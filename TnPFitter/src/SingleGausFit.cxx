@@ -139,7 +139,7 @@ void SingleGausFit::SetCompositeErrFunction(TF1* function,
     auto val = fitConfig.ParSettings(parIdx).Value();
     auto min = fitConfig.ParSettings(parIdx).LowerLimit();
     auto max = fitConfig.ParSettings(parIdx).UpperLimit();
-    std::string namePar = fitConfig.ParSettings(parIdx).Name();
+    auto namePar = fitConfig.ParSettings(parIdx).Name();
 
     function->SetParName(parIdx, namePar.c_str());
     function->SetParameter(parIdx, val);
