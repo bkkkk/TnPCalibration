@@ -56,20 +56,20 @@ void SingleGausFit::SetSignalFunction() {
 void SingleGausFit::SetCompositeUpFunction(void) {
   testCompositeFunction();
 
-  auto composite_function_name =
+  auto compositeFunctionName =
       functionName + "_Composite_Up_" + histogramName;
-  auto bkg_function_name = functionName + "_Bkg_Up_" + histogramName;
+  auto bkgFunctionName = functionName + "_Bkg_Up_" + histogramName;
 
-  auto bkg_function_string = fitConfig.GetBackgroundFitFunction();
-  auto function_string = fitConfig.GetFitFunction();
+  auto bkgFunctionString = fitConfig.GetBackgroundFitFunction();
+  auto functionString = fitConfig.GetFitFunction();
 
-  backgroundUpFunction = new TF1(bkg_function_name.c_str(),
-                                 bkg_function_string.c_str(),
+  backgroundUpFunction = new TF1(bkgFunctionName.c_str(),
+                                 bkgFunctionString.c_str(),
                                  bottomFitLimit,
                                  topFitLimit);
 
-  compositeUpFunction = new TF1(composite_function_name.c_str(),
-                                function_string.c_str(),
+  compositeUpFunction = new TF1(compositeFunctionName.c_str(),
+                                functionString.c_str(),
                                 bottomFitLimit,
                                 topFitLimit);
 
@@ -134,7 +134,8 @@ void SingleGausFit::SetCompositeErrFunction(TF1* function,
                                             double poly,
                                             double slope,
                                             double constant) {
-  for (auto parIdx = 0; parIdx != 3; parIdx++) {
+  auto nSignalParameters = 3;
+  for (auto parIdx = 0; parIdx != nSignalParameters; parIdx++) {
     auto val = fitConfig.ParSettings(parIdx).Value();
     auto min = fitConfig.ParSettings(parIdx).LowerLimit();
     auto max = fitConfig.ParSettings(parIdx).UpperLimit();
