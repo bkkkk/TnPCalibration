@@ -129,18 +129,18 @@ void DoubleGausFit::SetCompositeErrFunction(TF1* function,
                                             double poly,
                                             double slope,
                                             double constant) {
-  auto first_bkg_parameter = 6;
-  for (auto par_index = 0; par_index < first_bkg_parameter; par_index++) {
-    auto val = fitConfig.ParSettings(par_index).Value();
-    auto min = fitConfig.ParSettings(par_index).LowerLimit();
-    auto max = fitConfig.ParSettings(par_index).UpperLimit();
-    auto namePar = fitConfig.ParSettings(par_index).Name();
+  auto nSignalParameters = 6;
+  for (auto parIndex = 0; parIndex < nSignalParameters; parIndex++) {
+    auto val = fitConfig.ParSettings(parIndex).Value();
+    auto min = fitConfig.ParSettings(parIndex).LowerLimit();
+    auto max = fitConfig.ParSettings(parIndex).UpperLimit();
+    auto namePar = fitConfig.ParSettings(parIndex).Name();
 
-    function->SetParName(par_index, namePar.c_str());
-    function->SetParameter(par_index, val);
+    function->SetParName(parIndex, namePar.c_str());
+    function->SetParameter(parIndex, val);
 
-    if (fitConfig.ParSettings(par_index).HasLowerLimit()) {
-      function->SetParLimits(par_index, min, max);
+    if (fitConfig.ParSettings(parIndex).HasLowerLimit()) {
+      function->SetParLimits(parIndex, min, max);
     }
   }
 
