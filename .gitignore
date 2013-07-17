@@ -2,6 +2,7 @@
 *.slo
 *.lo
 *.o
+*.d
 
 # Compiled Dynamic libraries
 *.so
@@ -11,3 +12,24 @@
 *.lai
 *.la
 *.a
+
+# RootCore specific
+obj/
+test-bin/
+bin/
+*.root
+.fuse*
+
+# Emacs
+*.*~
+
+# Random
+.fuse*
+
+# Output specific
+*.pdf
+*.png
+*.eps
+output
+finalOutput
+plotOutput

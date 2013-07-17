@@ -1,0 +1,13 @@
+{
+	"folders":
+	[
+		{
+			"path": "/Users/jayb88/jblanco/CalibrationWork/SMTMiniNtuple",
+			"folder_exclude_patterns": ["obj","StandAlone"]
+		}
+  ],
+	"settings":
+	{
+		"tab_size": 2
+	}
+}
