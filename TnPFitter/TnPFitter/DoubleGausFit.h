@@ -24,15 +24,21 @@ public:
 public:
   // fitCompositeFunction
   void fitCompositeFunction();
-  
+
+public:  
   // Set component functions
   void setSignalFunction(void);
   void setBackgroundFunction(void);
-  void setFitLimits(const double min, const double max)
-  {
-    bottomFitLimit = min;
-    topFitLimit = max;
-  };
+  void setFitLimits(const double min, const double max);
+  
+public:
+  // Integral getters
+  double GetSignalIntegral(int sigma=3);
+  double GetBackgroundIntegral(int sigma=3);
+
+  TF1* GetSignalFunction(void);
+  TF1* GetBackgroundFunction(void);
+  TF1* GetCompositeFunction(void);
 
 public:
   TH1F* GetHistogram(void) { return histogram; };
@@ -40,6 +46,38 @@ public:
 public:
   // Draw
   void Draw();
+
+private:
+  double GetSigmaLow(int sigma=3);
+  double GetSigmaHigh(int sigma=3);
+
+private:
+  void testSignalFunction()
+  {
+    if(signalFunction == NULL)
+    {
+      LOG_ERROR() << "Signal function not set";
+      setSignalFunction();
+    }
+  }
+
+  void testBackgroundFunction()
+  {
+    if(backgroundFunction == NULL)
+    {
+      LOG_ERROR() << "Background function not set";
+      setBackgroundFunction();
+    }
+  }
+
+  void testCompositeFunction()
+  {
+    if(compositeFunction == NULL)
+    {
+      LOG_ERROR() << "Composite function not set";
+      fitCompositeFunction();
+    }
+  }
 
 private:
   // Name
@@ -61,8 +99,6 @@ private:
   FitResult* fitResult;
 };
 
-#endif
-
 namespace TNPFITTER
 {
   // Setup a fitconfig object
@@ -71,3 +107,5 @@ namespace TNPFITTER
   // Run fit
   int RunFit(DoubleGausFit* fitter);
 }
+
+#endif

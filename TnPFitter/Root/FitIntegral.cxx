@@ -4,11 +4,9 @@
 #include <TF1.h>
 #include <JacobUtils/LoggingUtility.h>
 
-#if 0
-
 //______________________________________________________________________________
 FitIntegral::FitIntegral(DoubleGausFit* fitter)
- : 
+ : fFitter(fitter)
 {
 
 }
@@ -23,12 +21,11 @@ FitIntegral::~FitIntegral()
 double FitIntegral::
 GetSignalIntegral()
 {
-	// TF1* signal = fFitter->GetSignalFunction();
+	TF1* signal = fFitter->GetSignalFunction();
 	
-	// double integral = signal->Integral(lowLimit, highLimit);
-	double integral = 0;
+	double integral = signal->Integral(lowLimit, highLimit);
 
-	//LOG_INFO() << "Signal " << integral;
+	LOG_INFO() << "Signal " << integral;
 
 	return (integral);
 }
@@ -37,11 +34,10 @@ GetSignalIntegral()
 double FitIntegral::
 GetBackgroundIntegral()
 {
-	//TF1* background = fFitter->GetBackgroundFunction();
+	TF1* background = fFitter->GetBackgroundFunction();
 	
-	//double integral = background->Integral(lowLimit, highLimit);
-  	double integral = 0;
-	// LOG_INFO() << "Background " << integral;
+	double integral = background->Integral(lowLimit, highLimit);
+	LOG_INFO() << "Background " << integral;
 
 	return (integral);
 }
@@ -66,13 +62,12 @@ GetYield()
 double FitIntegral::
 GetSignalYield()
 {
-	//double bkg = GetBackgroundIntegral();
-	//double histoYield = GetYield();
+	double bkg = GetBackgroundIntegral();
+	double histoYield = GetYield();
 
-	//double yieldMinusBkg = histoYield - bkg;
+	double yieldMinusBkg = histoYield - bkg;
 
-	//LOG_INFO() << "Signal Yield: " << yieldMinusBkg;
+	LOG_INFO() << "Signal Yield: " << yieldMinusBkg;
 
-	//return(yieldMinusBkg);
+	return(yieldMinusBkg);
 }
-#endif

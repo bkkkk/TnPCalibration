@@ -62,7 +62,7 @@ fitCompositeFunction()
 	histogram->Fit(compositeFunction, fitConfig.GetFitOptions().c_str());
 
   // Set Parameter results
-  for(size_t parIdx = 0; parIdx != compositeFunction->GetNpar(); parIdx++)
+  for(int parIdx = 0; parIdx != compositeFunction->GetNpar(); parIdx++)
   {
     std::string parName = compositeFunction->GetParName(parIdx);
     float parValue = compositeFunction->GetParameter(parIdx);
@@ -74,10 +74,17 @@ fitCompositeFunction()
 	return;
 }
 
-//________________________________________________________________________
+//______________________________________________________________________________
 void DoubleGausFit::
 setBackgroundFunction(void)
 {
+  if(compositeFunction == NULL)
+  {
+    LOG_INFO() << "Composite function not set and fit not run";
+    LOG_INFO() << "Running fit now";
+    fitCompositeFunction();
+  }
+
   // Create a background function
   std::string poly = "[0] + [1] * x + [2] * x * x";
   backgroundFunction = new TF1("Poly", poly.c_str(), bottomFitLimit, topFitLimit);
@@ -91,10 +98,17 @@ setBackgroundFunction(void)
   return;
 }
 
-//________________________________________________________________________
+//______________________________________________________________________________
 void DoubleGausFit::
 setSignalFunction(void)
 {
+  if(compositeFunction == NULL)
+  {
+    LOG_INFO() << "Composite function not set and fit not run";
+    LOG_INFO() << "Running fit now";
+    fitCompositeFunction();
+  }
+
   // Create a background function
   std::string doubleGaus = "gaus(0) + gaus(3)";
   signalFunction = new TF1("DoubleGaus", doubleGaus.c_str(), bottomFitLimit, topFitLimit);
@@ -111,8 +125,135 @@ setSignalFunction(void)
   return;
 }
 
+//______________________________________________________________________________
+TF1* DoubleGausFit::
+GetCompositeFunction()
+{
+  testCompositeFunction();
 
-//________________________________________________________________________
+  return (compositeFunction);
+}
+
+//______________________________________________________________________________
+TF1* DoubleGausFit::
+GetSignalFunction()
+{
+  testSignalFunction();
+
+  return (signalFunction);
+}
+
+//______________________________________________________________________________
+TF1* DoubleGausFit::
+GetBackgroundFunction()
+{
+  testBackgroundFunction();
+  return (backgroundFunction);
+}
+
+//______________________________________________________________________________
+void DoubleGausFit::
+setFitLimits(const double min, const double max)
+{
+  bottomFitLimit = min;
+  topFitLimit = max;
+  return;
+}
+
+//______________________________________________________________________________
+// Need to implement these
+double DoubleGausFit::
+GetSignalIntegral(int sigma)
+{
+  if(histogram == NULL)
+  {
+    LOG_ERROR() << "Histogram is not configured properly";
+    return (0);
+  }
+
+  int binMin = histogram->FindBin(GetSigmaLow(sigma));
+  int binMax = histogram->FindBin(GetSigmaHigh(sigma));
+
+  return( histogram->Integral(binMin, binMax) );
+}
+
+//______________________________________________________________________________
+// Need to implement these
+double DoubleGausFit::
+GetBackgroundIntegral(int sigma)
+{
+  if(fLowMode != 0)
+  {
+    testBackgroundFunction();
+  } else
+  {
+    return (0.0);
+  }
+
+  double lowLimit = GetSigmaLow(sigma);
+  double highLimit = GetSigmaHigh(sigma);
+
+  return(backgroundFunction->Integral(lowLimit, highLimit));
+}
+
+
+//______________________________________________________________________________
+double DoubleGausFit::
+GetSigmaLow(int nSigma)
+{
+  testCompositeFunction();
+  
+  double muNarrow = compositeFunction->GetParameter(1);
+  double sigmaNarrow = compositeFunction->GetParameter(2);
+
+  double muWide = compositeFunction->GetParameter(4);
+  double sigmaWide = compositeFunction->GetParameter(5);
+
+  double sigma;
+  double mu;
+
+  if(sigmaWide < sigmaNarrow)
+  {
+    sigma = sigmaNarrow;
+    mu = muWide;
+  } else
+  {
+    sigma = sigmaWide;
+    mu = muNarrow;
+  }
+
+  return(mu - nSigma * sigma);
+};
+
+//______________________________________________________________________________
+double DoubleGausFit::
+GetSigmaHigh(int nSigma)
+{
+  testCompositeFunction();
+
+  double muNarrow = compositeFunction->GetParameter(1);
+  double sigmaNarrow = compositeFunction->GetParameter(2);
+
+  double muWide = compositeFunction->GetParameter(4);
+  double sigmaWide = compositeFunction->GetParameter(5);
+
+  double sigma;
+  double mu;
+
+  if(sigmaWide < sigmaNarrow)
+  {
+    sigma = sigmaNarrow;
+    mu = muWide;
+  } else
+  {
+    sigma = sigmaWide;
+    mu = muNarrow;
+  }
+
+  return(mu + nSigma * sigma);
+};
+
+//______________________________________________________________________________
 void DoubleGausFit::
 Draw()
 {
@@ -126,7 +267,7 @@ Draw()
   compositeFunction->SetLineStyle(9);
   compositeFunction->SetLineWidth(2.5);
 
-  histogram->GetYaxis()->SetRangeUser(histogram->GetMinimum()-200,histogram->GetMaximum() * 1.2);
+  histogram->GetYaxis()->SetRangeUser(histogram->GetMinimum() - histogram->GetMaximum() * 0.05, histogram->GetMaximum() * 1.2);
 	histogram->Draw();
 	compositeFunction->Draw("SAME");
 
@@ -135,36 +276,11 @@ Draw()
 
   LOG_INFO() << "Histogram min: " << histMin << " max: " << histMax;
 
-  float wideN = fitResult->GetParValue("Wide N");
-  float wideSigma = fitResult->GetParValue("Wide Sigma");
-  float wideMu = fitResult->GetParValue("Wide Mean");
-
-  float narrowN = fitResult->GetParValue("Narrow N");
-  float narrowSigma = fitResult->GetParValue("Narrow Sigma");
-  float narrowMu = fitResult->GetParValue("Narrow Mean");
-
-  float mu = 0; float sigma = 0;
-
-  if( wideN < narrowN )
-  {
-    mu = narrowMu;
-    sigma = wideSigma;
-  } else
-  {
-    mu = wideMu;
-    sigma = narrowSigma;
-  }
-
-  float threeSigmaLow = mu - 6 * sigma;
-  float threeSigmaHigh = mu + 6 * sigma;
+  float threeSigmaLow = GetSigmaLow(3);
+  float threeSigmaHigh = GetSigmaHigh(3);
   
-  float fiveSigmaLow = mu - 10 * sigma;
-  float fiveSigmaHigh = mu + 10 * sigma;
-
-  LOG_INFO() << "Narrow: Sigma = " << narrowSigma << ", Mu = " << narrowMu;
-  LOG_INFO() << "Wide: Sigma = " << wideSigma << ", Mu = " << wideMu;
-  LOG_INFO() << "Sigmas(3): Low = " << threeSigmaLow << " and High = " << threeSigmaLow;
-  LOG_INFO() << "Sigmas(5): Low = " << fiveSigmaLow << " and High = " << fiveSigmaHigh;
+  float fiveSigmaLow = GetSigmaLow(5);
+  float fiveSigmaHigh = GetSigmaHigh(5);
 
   TLine* fiveLow = new TLine( fiveSigmaLow, histMin, fiveSigmaLow, histMax );
   TLine* fiveHigh = new TLine( fiveSigmaHigh, histMin, fiveSigmaHigh, histMax );
@@ -239,7 +355,7 @@ BuildFitConfiguration(TH1* histogram)
   };
 
   fitConfig->SetParamsSettings(pars);
-  fitConfig->SetFitOptions("MERB");
+  fitConfig->SetFitOptions("MERBQ");
 
   return(*fitConfig);
 }

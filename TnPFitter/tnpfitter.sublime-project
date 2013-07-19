@@ -2,8 +2,19 @@
 	"folders":
 	[
 		{
-			"follow_symlinks": true,
-			"path": "/Users/jayb88/jblanco/CalibrationWork/TnPFitter"
+			"path": "Root",
+			"name": "Source",
+		},
+		{
+			"path": "TnPFitter",
+			"name": "Header"
+		},
+		{
+			"path": "cmt"
+		},
+		{
+			"path": "test",
+			"name": "unit-tests"
 		}
 	]
 }
