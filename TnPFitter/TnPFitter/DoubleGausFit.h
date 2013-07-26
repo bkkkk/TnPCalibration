@@ -40,9 +40,6 @@ namespace TNPFITTER
 {
   // Setup a fitconfig object
   FitConfig BuildFitConfiguration(TH1* histogram);
-
-  // Run fit
-  int RunFit(DoubleGausFit* fitter, int sigma, int window);
 }
 
 #endif

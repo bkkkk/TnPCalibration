@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
   };
 
   DoubleGausLandauFit* fit = new DoubleGausLandauFit("probe", histo, LANDAUFIT::BuildFitConfiguration(histo));
-  LANDAUFIT::RunFit( fit, sigma, 2 );
+  TNPFITTER::RunFit( fit, sigma, 2 );
 
   double down = fit->GetBackgroundDownFunction()->GetParameter(0);
   double up = fit->GetBackgroundUpFunction()->GetParameter(0);
