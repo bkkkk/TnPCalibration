@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<root setup="2xoo" ref="null" created="2013-07-26 12:03:54" modified="2013-07-26 12:03:54" uuid="1008756e-f5e3-11e2-9717-ea6cdb86beef" version="2">
+  <XmlKey name="BkgUpConfig" cycle="1" created="2013-07-26 12:03:55">
+    <Object class="FitterDraw__LineAttrib">
+      <FitterDraw__LineAttrib version="1">
+        <name>
+          <Version v="9"/>
+          <UChar_t v="12"/>
+          <CharStar v="BackgroundUp"/>
+        </name>
+        <color v="36"/>
+        <style v="4"/>
+        <width v="2.500000e+00"/>
+      </FitterDraw__LineAttrib>
+    </Object>
+  </XmlKey>
+  <XmlKey name="BkgDownConfig" cycle="1" created="2013-07-26 12:03:55">
+    <Object class="FitterDraw__LineAttrib">
+      <FitterDraw__LineAttrib version="1">
+        <name>
+          <Version v="9"/>
+          <UChar_t v="14"/>
+          <CharStar v="BackgroundDown"/>
+        </name>
+        <color v="30"/>
+        <style v="4"/>
+        <width v="2.500000e+00"/>
+      </FitterDraw__LineAttrib>
+    </Object>
+  </XmlKey>
+  <XmlKey name="SignalConfig" cycle="1" created="2013-07-26 12:03:55">
+    <Object class="FitterDraw__LineAttrib">
+      <FitterDraw__LineAttrib version="1">
+        <name>
+          <Version v="9"/>
+          <UChar_t v="6"/>
+          <CharStar v="Signal"/>
+        </name>
+        <color v="632"/>
+        <style v="9"/>
+        <width v="2.500000e+00"/>
+      </FitterDraw__LineAttrib>
+    </Object>
+  </XmlKey>
+  <XmlKey name="NominalConfig" cycle="1" created="2013-07-26 12:03:55">
+    <Object class="FitterDraw__LineAttrib">
+      <FitterDraw__LineAttrib version="1">
+        <name>
+          <Version v="9"/>
+          <UChar_t v="9"/>
+          <CharStar v="Composite"/>
+        </name>
+        <color v="4"/>
+        <style v="1"/>
+        <width v="2.500000e+00"/>
+      </FitterDraw__LineAttrib>
+    </Object>
+  </XmlKey>
+  <XmlKey name="BkgConfig" cycle="1" created="2013-07-26 12:03:55">
+    <Object class="FitterDraw__LineAttrib">
+      <FitterDraw__LineAttrib version="1">
+        <name>
+          <Version v="9"/>
+          <UChar_t v="10"/>
+          <CharStar v="Background"/>
+        </name>
+        <color v="6"/>
+        <style v="7"/>
+        <width v="2.500000e+00"/>
+      </FitterDraw__LineAttrib>
+    </Object>
+  </XmlKey>
+  <StreamerInfos>
+    <TStreamerInfo name="FitterDraw::LineAttrib" title="" v="9" classversion="-1" canoptimize="true" checksum="-1439378082">
+      <TStreamerSTLstring name="name" v="2" type="300" typename="string" size="8" STLtype="365" Ctype="365"/>
+      <TStreamerBasicType name="color" v="2" type="3" typename="int" size="4"/>
+      <TStreamerBasicType name="style" v="2" type="3" typename="int" size="4"/>
+      <TStreamerBasicType name="width" v="2" type="5" typename="float" size="4"/>
+    </TStreamerInfo>
+  </StreamerInfos>
+</root>
