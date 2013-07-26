@@ -4,6 +4,7 @@
  *  Created on: 25 Oct 2011
  *      Author: neil
  */
+#ifdef DEPRECATED
 
 #include <MuonEfficiency/EfficiencyMaker.h>
 #include <iostream>
@@ -13,14 +14,14 @@
 
 ClassImp(EfficiencyMaker)
 
-EfficiencyMaker :: 
+EfficiencyMaker:: 
 EfficiencyMaker(TString prefixName, TString tagName,
                 TH1F* inDetHisto, TH1F* muProbeHisto, TH1F* matchChi2Histo,
-                int Nsigma) :
-                  m_fitObj(new SingleGausFit(prefixName)),
-                  m_inDetHisto(inDetHisto),
-                  m_muProbeHisto(muProbeHisto),
-                  m_matchChi2Histo(matchChi2Histo)
+                int Nsigma)
+ : m_fitObj(new SingleGausFit(prefixName)),
+   m_inDetHisto(inDetHisto),
+   m_muProbeHisto(muProbeHisto),
+   m_matchChi2Histo(matchChi2Histo)
 {
   std::string s;
   std::stringstream out;
@@ -77,3 +78,5 @@ EfficiencyMaker(TString prefixName, TString tagName,
 EfficiencyMaker::~EfficiencyMaker() {
   // TODO Auto-generated destructor stub
 }
+
+#endif

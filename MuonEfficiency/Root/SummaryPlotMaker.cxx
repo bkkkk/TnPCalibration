@@ -1,7 +1,11 @@
 #include "MuonEfficiency/SummaryPlotMaker.h"
 #include "JacobUtils/LoggingUtility.h"
+#include "JacobUtils/MathTools.h"
 #include "MuonEfficiency/EfficiencyMaker.h"
+#include "TnPFitter/FitEfficiency.h"
 #include "THStack.h"
+
+#include <math.h>
 
 ClassImp(SummaryPlotMaker)
 
@@ -272,19 +276,19 @@ FillEfficiencyHistograms(TFile* file,
       histoProbe = histoMuonProbe;
     };
 
-    EfficiencyMaker* effTester = new EfficiencyMaker(sliceName, typeName, histoProbe, histoMuonProbe, histoSMT, 3);
+    std::string name = typeName  + "_" + sliceName;
 
-    float recoEff = effTester->recoEff();
-    float recoTotalErr = GetTotalError( recoEff,
-                                        effTester->recoEffStatErr(),
-                                        effTester->recoEffSysErr() );
+    FitEfficiency* fitEfficiency = new FitEfficiency(name, histoProbe, histoMuonProbe, histoSMT);
+
+    float recoEff = fitEfficiency->GetRecoEfficiency();
+    float recoTotalErr = fitEfficiency->GetRecoError();
 
     if((recoTotalErr / recoEff) > 0.2)
     {
       LOG_WARNING() << "Large Uncertainty : " << recoEff << "+-" << recoTotalErr << " from " << sliceName;
     }
 
-    if(recoEff != recoEff)
+    if(MathTools::isNan(recoEff))
     {
       LOG_WARNING() << "The reconstruction efficiency is NaN";
       continue;
@@ -292,21 +296,19 @@ FillEfficiencyHistograms(TFile* file,
 
     LOG_INFO() << "Reconstruction efficiency: " << recoEff << "\u00b1" << recoTotalErr;
 
-    recoHisto.Fill(lowEdge + 0.01, effTester->recoEff());
+    recoHisto.Fill(lowEdge + 0.01, recoEff);
     recoHisto.SetBinError(idx + 1, recoTotalErr);
     
     /// SMT
-    float matchChi2Eff = effTester->matchChi2Eff();
-    float matchChi2TotalErr = GetTotalError( matchChi2Eff,
-                                             effTester->matchChi2EffStatErr(),
-                                             effTester->matchChi2EffSysErr() );
+    float matchChi2Eff = fitEfficiency->GetSMTEfficiency();
+    float matchChi2TotalErr = fitEfficiency->GetSMTError();
 
-    if(matchChi2Eff != matchChi2Eff)
+    if(MathTools::isNan(matchChi2Eff))
     {
       LOG_WARNING() << "The SMT efficiency is NaN moving to next bin";
       continue;
     }
-
+      
     if((matchChi2TotalErr / matchChi2Eff) > 0.2)
     {
       LOG_WARNING() << "Large Uncertainty : " << matchChi2Eff << "+-" << matchChi2TotalErr << " from " << sliceName;

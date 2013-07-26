@@ -19,7 +19,13 @@ public:
   ~FitConfig();
 
 public:
+  // Set fit functions
   void SetFitFunction (const std::string& fitFunction) { fFunction = fitFunction; }
+  void SetBackgroundFitFunction (const std::string& fitFunction) { fBkgFunction = fitFunction; }
+  void SetSignalFitFunction (const std::string& fitFunction) { fSigFunction = fitFunction; }
+
+public:
+  void SetBackgroundIndex (const double index) { firstBkgIndx = index; }
 
 public:
   void SetFitOptions (const std::string& fitOptions) { fFitOptions = fitOptions; }
@@ -28,15 +34,17 @@ public:
   bool GetMode(void) { return fLowBackground; }
 
 public:  
+  // Get fit functions
   const std::string GetFitFunction (void) const { return (fFunction); } 
-
-public:
+  const std::string GetSignalFitFunction (void) const { return (fSigFunction); }
+  const std::string GetBackgroundFitFunction (void) const { return (fBkgFunction); }
   std::string GetFitFunction (void) { return (fFunction); } 
+  std::string GetSignalFitFunction (void) { return (fSigFunction); }
+  std::string GetBackgroundFitFunction (void) { return (fBkgFunction); }
 
 public:
+  // Get fit options
   const std::string GetFitOptions (void) const { return (fFitOptions); }
-
-public:
   std::string GetFitOptions (void) { return (fFitOptions); }
 
 public:
@@ -66,7 +74,7 @@ public:
 public:
   void Print()
   {
-    LOG_INFO() << "Printing variables";
+    LOG_INFO() << "Configuring fit with the following parameters";
     
     for(size_t parIdx = 0; parIdx != fSettings.size(); parIdx++)
     {
@@ -84,8 +92,14 @@ protected:
 private:
   std::string fFitOptions; // Fit Options
   std::string fFunction; // Fit function
+  std::string fBkgFunction; // Fit Bkg function
+  std::string fSigFunction; // Fit Sig function
   bool fLowBackground; // Background mode
   std::vector<ROOT::Fit::ParameterSettings> fSettings; // Vector with the parameter settings
+  // @todo - have this be made from strings rather then input manually
+  int firstBkgIndx; // Holds the index of the first background parameter
+
+  ClassDef(FitConfig, 1)
 };
 
 #endif

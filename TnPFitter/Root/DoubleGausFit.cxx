@@ -8,111 +8,62 @@
 #include "TCanvas.h"
 #include "TLine.h"
 
+ClassImp(DoubleGausFit)
+
 //________________________________________________________________________
 DoubleGausFit::
 DoubleGausFit(const std::string& val_name, TH1F* val_histogram, const FitConfig& val_fitConfig)
- : name(val_name),
-   fitConfig(val_fitConfig),
-   histogram(val_histogram),
-   bottomFitLimit(2.6),
-   topFitLimit(3.5),
-   fitResult( new FitResult ( name, 9 ) )
+ : FitInterface(val_name, val_histogram, val_fitConfig)
 {
-
+  LOG_DEBUG() << "Constructing a gaus + landau fit";
+  functionName = "DGaus";
 }
 
 //________________________________________________________________________
 DoubleGausFit::
 ~DoubleGausFit(void)
 {
-  delete compositeFunction;
-  delete backgroundFunction;
-  delete signalFunction;
-}
 
-//________________________________________________________________________
-void DoubleGausFit::
-fitCompositeFunction()
-{
-  std::string nameOfFunc = "Fitter_" + std::string(histogram->GetName());
-
-  LOG_INFO() << "Fitting: " << histogram->GetName();
-
-  fLowMode = fitConfig.GetMode();
-
-	compositeFunction = new TF1( nameOfFunc.c_str(), fitConfig.GetFitFunction().c_str(),
-                               bottomFitLimit, topFitLimit );
-
-  for(int parIdx = 0; parIdx != compositeFunction->GetNpar(); parIdx++)
-  {
-    double val = fitConfig.ParSettings(parIdx).Value();
-    double min = fitConfig.ParSettings(parIdx).LowerLimit();
-    double max = fitConfig.ParSettings(parIdx).UpperLimit();
-    std::string namePar = fitConfig.ParSettings(parIdx).Name();
-
-  	compositeFunction->SetParName( parIdx, namePar.c_str() );
-    compositeFunction->SetParameter( parIdx, val );
-
-    if(fitConfig.ParSettings(parIdx).HasLowerLimit())
-    {
-      compositeFunction->SetParLimits( parIdx, min, max );
-    }
-  }
-  
-	histogram->Fit(compositeFunction, fitConfig.GetFitOptions().c_str());
-
-  // Set Parameter results
-  for(int parIdx = 0; parIdx != compositeFunction->GetNpar(); parIdx++)
-  {
-    std::string parName = compositeFunction->GetParName(parIdx);
-    float parValue = compositeFunction->GetParameter(parIdx);
-    float parError = compositeFunction->GetParError(parIdx);
-
-    fitResult->AddParameter(parName, parValue, parError);
-  };
-
-	return;
 }
 
 //______________________________________________________________________________
 void DoubleGausFit::
-setBackgroundFunction(void)
+SetBackgroundFunction(void)
 {
-  if(compositeFunction == NULL)
-  {
-    LOG_INFO() << "Composite function not set and fit not run";
-    LOG_INFO() << "Running fit now";
-    fitCompositeFunction();
-  }
+  testCompositeFunction();
+
+  std::string funcName = functionName + "_" + histogramName;
+
+  backgroundFunction = new TF1( funcName.c_str(), fitConfig.GetBackgroundFitFunction().c_str(),
+                                bottomFitLimit, topFitLimit);
 
   // Create a background function
-  std::string poly = "[0] + [1] * x + [2] * x * x";
-  backgroundFunction = new TF1("Poly", poly.c_str(), bottomFitLimit, topFitLimit);
-
-  backgroundFunction->FixParameter(0, compositeFunction->GetParameter("Constant"));
-  backgroundFunction->FixParameter(1, compositeFunction->GetParameter("Slope"));
-  backgroundFunction->FixParameter(2, compositeFunction->GetParameter("Poly"));
-
-  backgroundFunction->SetLineColor(6); backgroundFunction->SetLineStyle(7);
+  if(fitConfig.GetMode() != 1)
+  {
+    backgroundFunction->FixParameter(0, compositeFunction->GetParameter("Constant"));
+    backgroundFunction->FixParameter(1, compositeFunction->GetParameter("Slope"));
+    backgroundFunction->FixParameter(2, compositeFunction->GetParameter("Poly"));
+    backgroundFunction->SetLineColor(6); backgroundFunction->SetLineStyle(7);
+  }
 
   return;
 }
 
 //______________________________________________________________________________
 void DoubleGausFit::
-setSignalFunction(void)
+SetSignalFunction(void)
 {
-  if(compositeFunction == NULL)
-  {
-    LOG_INFO() << "Composite function not set and fit not run";
-    LOG_INFO() << "Running fit now";
-    fitCompositeFunction();
-  }
+  // Test if the composite fit was done correctly
+  testCompositeFunction();
+
+  // Unique function name
+  std::string funcName = functionName + "_signal_" + histogramName;
 
   // Create a background function
-  std::string doubleGaus = "gaus(0) + gaus(3)";
-  signalFunction = new TF1("DoubleGaus", doubleGaus.c_str(), bottomFitLimit, topFitLimit);
+  signalFunction = new TF1( funcName.c_str(), fitConfig.GetSignalFitFunction().c_str(),
+                            bottomFitLimit, topFitLimit );
 
+  // Fit parameters of function
   signalFunction->FixParameter( 0, compositeFunction->GetParameter("Narrow N") );
   signalFunction->FixParameter( 1, compositeFunction->GetParameter("Narrow Mean") );
   signalFunction->FixParameter( 2, compositeFunction->GetParameter("Narrow Sigma") );
@@ -126,195 +77,152 @@ setSignalFunction(void)
 }
 
 //______________________________________________________________________________
-TF1* DoubleGausFit::
-GetCompositeFunction()
+void DoubleGausFit::
+SetCompositeUpFunction (void)
 {
   testCompositeFunction();
 
-  return (compositeFunction);
-}
+  std::string funcNameComp = functionName + "_Composite_Up_" + histogramName;
+  std::string funcNameBkg = functionName + "_Bkg_Up_" + histogramName;
 
-//______________________________________________________________________________
-TF1* DoubleGausFit::
-GetSignalFunction()
-{
-  testSignalFunction();
+  backgroundUpFunction = new TF1( funcNameBkg.c_str(), fitConfig.GetBackgroundFitFunction().c_str(),
+                                  bottomFitLimit, topFitLimit );
 
-  return (signalFunction);
-}
+  compositeUpFunction = new TF1( funcNameComp.c_str(), fitConfig.GetFitFunction().c_str(), 
+                                  bottomFitLimit, topFitLimit );
 
-//______________________________________________________________________________
-TF1* DoubleGausFit::
-GetBackgroundFunction()
-{
-  testBackgroundFunction();
-  return (backgroundFunction);
-}
+  if(fitConfig.GetMode() != 1)
+  {    
+    double constant = fitResult->GetParValue("Constant") + fitResult->GetParError("Constant");
+    double slope = fitResult->GetParValue("Slope") - fitResult->GetParError("Slope");
+    double poly = fitResult->GetParValue("Poly") + fitResult->GetParError("Poly");
+    
+    SetCompositeErrFunction(compositeUpFunction, poly, slope, constant);
 
-//______________________________________________________________________________
-void DoubleGausFit::
-setFitLimits(const double min, const double max)
-{
-  bottomFitLimit = min;
-  topFitLimit = max;
+    histogram->Fit(compositeUpFunction, fitConfig.GetFitOptions().c_str());
+
+    backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(6));
+    backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(7));
+    backgroundUpFunction->SetParameter(2, compositeUpFunction->GetParameter(8));
+
+    LOG_DEBUG1() << "After fit";
+    LOG_DEBUG1() << "Constant = " << backgroundUpFunction->GetParameter(0);
+    LOG_DEBUG1() << "Slope = " << backgroundUpFunction->GetParameter(1);
+    LOG_DEBUG1() << "Poly = " << backgroundUpFunction->GetParameter(2);
+  }
+
   return;
 }
 
 //______________________________________________________________________________
-// Need to implement these
-double DoubleGausFit::
-GetSignalIntegral(int sigma)
-{
-  if(histogram == NULL)
-  {
-    LOG_ERROR() << "Histogram is not configured properly";
-    return (0);
-  }
-
-  int binMin = histogram->FindBin(GetSigmaLow(sigma));
-  int binMax = histogram->FindBin(GetSigmaHigh(sigma));
-
-  return( histogram->Integral(binMin, binMax) );
-}
-
-//______________________________________________________________________________
-// Need to implement these
-double DoubleGausFit::
-GetBackgroundIntegral(int sigma)
-{
-  if(fLowMode != 0)
-  {
-    testBackgroundFunction();
-  } else
-  {
-    return (0.0);
-  }
-
-  double lowLimit = GetSigmaLow(sigma);
-  double highLimit = GetSigmaHigh(sigma);
-
-  return(backgroundFunction->Integral(lowLimit, highLimit));
-}
-
-
-//______________________________________________________________________________
-double DoubleGausFit::
-GetSigmaLow(int nSigma)
-{
-  testCompositeFunction();
-  
-  double muNarrow = compositeFunction->GetParameter(1);
-  double sigmaNarrow = compositeFunction->GetParameter(2);
-
-  double muWide = compositeFunction->GetParameter(4);
-  double sigmaWide = compositeFunction->GetParameter(5);
-
-  double sigma;
-  double mu;
-
-  if(sigmaWide < sigmaNarrow)
-  {
-    sigma = sigmaNarrow;
-    mu = muWide;
-  } else
-  {
-    sigma = sigmaWide;
-    mu = muNarrow;
-  }
-
-  return(mu - nSigma * sigma);
-};
-
-//______________________________________________________________________________
-double DoubleGausFit::
-GetSigmaHigh(int nSigma)
+void DoubleGausFit::
+SetCompositeDownFunction (void)
 {
   testCompositeFunction();
 
-  double muNarrow = compositeFunction->GetParameter(1);
-  double sigmaNarrow = compositeFunction->GetParameter(2);
+  std::string funcNameComp = functionName + "_Composite_Down_" + histogramName;
+  std::string funcNameBkg = functionName + "_Bkg_Down_" + histogramName;
 
-  double muWide = compositeFunction->GetParameter(4);
-  double sigmaWide = compositeFunction->GetParameter(5);
+  backgroundDownFunction = new TF1( funcNameBkg.c_str(), fitConfig.GetBackgroundFitFunction().c_str(),
+                                  bottomFitLimit, topFitLimit );
 
-  double sigma;
-  double mu;
+  compositeDownFunction = new TF1( funcNameComp.c_str(), fitConfig.GetFitFunction().c_str(), 
+                                  bottomFitLimit, topFitLimit );
 
-  if(sigmaWide < sigmaNarrow)
-  {
-    sigma = sigmaNarrow;
-    mu = muWide;
-  } else
-  {
-    sigma = sigmaWide;
-    mu = muNarrow;
+  if(fitConfig.GetMode() == 0)
+  {    
+    double constant = fitResult->GetParValue("Constant") - fitResult->GetParError("Constant");
+    double slope = fitResult->GetParValue("Slope") + fitResult->GetParError("Slope");
+    double poly = fitResult->GetParValue("Poly") - fitResult->GetParError("Poly");
+    
+    SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);
+
+    histogram->Fit(compositeDownFunction, fitConfig.GetFitOptions().c_str());
+
+    backgroundDownFunction->SetParameter(0, compositeDownFunction->GetParameter(6));
+    backgroundDownFunction->SetParameter(1, compositeDownFunction->GetParameter(7));
+    backgroundDownFunction->SetParameter(2, compositeDownFunction->GetParameter(8));
+
+    LOG_DEBUG1() << "After fit";
+    LOG_DEBUG1() << "Constant = " << backgroundDownFunction->GetParameter(0);
+    LOG_DEBUG1() << "Slope = " << backgroundDownFunction->GetParameter(1);
+    LOG_DEBUG1() << "Poly = " << backgroundDownFunction->GetParameter(2);
   }
 
-  return(mu + nSigma * sigma);
-};
+  return;
+}
 
 //______________________________________________________________________________
 void DoubleGausFit::
-Draw()
+SetCompositeErrFunction(TF1* function, double poly, double slope, double constant)
 {
-	if(compositeFunction == NULL) return;
+  LOG_DEBUG() << "Setting parameters";
+  LOG_DEBUG() << "N Parameters: " << function->GetNpar();
 
-	TCanvas c1(name.c_str(), name.c_str(), 0, 0, 600, 800);
-	c1.Draw();
-
-  compositeFunction->SetNpx(1000);
-  compositeFunction->SetLineColor(4);
-  compositeFunction->SetLineStyle(9);
-  compositeFunction->SetLineWidth(2.5);
-
-  histogram->GetYaxis()->SetRangeUser(histogram->GetMinimum() - histogram->GetMaximum() * 0.05, histogram->GetMaximum() * 1.2);
-	histogram->Draw();
-	compositeFunction->Draw("SAME");
-
-  float histMin = histogram->GetMaximum();
-  float histMax = histogram->GetMinimum();
-
-  LOG_INFO() << "Histogram min: " << histMin << " max: " << histMax;
-
-  float threeSigmaLow = GetSigmaLow(3);
-  float threeSigmaHigh = GetSigmaHigh(3);
-  
-  float fiveSigmaLow = GetSigmaLow(5);
-  float fiveSigmaHigh = GetSigmaHigh(5);
-
-  TLine* fiveLow = new TLine( fiveSigmaLow, histMin, fiveSigmaLow, histMax );
-  TLine* fiveHigh = new TLine( fiveSigmaHigh, histMin, fiveSigmaHigh, histMax );
-  TLine* threeLow = new TLine( threeSigmaLow, histMin, threeSigmaLow, histMax );
-  TLine* threeHigh = new TLine( threeSigmaHigh, histMin, threeSigmaHigh, histMax );
-
-  fiveLow->SetLineColor(3); fiveLow->SetLineWidth(2);
-  fiveHigh->SetLineColor(3); fiveHigh->SetLineWidth(2);
-  
-  threeLow->SetLineColor(6); threeLow->SetLineWidth(2);
-  threeHigh->SetLineColor(6); threeHigh->SetLineWidth(2);
-
-  fiveLow->Draw(); fiveHigh->Draw();
-  threeLow->Draw(); threeHigh->Draw();
-
-  if(backgroundFunction != NULL)
+  // Set up signal parameters for composite fit variation function
+  for(int parIdx = 0; parIdx != 6; parIdx++)
   {
-    backgroundFunction->SetNpx(1000);
-    backgroundFunction->Draw("SAME");
-  }
-  
-  if(signalFunction != NULL)
-  {
-    signalFunction->SetNpx(1000);
-    signalFunction->Draw("SAME");
+    double val = fitConfig.ParSettings(parIdx).Value();
+    double min = fitConfig.ParSettings(parIdx).LowerLimit();
+    double max = fitConfig.ParSettings(parIdx).UpperLimit();
+    std::string namePar = fitConfig.ParSettings(parIdx).Name();
+
+    LOG_DEBUG() << namePar << " :: " << val 
+               << " min = " << min
+               << ", max = " << max;
+
+    function->SetParName( parIdx, namePar.c_str() );
+    function->SetParameter( parIdx, val );
+    
+    if(fitConfig.ParSettings(parIdx).HasLowerLimit())
+    {
+      function->SetParLimits( parIdx, min, max );  
+    }
   }
 
-  fiveLow->Draw(); fiveHigh->Draw(); threeLow->Draw(); threeHigh->Draw();
+  LOG_DEBUG() << "Setting background variables";
+  function->FixParameter(6, constant);
+  function->FixParameter(7, slope);
+  function->FixParameter(8, poly);
 
-	std::string filename = name + "-" + histogram->GetName() + ".pdf";
+  return;
+}
 
-	c1.SaveAs(filename.c_str(), "pdf");
+//______________________________________________________________________________
+void DoubleGausFit::
+GetSigmaAndMu(double& sigma, double& mu)
+{
+  double muNarrow = compositeFunction->GetParameter(1);
+  double sigmaNarrow = compositeFunction->GetParameter(2);
 
-	return;
+  double muWide = compositeFunction->GetParameter(4);
+  double sigmaWide = compositeFunction->GetParameter(5);
+
+  if(fitConfig.GetMode() == 0)
+  {
+    sigma = (sigmaWide + sigmaNarrow) / 2;  
+  } else
+  {
+    if(sigmaNarrow < sigmaWide) sigma = sigmaNarrow;
+    else sigma = sigmaWide;
+  }
+  
+  double mass = fitConfig.ParSettings(1).Value();
+  double diffMuNarrow = fabs(mass - muNarrow);
+  double diffMuWide = fabs(mass - muWide);
+
+  if(diffMuWide < diffMuNarrow)
+  {
+    mu = muWide;
+  } else
+  {
+    mu = muNarrow;
+  }
+
+  LOG_DEBUG2() << "Mu Wide = " << muWide << ", Mu Narrow = " << muNarrow;  
+  LOG_DEBUG2() << "Selected sigma = " << sigma << ", mu = " << mu;
+
+  return;
 }
 
 //______________________________________________________________________________
@@ -324,7 +232,6 @@ BuildFitConfiguration(TH1* histogram)
   double lowLimits = 2.6;
 
   int bin = histogram->FindBin(lowLimits);
-  LOG_INFO() << "Low limit: " << lowLimits << " in bin " << bin;
   std::vector<ROOT::Fit::ParameterSettings> pars;
 
   pars.push_back( ROOT::Fit::ParameterSettings("Narrow N", histogram->GetMaximum(), 0, 0.0001, 10000000));
@@ -343,37 +250,22 @@ BuildFitConfiguration(TH1* histogram)
 
   if(histogram->GetBinContent( bin ) < 10)
   { 
-    LOG_INFO() << "====> LOW BACKGROUND MODE";
+    LOG_DEBUG() << "====> LOW BACKGROUND MODE";
     fitConfig = new FitConfig(doubleGaus, 6, true);
   } else
   {
-    LOG_INFO() << "====> HIGH BACKGROUND MODE";
+    LOG_DEBUG() << "====> HIGH BACKGROUND MODE";
     fitConfig = new FitConfig(polyPlusDoubleGaus, 9, false);
+
     pars.push_back( ROOT::Fit::ParameterSettings("Constant", 0) );
     pars.push_back( ROOT::Fit::ParameterSettings("Slope", 0) );
     pars.push_back( ROOT::Fit::ParameterSettings("Poly", 0) ); 
-  };
-
+  }
+  
+  fitConfig->SetSignalFitFunction(doubleGaus);
+  fitConfig->SetBackgroundFitFunction(poly);
   fitConfig->SetParamsSettings(pars);
   fitConfig->SetFitOptions("MERBQ");
 
   return(*fitConfig);
-}
-
-//______________________________________________________________________________
-int TNPFITTER::
-RunFit(DoubleGausFit* fitter)
-{
-  if(fitter == NULL)
-  {
-    return (1);
-  }
-
-  LOG_INFO() << "Running Fit";
-  fitter->fitCompositeFunction();
-  fitter->setSignalFunction();
-  fitter->setBackgroundFunction();
-  fitter->Draw();
-
-  return (1);
 }

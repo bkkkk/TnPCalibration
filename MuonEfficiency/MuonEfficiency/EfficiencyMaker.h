@@ -5,6 +5,8 @@
  *      Author: neil
  */
 
+#ifdef DEPRECATED
+
 #ifndef EFFICIENCYMAKER_H_
 #define EFFICIENCYMAKER_H_
 
@@ -45,3 +47,5 @@ public:
 };
 
 #endif /* EFFICIENCYMAKER_H_ */
+
+#endif /* DEPRECATED */

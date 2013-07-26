@@ -18,7 +18,6 @@
 #pragma link C++ class SampleHistograms+;
 #pragma link C++ class SingleGausFit+;
 #pragma link C++ class FitResults+;
-#pragma link C++ class EfficiencyMaker+;
 #pragma link C++ class HistogramFactory+;
 #pragma link C++ class TnPSlices+;
 #pragma link C++ class SummaryPlotMaker+;
@@ -29,3 +28,7 @@
 #pragma link C++ class std::map<std::string, std::vector<std::pair<float, float> > >+;
 #pragma link C++ class std::map<std::string, std::vector<float> >+;
 #pragma link C++ class PileupPRW+;
+
+#ifdef DEPRECATED 
+#pragma link C++ class EfficiencyMaker+;
+#endif

@@ -1,12 +1,15 @@
 #include "TnPFitter/FitConfig.h"
 
+ClassImp(FitConfig)
+
 //__________________________________________________________________________________________
 FitConfig::
 FitConfig(const std::string& function, unsigned int npar, bool isLowBkg)
  : fFitOptions("MERQB"),
    fFunction(function),
    fLowBackground(isLowBkg),
-   fSettings(std::vector<ROOT::Fit::ParameterSettings>(npar))
+   fSettings(std::vector<ROOT::Fit::ParameterSettings>(npar)),
+   firstBkgIndx(0)
 {
 
 }

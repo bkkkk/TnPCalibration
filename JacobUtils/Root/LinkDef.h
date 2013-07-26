@@ -1,5 +1,6 @@
 #include "JacobUtils/LoggingUtility.h"
 #include "JacobUtils/ReaderTools.h"
+#include "JacobUtils/MathTools.h"
 
 #ifdef __CINT__
 
@@ -8,9 +9,8 @@
 #pragma link off all functions;
 
 #pragma link C++ nestedclass;
-#pragma link C++ namespace RT;
-#pragma link C++ function RT::GetListFromString(const std::string& inputString);
-
-#pragma link C++ class LoggingUtility+;
+#pragma link C++ defined_in "JacobUtils/LoggingUtility.h";
+#pragma link C++ defined_in "JacobUtils/ReaderTools.h";
+#pragma link C++ defined_in "JacobUtils/MathTools.h";
 
 #endif
