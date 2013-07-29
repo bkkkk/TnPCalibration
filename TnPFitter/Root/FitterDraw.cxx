@@ -25,7 +25,7 @@ FitterDraw(FitInterface* fitter, int sigma, int window)
     throw;
   }
 
-  LOG_INFO() << "Loading line configuration file";
+  LOG_DEBUG() << "Loading line configuration file";
 
   configFile->GetObject("BkgUpConfig", bkgUp);
   configFile->GetObject("BkgDownConfig", bkgDown);
@@ -34,8 +34,9 @@ FitterDraw(FitInterface* fitter, int sigma, int window)
   configFile->GetObject("NominalConfig", nominal);
 
   configFile->Close();
+  delete configFile;
 
-  LOG_INFO() << "Loding succesfully completed";
+  LOG_DEBUG() << "Loading succesfully completed";
 
   if(fFitter == NULL)
   {
@@ -55,7 +56,14 @@ FitterDraw(FitInterface* fitter, int sigma, int window)
 FitterDraw::
 ~FitterDraw(void)
 {
+  configFile->Close();
 
+  delete bkgUp;
+  delete bkgDown;
+  delete bkg;
+  delete signal;
+  delete nominal;
+  delete configFile;
 }
 
 //______________________________________________________________________________
@@ -133,7 +141,7 @@ SetupLine(TF1* line, LineAttrib* attribute)
     return;
   }
 
-  LOG_INFO() << "Setting up line: " << attribute->name;
+  LOG_DEBUG1() << "Setting up line: " << attribute->name;
   
   // Setup the line
   line->SetLineColor(attribute->color);

@@ -1,4 +1,5 @@
 #include "JacobUtils/LoggingUtility.h"
+#include "JacobUtils/SampleList.h"
 #include "JacobUtils/ReaderTools.h"
 #include "JacobUtils/MathTools.h"
 
@@ -12,5 +13,6 @@
 #pragma link C++ defined_in "JacobUtils/LoggingUtility.h";
 #pragma link C++ defined_in "JacobUtils/ReaderTools.h";
 #pragma link C++ defined_in "JacobUtils/MathTools.h";
+#pragma link C++ defined_in "JacobUtils/SampleList.h";
 
 #endif

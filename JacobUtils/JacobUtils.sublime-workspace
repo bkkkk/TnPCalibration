@@ -1,0 +1,947 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"sample",
+				"sampleMap"
+			],
+			[
+				"Sample",
+				"Sample"
+			],
+			[
+				"inpu",
+				"inputStringStream"
+			],
+			[
+				"smtEf",
+				"smtEffData"
+			],
+			[
+				"fitEf",
+				"fitEfficiencyMc"
+			],
+			[
+				"te",
+				"testMCFile"
+			],
+			[
+				"TNPFI",
+				"TnPFitter"
+			],
+			[
+				"LOG_",
+				"LOG_DEBUG2"
+			],
+			[
+				"tes",
+				"testEfficiency"
+			],
+			[
+				"LOG",
+				"LOG_INFO"
+			],
+			[
+				"Fit",
+				"FitEfficiency"
+			],
+			[
+				"TNPFIT",
+				"TNPFITTER"
+			],
+			[
+				"probe",
+				"probeHist"
+			],
+			[
+				"Get",
+				"GetTotalUncertainty"
+			],
+			[
+				"sigma",
+				"sigmaWide"
+			],
+			[
+				"recoE",
+				"recoErr"
+			],
+			[
+				"low",
+				"lowEdge"
+			],
+			[
+				"GetSigm",
+				"GetSigmaAndMu"
+			],
+			[
+				"fFit",
+				"fFitOptions"
+			],
+			[
+				"backg",
+				"backgroundFunction"
+			],
+			[
+				"Pol",
+				"PolyPlusDoubleGaus"
+			],
+			[
+				"Para",
+				"ParamsSettings"
+			],
+			[
+				"Tn",
+				"TnPJPsiFitter"
+			],
+			[
+				"PU",
+				"PUPROFILE"
+			],
+			[
+				"PRO",
+				"PROCESSINGFLAG"
+			],
+			[
+				"INPUT",
+				"INPUTDIRNAME"
+			],
+			[
+				"DATA",
+				"DATASETDIRHEAD"
+			],
+			[
+				"PO",
+				"PROCESSINGTAGNAME"
+			],
+			[
+				"jp",
+				"jpsiClassifier"
+			],
+			[
+				"chosen",
+				"chosenMuonProbe"
+			],
+			[
+				"high",
+				"highBkgHistoName"
+			],
+			[
+				"muonP",
+				"muonProbeHisto"
+			],
+			[
+				"compo",
+				"compositeFunction"
+			],
+			[
+				"input",
+				"inputSigma"
+			],
+			[
+				"highB",
+				"highBkgFit"
+			],
+			[
+				"sig",
+				"signalFitMean"
+			],
+			[
+				"poly",
+				"polyPlusDoubleGaus"
+			],
+			[
+				"pol",
+				"polyPlusDoubleGaus"
+			],
+			[
+				"val",
+				"val_histogram"
+			],
+			[
+				"m_pol",
+				"m_poly"
+			],
+			[
+				"m_poly",
+				"m_polyPlusDoubleGaus"
+			],
+			[
+				"m_sin",
+				"m_signalMass"
+			],
+			[
+				"m_signalM",
+				"m_signalMass"
+			],
+			[
+				"m_signal",
+				"m_signalFitMean"
+			],
+			[
+				"func",
+				"funcStyle"
+			],
+			[
+				"higBkg",
+				"highBkgHistoName"
+			],
+			[
+				"lo",
+				"lowBkgHisto"
+			],
+			[
+				"color",
+				"colorIdx"
+			],
+			[
+				"m_s",
+				"m_signalFitMax"
+			],
+			[
+				"m_si",
+				"m_signalFitMin"
+			],
+			[
+				"m_",
+				"m_signalFitMean"
+			],
+			[
+				"fun",
+				"functionMap"
+			],
+			[
+				"m_f",
+				"m_fitRangeMax"
+			],
+			[
+				"com",
+				"compLinearFunc"
+			],
+			[
+				"comp",
+				"compQuadFunc"
+			],
+			[
+				"match",
+				"matchChi2TotalErr"
+			],
+			[
+				"Event",
+				"EventWeighting"
+			],
+			[
+				"Histogram",
+				"HistogramCollector"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "JacobUtils.sublime-project",
+			"settings":
+			{
+				"buffer_size": 240,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "test/ut_SampleList.cxx",
+			"settings":
+			{
+				"buffer_size": 477,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "JacobUtils/SampleList.h",
+			"settings":
+			{
+				"buffer_size": 1104,
+				"line_ending": "Unix",
+				"name": "SampleList.h"
+			}
+		},
+		{
+			"file": "Root/SampleList.cxx",
+			"settings":
+			{
+				"buffer_size": 2259,
+				"line_ending": "Unix",
+				"name": "SampleList.cxx"
+			}
+		},
+		{
+			"file": "Root/LinkDef.h",
+			"settings":
+			{
+				"buffer_size": 517,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 47.0,
+		"selected_items":
+		[
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"packag",
+				"Preferences: Browse Packages"
+			],
+			[
+				"latex",
+				"Set Syntax: LaTeX"
+			],
+			[
+				"c++",
+				"Set Syntax: C++"
+			]
+		],
+		"width": 384.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/jayb88/.ssh/known_hosts",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/Root/EfficiencyMaker.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/JacobUtils/JacobUtils/MathTools.h",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/MuonEfficiency/EfficiencyMaker.h",
+		"/Users/jayb88/jblanco/CalibrationWork/JacobUtils/Root/MathTools.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/Root/LinkDef.h",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/Root/SummaryPlotMaker.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/cmt/Makefile.RootCore",
+		"/Users/jayb88/jblanco/CalibrationWork/JacobUtils/Root/LinkDef.h",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/Root/FitScaleFactor.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/test/ut_FitScaleFactor.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/TnPFitter/FitScaleFactor.h",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/test/ut_SetupDoubleGaus.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/Root/LinkDef.h",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/TnPFitter/FitConfig.h",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/TnPFitter/FitIntegral.h",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/test/ut_FitEfficiency.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/TnPFitter/FitEfficiency.h",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/Root/DoubleGausFit.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/Root/FitIntegral.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/Root/FitEfficiency.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/TnPFitter/DoubleGausFit.h",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/Root/FitConfig.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/test/ut_DoubleGausFit.cxx",
+		"/Users/jayb88/Dropbox/TopWork/PhD Reports/Year3 Report/report.tex",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/cmt/Makefile.RootCore",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/Root/TnPJPsiFitter.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/TnPFitter/TnPJPsiFitter.h",
+		"/Users/jayb88/jblanco/CalibrationWork/RunKinematics/scripts/runMakeKinematicsFaraday.sh",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/Root/SampleHistograms.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/RunKinematics/scripts/runMakeKinematics.sh",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/MuonEfficiency/SampleHistograms.h",
+		"/Users/jayb88/jblanco/CalibrationWork/RunKinematics/jobOptions/MakeKinematics.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/RunKinematics/jobOptions/MakeKinematicsFaraday.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/MuonEfficiency/HistogramFactory.h",
+		"/Users/jayb88/jblanco/CalibrationWork/RunSkim/jobOptions/RunSkimGridSubmit.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/RunPairing/jobOptions/MakeHistograms.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/Root/HistogramFactory.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/RunSkim/scripts/submitSkimGrid.sh",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/test/ut_DoubleGausFit.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/Root/DoubleGausFit.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/Root/TnPJPsiFitter.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/test/ut_SingleGausFit.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/MuonEfficiency/SingleGausFit.h",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/test/ut_TnPJPsiFitter.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/MuonEfficiency/DoubleGausFit.h",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/MuonEfficiency/FitConfig.h",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/Root/FitConfig.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/Root/SingleGausFit.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/MuonEfficiency/TnPJPsiFitter.h",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/MuonEfficiency/TnPJPsiFitterFunctions.h",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/MuonEfficiency/FitResults.h",
+		"/Users/jayb88/jblanco/CalibrationWork/RunSkim/control/branches.txt",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/Root/PileupReWeighting.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/MuonEfficiency/PileupReWeighting.h",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/MuonEfficiency/Weighting.h",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/Root/EventWeighting.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/MuonEfficiency/EventWeighting.h"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"SampleList::",
+			";",
+			"//",
+			"lxplus",
+			"lxplus4",
+			"fitOutput",
+			"name",
+			"effTester",
+			"Data",
+			"recoEffData",
+			";",
+			"public:",
+			"double",
+			"public:",
+			"TNPFITTER_FITEFFICIENCY",
+			"SYMBOL",
+			"testOne->",
+			"Narrow",
+			"testFile",
+			"Fit(",
+			"Fit",
+			"Constant",
+			"constant",
+			"Draw",
+			"stream",
+			"DoubleGausFit",
+			"TH1",
+			"Integral ",
+			"Integral",
+			"DoubleGausFit",
+			"probe",
+			"Get",
+			"double Get",
+			"double ",
+			"double",
+			"Double",
+			"double",
+			"public:",
+			"3",
+			"GetSigmaLow",
+			"3",
+			"LOG_INFO",
+			"class",
+			"funcNameComp,",
+			"funcNameBkg,",
+			"funcNameBkg",
+			"GetSignalFunction",
+			"fitConfig.GetBackgroundFunction",
+			"const",
+			"// ",
+			"c1->",
+			"};",
+			"MuonEfficiency",
+			"truthMatchingTool",
+			"lumiCalcFile",
+			"jpsiClassifier",
+			"JPsiClassifier",
+			"jpsiClassifier",
+			"LUMIFLE",
+			"DATASET",
+			"mu_staco_trackz0pvunbiased",
+			"st_",
+			"smallest_",
+			"_smallest_",
+			"_wgt",
+			"h_mu_staco_matchchi2_ndof_",
+			"///<",
+			"*",
+			"trk_z0_wrtPV",
+			"h_muonprobe_trackpvz0unbiased",
+			"h_tag_trackpvz0unbiased",
+			"h_mu_staco_z0_trk_mu",
+			"m_npar",
+			"// ",
+			"//",
+			"// ",
+			"m_inDetFitResult",
+			"6",
+			"0",
+			"m_compositeFunction",
+			"4",
+			"3",
+			"ROOT::Fit::",
+			"(*rhs)->",
+			"FitConfig",
+			";",
+			"public:",
+			"const",
+			"ROOT:",
+			"fitConfig->",
+			"double",
+			"tempFunction",
+			";",
+			"std::string",
+			";",
+			"public:",
+			"m_npar",
+			"My",
+			"ncIntegralUpErr",
+			"tempFunction",
+			"high",
+			"highBkgFile",
+			"highBkgFitter",
+			"compQuadFunc",
+			"functionIdx",
+			"n",
+			"N",
+			"n",
+			"par[1]",
+			"alpha",
+			"muonProbeIdx",
+			"include",
+			"pileupTool",
+			";",
+			"public:",
+			"name",
+			"public",
+			"LOG_ERROR",
+			"Muons   "
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "JacobUtils.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 240,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								234,
+								237
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "test/ut_SampleList.cxx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 477,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								386,
+								386
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "JacobUtils/SampleList.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1104,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								871,
+								873
+							]
+						],
+						"settings":
+						{
+							"auto_name": "SampleList.h",
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Root/SampleList.cxx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2259,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1626,
+								1626
+							]
+						],
+						"settings":
+						{
+							"auto_name": "SampleList.cxx",
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 340.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Root/LinkDef.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 517,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								70,
+								70
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"project": "JacobUtils.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"linkd",
+				"Sources/LinkDef.h"
+			],
+			[
+				"ut",
+				"Unit tests/ut_SampleList.cxx"
+			],
+			[
+				"runam",
+				"RunKinematics/scripts/runMakeKinematics.sh"
+			],
+			[
+				"summary",
+				"MuonEfficiency/Root/SummaryPlotMaker.cxx"
+			],
+			[
+				"link",
+				"MuonEfficiency/Root/LinkDef.h"
+			],
+			[
+				"eff",
+				"MuonEfficiency/Root/EfficiencyMaker.cxx"
+			],
+			[
+				"summar",
+				"MuonEfficiency/Root/SummaryPlotMaker.cxx"
+			],
+			[
+				"ef",
+				"MuonEfficiency/Root/EfficiencyMaker.cxx"
+			],
+			[
+				"fitsca",
+				"Source/FitScaleFactor.cxx"
+			],
+			[
+				"fitinte",
+				"Header/FitIntegral.h"
+			],
+			[
+				"fitef",
+				"Header/FitEfficiency.h"
+			],
+			[
+				"fief",
+				"Source/FitEfficiency.cxx"
+			],
+			[
+				"fitconf",
+				"Header/FitConfig.h"
+			],
+			[
+				"double",
+				"Source/DoubleGausFit.cxx"
+			],
+			[
+				"integ",
+				"Source/FitIntegral.cxx"
+			],
+			[
+				"integra",
+				"Header/FitIntegral.h"
+			],
+			[
+				"fitin",
+				"Header/FitIntegral.h"
+			],
+			[
+				"utset",
+				"unit-tests/ut_SetupDoubleGaus.cxx"
+			],
+			[
+				"fitint",
+				"Source/FitIntegral.cxx"
+			],
+			[
+				"fitcon",
+				"Header/FitConfig.h"
+			],
+			[
+				"fit",
+				"Header/FitIntegral.h"
+			],
+			[
+				"ut_",
+				"unit-tests/ut_DoubleGausFit.cxx"
+			],
+			[
+				"fitco",
+				"Source/FitConfig.cxx"
+			],
+			[
+				"make",
+				"cmt/Makefile.RootCore"
+			],
+			[
+				"makehisto",
+				"RunPairing/jobOptions/MakeHistograms.cxx"
+			],
+			[
+				"sampleh",
+				"MuonEfficiency/MuonEfficiency/SampleHistograms.h"
+			],
+			[
+				"histo",
+				"MuonEfficiency/MuonEfficiency/HistogramFactory.h"
+			],
+			[
+				"sample",
+				"MuonEfficiency/Root/SampleHistograms.cxx"
+			],
+			[
+				"tj",
+				"MuonEfficiency/Root/TnPJPsiFitter.cxx"
+			],
+			[
+				"ut_sing",
+				"MuonEfficiency/test/ut_SingleGausFit.cxx"
+			],
+			[
+				"plotmaker",
+				"MuonEfficiency/Root/SummaryPlotMaker.cxx"
+			],
+			[
+				"effi",
+				"MuonEfficiency/Root/EfficiencyMaker.cxx"
+			],
+			[
+				"single",
+				"MuonEfficiency/MuonEfficiency/SingleGausFit.h"
+			],
+			[
+				"singl",
+				"MuonEfficiency/Root/SingleGausFit.cxx"
+			],
+			[
+				"fi",
+				"MuonEfficiency/MuonEfficiency/FitConfig.h"
+			],
+			[
+				"tnpj",
+				"MuonEfficiency/Root/TnPJPsiFitter.cxx"
+			],
+			[
+				"sign",
+				"MuonEfficiency/MuonEfficiency/SingleGausFit.h"
+			],
+			[
+				"singe",
+				"MuonEfficiency/Root/SingleGausFit.cxx"
+			],
+			[
+				"sing",
+				"MuonEfficiency/MuonEfficiency/SingleGausFit.h"
+			],
+			[
+				"tn",
+				"MuonEfficiency/MuonEfficiency/TnPJPsiFitterFunctions.h"
+			],
+			[
+				"tnpjp",
+				"MuonEfficiency/MuonEfficiency/TnPJPsiFitter.h"
+			],
+			[
+				"summaryplot",
+				"MuonEfficiency/Root/SummaryPlotMaker.cxx"
+			],
+			[
+				"function",
+				"MuonEfficiency/MuonEfficiency/TnPJPsiFitterFunctions.h"
+			],
+			[
+				"histogra",
+				"MuonEfficiency/MuonEfficiency/HistogramFactory.h"
+			],
+			[
+				"samplehist",
+				"MuonEfficiency/MuonEfficiency/SampleHistograms.h"
+			],
+			[
+				"runki",
+				"RunKinematics/jobOptions/MakeKinematics.cxx"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

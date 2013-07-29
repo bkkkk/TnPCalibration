@@ -17,17 +17,12 @@ SummaryPlotMaker::SummaryPlotMaker(const std::string& fileLabel)
    outputFile(NULL),
    tnpSlices(NULL)
 {
-SET_LOG_LEVEL(kDEBUG3);
+  SET_LOG_LEVEL(kINFO);
 
   std::string prefix = "TnPFitResults";
   std::string fileName = prefix + "_" + fileLabel+ ".root";
 
   LOG_INFO() << "The output file is name: " << fileName;
-
-  fitOutput.open("Test.txt");
-  backup = std::cout.rdbuf();
-  psbuf = fitOutput.rdbuf();
-  std::cout.rdbuf(psbuf);
 
   outputFile = new TFile(fileName.c_str(), "RECREATE");
 };
@@ -37,8 +32,6 @@ SET_LOG_LEVEL(kDEBUG3);
 SummaryPlotMaker ::
 ~SummaryPlotMaker(void)
 {
-  std::cout.rdbuf(backup);
-  fitOutput.close();
 };
 
 // =============================================================================
@@ -191,24 +184,33 @@ SaveScaleFactorHistograms( const std::string& varName )
   status = MakeSFHistograms(smtEffMc, smtEffData, *smtSF);
 
   outputFile->cd();
+
+  if(outputFile==NULL)
+  {
+    LOG_ERROR() << "File got deleted somewhere";
+    throw;
+  }
   
   recoSFStack->Add(recoEffData);
   recoSFStack->Add(recoEffMc);
-  recoEffData->Write();
-  recoEffMc->Write();
-  recoSFStack->Write();
+
+  status = recoEffData->Write();
+  status = recoEffMc->Write();
+  status = recoSFStack->Write();
 
   smtSFStack->Add(smtEffData);
   smtSFStack->Add(smtEffMc);
-  smtEffData->Write();
-  smtEffMc->Write();
-  smtSFStack->Write();
+
+  outputFile->cd();
+  status = smtEffData->Write();
+  status = smtEffMc->Write();
+  status = smtSFStack->Write();
   
   recoSF->Draw();
-  recoSF->Write();
+  status = recoSF->Write();
   
   smtSF->Draw();
-  smtSF->Write();
+  status = smtSF->Write();
 
   return (status);
 };
@@ -247,7 +249,7 @@ FillEfficiencyHistograms(TFile* file,
                          TH1F& smtHisto,
                          const std::string& prefix)
 {
-  LOG_INFO() << "Looping over slices for " << varName;
+  LOG_INFO() << "Looping over slices in " << varName << " and " << prefix;
 
   for (size_t idx = 0; idx != slices.size(); idx++)
   {
@@ -260,14 +262,13 @@ FillEfficiencyHistograms(TFile* file,
     std::string muonprobe = sliceName + "MuonProbe";
     std::string smt = sliceName + "SMT";
 
-    LOG_DEBUG1() << "Slice name SMT: " << smt;
+    LOG_DEBUG1() << "Slice name: " << sliceName;
 
     TH1F* histoProbe = dynamic_cast<TH1F*>(file->Get(probe.c_str()));
     TH1F* histoMuonProbe = dynamic_cast<TH1F*>(file->Get(muonprobe.c_str()));
     TH1F* histoSMT = dynamic_cast<TH1F*>(file->Get(smt.c_str()));
 
     outputFile->cd();
-
 
     if (TString(varName).Contains("cone"))
     {
@@ -279,6 +280,8 @@ FillEfficiencyHistograms(TFile* file,
     std::string name = typeName  + "_" + sliceName;
 
     FitEfficiency* fitEfficiency = new FitEfficiency(name, histoProbe, histoMuonProbe, histoSMT);
+
+    outputFile->cd();
 
     float recoEff = fitEfficiency->GetRecoEfficiency();
     float recoTotalErr = fitEfficiency->GetRecoError();
@@ -316,10 +319,13 @@ FillEfficiencyHistograms(TFile* file,
 
     smtHisto.Fill(lowEdge + 0.01, matchChi2Eff);
     smtHisto.SetBinError(idx + 1, matchChi2TotalErr);
+
+    delete fitEfficiency;
   };
 
 
-  LOG_INFO() << "Ending for " << varName;
+
+  LOG_INFO() << "Ending for " << varName << " and " << prefix;
 
   return (1);
 };

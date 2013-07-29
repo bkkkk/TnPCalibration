@@ -64,7 +64,6 @@ private:
   TLine* fiveHigh;
   TLine* threeLow;
   TLine* threeHigh;
-
   
   ClassDef(FitterDraw, 1)
 };

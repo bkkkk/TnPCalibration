@@ -1,7 +1,7 @@
- MakeHistogramsFaraday ( const std::string& inputDir,
-                         const std::string& submitDir,
-                         const std::string& prwFileName="mc12_jpsi_config.prw.root",
-                         const std::string& ilumiCalcFile="$ROOTCOREDIR/data/PileupReweighting/ilumicalc_histograms_PeriodA.root" )
+ int MakeHistogramsFaradayComposite ( const std::string& inputDirs,
+                                      const std::string& compositeName,
+                                      const std::string& submitDir,
+                                      const std::string& ilumiCalcFile )
 {
   // Load the libraries for all packages
   gROOT->ProcessLine(".x $ROOTCOREDIR/scripts/load_packages.C+");
@@ -11,7 +11,15 @@
 
   // Create a new SampleHandler to grab all samples
   SH::SampleHandler sh;
-  SH::scanDir(sh, inputDir);
+
+  // Add periods to sample for processing
+  std::stringstream inputStringStream(inputDirs);
+  std::string temp;
+  while(std::getline(inputStringStream, temp, ','))
+  {
+    SH::scanDir (sh, temp);
+  }
+
   sh.setMetaString ("nc_tree", "physics");
 
   // Create a new job
@@ -47,13 +55,12 @@
   slices.AddSlices("nucone40", sliceDir + "nucone40.txt");
   slices.Initialize();
 
-  /// Initialize and configure Tag selector
+  /// Initialize and configure Tag Selector
   TJPsiTagSelector* tagSelector = new TJPsiTagSelector();
-  tagSelector->etaCut = 2.5;
-  tagSelector->combinedMuonCut = 1;
-  tagSelector->ptCut = 4000;
-  tagSelector->d0Cut = 0.3; tagSelector->d0SigCut = 3.0;
-  tagSelector->z0Cut = 1.5; tagSelector->z0SigCut = 3.0;
+  tagSelector->etaCut = 2.5; tagSelector->combinedMuonCut = 1;
+  tagSelector->ptCut = 4000; tagSelector->d0Cut = 0.3;
+  tagSelector->z0Cut = 1.5; tagSelector->d0SigCut = 3.0;
+  tagSelector->z0SigCut = 3.0;
 
   /// Configure probe
   TJPsiProbeSelector* probeSelector = new TJPsiProbeSelector();
@@ -93,13 +100,10 @@
   jpsiClassifier->smtSelector = smtSelector;
   jpsiClassifier->mcpSelector = mcpSelector;
 
-  std::string prwShareFolder = "$ROOTCOREDIR/data/PileupReweighting/";
-  std::string prwFullPath = prwShareFolder + prwFileName;
-
   // Event Weighting object
   EventWeighting* eventWgt = new EventWeighting("NOMINAL");
   Root::TPileupReweighting* pileupTool = new Root::TPileupReweighting("pileup");
-  pileupTool->AddConfigFile(prwFullPath.c_str());
+  pileupTool->AddConfigFile("$ROOTCOREDIR/data/PileupReweighting/mc12_jpsi_config.prw.root");
   
 
   // used to fix expected Nvtx discrepancy between MC and data due to z beam spot size

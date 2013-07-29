@@ -1,0 +1,20 @@
+{
+	"folders":
+	[
+    {
+      "name": "Sources",
+      "path": "Root"
+    },
+    {
+      "name": "Headers",
+      "path": "JacobUtils"
+    },
+    {
+      "path": "cmt"
+    },
+    {
+      "name": "Unit tests",
+      "path": "test"
+    }
+	]
+}
