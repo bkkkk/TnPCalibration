@@ -277,9 +277,10 @@ FillEfficiencyHistograms(TFile* file,
       histoProbe = histoMuonProbe;
     };
 
-    std::string name = typeName  + "_" + sliceName;
+    std::string name = typeName + "_" + sliceName;
 
     FitEfficiency* fitEfficiency = new FitEfficiency(name, histoProbe, histoMuonProbe, histoSMT);
+    fitEfficiency->Draw();
 
     outputFile->cd();
 

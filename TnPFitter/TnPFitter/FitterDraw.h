@@ -7,6 +7,7 @@ class TF1;
 class TH1F;
 class TLine;
 class TFile;
+class TPaveText;
 
 #include "TObject.h"
 
@@ -39,6 +40,7 @@ public:
 public:
   void SetupLines(const std::string& options="");
   void SetupLine(TF1* line, LineAttrib* attribute);
+  void SetupBox(void);
   void Draw(const std::string& options="");
 
 private:
@@ -65,6 +67,8 @@ private:
   TLine* threeLow;
   TLine* threeHigh;
   
+  TPaveText* box;
+
   ClassDef(FitterDraw, 1)
 };
 

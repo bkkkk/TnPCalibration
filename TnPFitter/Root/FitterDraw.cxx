@@ -9,16 +9,17 @@
 #include <TF1.h>
 #include <TH1F.h>
 #include <TCanvas.h>
+#include <TPaveText.h>
 
 //______________________________________________________________________________
 FitterDraw::
 FitterDraw(FitInterface* fitter, int sigma, int window)
- : fFitter(fitter),
-   fSigma(sigma),
-   fWindow(window)
+  : fFitter(fitter),
+    fSigma(sigma),
+    fWindow(window)
 {
   configFile = TFile::Open("$ROOTCOREDIR/data/TnPFitter/TnPFitter-FittingConfig.xml", "OPEN");
-  
+
   if(configFile->IsZombie() == 1)
   {
     LOG_ERROR() << "Failed to load configuration XML file";
@@ -76,6 +77,8 @@ SetupLines(const std::string& options)
   SetupLine(fFitter->GetCompositeFunction(), nominal);
   SetupLine(fFitter->GetBackgroundUpFunction(), bkgUp);
   SetupLine(fFitter->GetBackgroundDownFunction(), bkgDown);
+  SetupLine(fFitter->GetCompositeDownFunction(), bkgDown);
+  SetupLine(fFitter->GetCompositeUpFunction(), bkgUp);
 
   // Get Ranges
   float narrowSigmaLow = fFitter->GetSigmaLow(fSigma);
@@ -84,16 +87,37 @@ SetupLines(const std::string& options)
   float wideSigmaHigh = fFitter->GetSigmaHigh(fSigma + fWindow);
 
   // Set up lines
-  fiveLow = new TLine  ( wideSigmaLow,    histMin, wideSigmaLow,    histMax );
-  fiveHigh = new TLine ( wideSigmaHigh,   histMin, wideSigmaHigh,   histMax );
-  threeLow = new TLine ( narrowSigmaLow,  histMin, narrowSigmaLow,  histMax );
+  fiveLow = new TLine( wideSigmaLow, histMin, wideSigmaLow, histMax );
+  fiveHigh = new TLine( wideSigmaHigh, histMin, wideSigmaHigh, histMax );
+  threeLow = new TLine( narrowSigmaLow, histMin, narrowSigmaLow, histMax );
   threeHigh = new TLine( narrowSigmaHigh, histMin, narrowSigmaHigh, histMax );
 
-  fiveLow->SetLineColor(3); fiveLow->SetLineWidth(2);
-  fiveHigh->SetLineColor(3); fiveHigh->SetLineWidth(2);
-  
-  threeLow->SetLineColor(6); threeLow->SetLineWidth(2);
-  threeHigh->SetLineColor(6); threeHigh->SetLineWidth(2);
+  fiveLow->SetLineColor(3);
+  fiveLow->SetLineWidth(2);
+  fiveHigh->SetLineColor(3);
+  fiveHigh->SetLineWidth(2);
+
+  threeLow->SetLineColor(6);
+  threeLow->SetLineWidth(2);
+  threeHigh->SetLineColor(6);
+  threeHigh->SetLineWidth(2);
+}
+
+//______________________________________________________________________________
+void FitterDraw::
+SetupBox(void)
+{
+  box = new TPaveText(0.2, 0.48, 0.45, 0.9, "NDC");
+  for(size_t parIdx = 0; parIdx != fFitter->GetCompositeFunction()->GetNpar(); parIdx++)
+  {
+    std::string name = fFitter->GetCompositeFunction()->GetParName(parIdx);
+    double val = fFitter->GetCompositeFunction()->GetParameter(parIdx);
+    double err = fFitter->GetCompositeFunction()->GetParError(parIdx);
+    std::stringstream str;
+    str << name << " : " << val << "+-" << err;
+
+    box->AddText(str.str().data());
+  }
 }
 
 //______________________________________________________________________________
@@ -102,6 +126,7 @@ Draw(const std::string& options)
 {
   // Setup the lines
   SetupLines(options);
+  SetupBox();
 
   // Canvas and other thingies
   std::string name = fFitter->GetName();
@@ -112,7 +137,7 @@ Draw(const std::string& options)
   // Canvas + histogram
   c1->Draw();
   histogram->Draw();
-  
+
   // Draw function
   fFitter->GetCompositeFunction()->Draw("SAME");
   if(fFitter->GetFitConfig().GetMode() != 1)
@@ -121,12 +146,19 @@ Draw(const std::string& options)
     fFitter->GetSignalFunction()->Draw("SAME");
     fFitter->GetBackgroundDownFunction()->Draw("SAME");
     fFitter->GetBackgroundUpFunction()->Draw("SAME");
+    fFitter->GetCompositeDownFunction()->Draw("SAME");
+    fFitter->GetCompositeUpFunction()->Draw("SAME");
   }
 
-  fiveLow->Draw(); fiveHigh->Draw();
-  threeLow->Draw(); threeHigh->Draw();
+  fiveLow->Draw();
+  fiveHigh->Draw();
+  threeLow->Draw();
+  threeHigh->Draw();
+  box->Draw();
 
-  std::string filename = fFitter->GetFunctionName() + "-" + histogram->GetName() + ".pdf";
+  std::string filename = fFitter->GetFunctionName() + "-" + name + ".pdf";
+
+  LOG_INFO() << "Filename: " << filename;
   c1->SaveAs(filename.c_str(), "pdf");
   c1->Close();
 }
@@ -142,7 +174,7 @@ SetupLine(TF1* line, LineAttrib* attribute)
   }
 
   LOG_DEBUG1() << "Setting up line: " << attribute->name;
-  
+
   // Setup the line
   line->SetLineColor(attribute->color);
   line->SetLineWidth(attribute->width);

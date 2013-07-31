@@ -24,12 +24,12 @@ int main(int argc, char** argv)
   };
 
   int sigma = 3;
-  int window = 2;  
+  int window = 2;
 
   DoubleGausLandauFit* fit = new DoubleGausLandauFit("probe", histo, LANDAUFIT::BuildFitConfiguration(histo));
-  TNPFITTER::RunFit( fit, sigma, window );
+  TNPFITTER::RunFit( fit );
 
-  FitterDraw* draw = new FitterDraw(fit, sigma, window);
+  FitterDraw* draw = new FitterDraw ( fit, sigma, window );
 
   if (draw == NULL)
   {

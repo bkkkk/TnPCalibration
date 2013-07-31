@@ -13,10 +13,25 @@
 class FitConfig
 {
 public:
-  FitConfig(const std::string& function, unsigned int npar, bool isLowBkg);
+  FitConfig(const std::string& function, unsigned int npar, bool isLowBkg,
+            double min, double max);
 
 public:
   ~FitConfig();
+
+public:
+  void SetFitLimits(double min, double max)
+  {
+    fFitMin = min;
+    fFitMax = max;
+  }
+
+public:
+  const inline double GetFitMin(void) const { return (fFitMin); }
+  inline double GetFitMin(void) { return (fFitMin); }
+
+  const inline double GetFitMax(void) const { return (fFitMax); }
+  inline double GetFitMax(void) { return (fFitMax); }
 
 public:
   // Set fit functions
@@ -91,6 +106,8 @@ protected:
 
 private:
   std::string fFitOptions; // Fit Options
+  double fFitMin; // Fit range min
+  double fFitMax; // Fit range max
   std::string fFunction; // Fit function
   std::string fBkgFunction; // Fit Bkg function
   std::string fSigFunction; // Fit Sig function

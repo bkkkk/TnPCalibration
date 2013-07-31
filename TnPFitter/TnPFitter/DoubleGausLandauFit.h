@@ -11,9 +11,9 @@ class DoubleGausLandauFit : public FitInterface
 {
 public:
   // Ctir
-  DoubleGausLandauFit(const std::string& val_name = "",
-                      TH1F* val_histogram=NULL,
-                      const FitConfig& val_fitConfig = FitConfig("", 0, false));
+  DoubleGausLandauFit(const std::string& val_name,
+                      TH1F* val_histogram,
+                      const FitConfig& val_fitConfig);
 
 public:
   // Dtor

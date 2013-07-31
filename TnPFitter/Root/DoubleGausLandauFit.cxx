@@ -9,7 +9,7 @@ DoubleGausLandauFit::
 DoubleGausLandauFit( const std::string& val_name,
                      TH1F* val_histogram,
                      const FitConfig& val_fitConfig)
- : FitInterface(val_name, val_histogram, val_fitConfig)
+  : FitInterface(val_name, val_histogram, val_fitConfig)
 {
   LOG_DEBUG() << "Constructing a double gaus + landau fit";
   functionName = "LandGaus";
@@ -79,15 +79,15 @@ SetCompositeUpFunction (void)
   backgroundUpFunction = new TF1( funcNameBkg.c_str(), fitConfig.GetBackgroundFitFunction().c_str(),
                                   bottomFitLimit, topFitLimit );
 
-  compositeUpFunction = new TF1( funcNameComp.c_str(), fitConfig.GetFitFunction().c_str(), 
-                                  bottomFitLimit, topFitLimit );
+  compositeUpFunction = new TF1( funcNameComp.c_str(), fitConfig.GetFitFunction().c_str(),
+                                 bottomFitLimit, topFitLimit );
 
   if(fitConfig.GetMode() != 1)
-  {    
+  {
     double constant = fitResult->GetParValue("Constant") + fitResult->GetParError("Constant");
     double slope = fitResult->GetParValue("Slope") - fitResult->GetParError("Slope");
     double poly = fitResult->GetParValue("Poly") + fitResult->GetParError("Poly");
-    
+
     SetCompositeErrFunction(compositeUpFunction, poly, slope, constant);
 
     histogram->Fit(compositeUpFunction, fitConfig.GetFitOptions().c_str());
@@ -116,17 +116,17 @@ SetCompositeDownFunction (void)
   std::string funcNameBkg = functionName + "_Bkg_Down_" + histogramName;
 
   backgroundDownFunction = new TF1( funcNameBkg.c_str(), fitConfig.GetBackgroundFitFunction().c_str(),
-                                  bottomFitLimit, topFitLimit );
+                                    bottomFitLimit, topFitLimit );
 
-  compositeDownFunction = new TF1( funcNameComp.c_str(), fitConfig.GetFitFunction().c_str(), 
-                                  bottomFitLimit, topFitLimit );
+  compositeDownFunction = new TF1( funcNameComp.c_str(), fitConfig.GetFitFunction().c_str(),
+                                   bottomFitLimit, topFitLimit );
 
   if(fitConfig.GetMode() != 1)
-  {    
+  {
     double constant = fitResult->GetParValue("Constant") - fitResult->GetParError("Constant");
     double slope = fitResult->GetParValue("Slope") + fitResult->GetParError("Slope");
     double poly = fitResult->GetParValue("Poly") - fitResult->GetParError("Poly");
-    
+
     SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);
 
     histogram->Fit(compositeDownFunction, fitConfig.GetFitOptions().c_str());
@@ -157,16 +157,16 @@ SetCompositeErrFunction(TF1* function, double poly, double slope, double constan
     double max = fitConfig.ParSettings(parIdx).UpperLimit();
     std::string namePar = fitConfig.ParSettings(parIdx).Name();
 
-    LOG_DEBUG() << namePar << " :: " << val 
-               << " min = " << min
-               << ", max = " << max;
+    LOG_DEBUG() << namePar << " :: " << val
+                << " min = " << min
+                << ", max = " << max;
 
     function->SetParName( parIdx, namePar.c_str() );
     function->SetParameter( parIdx, val );
-    
+
     if(fitConfig.ParSettings(parIdx).HasLowerLimit())
     {
-      function->SetParLimits( parIdx, min, max );  
+      function->SetParLimits( parIdx, min, max );
     }
   }
 
@@ -187,7 +187,7 @@ GetSigmaAndMu(double& sigma, double& mu)
   sigma = compositeFunction->GetParameter("Gaus Sigma");
 
   LOG_DEBUG2() << "Selected sigma = " << sigma << ", mu = " << mu;
-} 
+}
 
 //______________________________________________________________________________
 //_____ Convenience Functions __________________________________________________
@@ -220,19 +220,23 @@ BuildFitConfiguration(TH1* histogram)
 
   std::string backgroundFunction = "[0] + [1] * x + [2] * x * x";
 
+  double min = 2.61;
+  double max = 3.5;
+
   // Background fitting parameters
   if(histogram->GetBinContent( bin ) < 10)
-  { 
+  {
     LOG_DEBUG() << "====> LOW BACKGROUND MODE";
-    fitConfig = new FitConfig(signalFunction, 5, true);
-  } else
+    fitConfig = new FitConfig(signalFunction, 5, true, min, max);
+  }
+  else
   {
     LOG_DEBUG() << "====> HIGH BACKGROUND MODE";
-    fitConfig = new FitConfig(compositeFunction, 8, false);
+    fitConfig = new FitConfig(compositeFunction, 8, false, min, max);
 
     pars.push_back( ROOT::Fit::ParameterSettings("Constant", 0) );
     pars.push_back( ROOT::Fit::ParameterSettings("Slope", 0) );
-    pars.push_back( ROOT::Fit::ParameterSettings("Poly", 0) ); 
+    pars.push_back( ROOT::Fit::ParameterSettings("Poly", 0) );
   }
 
   fitConfig->SetSignalFitFunction(signalFunction);

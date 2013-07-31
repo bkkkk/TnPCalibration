@@ -18,18 +18,27 @@ public:
   FitIntegral* fSmtIntegral;
 
 public:
-  FitEfficiency(const std::string& name, TH1F* probeHisto, TH1F* muonProbeHisto, TH1F* smtHisto);
+  FitEfficiency( const std::string& name,
+                 TH1F* probeHisto,
+                 TH1F* muonProbeHisto,
+                 TH1F* smtHisto,
+                 double min = 2.61,
+                 double max = 3.5 );
   
 public:
   ~FitEfficiency();
 
 public:
-  double GetSMTError(void);
-  double GetSMTEfficiency(void);
+  // Draws all the fitted plots
+  void Draw(void);
 
 public:
-  double GetRecoError(void);
-  double GetRecoEfficiency(void);
+  double GetSMTError(int nSigma = 3, int windowSize = 2);
+  double GetSMTEfficiency(int nSigma = 3);
+
+public:
+  double GetRecoError(int nSigma = 3, int windowSize = 2);
+  double GetRecoEfficiency(int nSigma = 3);
 
   ClassDef(FitEfficiency, 1)
 };
@@ -37,13 +46,13 @@ public:
 namespace TNPFITTER 
 {
   // Returns efficiency based on two FitIntegral objects
-  double GetEfficiency(FitIntegral* top, FitIntegral* bottom);
+  double GetEfficiency(FitIntegral* top, FitIntegral* bottom, int nSigma = 3);
 
   // Returns efficiency based on two yields
   double GetEfficiency(double top, double bottom);
 
   // Returns the total uncertainty based on two FitIntegral objects
-  double GetTotalUncertainty(FitIntegral* top, FitIntegral* bottom);
+  double GetTotalUncertainty(FitIntegral* top, FitIntegral* bottom, int nSigma = 3, int windowSize = 2);
 
   // Retrusn the total uncertainty based on two uncertainties
   double GetTotalUncertainty(double top, double bottom);

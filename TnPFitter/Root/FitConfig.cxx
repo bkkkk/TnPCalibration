@@ -4,12 +4,17 @@ ClassImp(FitConfig)
 
 //__________________________________________________________________________________________
 FitConfig::
-FitConfig(const std::string& function, unsigned int npar, bool isLowBkg)
- : fFitOptions("MERQB"),
-   fFunction(function),
-   fLowBackground(isLowBkg),
-   fSettings(std::vector<ROOT::Fit::ParameterSettings>(npar)),
-   firstBkgIndx(0)
+FitConfig(const std::string& function,
+          unsigned int npar,
+          bool isLowBkg,
+          double min = 2.62, double max = 3.5)
+  : fFitOptions("MERQB"),
+    fFitMin(min),
+    fFitMax(max),
+    fFunction(function),
+    fLowBackground(isLowBkg),
+    fSettings(std::vector<ROOT::Fit::ParameterSettings>(npar)),
+    firstBkgIndx(0)
 {
 
 }
@@ -25,22 +30,22 @@ FitConfig::
 void FitConfig::
 SetFromFitResult (const TFitResultPtr& rhs)
 {
-	unsigned int npar = (*rhs).NPar();
+  unsigned int npar = (*rhs).NPar();
 
-	if(npar != fSettings.size())
-	{
-		LOG_WARNING() << "Fit result object is not compatible with this configuration";
-	}
+  if(npar != fSettings.size())
+  {
+    LOG_WARNING() << "Fit result object is not compatible with this configuration";
+  }
 
-	const double* pars = (*rhs).GetParams();
+  const double* pars = (*rhs).GetParams();
 
-	// Loop over paramaters
-	for(size_t parIdx = 0; parIdx != npar; parIdx++)
-	{
-		std::string name = (*rhs).GetParameterName(parIdx);
-		fSettings.push_back(ROOT::Fit::ParameterSettings(name, pars[parIdx]));
-	}
+  // Loop over paramaters
+  for(size_t parIdx = 0; parIdx != npar; parIdx++)
+  {
+    std::string name = (*rhs).GetParameterName(parIdx);
+    fSettings.push_back(ROOT::Fit::ParameterSettings(name, pars[parIdx]));
+  }
 
-	return;
+  return;
 }
 

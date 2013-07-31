@@ -1,12 +1,13 @@
 #ifndef TNPFITTER_FITINTERFACE_H_
 #define TNPFITTER_FITINTERFACE_H_ 1
 
+//
+#include <string>
+#include <stdexcept>
+
 // Root
 #include <TF1.h>
 #include <TH1F.h>
-
-//
-#include <string>
 
 //
 #include "TnPFitter/FitConfig.h"
@@ -15,7 +16,9 @@
 class FitInterface
 {
 public:
-  FitInterface(const std::string& name, TH1F* val_histogram=NULL, const FitConfig& val_fitConfig = FitConfig("", 0, false));
+  FitInterface(const std::string& name,
+               TH1F* val_histogram,
+               const FitConfig& val_fitConfig);
   
   virtual ~FitInterface(void);
 
@@ -25,6 +28,8 @@ public:
   TF1* GetCompositeFunction (void);
   TF1* GetBackgroundUpFunction (void);
   TF1* GetBackgroundDownFunction (void);
+  TF1* GetCompositeUpFunction (void);
+  TF1* GetCompositeDownFunction (void);
 
 public:  
   // Set component functions
@@ -104,7 +109,8 @@ protected:
 
 namespace TNPFITTER
 {
-  void RunFit(FitInterface* fitter = NULL, int sigma = 3, int window = 2);
+  void RunFit(FitInterface* fitter);
+  void DrawFit(FitInterface* fitter, int sigma, int window);
 }
 
 #endif

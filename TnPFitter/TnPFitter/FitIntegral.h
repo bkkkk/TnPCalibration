@@ -12,7 +12,7 @@ class FitIntegral
 {
 public:
 	FitIntegral(DoubleGausFit* fitter);
-  FitIntegral(const std::string& name, TH1F* histogram);
+  FitIntegral(const std::string& name, TH1F* histogram, double min = 2.61, double max = 3.5);
 
 public:
 	~FitIntegral();
@@ -27,6 +27,7 @@ public:
   double GetBackgroundUncertainty (int sigma = 3);
   double GetSignalWindowUncertainty(int sigma = 3, int window = 2);
   double GetTotalUncertainty (int sigma = 3, int window = 2);
+  void Draw(int sigma = 3, int window = 2);
 
 private:
   std::string fName;

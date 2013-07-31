@@ -3,28 +3,28 @@
 
 FitInterface::
 FitInterface(const std::string& val_name, TH1F* val_histogram, const FitConfig& val_fitConfig)
- : name(val_name),
-   fitConfig(val_fitConfig),
-   functionName("NotDefined"),
-   histogram(val_histogram),
-   histogramName(histogram->GetName()),
-   compositeFunction(NULL),
-   signalFunction(NULL),
-   backgroundFunction(NULL),
-   compositeUpFunction(NULL),
-   compositeDownFunction(NULL),
-   backgroundUpFunction(NULL),
-   backgroundDownFunction(NULL),
-   bottomFitLimit(2.6),
-   topFitLimit(3.5)
+  : name(val_name),
+    fitConfig(val_fitConfig),
+    functionName("NotDefined"),
+    histogram(val_histogram),
+    histogramName(histogram->GetName()),
+    compositeFunction(NULL),
+    signalFunction(NULL),
+    backgroundFunction(NULL),
+    compositeUpFunction(NULL),
+    compositeDownFunction(NULL),
+    backgroundUpFunction(NULL),
+    backgroundDownFunction(NULL),
+    bottomFitLimit(fitConfig.GetFitMin()),
+    topFitLimit(fitConfig.GetFitMax())
 {
   fitResult = new FitResult ( name, fitConfig.NPar() );
-
 }
 
 //______________________________________________________________________________
 FitInterface::~FitInterface()
 {
+  delete fitResult;
   delete compositeFunction;
   delete backgroundFunction;
   delete signalFunction;
@@ -58,7 +58,7 @@ FitCompositeFunction()
       compositeFunction->SetParLimits( parIdx, min, max );
     }
   }
-  
+
   histogram->Fit(compositeFunction, fitConfig.GetFitOptions().c_str());
 
   // Set Parameter results
@@ -94,6 +94,23 @@ GetBackgroundUpFunction (void)
 
 //______________________________________________________________________________
 TF1* FitInterface::
+GetCompositeDownFunction (void)
+{
+  testCompositeFunction();
+  return (compositeDownFunction);
+}
+
+//______________________________________________________________________________
+TF1* FitInterface::
+GetCompositeUpFunction (void)
+{
+  testCompositeFunction();
+  return (compositeUpFunction);
+}
+
+
+//______________________________________________________________________________
+TF1* FitInterface::
 GetCompositeFunction()
 {
   testCompositeFunction();
@@ -121,15 +138,15 @@ double FitInterface::
 GetSigmaLow(int nSigma)
 {
   testCompositeFunction();
-  
+
   double sigma;
   double mu;
 
   GetSigmaAndMu(sigma, mu);
 
   double lowEdge = mu - nSigma * sigma;
-  LOG_DEBUG1() << "Low edge for nSigma: " << nSigma << " is: " << lowEdge;
-  
+  LOG_DEBUG3() << "Low edge for nSigma: " << nSigma << " is: " << lowEdge;
+
   return(lowEdge);
 };
 
@@ -145,7 +162,7 @@ GetSigmaHigh(int nSigma)
   GetSigmaAndMu(sigma, mu);
 
   double highEdge = mu + nSigma * sigma;
-  LOG_DEBUG1() << "High edge for nSigma: " << nSigma << " is: " << highEdge;
+  LOG_DEBUG3() << "High edge for nSigma: " << nSigma << " is: " << highEdge;
 
   return(highEdge);
 };
@@ -201,27 +218,43 @@ PrintVariable(const std::string& name, double var, double err) const
 
 //______________________________________________________________________________
 void TNPFITTER::
-RunFit(FitInterface* fitter, int sigma, int window)
+RunFit(FitInterface* fitter)
 {
   if(fitter == NULL)
   {
-    throw;
+    throw(std::runtime_error("Fitter function not setup correctly"));
+  }
+
+  LOG_DEBUG() << "RunFit :: Running fit";
+  fitter->FitCompositeFunction();
+
+  LOG_DEBUG() << "RunFit :: Setting signal function";
+  fitter->SetSignalFunction();
+
+  LOG_DEBUG() << "RunFit :: Setting background function";
+  fitter->SetBackgroundFunction();
+
+  LOG_DEBUG() << "RunFitt :: Setting background down variation";
+  fitter->SetCompositeDownFunction();
+
+  LOG_DEBUG() << "RunFitt :: Setting background up variation";
+  fitter->SetCompositeUpFunction();
+
+  LOG_DEBUG() << "RunFit :: Fitting procedure is complete";
+  return;
+}
+
+//______________________________________________________________________________
+void TNPFITTER::
+DrawFit(FitInterface* fitter, int sigma, int window)
+{
+  if(fitter == NULL)
+  {
+    throw(std::runtime_error("Fitter function not setup correctly"));
   }
 
   FitterDraw* fitterDraw = new FitterDraw(fitter, sigma, window);
-
-  LOG_DEBUG() << "Running Fit";
-  fitter->FitCompositeFunction();
-  LOG_DEBUG() << "Signal Function";
-  fitter->SetSignalFunction();
-  LOG_DEBUG() << "Bkg Function";
-  fitter->SetBackgroundFunction();
-  LOG_DEBUG() << "Bkg Variation Function";
-  fitter->SetCompositeDownFunction();
-  fitter->SetCompositeUpFunction();
   fitterDraw->Draw();
-
-  return;
 }
 
 //______________________________________________________________________________

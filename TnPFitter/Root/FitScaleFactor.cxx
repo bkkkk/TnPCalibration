@@ -4,9 +4,9 @@
 //_____________________________________________________________________________
 FitScaleFactor::
 FitScaleFactor(const std::string& name, FitEfficiency* data, FitEfficiency* mc)
- : fName(name),
-   fData(data),
-   fMC(mc)
+  : fName(name),
+    fData(data),
+    fMC(mc)
 {
 
 };
@@ -24,7 +24,7 @@ GetRecoScaleFactor(void)
 {
   double recoEffData = fData->GetRecoEfficiency();
   double recoEffMC = fMC->GetRecoEfficiency();
-  
+
   return(recoEffData/recoEffMC);
 };
 
