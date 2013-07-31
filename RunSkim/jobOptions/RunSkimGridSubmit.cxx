@@ -8,7 +8,13 @@ void RunSkimGridSubmit (const std::string& inDS,
   /// Load the libraries for all packages
   gROOT->ProcessLine(".x $ROOTCOREDIR/scripts/load_packages.C+");
 
-  EL::GridDriver::gangaLogFile = Form("%s/gangalog", gSystem->pwd());
+  TDatime timeObject;
+
+  // Ganga Log
+  std::string dataTime = timeObject.AsString();
+  TString gangaLogFilePath = Form("%s/gangalog-%s", gSystem->pwd(), dataTime.c_str());
+
+  EL::GridDriver::gangaLogFile = gangaLogFilePath;
 
   /// Output name
   std::string outputName = "output";
