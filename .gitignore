@@ -19,6 +19,7 @@ test-bin/
 bin/
 *.root
 .fuse*
+test-bin
 
 # Emacs
 *.*~
