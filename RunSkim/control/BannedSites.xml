@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<root setup="2xoo" ref="null" created="2013-08-01 13:01:59" modified="2013-08-01 13:01:59" uuid="2b37b7d2-faa2-11e2-9717-276cdb86beef" version="2">
+  <XmlKey name="BannedSites" cycle="1" created="2013-08-01 13:04:23">
+    <Object class="vector_string_">
+      <Int_t v="1"/>
+      <UChar_t v="17"/>
+      <CharStar v="ANALY_IN2P3-CC-T2"/>
+    </Object>
+  </XmlKey>
+  <StreamerInfos/>
+</root>

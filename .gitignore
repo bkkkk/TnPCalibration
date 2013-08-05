@@ -3,6 +3,7 @@
 *.lo
 *.o
 *.d
+RunSkim/scripts/gangalog*
 
 # Compiled Dynamic libraries
 *.so
