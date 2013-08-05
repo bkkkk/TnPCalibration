@@ -18,8 +18,8 @@ namespace RT
      * @return
      *     A vector of strings made up of elements from the text file 
      */
-    int GetListFromFile(const std::string& path, std::vector<std::string>& elements);
-    int GetListFromFile(const std::string& path, std::vector<float>& elements);
+    void GetListFromFile(const std::string& path, std::vector<std::string>& elements);
+    void GetListFromFile(const std::string& path, std::vector<float>& elements);
     
 
     /**
@@ -31,6 +31,31 @@ namespace RT
      *     A vector of strings made up of elements from the string
      */
     std::vector<std::string> GetListFromString(const std::string& inputString);
+
+    /**
+     * @brief Get a vector from XML file
+     *
+     * @param inputFile
+     *     Input File
+     * @param listName
+     *     Name of list
+     * @return
+     *     Vector of strings
+     */
+    std::vector<std::string> GetListFromXML(const std::string& inputFile,
+                                            const std::string& listName);
+
+    /**
+     * @brief Return a concatenated vector of strings as a comma-separated string
+     *
+     * @param inputFile
+     *        Name of file
+     * @param listName
+     *        Name of list
+     * @return 
+     *     Concatenated string       
+     */
+    std::string GetStringFromFileXML(const std::string& inputFile, const std::string& listName);
 };
 
 #endif // END READERTOOLS_H_

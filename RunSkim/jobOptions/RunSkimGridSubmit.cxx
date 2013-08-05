@@ -91,10 +91,12 @@ void RunSkimGridSubmit (const std::string& inDS,
 
   job.algsAdd(miniNtupleMaker);
   
+  job.options()->setDouble (EL::Job::optMaxEvents, 1000);
+
   /// Create a new driver
   EL::GridDriver driver;
   driver.athenaTag="17.6.0";
-  driver.excludedSite = "ANALY_IN2P3-CC-T2,ANALY_BNL_SHORT,ANALY_BNL_LONG,ANALY_SLAC,ANALY_GLASGOW,ANALY_INFN-NAPOLI,ANALY_ROMANIA07,ANALY_FREIBURG";
+  driver.excludedSite = "ANALY_ROMANIA07";
   driver.outputSampleName = outDS;
 
   /// process the job using the driver

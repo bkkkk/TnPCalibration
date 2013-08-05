@@ -1,6 +1,6 @@
  MakeHistogramsFaraday ( const std::string& inputDir,
                          const std::string& submitDir,
-                         const std::string& prwFileName="mc12_jpsi_config.prw.root",
+                         const std::string& prwFileName="mc12a_defaults.prw.root",
                          const std::string& ilumiCalcFile="$ROOTCOREDIR/data/PileupReweighting/ilumicalc_histograms_PeriodA.root" )
 {
   // Load the libraries for all packages
@@ -98,19 +98,19 @@
 
   // Event Weighting object
   EventWeighting* eventWgt = new EventWeighting("NOMINAL");
-  Root::TPileupReweighting* pileupTool = new Root::TPileupReweighting("pileup");
-  pileupTool->AddConfigFile(prwFullPath.c_str());
+  // Root::TPileupReweighting* pileupTool = new Root::TPileupReweighting("pileup");
+  // pileupTool->AddConfigFile(prwFullPath.c_str());
   
 
   // used to fix expected Nvtx discrepancy between MC and data due to z beam spot size
   bool runKFactorCorrection = false;
   if(runKFactorCorrection != false) pileupTool->SetDataScaleFactors(1./1.11);
 
-  pileupTool->AddLumiCalcFile(ilumiCalcFile.c_str());
-  pileupTool->SetUnrepresentedDataAction(2);
-  pileupTool->Initialize();
+  // pileupTool->AddLumiCalcFile(ilumiCalcFile.c_str());
+  // pileupTool->SetUnrepresentedDataAction(2);
+  // pileupTool->Initialize();
 
-  eventWgt->AddWeighting(new PileupReWeighting("PRW", "Pileup Reweighting Tool", pileupTool)); // PRW tool
+  // eventWgt->AddWeighting(new PileupReWeighting("PRW", "Pileup Reweighting Tool", pileupTool)); // PRW tool
 
   std::cout << "Adding slices" << std::endl;
   histoFactory->varSlices = slices;
@@ -127,7 +127,7 @@
   std::string optionQueue = "-q long";
   std::string option = optionMergeLogs + " " + optionQueue;
   
-  std::string shellInitCmd = "export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase && source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh && eval localSetupROOT --skipConfirm --rootVersion=\"5.30.06-x86_64-slc5-gcc4.3\"  && echo setup success || echo setup failure; which root; echo $PATH";
+  std::string shellInitCmd = "export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase && source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh && eval localSetupROOT --skipConfirm && echo setup success || echo setup failure; which root; echo $PATH";
   std::cout << "Submitting with init command: " << shellInitCmd << std::endl;
   std::cout << "Options for submission: " << option << std::endl;
 

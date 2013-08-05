@@ -239,48 +239,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "JacobUtils.sublime-project",
-			"settings":
-			{
-				"buffer_size": 240,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "test/ut_SampleList.cxx",
-			"settings":
-			{
-				"buffer_size": 477,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "JacobUtils/SampleList.h",
-			"settings":
-			{
-				"buffer_size": 1104,
-				"line_ending": "Unix",
-				"name": "SampleList.h"
-			}
-		},
-		{
-			"file": "Root/SampleList.cxx",
-			"settings":
-			{
-				"buffer_size": 2259,
-				"line_ending": "Unix",
-				"name": "SampleList.cxx"
-			}
-		},
-		{
-			"file": "Root/LinkDef.h",
-			"settings":
-			{
-				"buffer_size": 517,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -333,6 +291,16 @@
 	},
 	"file_history":
 	[
+		"/Users/jayb88/jblanco/CalibrationWork/JacobUtils/Root/LinkDef.h",
+		"/Users/jayb88/jblanco/CalibrationWork/JacobUtils/JacobUtils/SampleList.h",
+		"/Users/jayb88/jblanco/CalibrationWork/JacobUtils/test/ut_SampleList.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/RunPairing/jobOptions/MakeHistogramsFaraday.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/JacobUtils/Root/SampleList.cxx",
+		"/Users/jayb88/jblanco/CalibrationWork/JacobUtils/JacobUtils.sublime-project",
+		"/Users/jayb88/jblanco/CalibrationWork/RunSkim/jobOptions/RunSkimGridSubmit.cxx",
+		"/Users/jayb88/Dropbox/TopWork/CalibrationWork/Report/report.tex",
+		"/Users/jayb88/jblanco/CalibrationWork/RunPairing/jobOptions/MakeHistogramsFaraday",
+		"/Users/jayb88/jblanco/CalibrationWork/EventLoopGrid/Root/GridDriver.cxx",
 		"/Users/jayb88/.ssh/known_hosts",
 		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/Root/EfficiencyMaker.cxx",
 		"/Users/jayb88/jblanco/CalibrationWork/JacobUtils/JacobUtils/MathTools.h",
@@ -341,7 +309,6 @@
 		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/Root/LinkDef.h",
 		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/Root/SummaryPlotMaker.cxx",
 		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/cmt/Makefile.RootCore",
-		"/Users/jayb88/jblanco/CalibrationWork/JacobUtils/Root/LinkDef.h",
 		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/Root/FitScaleFactor.cxx",
 		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/test/ut_FitScaleFactor.cxx",
 		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/TnPFitter/FitScaleFactor.h",
@@ -368,7 +335,6 @@
 		"/Users/jayb88/jblanco/CalibrationWork/RunKinematics/jobOptions/MakeKinematics.cxx",
 		"/Users/jayb88/jblanco/CalibrationWork/RunKinematics/jobOptions/MakeKinematicsFaraday.cxx",
 		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/MuonEfficiency/HistogramFactory.h",
-		"/Users/jayb88/jblanco/CalibrationWork/RunSkim/jobOptions/RunSkimGridSubmit.cxx",
 		"/Users/jayb88/jblanco/CalibrationWork/RunPairing/jobOptions/MakeHistograms.cxx",
 		"/Users/jayb88/jblanco/CalibrationWork/MuonEfficiency/Root/HistogramFactory.cxx",
 		"/Users/jayb88/jblanco/CalibrationWork/RunSkim/scripts/submitSkimGrid.sh",
@@ -394,7 +360,7 @@
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -408,6 +374,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"checkEnvironment",
+			"bannedSiteListPath",
+			"checkEnvironment",
+			"needAthena",
+			"checkEn",
 			"SampleList::",
 			";",
 			"//",
@@ -544,146 +515,8 @@
 	"groups":
 	[
 		{
-			"selected": 3,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "JacobUtils.sublime-project",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 240,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								234,
-								237
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "test/ut_SampleList.cxx",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 477,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								386,
-								386
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "JacobUtils/SampleList.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1104,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								871,
-								873
-							]
-						],
-						"settings":
-						{
-							"auto_name": "SampleList.h",
-							"syntax": "Packages/C++/C++.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "Root/SampleList.cxx",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2259,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1626,
-								1626
-							]
-						],
-						"settings":
-						{
-							"auto_name": "SampleList.cxx",
-							"syntax": "Packages/C++/C++.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 340.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "Root/LinkDef.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 517,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								70,
-								70
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
