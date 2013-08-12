@@ -1,0 +1,67 @@
+Grid Submission:
+  ☐ Submit remaining periods:
+    ☐ Period I
+    ☐ Period J
+    ☐ Period K
+  ☐ DQ2 Campaign:
+    ☐ Period D:
+      ✔ Initial Download @done (13-08-12 12:36)
+      ☐ Done
+    ☐ Period E:
+      ✔ Initial Download @done (13-08-12 12:36)
+      ☐ Done
+    ☐ Period G:
+      ✔ Initial Download @done (13-08-12 12:37)
+      ☐ Done
+    ☐ Period H:
+      ✔ Initial Download @done (13-08-12 12:37)
+      ☐ Done
+    ☐ Period I:
+      ☐ Initial Download
+      ☐ Done
+    ☐ Period J:
+      ☐ Initial Download
+      ☐ Done
+    ☐ Period L:
+      ☐ Initial Download
+      ☐ Done
+Getting regional plots without pileup:
+  ☐ Change Probe pT cut to 6.5 #MakeEfficiency.cxx  
+  ☐ Run Pairings:
+    ☐ Period A
+    ☐ Period B
+    ☐ Period C
+Get Regional plots with pileup p1328:
+  ☐ Run PRW config maker for: @short
+    ☐ Prompt JPsi @short
+    ☐ Non-Prompt JPsi @short
+  ☐ Get iLumiCalc Files for all periods: @long
+    ☐ Period A @short
+    ☐ Period B @short
+    ☐ Period C @short
+    ☐ Period D @short
+    ☐ Period E @short
+    ☐ Period G @short
+    ☐ Period H @short
+    ☐ Period I @short
+    ☐ Period J @short
+    ☐ Period L @short
+  ☐ Run Pairings: @long
+    ☐ Period A @medium
+    ☐ Period B @medium
+    ☐ Period C @medium
+    ☐ Period D @medium
+    ☐ Period E @medium
+    ☐ Period G @medium
+    ☐ Period H @medium
+    ☐ Period I @medium
+    ☐ Period J @medium
+    ☐ Period L @medium
+Getting new MC samples:
+  ☐ Email SMWZ people asking for D3PDs of lower pT filter samples
+    ☐ Find out who these people are
+    ☐ Ask for 3.5 D3PD samples of prompt and non-prompt
+Comparison with Z->mumu:
+  ☐ Email Marco to ask about updates to the SMT results in Z->mumu
+Possible improvements to plotting:
+  ☐ Add 2D (eta vs pt) plots to #SummaryPlotMaker.cxx
