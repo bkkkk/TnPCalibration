@@ -4,6 +4,7 @@
 *.o
 *.d
 RunSkim/scripts/gangalog*
+RunPileupPRW/Prw*
 
 # Compiled Dynamic libraries
 *.so
