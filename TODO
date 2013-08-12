@@ -1,6 +1,5 @@
 Grid Submission:
   ☐ Submit remaining periods: @wait @medium
-    ☐ Period J @short @wait
     ☐ Period L @short @wait
   ☐ DQ2 Campaign: @wait @medium
     ☐ Period I:
@@ -15,24 +14,23 @@ Grid Submission:
       ☐ Done
       ☐ Move Files
 Getting regional plots without pileup:
-  ☐ Retrieve Faraday Results: @wait @short
-    ☐ Period A @wait
-    ☐ Period B @wait
-    ☐ Period C @wait
-    ☐ Period D @wait
-    ☐ Prompt JPsi @wait
-    ☐ NonPrompt JPsi @wait
-  ☐ Do fitting:
+  ☐ Retrieve Faraday Results @wait @short
+    ☐ Period A @wait @error @partial
+      Version 3, one job failed due to file being corrupted from the grid: user.jayb88.005462.EXT1._00146.output.root
+        ☐ Re-run Period A with all good files
+        ☐ Find dataset with file and attempt redownload
+    ☐ Period B @wait @error @partial
+      'Version 2, two jobs failed due to files being corrupted from the grid:'
+        user.jayb88.005519.EXT1._00280.output.root
+        user.jayb88.005575.EXT1._01096.output.root
+        ☐ Re-run Period B with all good files
+        ☐ Find dataset with file and attempt redownload
+  ☐ Do fitting
     ☐ Period A @wait
     ☐ Period B @wait
     ☐ Period C @wait
     ☐ Period D @wait
 Get Regional plots with pileup p1328:
-  ☐ Run PRW config maker for: @short
-    ☐ Non-Prompt JPsi @short
-      ☐ Run @short
-      ☐ Done @wait
-      ☐ Retrieve @short @wait
   ☐ Get iLumiCalc Files for all periods: @long
     ☐ Period A + B @short
     ☐ Period C + D @short
@@ -63,13 +61,23 @@ Get Regional plots with pileup p1328:
     ☐ Period J @medium
     ☐ Period L @medium
 Getting new MC samples:
-  ☐ Email SMWZ people asking for D3PDs of lower pT filter samples
-    "Ask for 3.5 D3PD samples of prompt and non-prompt"
 ---- ✄ -----------------------
-NOTE:
+Calibration Note:
   There should be some todo thingies here
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Email SMWZ people asking for D3PDs of lower pT filter samples @done (13-08-12 19:53) @project(Getting new MC samples)
+  "Ask for 3.5 D3PD samples of prompt and non-prompt"
+ ✔ NonPrompt JPsi @wait @done (13-08-12 19:52) @project(Getting regional plots without pileup)
+ ✔ Prompt JPsi @wait @done (13-08-12 19:51) @project(Getting regional plots without pileup)
+ ✔ Period C @wait @done (13-08-12 19:50) @project(Getting regional plots without pileup)
+ ✔ Period D @wait @done (13-08-12 19:51) @project(Getting regional plots without pileup)
+ ✔ Run PRW config maker for: @short @done (13-08-12 19:36) @project(Get Regional plots with pileup p1328)
+ ✔ Non-Prompt JPsi @short @done (13-08-12 19:36) @project(Get Regional plots with pileup p1328)
+ ✔ Done @wait @done (13-08-12 19:36) @project(Get Regional plots with pileup p1328)
+ ✔ Retrieve @short @wait @done (13-08-12 19:36) @project(Get Regional plots with pileup p1328)
+ ✔ Run @short @done (13-08-12 16:31) @project(Get Regional plots with pileup p1328)
+ ✔ Period J @short @wait @done (13-08-12 16:25) @project(Grid Submission)
  ✔ Do Pairing: @done (13-08-12 15:43) @project(Getting regional plots without pileup)
  ✔ Prompt JPsi @done (13-08-12 15:43) @project(Getting regional plots without pileup)
  ✔ Non-Prompt JPsi @done (13-08-12 15:43) @project(Getting regional plots without pileup)
