@@ -11,7 +11,7 @@ usage() {
   OPTIONS:
     -h    Show this message
     -i    Period name
-    -p    p1067
+    -p    Processing Tag. p1067/p1328
     -l    Label for output dataset
     -L    Which Period to use for prw
 
@@ -49,11 +49,24 @@ do
   esac
 done
 
-if [[ -z $LABEL ]] || [[ -z $INPUTSAMPLE ]] || [[ -z $PROCESSINGTAG ]]
+if [[ -z $LABEL ]]
 then
-  echo variable missing
+  echo "Label is missing please use -l to set the output label"
   exit 1
 fi
+
+if [[ -z $INPUTSAMPLE ]]
+  then
+  echo "Input sample is missing use -i to set the input sample"
+  exit 1
+fi
+
+if [[ -z $PROCESSINGTAG ]]
+  then
+  echo "Processing tag is missing, use -p to set processing tag"
+  exit 1
+fi
+
 
 root -q -b -l "$JODIR/MakeHistogramsFaraday.cxx(\"$PROCESSINGTAG\", \"$INPUTSAMPLE\",\"$LABEL\",\"$ILUMICALCFILE\")"
 

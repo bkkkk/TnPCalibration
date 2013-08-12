@@ -44,16 +44,21 @@ do
   esac
 done
 
-if [[ -z $LABEL ]] || [[ -z $INPUTDIRS ]]
+if [[ -z $LABEL ]]
 then
-  echo variable missing
-  usage
+  echo "Output label is missing, use -l LABEL to set it"
+  exit 1
+fi
+
+if [[ -z $INPUTDIRS ]]
+then
+  echo "Input samples list not set, use -i flag"
   exit 1
 fi
 
 INPUTDIRLIST=$(awk -v ORS=, '{ print $1 }' $INPUTDIRS | sed 's/,$//')
 
-OUTPUTDIRNAME="$OUTPUTDIR/dataSet_"$T"_$LABEL"
+OUTPUTDIRNAME="$OUTPUTDIR/CompositePairing_"$T"_$LABEL"
 
 root -q -b -l "$JODIR/MakeHistogramsFaradayComposite.cxx(\"$INPUTDIRLIST\",\"$LABEL\",\"$OUTPUTDIRNAME\",\"$ILUMICALCFILE\")"
 

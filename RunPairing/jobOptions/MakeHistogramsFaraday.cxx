@@ -32,9 +32,16 @@
   // Event Weighting object
   EventWeighting* eventWgt = new EventWeighting("NOMINAL");
 
+  // Testing PRW disabled for now
+  bool doPRW = false;
+  if(doPRW == false)
+  {
+    std::cout << "!!!!! WARNING !!!!! RUNNING WITH PRW DISABLED !!!!!! WARNING !!!!!!!" << std::endl;
+  }
+
   // Do PRW for MC only
   bool isMC = false;
-  if(TString(inputSample).Contains("JPsi"))
+  if(TString(inputSample).Contains("JPsi") && doPRW == true)
   { 
     std::cout << "Running on MC, loading PRW configuration DB from: ";
     isMC = true;
@@ -47,7 +54,7 @@
     std::cout << prwConfigDBFullPath.str() << std::endl;
     
     Skimming::SkimListReader* prwConfiguration = new Skimming::SkimListReader(prwConfigDBFullPath.str(), batchName);
-  
+    
     std::string prwFullPath = prwConfiguration->GetPeriodPath(inputSample);
     std::cout << "Loading PRW configuration file " << prwFilePath << std::endl;
     
@@ -115,8 +122,14 @@
   tagSelector->z0Cut = 1.5; tagSelector->z0SigCut = 3.0;
 
   /// Configure probe
+  
   TJPsiProbeSelector* probeSelector = new TJPsiProbeSelector();
-  probeSelector->etaCut = 2.5; probeSelector->pCut = 3000;
+  probeSelector->etaCut = 2.5; probeSelector->pCut = 6500;
+  if(probeSelector->pCut != 3000)
+  {
+    std::cout << "!!!!! WARNING !!!!! Running with probe pT cut : "
+              << probeSelector->pCut << std::endl;
+  }
 
   /// Configure pair
   TJPsiPairSelector* pairSelector = new TJPsiPairSelector();
@@ -193,7 +206,7 @@
             << datime.str() << "_" << label;
 
   // Do submission
-  // driver.submitOnly (job, submitDir.str());
+  driver.submitOnly (job, submitDir.str());
 
   std::cout << "See output in: " << submitDir.str() << std::endl;
 }
