@@ -29,9 +29,8 @@ void RunPileupPRWSubmit (const std::string& inDS,
   
   /// Create a new driver
   EL::GridDriver driver;
-  driver.athenaTag="17.3.1";
-  driver.excludedSite = "ANALY_IN2P3-CC-T2";
-
+  driver.athenaTag="17.6.0";
+  
   /// process the job using the driver
   driver.submitOnly (job, submitDir);
 }

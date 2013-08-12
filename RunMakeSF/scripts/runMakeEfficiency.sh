@@ -54,13 +54,13 @@ fi
 echo "Please enter a description of the files to be outputted: "
 read DESCRIPTION
 
-T="$(date +%Y_%m_%d_%H_%M_%S)"
+T="$(date +%Y%m%d%H%M%S)"
 FULLOUTPUTDIR="$OUTPUTDIR/output_"$T"_$LABEL"
 
 mkdir $FULLOUTPUTDIR
 cd $FULLOUTPUTDIR
 
-root -b -l -q ''$JODIR'/MakeEfficiency.cxx("'$DATAINPUTDIR'", "'$MCINPUTDIR'","'$LABEL'")'
+root -b -l -q "$JODIR/MakeEfficiency.cxx(\"$DATAINPUTDIR\", \"$MCINPUTDIR\",\"$LABEL\")"
 
 echo $DESCRIPTION >> $FULLOUTPUTDIR/description.txt
 

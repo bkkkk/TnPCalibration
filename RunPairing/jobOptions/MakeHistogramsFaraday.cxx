@@ -1,13 +1,72 @@
- MakeHistogramsFaraday ( const std::string& inputDir,
-                         const std::string& submitDir,
-                         const std::string& prwFileName="mc12a_defaults.prw.root",
-                         const std::string& ilumiCalcFile="$ROOTCOREDIR/data/PileupReweighting/ilumicalc_histograms_PeriodA.root" )
+ MakeHistogramsFaraday ( const std::string& processingTag,
+                         const std::string& inputSample,
+                         const std::string& label,
+                         const std::string& periodForPrw="PeriodB")
 {
   // Load the libraries for all packages
   gROOT->ProcessLine(".x $ROOTCOREDIR/scripts/load_packages.C+");
 
+  std::string prwFileName="mc12a_defaults.prw.root";
+
   // Output name
   std::string outputName = "output";
+
+  std::string batchName = "Batch-";
+  batchName.append(processingTag);
+
+  std::string fullPath = "/scratch3/jblanco/SMTMiniNtuples/";
+  fullPath.append("SkimDB-");
+  fullPath.append(batchName);
+  fullPath.append(".xml");
+
+  std::cout << "Processing Sample: " << inputSample 
+            << " from: " << processingTag
+            << std::endl;
+
+  std::cout << "Loading Skims DB : " << fullPath << std::endl;
+
+  Skimming::SkimListReader* skimList = new Skimming::SkimListReader(fullPath, batchName);
+  std::string inputDir = skimList->GetPeriodPath(inputSample);
+  std::cout << "Running over: " << inputDir << std::endl;
+
+  // Event Weighting object
+  EventWeighting* eventWgt = new EventWeighting("NOMINAL");
+
+  // Do PRW for MC only
+  bool isMC = false;
+  if(TString(inputSample).Contains("JPsi"))
+  { 
+    std::cout << "Running on MC, loading PRW configuration DB from: ";
+    isMC = true;
+
+    std::stringstream prwConfigDBFullPath;
+    std::string prwSharePath = gSystem->ExpandPathName("$ROOTCOREDIR/share/PileupReweighting/");
+
+    prwConfigDBFullPath << prwSharePath << "PrwConfigDB-" << batchName << ".xml";
+    
+    std::cout << prwConfigDBFullPath.str() << std::endl;
+    
+    Skimming::SkimListReader* prwConfiguration = new Skimming::SkimListReader(prwConfigDBFullPath.str(), batchName);
+  
+    std::string prwFullPath = prwConfiguration->GetPeriodPath(inputSample);
+    std::cout << "Loading PRW configuration file " << prwFilePath << std::endl;
+    
+    std::string ilumiCalcFile = prwConfiguration->GetPeriodPath(periodForPrw);
+    std::cout << "Loading iLumiCalc file: " << ilumiCalcFile << std::endl;
+
+    Root::TPileupReweighting* pileupTool = new Root::TPileupReweighting("pileup");
+    pileupTool->AddConfigFile(prwFullPath.c_str());
+  
+    // used to fix expected Nvtx discrepancy between MC and data due to z beam spot size
+    bool runKFactorCorrection = false;
+    if(runKFactorCorrection != false) pileupTool->SetDataScaleFactors(1./1.11);
+
+    pileupTool->AddLumiCalcFile(ilumiCalcFile.c_str());
+    pileupTool->SetUnrepresentedDataAction(2);
+    pileupTool->Initialize();
+
+    eventWgt->AddWeighting(new PileupReWeighting("PRW", "Pileup Reweighting Tool", pileupTool)); // PRW tool
+  }
 
   // Create a new SampleHandler to grab all samples
   SH::SampleHandler sh;
@@ -96,22 +155,6 @@
   std::string prwShareFolder = "$ROOTCOREDIR/data/PileupReweighting/";
   std::string prwFullPath = prwShareFolder + prwFileName;
 
-  // Event Weighting object
-  EventWeighting* eventWgt = new EventWeighting("NOMINAL");
-  // Root::TPileupReweighting* pileupTool = new Root::TPileupReweighting("pileup");
-  // pileupTool->AddConfigFile(prwFullPath.c_str());
-  
-
-  // used to fix expected Nvtx discrepancy between MC and data due to z beam spot size
-  bool runKFactorCorrection = false;
-  if(runKFactorCorrection != false) pileupTool->SetDataScaleFactors(1./1.11);
-
-  // pileupTool->AddLumiCalcFile(ilumiCalcFile.c_str());
-  // pileupTool->SetUnrepresentedDataAction(2);
-  // pileupTool->Initialize();
-
-  // eventWgt->AddWeighting(new PileupReWeighting("PRW", "Pileup Reweighting Tool", pileupTool)); // PRW tool
-
   std::cout << "Adding slices" << std::endl;
   histoFactory->varSlices = slices;
   histoFactory->jpsiClassifier = jpsiClassifier;
@@ -128,8 +171,6 @@
   std::string option = optionMergeLogs + " " + optionQueue;
   
   std::string shellInitCmd = "export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase && source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh && eval localSetupROOT --skipConfirm && echo setup success || echo setup failure; which root; echo $PATH";
-  std::cout << "Submitting with init command: " << shellInitCmd << std::endl;
-  std::cout << "Options for submission: " << option << std::endl;
 
   // Create a new driver
   EL::TorqueDriver driver;
@@ -140,6 +181,19 @@
 
   std::cout << "Submitting" << std::endl;
 
-  // process the job using the driver
-  driver.submitOnly (job, submitDir);
+  TDatime temp;
+  std::stringstream datime;
+  datime << temp.GetDate() << temp.GetTime();
+
+
+  std::string basePath = "/scratch3/jblanco/CalibrationHistograms/";
+  std::stringstream submitDir;
+
+  submitDir << basePath << "CalibSample-" << processingTag << "_" << inputSample << "-"
+            << datime.str() << "_" << label;
+
+  // Do submission
+  // driver.submitOnly (job, submitDir.str());
+
+  std::cout << "See output in: " << submitDir.str() << std::endl;
 }

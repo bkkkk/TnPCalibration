@@ -2,8 +2,7 @@
 
 source ./setup.sh
 
-usage()
-{
+usage() {
   cat << EOF
   usage: $0 [options] -i inputDir
 
@@ -11,17 +10,20 @@ usage()
 
   OPTIONS:
     -h    Show this message
+    -i    Period name
+    -p    p1067
     -l    Label for output dataset
-    -L    iLumiCalc File for period
-    -i    Input Directory
+    -L    Which Period to use for prw
+
 EOF
 }
 
 LABEL=
 MAXEVENTS=
 ILUMICALCFILE=
-INPUTDIR=
-while getopts “hL:l:i:” OPTION
+INPUTSAMPLE=
+PROCESSINGTAG=
+while getopts “hL:l:i:p:” OPTION
 do
   case $OPTION in
     h)
@@ -35,7 +37,10 @@ do
       LABEL=$OPTARG
       ;;
     i)
-      INPUTDIR=$OPTARG
+      INPUTSAMPLE=$OPTARG
+      ;;
+    p)
+      PROCESSINGTAG=$OPTARG
       ;;
     ?)
       usage
@@ -44,15 +49,12 @@ do
   esac
 done
 
-if [[ -z $LABEL ]] || [[ -z $INPUTDIR ]]
+if [[ -z $LABEL ]] || [[ -z $INPUTSAMPLE ]] || [[ -z $PROCESSINGTAG ]]
 then
   echo variable missing
-  usage
   exit 1
 fi
 
-OUTPUTDIRNAME="$OUTPUTDIR/dataSet_"$T"_$LABEL"
-
-root -q -b -l ''$JODIR'/MakeHistogramsFaraday.cxx("'$INPUTDIR'","'$OUTPUTDIRNAME'","'$ILUMICALCFILE'")'
+root -q -b -l "$JODIR/MakeHistogramsFaraday.cxx(\"$PROCESSINGTAG\", \"$INPUTSAMPLE\",\"$LABEL\",\"$ILUMICALCFILE\")"
 
 echo "All Done"

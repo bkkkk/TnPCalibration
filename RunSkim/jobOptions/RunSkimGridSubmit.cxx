@@ -91,8 +91,6 @@ void RunSkimGridSubmit (const std::string& inDS,
 
   job.algsAdd(miniNtupleMaker);
   
-  job.options()->setDouble (EL::Job::optMaxEvents, 1000);
-
   /// Create a new driver
   EL::GridDriver driver;
   driver.athenaTag="17.6.0";

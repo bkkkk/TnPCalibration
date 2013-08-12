@@ -30,7 +30,6 @@ void MakeEfficiency (const std::string& inputDirData, const std::string& inputDi
   plotMaker->AddDataSample(inputDirData);
 
   plotMaker->SaveScaleFactorHistograms("pt", "eta");
-
   plotMaker->SaveScaleFactorHistograms("eta");
   plotMaker->SaveScaleFactorHistograms("pt");
   plotMaker->SaveScaleFactorHistograms("phi");
