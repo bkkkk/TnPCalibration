@@ -21,6 +21,7 @@ int main(int argc, char** argv)
   if(histo == NULL)
   {
     std::cout << "Histograms could not be opened" << std::endl;
+    return (111);
   };
 
   int sigma = 3;
@@ -34,7 +35,7 @@ int main(int argc, char** argv)
   if (draw == NULL)
   {
     std::cout << "Object constructed incorrectly" << std::endl;
-    return (1);
+    return (112);
   }
 
   draw->Draw();
