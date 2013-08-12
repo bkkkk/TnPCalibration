@@ -1,56 +1,61 @@
 Grid Submission:
-  ☐ Submit remaining periods:
-    ☐ Period I
-    ☐ Period J
-    ☐ Period K
-  ☐ DQ2 Campaign:
-    ☐ Period D:
-      ✔ Initial Download @done (13-08-12 12:36)
-      ☐ Done
-    ☐ Period E:
-      ✔ Initial Download @done (13-08-12 12:36)
-      ☐ Done
-    ☐ Period G:
-      ✔ Initial Download @done (13-08-12 12:37)
-      ☐ Done
-    ☐ Period H:
-      ✔ Initial Download @done (13-08-12 12:37)
-      ☐ Done
+  ☐ Submit remaining periods: @wait @medium
+    ☐ Period J @short @wait
+    ☐ Period L @short @wait
+  ☐ DQ2 Campaign: @wait @medium
     ☐ Period I:
-      ☐ Initial Download
       ☐ Done
+      ☐ Move Files
     ☐ Period J:
       ☐ Initial Download
       ☐ Done
+      ☐ Move Files
     ☐ Period L:
       ☐ Initial Download
       ☐ Done
+      ☐ Move Files
 Getting regional plots without pileup:
-  ☐ Change Probe pT cut to 6.5 #MakeEfficiency.cxx  
-  ☐ Run Pairings:
-    ☐ Period A
-    ☐ Period B
-    ☐ Period C
+  ☐ Retrieve Faraday Results: @wait @short
+    ☐ Period A @wait
+    ☐ Period B @wait
+    ☐ Period C @wait
+    ☐ Period D @wait
+    ☐ Prompt JPsi @wait
+    ☐ NonPrompt JPsi @wait
+  ☐ Do fitting:
+    ☐ Period A @wait
+    ☐ Period B @wait
+    ☐ Period C @wait
+    ☐ Period D @wait
 Get Regional plots with pileup p1328:
   ☐ Run PRW config maker for: @short
-    ☐ Prompt JPsi @short
     ☐ Non-Prompt JPsi @short
+      ☐ Run @short
+      ☐ Done @wait
+      ☐ Retrieve @short @wait
   ☐ Get iLumiCalc Files for all periods: @long
-    ☐ Period A @short
-    ☐ Period B @short
-    ☐ Period C @short
-    ☐ Period D @short
+    ☐ Period A + B @short
+    ☐ Period C + D @short
     ☐ Period E @short
     ☐ Period G @short
     ☐ Period H @short
     ☐ Period I @short
     ☐ Period J @short
     ☐ Period L @short
-  ☐ Run Pairings: @long
-    ☐ Period A @medium
-    ☐ Period B @medium
-    ☐ Period C @medium
-    ☐ Period D @medium
+  ☐ Run Pairings Prompt: @long
+    ☐ All @medium
+    ☐ Period A and B @medium
+    ☐ Period C and D @medium
+    ☐ Period E @medium
+    ☐ Period G @medium
+    ☐ Period H @medium
+    ☐ Period I @medium
+    ☐ Period J @medium
+    ☐ Period L @medium
+  ☐ Run Pairings Non-Prompt: @long
+    ☐ All @medium
+    ☐ Period A and B @medium
+    ☐ Period C and D @medium
     ☐ Period E @medium
     ☐ Period G @medium
     ☐ Period H @medium
@@ -59,9 +64,45 @@ Get Regional plots with pileup p1328:
     ☐ Period L @medium
 Getting new MC samples:
   ☐ Email SMWZ people asking for D3PDs of lower pT filter samples
-    ☐ Find out who these people are
-    ☐ Ask for 3.5 D3PD samples of prompt and non-prompt
-Comparison with Z->mumu:
-  ☐ Email Marco to ask about updates to the SMT results in Z->mumu
-Possible improvements to plotting:
-  ☐ Add 2D (eta vs pt) plots to #SummaryPlotMaker.cxx
+    "Ask for 3.5 D3PD samples of prompt and non-prompt"
+---- ✄ -----------------------
+NOTE:
+  There should be some todo thingies here
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+ ✔ Do Pairing: @done (13-08-12 15:43) @project(Getting regional plots without pileup)
+ ✔ Prompt JPsi @done (13-08-12 15:43) @project(Getting regional plots without pileup)
+ ✔ Non-Prompt JPsi @done (13-08-12 15:43) @project(Getting regional plots without pileup)
+ ✔ Period A @done (13-08-12 15:26) @project(Getting regional plots without pileup)
+ ✔ Period B @done (13-08-12 15:26) @project(Getting regional plots without pileup)
+ ✔ Period C @done (13-08-12 15:26) @project(Getting regional plots without pileup)
+ ✔ Period D @done (13-08-12 15:26) @project(Getting regional plots without pileup)
+ ✔ Prompt JPsi @short @done (13-08-12 15:23) @project(Get Regional plots with pileup p1328)
+ ✔ Retrieve @short @wait @done (13-08-12 15:23) @project(Get Regional plots with pileup p1328)
+ ✔ Initial Download @done (13-08-12 15:09) @project(Grid Submission)
+ ✔ Done @wait @done (13-08-12 14:33) @project(Get Regional plots with pileup p1328)
+ ✔ Email Marco to ask about updates to the SMT results in Z->mumu @done (13-08-12 14:32) @project(Comparison with Z->mumu)
+ ✔ Run Pairings: @done (13-08-12 14:25) @project(Getting regional plots without pileup)
+ ✔ Period A @done (13-08-12 14:24) @project(Getting regional plots without pileup)
+ ✔ Period B @done (13-08-12 14:24) @project(Getting regional plots without pileup)
+ ✔ Period C @done (13-08-12 14:25) @project(Getting regional plots without pileup)
+ ✔ Period D @done (13-08-12 14:26) @project(Getting regional plots without pileup)
+ ✔ Period I @done (13-08-12 14:02) @project(Grid Submission)
+ ✔ Period D: @done (13-08-12 13:50) @project(Grid Submission)
+ ✔ Initial Download @done (13-08-12 12:36) @project(Grid Submission)
+ ✔ Done @done (13-08-12 13:06) @project(Grid Submission)
+ ✔ Move Files @done (13-08-12 13:48) @project(Grid Submission)
+ ✔ Period E: @done (13-08-12 13:06) @project(Grid Submission)
+ ✔ Initial Download @done (13-08-12 12:36) @project(Grid Submission)
+ ✔ Done @done (13-08-12 13:06) @project(Grid Submission)
+ ✔ Move Files @done (13-08-12 13:48) @project(Grid Submission)
+ ✔ Period G: @done (13-08-12 13:06) @project(Grid Submission)
+ ✔ Initial Download @done (13-08-12 12:37) @project(Grid Submission)
+ ✔ Done @done (13-08-12 13:06) @project(Grid Submission)
+ ✔ Move Files @done (13-08-12 13:48) @project(Grid Submission)
+ ✔ Period H: @done (13-08-12 13:50) @project(Grid Submission)
+ ✔ Initial Download @done (13-08-12 12:37) @project(Grid Submission)
+ ✔ Done @done (13-08-12 13:48) @project(Grid Submission)
+ ✔ Move Files @done (13-08-12 13:48) @project(Grid Submission)
+ ✔ Change Probe pT cut to 6.5 #MakeEfficiency.cxx @done (13-08-12 14:02) @project(Getting regional plots without pileup)
+ ✔ Run @short @done (13-08-12 13:04) @project(Get Regional plots with pileup p1328)
