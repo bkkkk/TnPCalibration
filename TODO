@@ -1,45 +1,29 @@
-Grid Submission:
-  ☐ Submit remaining periods: @wait @medium
-    ☐ Period L @short @wait
-  ☐ DQ2 Campaign: @wait @medium
-    ☐ Period I:
-      ☐ Done
-      ☐ Move Files
-    ☐ Period J:
-      ☐ Initial Download
-      ☐ Done
-      ☐ Move Files
-    ☐ Period L:
-      ☐ Initial Download
-      ☐ Done
-      ☐ Move Files
 Getting regional plots without pileup:
-  ☐ Retrieve Faraday Results @wait @short
-    ☐ Period A @wait @error @partial
-      Version 3, one job failed due to file being corrupted from the grid: user.jayb88.005462.EXT1._00146.output.root
-        ☐ Re-run Period A with all good files
-        ☐ Find dataset with file and attempt redownload
-    ☐ Period B @wait @error @partial
-      'Version 2, two jobs failed due to files being corrupted from the grid:'
-        user.jayb88.005519.EXT1._00280.output.root
-        user.jayb88.005575.EXT1._01096.output.root
-        ☐ Re-run Period B with all good files
-        ☐ Find dataset with file and attempt redownload
-  ☐ Do fitting
-    ☐ Period A @wait
-    ☐ Period B @wait
-    ☐ Period C @wait
-    ☐ Period D @wait
+  Latest Results: 'Composite PeriodABCD v2'
+
+  Notes:
+    Skims:
+      Period A:
+        'Version 3, one job failed due to file being corrupted from the grid:'
+          user.jayb88.005462.EXT1._00146.output.root @removed
+          user.jayb88.005462.EXT1._00147.output.root @removed
+      Period B:
+        'Version 2, two jobs failed due to files being corrupted from the grid:'
+          user.jayb88.005519.EXT1._00280.output.root @removed @notongrid
+          user.jayb88.005519.EXT1._00293.output.root @removed @notongrid
+          user.jayb88.005575.EXT1._01096.output.root @removed @notongrid
+          user.jayb88.005519.EXT1._00302.output.root @removed @notongrid
+
+---- ✄ -----------------------
+Debugging Match-Chi^{2}:
+  ☐ Look at at the matchi-chi^{2}
+  
+
 Get Regional plots with pileup p1328:
-  ☐ Get iLumiCalc Files for all periods: @long
-    ☐ Period A + B @short
-    ☐ Period C + D @short
-    ☐ Period E @short
-    ☐ Period G @short
-    ☐ Period H @short
-    ☐ Period I @short
-    ☐ Period J @short
-    ☐ Period L @short
+  ✔ Rename all iLumiCalc files @done (13-08-13 16:56)
+    'LumiCalc-p1328_PeriodA.root' -- Singles
+    'LumiCalc-p1328_PeriodAB.root' -- Composites
+    'LumiCalc-p1328_PeriodAL.root' -- For Range
   ☐ Run Pairings Prompt: @long
     ☐ All @medium
     ☐ Period A and B @medium
@@ -60,12 +44,97 @@ Get Regional plots with pileup p1328:
     ☐ Period I @medium
     ☐ Period J @medium
     ☐ Period L @medium
+
+---- ✄ -----------------------
+
 Getting new MC samples:
 ---- ✄ -----------------------
 Calibration Note:
   There should be some todo thingies here
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Move all PRW configuration files to the correct place @done (13-08-13 16:04) @project(Get Regional plots with pileup p1328)
+  'Move to PileupReweighting/data'
+ ✔ Hadd all outFiles: @done (13-08-13 15:47) @project(Get Regional plots with pileup p1328)
+ ✔ Prompt JPsi @done (13-08-13 15:47) @project(Get Regional plots with pileup p1328)
+ ✔ NonPrompt JPsi @done (13-08-13 15:47) @project(Get Regional plots with pileup p1328)
+ ✔ Make slides: @done (13-08-13 15:37) @project(Slides for meeting 13 Aug)
+ ✔ Next steps @done (13-08-13 15:37) @project(Slides for meeting 13 Aug)
+ ✔ Remove limited trigger requirement @done (13-08-13 15:20) @project(Get Regional plots with pileup p1328)
+ ✔ Changes to fitting @done (13-08-13 14:20) @project(Slides for meeting 13 Aug)
+ ✔ Status of skims @done (13-08-13 14:20) @project(Slides for meeting 13 Aug)
+ ✔ Status of new MC samples @done (13-08-13 14:20) @project(Slides for meeting 13 Aug)
+ ✔ Results without pileup @done (13-08-13 14:46) @project(Slides for meeting 13 Aug)
+ ✔ Z->mumu results @done (13-08-13 14:46) @project(Slides for meeting 13 Aug)
+ ✔ Composite sample results: @done (13-08-13 13:43) @project(Getting regional plots without pileup)
+ ✔ Plot summary plots @done (13-08-13 13:42) @project(Getting regional plots without pileup)
+ ✔ Run fitting @done (13-08-13 13:32) @project(Getting regional plots without pileup)
+ ✔ Add ABCD with new sample A: version3 B: version4 C: version2 D: version2 @done (13-08-13 13:29) @project(Getting regional plots without pileup)
+ ✔ Get summary plots @wait @short @done (13-08-13 13:27) @project(Getting regional plots without pileup)
+ ✔ Period B @wait @done (13-08-13 13:26) @project(Getting regional plots without pileup)
+ ✔ iLumiCalc Files: @done (13-08-13 13:26) @project(Get Regional plots with pileup p1328)
+ ✔ All @done (13-08-13 13:26) @project(Get Regional plots with pileup p1328)
+ ✔ Period A @wait @done (13-08-13 13:17) @project(Getting regional plots without pileup)
+ ✔ Get iLumiCalc Files for all periods: @long @done (13-08-13 13:09) @project(Get Regional plots with pileup p1328)
+ ✔ Period C+D @short @done (13-08-13 13:09) @project(Get Regional plots with pileup p1328)
+ ✔ Period A+B @short @done (13-08-13 13:05) @project(Get Regional plots with pileup p1328)
+ ✔ Period L @short @done (13-08-13 13:04) @project(Get Regional plots with pileup p1328)
+ ✔ Period J @short @done (13-08-13 13:01) @project(Get Regional plots with pileup p1328)
+ ✔ Period I @short @done (13-08-13 12:58) @project(Get Regional plots with pileup p1328)
+ ✔ Period H @short @done (13-08-13 12:57) @project(Get Regional plots with pileup p1328)
+ ✔ Re-run fitting PeriodB @version3 @done (13-08-13 12:53) @project(Getting regional plots without pileup)
+ ✔ Re-run fitting PeriodB @verion4 @done (13-08-13 12:51) @project(Getting regional plots without pileup)
+ ✔ Period G @short @done (13-08-13 12:47) @project(Get Regional plots with pileup p1328)
+ ✔ Retrieve results for Period A @verion4 @done (13-08-13 12:43) @project(Getting regional plots without pileup)
+ ✔ Period E @short @done (13-08-13 12:42) @project(Get Regional plots with pileup p1328)
+ ✔ Period A @short @done (13-08-13 12:39) @project(Get Regional plots with pileup p1328)
+ ✔ Period B @short @done (13-08-13 12:39) @project(Get Regional plots with pileup p1328)
+ ✔ Period C @short @done (13-08-13 12:39) @project(Get Regional plots with pileup p1328)
+ ✔ Period D @short @done (13-08-13 12:39) @project(Get Regional plots with pileup p1328)
+ ✔ Retrieve results for Period B @done (13-08-13 12:10) @project(Getting regional plots without pileup)
+ ✔ Re-run Period A with all good files @done (13-08-13 10:56) @project(Getting regional plots without pileup)
+ ✔ Re-run Period B with all good files @done (13-08-13 10:56) @project(Getting regional plots without pileup)
+ ✘ Run skim on new Prompt JPsi sample @cancelled (13-08-13 10:55) @project(Getting new MC samples)
+  'mc12_8TeV.208001.Pythia8B_AU2_CTEQ6L1_pp_Jpsimu4mu4.merge.NTUP_SMWZ.e1331_a159_a173_r3549_p1067/'
+ ✘ Run: @cancelled (13-08-13 10:55) @project(Getting new MC samples)
+ ✘ Add sample name to #RunSkimGridSubmit.cxx @cancelled (13-08-13 10:55) @project(Getting new MC samples)
+ ✘ Submit @cancelled (13-08-13 10:55) @project(Getting new MC samples)
+ ✘ Done @cancelled (13-08-13 10:55) @project(Getting new MC samples)
+ ✘ DQ2 sample: @cancelled (13-08-13 10:55) @project(Getting new MC samples)
+ ✘ Initial Download @cancelled (13-08-13 10:55) @project(Getting new MC samples)
+ ✘ Done @cancelled (13-08-13 10:55) @project(Getting new MC samples)
+ ✘ Move Files @cancelled (13-08-13 10:55) @project(Getting new MC samples)
+ ✔ Do Plotting: @done (13-08-13 10:47) @project(Getting regional plots without pileup)
+  'Uncertainties on individual periods too high'
+ ✔ Periods A+B+C+D @done (13-08-13 10:47) @project(Getting regional plots without pileup)
+ ✔ Add Periods together @done (13-08-13 10:41) @project(Getting regional plots without pileup)
+ ✔ Do Fitting: @done (13-08-13 10:41) @project(Getting regional plots without pileup)
+ ✔ Periods A+B+C+D @done (13-08-13 10:41) @project(Getting regional plots without pileup)
+ ✘ Find dataset with file and attempt redownload @cancelled (13-08-13 10:31) @project(Getting regional plots without pileup)
+ ✘ Find dataset with file and attempt redownload @cancelled (13-08-13 10:31) @project(Getting regional plots without pileup)
+ ✔ Period A @done (13-08-13 10:29) @project(Getting regional plots without pileup)
+ ✔ Period B @done (13-08-13 10:29) @project(Getting regional plots without pileup)
+ ✔ Period C @done (13-08-13 10:29) @project(Getting regional plots without pileup)
+ ✔ Period D @done (13-08-13 10:29) @project(Getting regional plots without pileup)
+ ✔ DQ2 Campaign: @wait @medium @done (13-08-13 10:02) @project(Grid Submission)
+ ✔ Period I: @done (13-08-13 10:02) @project(Grid Submission)
+ ✔ Move Files @done (13-08-13 10:02) @project(Grid Submission)
+ ✔ Period J: @done (13-08-13 10:02) @project(Grid Submission)
+ ✔ Move Files @done (13-08-13 10:02) @project(Grid Submission)
+ ✔ Period L: @done (13-08-13 10:02) @project(Grid Submission)
+ ✔ Move Files @done (13-08-13 10:02) @project(Grid Submission)
+ ✔ Done @done (13-08-13 09:49) @project(Grid Submission)
+ ✔ Done @done (13-08-13 09:49) @project(Grid Submission)
+ ✔ Do fitting @done (13-08-12 23:55) @project(Getting regional plots without pileup)
+ ✔ Period A @wait @done (13-08-12 23:55) @project(Getting regional plots without pileup)
+ ✔ Period B @wait @done (13-08-12 23:55) @project(Getting regional plots without pileup)
+ ✔ Period C @wait @done (13-08-12 23:55) @project(Getting regional plots without pileup)
+ ✔ Period D @wait @done (13-08-12 23:55) @project(Getting regional plots without pileup)
+ ✔ Initial Download @done (13-08-12 23:52) @project(Grid Submission)
+ ✔ Done @done (13-08-12 23:51) @project(Grid Submission)
+ ✔ Initial Download @done (13-08-12 20:00) @project(Grid Submission)
+ ✔ Submit remaining periods: @wait @medium @done (13-08-12 20:00) @project(Grid Submission)
+ ✔ Period L @short @wait @done (13-08-12 20:00) @project(Grid Submission)
  ✔ Email SMWZ people asking for D3PDs of lower pT filter samples @done (13-08-12 19:53) @project(Getting new MC samples)
   "Ask for 3.5 D3PD samples of prompt and non-prompt"
  ✔ NonPrompt JPsi @wait @done (13-08-12 19:52) @project(Getting regional plots without pileup)
