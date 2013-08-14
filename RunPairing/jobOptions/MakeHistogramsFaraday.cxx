@@ -1,12 +1,12 @@
  MakeHistogramsFaraday ( const std::string& processingTag,
                          const std::string& inputSample,
                          const std::string& label,
-                         const std::string& periodForPrw="PeriodB")
+                         const std::string& periodForPrw="None")
 {
   // Load the libraries for all packages
   gROOT->ProcessLine(".x $ROOTCOREDIR/scripts/load_packages.C+");
 
-  std::string prwFileName="mc12a_defaults.prw.root";
+  std::string sep = std::string(80, '=') + "\n";
 
   // Output name
   std::string outputName = "output";
@@ -14,20 +14,17 @@
   std::string batchName = "Batch-";
   batchName.append(processingTag);
 
-  std::string fullPath = "/scratch3/jblanco/SMTMiniNtuples/";
-  fullPath.append("SkimDB-");
-  fullPath.append(batchName);
-  fullPath.append(".xml");
+  std::stringstream fullPath;
+  fullPath << "/scratch3/jblanco/SMTMiniNtuples/SkimDB-" << batchName << ".xml";
 
-  std::cout << "Processing Sample: " << inputSample 
-            << " from: " << processingTag
-            << std::endl;
+  std::cout << sep << " Processing Sample: " << inputSample
+            << " from: " << processingTag << "\n" << sep;
 
-  std::cout << "Loading Skims DB : " << fullPath << std::endl;
+  std::cout << " Loading Skims DB : " << fullPath.str() << std::endl;
 
-  Skimming::SkimListReader* skimList = new Skimming::SkimListReader(fullPath, batchName);
+  Skimming::SkimListReader* skimList = new Skimming::SkimListReader(fullPath.str(), batchName);
   std::string inputDir = skimList->GetPeriodPath(inputSample);
-  std::cout << "Running over: " << inputDir << std::endl;
+  std::cout << " Running over: " << inputDir << std::endl;
 
   // Event Weighting object
   EventWeighting* eventWgt = new EventWeighting("NOMINAL");
@@ -41,24 +38,23 @@
 
   // Do PRW for MC only
   bool isMC = false;
-  if(TString(inputSample).Contains("JPsi") && doPRW == true)
-  { 
-    std::cout << "Running on MC, loading PRW configuration DB from: ";
+  if(TString(inputSample).Contains("JPsi") && TString(periodForPrw).Contains("None") != true)
+  {
     isMC = true;
-
-    std::stringstream prwConfigDBFullPath;
+    
     std::string prwSharePath = gSystem->ExpandPathName("$ROOTCOREDIR/data/PileupReweighting/");
-
-    prwConfigDBFullPath << prwSharePath << "PrwConfigDB-" << batchName << ".xml";
+    std::stringstream prwConfigDBFullPath;          
+    prwConfigDBFullPath << prwSharePath << "SkimDB-" << processingTag << ".xml";
+    std::cout << sep << " Running on MC, loading PRW configuration DB from: "
+              << prwConfigDBFullPath.str() << std::endl;
     
-    std::cout << "Loading configuration PRW DB from: " << prwConfigDBFullPath.str() << std::endl;
-    
-    Skimming::SkimListReader* prwConfiguration = new Skimming::SkimListReader(prwConfigDBFullPath.str(), batchName);
+    Skimming::SkimListReader* prwConfiguration = new Skimming::SkimListReader(prwConfigDBFullPath.str(), processingTag);
     std::string prwFullPath = prwConfiguration->GetPeriodPath(inputSample);
     std::string ilumiCalcFile = prwConfiguration->GetPeriodPath(periodForPrw);
 
-    std::cout << "Loading PRW configuration file " << prwFilePath << std::endl;
-    std::cout << "Loading iLumiCalc file: " << ilumiCalcFile << std::endl;
+    std::cout << " Loading PRW configuration file " << prwFullPath << std::endl;
+    std::cout << " Loading iLumiCalc file: " << ilumiCalcFile << std::endl;
+    
 
     Root::TPileupReweighting* pileupTool = new Root::TPileupReweighting("pileup");
     pileupTool->AddConfigFile(prwFullPath.c_str());
@@ -76,7 +72,9 @@
     pileupTool->Initialize();
 
     eventWgt->AddWeighting(new PileupReWeighting("PRW", "Pileup Reweighting Tool", pileupTool)); // PRW tool
+    
   }
+  std::cout << sep;
 
   // Create a new SampleHandler to grab all samples
   SH::SampleHandler sh;
@@ -159,7 +157,7 @@
   jetSelector->emfracCut = 0.8;
   jetSelector->nTrkCut = 3;
 
-  std::cout << "Setting up classifier" << std::endl;
+  std::cout << " Setting up classifier" << std::endl;
   TJPsiClassifier* jpsiClassifier = new TJPsiClassifier();
   jpsiClassifier->tagSelector = tagSelector;
   jpsiClassifier->pairSelector = pairSelector;
@@ -167,15 +165,14 @@
   jpsiClassifier->muonProbeSelector = muonProbeSelector;
   jpsiClassifier->smtSelector = smtSelector;
   jpsiClassifier->mcpSelector = mcpSelector;
+  std::cout << sep;
 
-  std::string prwShareFolder = "$ROOTCOREDIR/data/PileupReweighting/";
-  std::string prwFullPath = prwShareFolder + prwFileName;
-
-  std::cout << "Adding slices" << std::endl;
+  std::cout << " Setting up analysis components" << std::endl;
   histoFactory->varSlices = slices;
   histoFactory->jpsiClassifier = jpsiClassifier;
   histoFactory->jetSelector = jetSelector;
   histoFactory->eventWgt = eventWgt;
+  std::cout << sep;
 
   /// Set the number of events to print full debug information for
   histoFactory->nDebugEvents = 10;
@@ -210,6 +207,6 @@
 
   // Do submission
   driver.submitOnly (job, submitDir.str());
-
+  std::cout << sep;
   std::cout << "See output in: " << submitDir.str() << std::endl;
 }
