@@ -122,12 +122,6 @@ EL::StatusCode SampleHistograms :: execute ()
   LOG_DEBUG() << "============ Event " << eventCount << "============";
   eventCount++;
 
-  if(event->triggerbits.EF_mu6_Trk_Jpsi_loose() != 1)
-  {
-    LOG_DEBUG1() << "Failed trigger requirement"; 
-    return EL::StatusCode::SUCCESS;
-  }
-
   // Runs the classifier and returns 0 if no good pair has been found
   int goodPairFound = jpsiClassifier->classify(event->mu_staco, event->trk);
 
