@@ -1,5 +1,5 @@
 Getting regional plots without pileup:
-  Latest Results: 'Composite PeriodABCD v2'
+  Latest Results: 'Composite PeriodABCD v3'
 
   Notes:
     Skims:
@@ -14,16 +14,24 @@ Getting regional plots without pileup:
           user.jayb88.005575.EXT1._01096.output.root @removed @notongrid
           user.jayb88.005519.EXT1._00302.output.root @removed @notongrid
 
----- ✄ -----------------------
-Debugging Match-Chi^{2}:
-  ☐ Look at at the matchi-chi^{2}
-  
+Diagnosing procedure:
+  ☐ Double check the fits for strange points:
+    ☐ Look at reconstruction efficiency
+  ☐ Email SM Convener regarding SMWZ samples
+  Will doesn't have a straight-forward answer. Seems to be a pending issue.
+  ☐ Send athena log file to Will B.
+
+Submission scripts:
+  Standardize all scripts to output with standard naming scheme
+  'SFResult-#PROCESSINGTAG_#DATA_#MC-v#NUMBER_#COMMENT'
+  'SFPlot-#PROCESSINGTAG_#DATA_#MC-v#NUMBER_#COMMENT'
+
 
 Get Regional plots with pileup p1328:
-  ✔ Rename all iLumiCalc files @done (13-08-13 16:56)
-    'LumiCalc-p1328_PeriodA.root' -- Singles
-    'LumiCalc-p1328_PeriodAB.root' -- Composites
-    'LumiCalc-p1328_PeriodAL.root' -- For Range
+
+  'LumiCalc-p1328_PeriodA.root' -- Singles
+  'LumiCalc-p1328_PeriodAB.root' -- Composites
+  'LumiCalc-p1328_PeriodAL.root' -- For Range
   ☐ Run Pairings Prompt: @long
     ☐ All @medium
     ☐ Period A and B @medium
@@ -53,6 +61,36 @@ Calibration Note:
   There should be some todo thingies here
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Run with OR of multiple triggers PeriodAD @priority0: @done (13-08-14 16:10) @project(Get Regional plot with No PRW p1328)
+ ✔ Run fitting will all PeriodAD @done (13-08-14 16:10) @project(Get Regional plot with No PRW p1328)
+ ✔ Run Plotting @done (13-08-14 16:10) @project(Get Regional plot with No PRW p1328)
+ ✔ Plotting: @done (13-08-14 15:51) @project(Get Regional plot with No PRW p1328)
+ ✔ Period A @done (13-08-14 15:50) @project(Get Regional plot with No PRW p1328)
+ ✔ Period B @done (13-08-14 15:50) @project(Get Regional plot with No PRW p1328)
+ ✔ Period C @done (13-08-14 15:50) @project(Get Regional plot with No PRW p1328)
+ ✔ Period D @done (13-08-14 15:50) @project(Get Regional plot with No PRW p1328)
+ ✔ Fitting: @done (13-08-14 15:49) @project(Get Regional plot with No PRW p1328)
+ ✔ Period D @done (13-08-14 15:49) @project(Get Regional plot with No PRW p1328)
+ ✔ Period C @done (13-08-14 15:19) @project(Get Regional plot with No PRW p1328)
+ ✔ Period B @done (13-08-14 15:15) @project(Get Regional plot with No PRW p1328)
+ ✔ Period A @done (13-08-14 15:09) @project(Get Regional plot with No PRW p1328)
+ ✔ Retrieve: @wait @done (13-08-14 15:04) @project(Get Regional plot with No PRW p1328)
+ ✔ Period B @done (13-08-14 15:04) @project(Get Regional plot with No PRW p1328)
+ ✔ Prompt Jpsi @done (13-08-14 15:04) @project(Get Regional plot with No PRW p1328)
+ ✔ Period A @done (13-08-14 14:58) @project(Get Regional plot with No PRW p1328)
+ ✔ Find out what happens with multiple triggers when using PRW @done (13-08-14 14:58) @project(Diagnosing procedure)
+ ✔ Period C @done (13-08-14 14:38) @project(Get Regional plot with No PRW p1328)
+ ✔ Period D @done (13-08-14 14:38) @project(Get Regional plot with No PRW p1328)
+ ✔ Email James Catmore asking if the multiple triggers mess with the PRW given that it only takes a single trigger @done (13-08-14 14:33) @project(Diagnosing procedure)
+ ✔ Submit: @done (13-08-14 14:28) @project(Get Regional plot with No PRW p1328)
+ ✔ Period A @done (13-08-14 14:28) @project(Get Regional plot with No PRW p1328)
+ ✔ Period B @done (13-08-14 14:28) @project(Get Regional plot with No PRW p1328)
+ ✔ Period C @done (13-08-14 14:28) @project(Get Regional plot with No PRW p1328)
+ ✔ Period D @done (13-08-14 14:28) @project(Get Regional plot with No PRW p1328)
+ ✔ PromptJPsi @done (13-08-14 14:28) @project(Get Regional plot with No PRW p1328)
+ ✔ Make PRW DB file @done (13-08-14 12:59) @project(Get Regional plots with pileup p1328)
+ ✔ Look at submission scripts to Faraday to make sure that its possible to submit with alternate PRW configurations @done (13-08-14 11:26) @project(Get Regional plots with pileup p1328)
+ ✔ Rename all iLumiCalc files @done (13-08-13 16:56) @project(Get Regional plots with pileup p1328)
  ✔ Move all PRW configuration files to the correct place @done (13-08-13 16:04) @project(Get Regional plots with pileup p1328)
   'Move to PileupReweighting/data'
  ✔ Hadd all outFiles: @done (13-08-13 15:47) @project(Get Regional plots with pileup p1328)
