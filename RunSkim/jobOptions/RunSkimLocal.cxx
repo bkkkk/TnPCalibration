@@ -84,9 +84,6 @@ void RunSkimLocal ( const std::string samplePath,
   miniNtupleMaker->eventDebug = 10;
   miniNtupleMaker->triggerMatching = triggerMatching;
 
-  job.options()->setDouble (EL::Job::optMaxEvents, 1000);
-
-
   job.algsAdd(miniNtupleMaker);
   /// Create a new driver
   EL::DirectDriver driver;

@@ -47,6 +47,6 @@ then
   exit 1
 fi
 
-OUTPUTPATH=$ROOTCOREDIR/../RunMakeSF/finalOutput/output_$VAR_$LABEL/
+OUTPUTPATH=$ROOTCOREDIR/../RunMakeSF/finalOutput/SFPlot_$LABEL/
 
-root -b -q -l '$JODIR/Plotter.cxx("'$INPUTFILE'","'$OUTPUTPATH'")'
+root -b -q -l "$JODIR/Plotter.cxx(\"$INPUTFILE\",\"$OUTPUTPATH\")"

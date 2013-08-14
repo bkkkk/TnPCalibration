@@ -1,6 +1,6 @@
 #!/bin/bash
 
-T="$(date +%Y_%m_%d_%H_%M_%S)"
+T="$(date +%Y%m%d%H%M%S)"
 
 export RUNDIR=/home/jblanco/WorkArea/CalibrationWork/RunPairing
 export OUTPUTDIR=/scratch3/jblanco/CalibrationHistograms

@@ -33,7 +33,7 @@
   EventWeighting* eventWgt = new EventWeighting("NOMINAL");
 
   // Testing PRW disabled for now
-  bool doPRW = false;
+  bool doPRW = true;
   if(doPRW == false)
   {
     std::cout << "!!!!! WARNING !!!!! RUNNING WITH PRW DISABLED !!!!!! WARNING !!!!!!!" << std::endl;
@@ -47,18 +47,17 @@
     isMC = true;
 
     std::stringstream prwConfigDBFullPath;
-    std::string prwSharePath = gSystem->ExpandPathName("$ROOTCOREDIR/share/PileupReweighting/");
+    std::string prwSharePath = gSystem->ExpandPathName("$ROOTCOREDIR/data/PileupReweighting/");
 
     prwConfigDBFullPath << prwSharePath << "PrwConfigDB-" << batchName << ".xml";
     
-    std::cout << prwConfigDBFullPath.str() << std::endl;
+    std::cout << "Loading configuration PRW DB from: " << prwConfigDBFullPath.str() << std::endl;
     
     Skimming::SkimListReader* prwConfiguration = new Skimming::SkimListReader(prwConfigDBFullPath.str(), batchName);
-    
     std::string prwFullPath = prwConfiguration->GetPeriodPath(inputSample);
-    std::cout << "Loading PRW configuration file " << prwFilePath << std::endl;
-    
     std::string ilumiCalcFile = prwConfiguration->GetPeriodPath(periodForPrw);
+
+    std::cout << "Loading PRW configuration file " << prwFilePath << std::endl;
     std::cout << "Loading iLumiCalc file: " << ilumiCalcFile << std::endl;
 
     Root::TPileupReweighting* pileupTool = new Root::TPileupReweighting("pileup");
@@ -66,7 +65,11 @@
   
     // used to fix expected Nvtx discrepancy between MC and data due to z beam spot size
     bool runKFactorCorrection = false;
-    if(runKFactorCorrection != false) pileupTool->SetDataScaleFactors(1./1.11);
+    if(runKFactorCorrection != false) 
+    {
+      std::cout << "Running with scale factor Nvtx correction" << std::endl;
+      pileupTool->SetDataScaleFactors(1./1.11);
+    }
 
     pileupTool->AddLumiCalcFile(ilumiCalcFile.c_str());
     pileupTool->SetUnrepresentedDataAction(2);

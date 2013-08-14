@@ -44,30 +44,30 @@ done
 # Sets up output, scripts and jO directories
 source ./setup.sh
 
-if [[ -z $LABEL ]] || [[ -z $DATAINPUTDIR ]] || [[ -z $MCINPUTDIR ]]
+if [[ -z $DATAINPUTDIR ]]
+then 
+  echo "Missing Data Input Directory, use flag -d to set it"
+  exit
+fi
+
+if [[ -z $MCINPUTDIR ]]
+then 
+  echo "Missing Data Input Directory, use flag -m to set it"
+  exit
+fi
+
+if [[ -z $LABEL ]]
 then
-  echo variable missing
-  usage
+  echo "Output label missing, use flag -l to set it"
   exit 1
 fi
 
-echo "Please enter a description of the files to be outputted: "
-read DESCRIPTION
-
 T="$(date +%Y%m%d%H%M%S)"
-FULLOUTPUTDIR="$OUTPUTDIR/output_"$T"_$LABEL"
+FULLOUTPUTDIR="$OUTPUTDIR/SFResult_"$LABEL"_$T"
 
 mkdir $FULLOUTPUTDIR
 cd $FULLOUTPUTDIR
 
 root -b -l -q "$JODIR/MakeEfficiency.cxx(\"$DATAINPUTDIR\", \"$MCINPUTDIR\",\"$LABEL\")"
-
-echo $DESCRIPTION >> $FULLOUTPUTDIR/description.txt
-
-if [[ -d $FULLOUTPUTDIR ]]
-then
-  echo $MCINPUTDIR >> $FULLOUTPUTDIR/mcSource.txt
-  echo $DATAINPUTDIR >> $FULLOUTPUTDIR/dataSource.txt
-fi
 
 echo "See output in $FULLOUTPUTDIR"
