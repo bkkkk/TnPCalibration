@@ -19,7 +19,7 @@ Diagnosing procedure:
     ☐ Look at reconstruction efficiency
   ☐ Email SM Convener regarding SMWZ samples
   'Will doesn't have a straight-forward answer. Seems to be a pending issue.'
-  ☐ Figure out what the new athena issue is
+  ☐ Figure out what the new athena issue
 
 Submission scripts:
   Standardize all scripts to output with standard naming scheme
@@ -29,17 +29,18 @@ Get Regional plots with pileup p1328:
   'LumiCalc-p1328_PeriodA.root' -- Singles
   'LumiCalc-p1328_PeriodAB.root' -- Composites
   'LumiCalc-p1328_PeriodAL.root' -- For Range
-  ☐ Make Composite Period AL
-  ☐ Run the fitting mechanism on PeriodAl
-  ☐ Get plots of PeriodAL @short
   ☐ Push to Git @EndOfDay
 
-Getting new MC samples:
+Ideas for improvements:
+  
 
 Calibration Note:
   There should be some todo thingies here
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Get plots of PeriodAL @short @done (13-08-15 15:35) @project(Get Regional plots with pileup p1328)
+ ✔ Run the fitting mechanism on PeriodAl @done (13-08-15 15:33) @project(Get Regional plots with pileup p1328)
+ ✔ Make Composite Period AL @done (13-08-15 15:21) @project(Get Regional plots with pileup p1328)
  ✔ Retrieve from farm: @wait @done (13-08-15 15:18) @project(Get Regional plots with pileup p1328)
  ✔ Prompt JPsi: @done (13-08-15 15:18) @project(Get Regional plots with pileup p1328)
  ✔ Period AL @done (13-08-15 15:18) @project(Get Regional plots with pileup p1328)
