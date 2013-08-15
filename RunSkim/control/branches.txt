@@ -4,6 +4,7 @@ actualIntPerXing
 averageIntPerXing
 isSimulation
 lbn
+mc_channel_number
 mu_n
 mu_pt
 mu_eta
