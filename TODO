@@ -1,38 +1,20 @@
-Getting regional plots without pileup:
-  Latest Results: 'Composite PeriodABCD v3'
-
-  Notes:
-    Skims:
-      Period A:
-        'Version 3, one job failed due to file being corrupted from the grid:'
-          user.jayb88.005462.EXT1._00146.output.root @removed
-          user.jayb88.005462.EXT1._00147.output.root @removed
-      Period B:
-        'Version 2, two jobs failed due to files being corrupted from the grid:'
-          user.jayb88.005519.EXT1._00280.output.root @removed @notongrid
-          user.jayb88.005519.EXT1._00293.output.root @removed @notongrid
-          user.jayb88.005575.EXT1._01096.output.root @removed @notongrid
-          user.jayb88.005519.EXT1._00302.output.root @removed @notongrid
-
 Diagnosing procedure:
   ☐ Double check the fits for strange points:
     ☐ Look at reconstruction efficiency
-  ☐ Email SM Convener regarding SMWZ samples
-  'Will doesn't have a straight-forward answer. Seems to be a pending issue.'
+  'Will doesn't have a straight-forward answer. Seems to be a pending issue.'  
+  
+
+Pileup Reweighting procedure:
   ☐ Figure out what the new athena issue
 
-Submission scripts:
-  Standardize all scripts to output with standard naming scheme
-  'SFResult-#PROCESSINGTAG_#DATA_#MC-v#NUMBER_#COMMENT'
-  'SFPlot-#PROCESSINGTAG_#DATA_#MC-v#NUMBER_#COMMENT'
-Get Regional plots with pileup p1328:
-  'LumiCalc-p1328_PeriodA.root' -- Singles
-  'LumiCalc-p1328_PeriodAB.root' -- Composites
-  'LumiCalc-p1328_PeriodAL.root' -- For Range
+Getting new samples:
+  ☐ Email SM Convener regarding SMWZ samples
+  
+General:
   ☐ Push to Git @EndOfDay
 
 Ideas for improvements:
-  
+
 
 Calibration Note:
   There should be some todo thingies here
