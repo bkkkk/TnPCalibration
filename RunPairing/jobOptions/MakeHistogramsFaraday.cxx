@@ -218,7 +218,7 @@
   std::string basePath = "/scratch3/jblanco/CalibrationHistograms/";
   std::stringstream submitDir;
 
-  submitDir << basePath << "CalibSample-" << processingTag << "_" << inputSample << "-"    
+  submitDir << basePath << "CalibSample-" << processingTag << "_" << inputSample << "-"; 
 
   if (TString(periodForPrw).Contains("None") != 1)
   {
@@ -226,6 +226,8 @@
   } 
 
   submitDir << datime.str() << "_" << label;
+
+  std::cout << "Submit Dir :: " << submitDir.str() << std::endl;
 
   // Do submission
   driver.submitOnly (job, submitDir.str());
