@@ -18,49 +18,82 @@ Diagnosing procedure:
   ☐ Double check the fits for strange points:
     ☐ Look at reconstruction efficiency
   ☐ Email SM Convener regarding SMWZ samples
-  Will doesn't have a straight-forward answer. Seems to be a pending issue.
-  ☐ Send athena log file to Will B.
+  'Will doesn't have a straight-forward answer. Seems to be a pending issue.'
+  ☐ Figure out what the new athena issue is
 
 Submission scripts:
   Standardize all scripts to output with standard naming scheme
   'SFResult-#PROCESSINGTAG_#DATA_#MC-v#NUMBER_#COMMENT'
   'SFPlot-#PROCESSINGTAG_#DATA_#MC-v#NUMBER_#COMMENT'
-
-
 Get Regional plots with pileup p1328:
-
   'LumiCalc-p1328_PeriodA.root' -- Singles
   'LumiCalc-p1328_PeriodAB.root' -- Composites
   'LumiCalc-p1328_PeriodAL.root' -- For Range
-  ☐ Run Pairings Prompt: @long
-    ☐ All @medium
-    ☐ Period A and B @medium
-    ☐ Period C and D @medium
-    ☐ Period E @medium
-    ☐ Period G @medium
-    ☐ Period H @medium
-    ☐ Period I @medium
-    ☐ Period J @medium
-    ☐ Period L @medium
-  ☐ Run Pairings Non-Prompt: @long
-    ☐ All @medium
-    ☐ Period A and B @medium
-    ☐ Period C and D @medium
-    ☐ Period E @medium
-    ☐ Period G @medium
-    ☐ Period H @medium
-    ☐ Period I @medium
-    ☐ Period J @medium
-    ☐ Period L @medium
-
----- ✄ -----------------------
+  ☐ Run pairing on PromptJPsi: @priority1
+    ☐ Run PeriodAL
+  ☐ Retrieve from farm: @wait
+    ☐ Prompt JPsi:
+      ☐ Period AL
+    ☐ Make Composite Period AL
+  ☐ Run the fitting mechanism on PeriodAl
+  ☐ Get plots of PeriodAL @short
+  ☐ Push to Git @EndOfDay
 
 Getting new MC samples:
----- ✄ -----------------------
+
 Calibration Note:
   There should be some todo thingies here
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Fix #RunMakeHistograms.cxx to add which period its reweighted to, to the output name @priority0 @short @done (13-08-15 13:12) @project(Submission scripts)
+ ✔ Period I @done (13-08-15 12:57) @project(Get Regional plots with pileup p1328)
+ ✔ Period E @done (13-08-15 12:56) @project(Get Regional plots with pileup p1328)
+ ✔ Period G @done (13-08-15 12:56) @project(Get Regional plots with pileup p1328)
+ ✔ Period H @done (13-08-15 12:56) @project(Get Regional plots with pileup p1328)
+ ✔ Period J @done (13-08-15 12:56) @project(Get Regional plots with pileup p1328)
+ ✔ Period L @done (13-08-15 12:56) @project(Get Regional plots with pileup p1328)
+ ✔ Period A @done (13-08-15 12:55) @project(Get Regional plots with pileup p1328)
+ ✔ Period B @done (13-08-15 12:55) @project(Get Regional plots with pileup p1328)
+ ✔ Period C @done (13-08-15 12:55) @project(Get Regional plots with pileup p1328)
+ ✔ Period D @done (13-08-15 12:55) @project(Get Regional plots with pileup p1328)
+ ✘ Run Pairings Non-Prompt: @long @cancelled (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✘ All @medium @cancelled (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✘ Period A and B @medium @cancelled (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✘ Period C and D @medium @cancelled (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✘ Period E @medium @cancelled (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✘ Period G @medium @cancelled (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✘ Period H @medium @cancelled (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✘ Period I @medium @cancelled (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✘ Period J @medium @cancelled (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✘ Period L @medium @cancelled (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✔ Run Pairings with ALL triggers: @long @now @done (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✔ Prompt JPsi: @done (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✔ Period AL @done (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✔ Period A @done (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✔ Period B @done (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✔ Period C @done (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✔ Period D @done (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✔ Period E @done (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✔ Period G @done (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✔ Period H @done (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✔ Period I @done (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✔ Period J @done (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✔ Period L @done (13-08-15 12:36) @project(Get Regional plots with pileup p1328)
+ ✔ Period A @medium @done (13-08-15 12:35) @project(Get Regional plots with pileup p1328)
+ ✔ Period B @medium @done (13-08-15 12:35) @project(Get Regional plots with pileup p1328)
+ ✔ Period C @medium @done (13-08-15 12:35) @project(Get Regional plots with pileup p1328)
+ ✔ Period D @medium @done (13-08-15 12:35) @project(Get Regional plots with pileup p1328)
+ ✔ Period E @medium @done (13-08-15 12:35) @project(Get Regional plots with pileup p1328)
+ ✔ Period G @medium @done (13-08-15 12:35) @project(Get Regional plots with pileup p1328)
+ ✔ Period H @medium @done (13-08-15 12:35) @project(Get Regional plots with pileup p1328)
+ ✔ Period I @medium @done (13-08-15 12:35) @project(Get Regional plots with pileup p1328)
+ ✔ Period J @medium @done (13-08-15 12:35) @project(Get Regional plots with pileup p1328)
+ ✔ Period L @medium @done (13-08-15 12:35) @project(Get Regional plots with pileup p1328)
+ ✔ Double-check if the small changes in distributions are real or there is some other issue: @done (13-08-15 12:16) @project(Submission scripts)
+ ✔ Look at trigger overlap: @done (13-08-15 12:07) @project(Submission scripts)
+ ✔ Get the number of additional events provided by triggers OTHER then EF_mu6_Trk_Jpsi_loose @done (13-08-15 12:06) @project(Submission scripts)
+ ✔ Make a script to loop over all event triggers OTHER then EF_mu6_Trk_Jpsi_loose and get number of events which do fire that trigger but NOT EF_mu6_Trk_Jpsi_loose @done (13-08-15 12:06) @project(Submission scripts)
+ ✘ Send athena log file to Will B. @cancelled (13-08-14 16:45) @project(Diagnosing procedure)
  ✔ Run with OR of multiple triggers PeriodAD @priority0: @done (13-08-14 16:10) @project(Get Regional plot with No PRW p1328)
  ✔ Run fitting will all PeriodAD @done (13-08-14 16:10) @project(Get Regional plot with No PRW p1328)
  ✔ Run Plotting @done (13-08-14 16:10) @project(Get Regional plot with No PRW p1328)
