@@ -29,12 +29,7 @@ Get Regional plots with pileup p1328:
   'LumiCalc-p1328_PeriodA.root' -- Singles
   'LumiCalc-p1328_PeriodAB.root' -- Composites
   'LumiCalc-p1328_PeriodAL.root' -- For Range
-  ☐ Run pairing on PromptJPsi: @priority1
-    ☐ Run PeriodAL
-  ☐ Retrieve from farm: @wait
-    ☐ Prompt JPsi:
-      ☐ Period AL
-    ☐ Make Composite Period AL
+  ☐ Make Composite Period AL
   ☐ Run the fitting mechanism on PeriodAl
   ☐ Get plots of PeriodAL @short
   ☐ Push to Git @EndOfDay
@@ -45,6 +40,13 @@ Calibration Note:
   There should be some todo thingies here
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Retrieve from farm: @wait @done (13-08-15 15:18) @project(Get Regional plots with pileup p1328)
+ ✔ Prompt JPsi: @done (13-08-15 15:18) @project(Get Regional plots with pileup p1328)
+ ✔ Period AL @done (13-08-15 15:18) @project(Get Regional plots with pileup p1328)
+ ✔ Run pairing on PromptJPsi: @priority1 @done (13-08-15 14:42) @project(Get Regional plots with pileup p1328)
+ ✔ Look at PromptJPsi for mc_channel_number @done (13-08-15 14:42) @project(Get Regional plots with pileup p1328)
+ ✔ Find a work around if its not present @done (13-08-15 14:42) @project(Get Regional plots with pileup p1328)
+ ✔ Run PeriodAL @done (13-08-15 14:42) @project(Get Regional plots with pileup p1328)
  ✔ Fix #RunMakeHistograms.cxx to add which period its reweighted to, to the output name @priority0 @short @done (13-08-15 13:12) @project(Submission scripts)
  ✔ Period I @done (13-08-15 12:57) @project(Get Regional plots with pileup p1328)
  ✔ Period E @done (13-08-15 12:56) @project(Get Regional plots with pileup p1328)
