@@ -196,8 +196,6 @@ EL::StatusCode HistogramFactory :: execute ()
   LOG_DEBUG() << "============ Event " << eventCount << "============";
 
   float weight = eventWgt->GetTotalWeighting(event);
-
-  LOG_DEBUG() << "Weight is: " << weight;
   
   // Runs the classifier and returns 0 if no good pair has been found
   int goodPairFound = jpsiClassifier->classify(event->mu_staco, event->trk);
@@ -300,13 +298,6 @@ EL::StatusCode HistogramFactory :: postExecute ()
 
 EL::StatusCode HistogramFactory :: finalize ()
 {
-  LOG_INFO() << "Good Tags = " << goodTags;
-  LOG_INFO() << "Good Probes = " << goodProbes;
-  LOG_INFO() << "Possible Pairs = " << possiblePairs;
-  LOG_INFO() << "Good Pairs = " << goodPairs;
-  LOG_INFO() << "Good MuonProbe Pair = " << goodMuonProbePairs;
-  LOG_INFO() << "Good SMT Pair = " << goodSmtMuonProbePairs;
-
   return EL::StatusCode::SUCCESS;
 }
 
