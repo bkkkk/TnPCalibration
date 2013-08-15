@@ -182,18 +182,6 @@ EL::StatusCode SampleHistograms :: execute ()
 
   LOG_DEBUG() << "Chosen tag: " << chosenTag << " and probe: " << chosenProbe << " and MuonProbe: " << chosenMuonProbe;
 
-  // Can only run on full NTUP_SMWZ
-#if 0
-  if(event->eventinfo.isSimulation() != 0)
-  {
-    truthMatchingTool = new TT::TruthMuonMatching(event->mc);
-    truthMatchingTool->deltaRCut = 0.01;
-    if(truthMatchingTool->MatchMuonPair(event->mu_staco[chosenTag], event->mu_staco[chosenMuonProbe]) == 1)
-    { LOG_DEBUG() << "Pair Is Truth Matched";
-    };
-  };
-#endif
-
   float dz0 = 0;
   float dd0 = 0;
   float deta = 0;
@@ -331,25 +319,6 @@ FillHistograms( const D3PDReader::MuonD3PDObjectElement& tag,
 
   float muonprobe_trackpvz0unbiased = 0;
   if (event->mu_staco[muonProbeIdx].trackz0pvunbiased.IsAvailable()) muonprobe_trackpvz0unbiased = event->mu_staco[muonProbeIdx].trackz0pvunbiased();
-
-  
-  #if 0
-  // Fill dz0 in slices of z0
-  static const float slices[] = { 0, 0.1, 0.2, 0.4, 1.0, 2.0, 4.0, 10 };
-  std::stringstream strName;
-  for(int edgeIdx = 1; edgeIdx != 8; edgeIdx++)
-  {
-    std::stringstream strName, strTitle;
-    strName << "h_probe_tag_dz0_PV_" << slices[edgeIdx-1] << "_" << slices[edgeIdx];    
-
-    LOG_DEBUG1() << "Filling z0 Name: " << strName.str();
-
-    if(trk_z0_wrtPV > slices[edgeIdx-1] && trk_z0_wrtPV < slices[edgeIdx])
-    {
-      histosCollector->FillHistogram(strName.str().c_str(), tag_probe_dz0_wrtPV, weight );
-    };
-  };
-#endif
 
   // Fill inclusive histos
   histosCollector->FillHistogram("h_probe_z0_PV_wgt", trk_z0_wrtPV, weight);
