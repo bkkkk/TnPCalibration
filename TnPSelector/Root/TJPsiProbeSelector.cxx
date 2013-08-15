@@ -35,13 +35,6 @@ int TJPsiProbeSelector::initialize(void)
 /// Accept
 int TJPsiProbeSelector::accept(const D3PDReader::TrackParticleD3PDObjectElement& track)
 {
-	// This is needed when I am running with momentum rather then pt
-/**
-	TLorentzVector trackVec = TNP::GetTrackVector(track.pt(), track.eta(), track.phi_wrtPV());
-	float p = trackVec.P();
-	float eta = track.eta();
-	return (accept(eta, p));
-*/
 	float eta = track.eta();
 	float pt = track.pt();
 	return (accept(eta, pt));
