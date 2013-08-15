@@ -71,15 +71,31 @@
     pileupTool->SetUnrepresentedDataAction(2);
     pileupTool->Initialize();
 
-    eventWgt->AddWeighting(new PileupReWeighting("PRW", "Pileup Reweighting Tool", pileupTool)); // PRW tool
-    
+    double override = 0;
+    bool doOverride = true;
+    if(doOverride == true)
+    {
+      std::cout << "!!! Running in Channel override mode !!!" << std::endl;
+      if(TString(inputSample).Contains("NonPromptJPsi"))
+      {
+        override = 208202;
+      } else
+      {
+        override = 208002;
+      }
+    }
+
+    eventWgt->AddWeighting(new PileupReWeighting("PRW", "Pileup Reweighting Tool", pileupTool, override)); // PRW tool
   }
   std::cout << sep;
 
   // Create a new SampleHandler to grab all samples
   SH::SampleHandler sh;
   SH::scanDir(sh, inputDir);
+  sh.print();
   sh.setMetaString ("nc_tree", "physics");
+  sh.setMetaString ("inputSample", inputSample);
+  sh.setMetaString ("processingTag", processingTag);
 
   // Create a new job
   EL::Job job;
