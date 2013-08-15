@@ -1,25 +1,23 @@
 Diagnosing procedure:
-  ☐ Double check the fits for strange points:
-    ☐ Look at reconstruction efficiency
-  'Will doesn't have a straight-forward answer. Seems to be a pending issue.'  
-  
+  Examine reconstruction efficiency:
+    'Looking at overall eta and pt it seems that the fitting is not always getting 
+     the whole peak'
 
 Pileup Reweighting procedure:
   ☐ Figure out what the new athena issue
 
-Getting new samples:
-  ☐ Email SM Convener regarding SMWZ samples
-  
 General:
-  ☐ Push to Git @EndOfDay
 
 Ideas for improvements:
 
 
 Calibration Note:
-  There should be some todo thingies here
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Double check the fits for strange points @done (13-08-15 16:47) @project(Diagnosing procedure)
+ ✔ Push to Git @EndOfDay @done (13-08-15 16:45) @project(General)
+ ✔ Email SM Convener regarding SMWZ samples @done (13-08-15 16:31) @project(Getting new samples)
+ ✔ Look at reconstruction efficiency @done (13-08-15 15:39) @project(Diagnosing procedure)
  ✔ Get plots of PeriodAL @short @done (13-08-15 15:35) @project(Get Regional plots with pileup p1328)
  ✔ Run the fitting mechanism on PeriodAl @done (13-08-15 15:33) @project(Get Regional plots with pileup p1328)
  ✔ Make Composite Period AL @done (13-08-15 15:21) @project(Get Regional plots with pileup p1328)
