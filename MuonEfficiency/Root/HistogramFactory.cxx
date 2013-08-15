@@ -150,25 +150,6 @@ EL::StatusCode HistogramFactory :: histInitialize ()
                                                     invMassBin, minMass, maxMass);
                   wk()->addOutput(sliceHistos[histoNameCC]);
                 }
-
-                // This allows for 3D slices but for now we don't need this and
-                // it slows things down dramatically
-  #if 0
-                for(size_t colC = 0; colC < nColumns; colC++)
-                {
-                  for (size_t rowC = rowB + 1; rowC < nRows; rowC++)
-                  {
-                    // Add Variable 3
-                    std::string varC = varSlices.varNames[rowC];
-                    float bottomC = varSlices.varMap.at(varC)[colC].first;
-                    float topC = varSlices.varMap.at(varC)[colC].second;
-                    
-                    if(topC != kDONTREAD) {
-                      
-                    };
-                  }; // End for rowC
-                }; // End for colC
-  #endif
               }; // End if topB is dummy 
             }; // 
           }; //
@@ -435,21 +416,6 @@ fillHistograms(const std::string& level, const float invMass,
   LOG_DEBUG2() << "Filling 2D portion";
   LOG_DEBUG2() << prefix << ptLabel << etaLabel << level;
   sliceHistos[prefix + ptLabel + etaLabel + level]->Fill(invMass, weight);
-
-  // Dont need to fill any of these
-#if 0
-  LOG_DEBUG1() << prefix << phiLabel << ptLabel << level;
-  sliceHistos[prefix + ptLabel + phiLabel + level]->Fill(invMass, weight);
-  LOG_DEBUG1() << prefix << etaLabel << phiLabel << level;
-  sliceHistos[prefix + etaLabel + phiLabel + level]->Fill(invMass, weight);
-#endif 
-
-  // Don't need to fill 3D histograms
-#if 0
-  LOG_DEBUG1() << "Filling 3D portion";
-  /// Accessing maps in this way is horribly unsafe
-  sliceHistos[prefix + etaLabel + phiLabel + ptLabel + level]->Fill(invMass);    
-#endif
 
   LOG_DEBUG2() << "All Done Filling";
 
