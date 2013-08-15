@@ -7,7 +7,8 @@
 class PileupReWeighting : public Weighting
 {
 public:
-	PileupReWeighting(const std::string& name="", const std::string& title="", Root::TPileupReweighting* tool=NULL);
+	PileupReWeighting( const std::string& name="", const std::string& title="", 
+                     Root::TPileupReweighting* tool=NULL, double override = 0 );
 
 public:
 	// Dtor
@@ -16,9 +17,10 @@ public:
 public:
 	// Returns weight
 	double GetWeight(const D3PDReader::Event* event);
-
+  
 private:
 	Root::TPileupReweighting* pileupTool;
+  double channelOverride;
 
 	ClassDef(PileupReWeighting, 1);
 };
