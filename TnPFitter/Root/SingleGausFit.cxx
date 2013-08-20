@@ -93,9 +93,9 @@ SetCompositeUpFunction (void)
 
     histogram->Fit(compositeUpFunction, fitConfig.GetFitOptions().c_str());
 
-    backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(6));
-    backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(7));
-    backgroundUpFunction->SetParameter(2, compositeUpFunction->GetParameter(8));
+    backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(3));
+    backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(4));
+    backgroundUpFunction->SetParameter(2, compositeUpFunction->GetParameter(5));
 
     LOG_DEBUG1() << "Constant = " << backgroundUpFunction->GetParameter(0);
     LOG_DEBUG1() << "Slope = " << backgroundUpFunction->GetParameter(1);
@@ -128,9 +128,9 @@ SetCompositeDownFunction (void)
 
     histogram->Fit(compositeDownFunction, fitConfig.GetFitOptions().c_str());
 
-    backgroundDownFunction->SetParameter(0, compositeDownFunction->GetParameter(6));
-    backgroundDownFunction->SetParameter(1, compositeDownFunction->GetParameter(7));
-    backgroundDownFunction->SetParameter(2, compositeDownFunction->GetParameter(8));
+    backgroundDownFunction->SetParameter(0, compositeDownFunction->GetParameter(3));
+    backgroundDownFunction->SetParameter(1, compositeDownFunction->GetParameter(4));
+    backgroundDownFunction->SetParameter(2, compositeDownFunction->GetParameter(5));
 
     LOG_DEBUG3() << "After fit";
     LOG_DEBUG3() << "Constant = " << backgroundDownFunction->GetParameter(0);
