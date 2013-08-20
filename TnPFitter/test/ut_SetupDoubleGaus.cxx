@@ -26,9 +26,9 @@ int main(int argc, char *argv[])
   str >> window;
   if(window == 0) window = 2;
 
-  std::string filePathData = "/scratch3/jblanco/CalibrationHistograms/dataSet_2013_07_29_14_17_04_Test/hist-user.jayb88.2013062512.periodAB.root";
-  std::string filePathMC = "/scratch3/jblanco/CalibrationHistograms/dataSet_2013_07_29_12_43_57_PromptJpsi-PeriodB/hist-user.jayb88.mc12_8TeV.208001.Pythia8B_AU2_CTEQ6L1_pp_Jpsimu4mu4.merge.NTUP_SMWZ.e1331_a159_a173_r3549_p1067.root";
-  std::string highBkgHistoName = "InvMass_pt_5000.00_6000.00";
+  std::string filePathData = "./hist-user.test.root";
+  std::string filePathMC = "./hist-user.test.root";
+  std::string highBkgHistoName = "InvMass_eta_0.10_1.10";
   
   TFile* testDataFile = TFile::Open(filePathData.c_str(), "OPEN");
   TFile* testMCFile = TFile::Open(filePathMC.c_str(), "OPEN");
@@ -36,6 +36,7 @@ int main(int argc, char *argv[])
   if(testDataFile->IsZombie() == 1 || testMCFile->IsZombie() == 1)
   {
     std::cout << "File could not be opened" << std::endl;
+    return 1;
   };
 
   TH1F* probeHisto = dynamic_cast<TH1F*> (testDataFile->Get( (highBkgHistoName + "_Probe").c_str() ) );

@@ -1,5 +1,6 @@
 #include <TnPFitter/FitIntegral.h>
 #include <TnPFitter/DoubleGausFit.h>
+#include <TnPFitter/SingleGausFit.h>
 #include <TH1F.h>
 #include <TF1.h>
 #include <JacobUtils/LoggingUtility.h>
@@ -16,13 +17,25 @@ FitIntegral(const std::string& name, TH1F* histogram, double min, double max)
     throw;
   }
 
-  fFitter = new DoubleGausFit(name, histogram, TNPFITTER::BuildFitConfiguration(histogram));
+  // Used for determining what is low and high background
+  double threshold = 0.07;
+
+  if(TNPFITTER::IsLowBackground(histogram, min, threshold))
+  {
+    LOG_DEBUG1() << "Running with DGaus";
+    fFitter = new DoubleGausFit(name, histogram, TNPFITTER::BuildFitConfiguration(histogram));
+  } else
+  {
+    LOG_DEBUG1() << "Running with SGaus";
+    fFitter = new SingleGausFit(name, histogram, TNPFITTER::BuildSingleGausFitConfiguration(histogram));
+  }
+
   TNPFITTER::RunFit( fFitter );
 }
 
 //______________________________________________________________________________
 FitIntegral::
-FitIntegral( DoubleGausFit* fitter )
+FitIntegral( FitInterface* fitter )
   : fName(""),
     fFitter(fitter)
 {
