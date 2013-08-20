@@ -45,13 +45,14 @@ int main(int argc, char** argv)
   if(testFile->IsZombie() == 1)
   {
     std::cout << "File could not be opened" << std::endl;
+    return(12);
   };
 
   TH1F* histo = dynamic_cast<TH1F*> (testFile->Get(highBkgHistoName.c_str()));
-  
   if(histo == NULL)
   {
     std::cout << "Histograms could not be opened" << std::endl;
+    return(11);
   };
 
   DoubleGausFit* fit = new DoubleGausFit("probe", histo, TNPFITTER::BuildFitConfiguration(histo));
