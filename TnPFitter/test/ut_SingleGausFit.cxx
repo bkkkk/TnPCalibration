@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     std::cout << "Histograms could not be opened" << std::endl;
   };
 
-  SingleGausFit* fit = new SingleGausFit("probe", histo, TNPFITTER::BuildFitConfiguration(histo));
+  SingleGausFit* fit = new SingleGausFit("probe", histo, TNPFITTER::BuildSingleGausFitConfiguration(histo));
   TNPFITTER::RunFit( fit );
   TNPFITTER::DrawFit( fit, sigma, window );
 
