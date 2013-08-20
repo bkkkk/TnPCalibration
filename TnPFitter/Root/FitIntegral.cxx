@@ -20,7 +20,7 @@ FitIntegral(const std::string& name, TH1F* histogram, double min, double max)
   // Used for determining what is low and high background
   double threshold = 0.07;
 
-  if(TNPFITTER::IsLowBackground(histogram, threshold, min))
+  if(TNPFITTER::IsLowBackground(histogram, min, threshold))
   {
     fFitter = new DoubleGausFit(name, histogram, TNPFITTER::BuildFitConfiguration(histogram));
   } else
