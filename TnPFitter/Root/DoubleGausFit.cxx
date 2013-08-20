@@ -260,7 +260,7 @@ BuildFitConfiguration(TH1* histogram)
 
   double testValue = histogram->GetBinContent( bin );
 
-
+  // @todo remove magic numbers
   if(histogram->GetMaximum() * 0.07 > testValue)
   {
     LOG_DEBUG() << "====> LOW BACKGROUND MODE";
