@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
   int window = 2;
   str >> window;
 
-  std::string filepath = "/scratch3/jblanco/CalibrationHistograms/dataSet_2013_07_16_16_51_02_PeriodB/hist-user.jayb88.20130625122121.data12_8TeV.periodB.physics_Muons.PhysCont.NTUP_SMWZ.grp13_v01_p1067.root";
-  std::string highBkgHistoName = "InvMass_eta_1.10_1.30_Probe";
+  std::string filepath = "./hist-user.test.root";
+  std::string highBkgHistoName = "InvMass_eta_2.00_2.50_Probe";
   
   TFile* testFile = new TFile(filepath.c_str(), "OPEN");
   if(testFile->IsZombie() == 1)
