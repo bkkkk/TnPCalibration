@@ -237,6 +237,7 @@ GetSigmaAndMu(double& sigma, double& mu)
 FitConfig TNPFITTER::
 BuildFitConfiguration(TH1* histogram)
 {
+  // @todo remove magic numbers
   double min = 2.63;
   double max = 3.5;
 
