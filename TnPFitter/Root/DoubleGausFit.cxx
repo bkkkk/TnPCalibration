@@ -248,8 +248,8 @@ BuildFitConfiguration(TH1* histogram)
   pars.push_back( ROOT::Fit::ParameterSettings("Narrow Sigma", 0.1, 0, 0.02, 0.2) );
 
   pars.push_back( ROOT::Fit::ParameterSettings("Wide N", histogram->GetMaximum(), 0, 0.0001, 10000000));
-  pars.push_back( ROOT::Fit::ParameterSettings("Wide Mean", 3.097, 0, 2.8, 3.3) );
-  pars.push_back( ROOT::Fit::ParameterSettings("Wide Sigma", 0.3, 0, 0.05, 0.7) );
+  pars.push_back( ROOT::Fit::ParameterSettings("Wide Mean", 3.097, 0, 2.7, 3.4) );
+  pars.push_back( ROOT::Fit::ParameterSettings("Wide Sigma", 0.3, 0, 0.08, 0.7) );
 
   std::string polyPlusDoubleGaus = "gaus(0) + gaus(3) + [6] + [7] * x + [8] * x * x";
   std::string doubleGaus = "gaus(0) + gaus(3)";
