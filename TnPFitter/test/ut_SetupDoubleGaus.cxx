@@ -36,6 +36,7 @@ int main(int argc, char *argv[])
   if(testDataFile->IsZombie() == 1 || testMCFile->IsZombie() == 1)
   {
     std::cout << "File could not be opened" << std::endl;
+    return 1;
   };
 
   TH1F* probeHisto = dynamic_cast<TH1F*> (testDataFile->Get( (highBkgHistoName + "_Probe").c_str() ) );
