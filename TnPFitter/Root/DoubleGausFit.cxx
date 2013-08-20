@@ -262,12 +262,10 @@ BuildFitConfiguration(TH1* histogram)
 
   if(TNPFITTER::IsLowBackground(histogram, min, 0.07))
   {
-    LOG_DEBUG() << "====> LOW BACKGROUND MODE ====";
     fitConfig = new FitConfig(doubleGaus, 6, true, min, max);
   }
   else
   {
-    LOG_DEBUG() << "====> HIGH BACKGROUND MODE ====";
     fitConfig = new FitConfig(polyPlusDoubleGaus, 9, false, min, max);
 
     pars.push_back( ROOT::Fit::ParameterSettings("Constant", 0) );
