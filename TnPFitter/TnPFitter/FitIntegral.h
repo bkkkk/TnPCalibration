@@ -5,14 +5,16 @@
 
 #include "TObject.h"
 
-class DoubleGausFit;
+#include "TnPFitter/DoubleGausFit.h"
+#include "TnPFitter/SingleGausFit.h"
+
 class TH1F;
 
 class FitIntegral
 {
 public:
-	FitIntegral(DoubleGausFit* fitter);
-  FitIntegral(const std::string& name, TH1F* histogram, double min = 2.61, double max = 3.5);
+	FitIntegral(FitInterface* fitter);
+  FitIntegral(const std::string& name, TH1F* histogram, double min = 2.63, double max = 3.5);
 
 public:
 	~FitIntegral();
@@ -31,7 +33,7 @@ public:
 
 private:
   std::string fName;
-	DoubleGausFit* fFitter;
+	FitInterface* fFitter;
 
 	ClassDef(FitIntegral, 1)
 };
