@@ -191,7 +191,6 @@ BuildSingleGausFitConfiguration(TH1* histogram)
   double min = 2.63;
   double max = 3.5;
 
-  int bin = histogram->FindBin(min);
   std::vector<ROOT::Fit::ParameterSettings> pars;
 
   pars.push_back( ROOT::Fit::ParameterSettings("Gaus N", histogram->GetMaximum(), 0, 0.0001, 10000000));
@@ -203,8 +202,6 @@ BuildSingleGausFitConfiguration(TH1* histogram)
   std::string poly = "[0] + [1] * x + [2] * x * x";
 
   FitConfig* fitConfig;
-
-  double testValue = histogram->GetBinContent( bin );
 
   if(TNPFITTER::IsLowBackground(histogram, min, 0.07))
   {
