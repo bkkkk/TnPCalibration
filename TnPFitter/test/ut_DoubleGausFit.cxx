@@ -8,18 +8,20 @@
 #include <vector>
 #include <sstream>
 
-int main(int argc, char *argv[])
+int main(int argc, char** argv)
 {
   int testStatus = 1;
   
   std::stringstream str;
 
+  // Grab sigma from prompt
   str << argv[1];
   int sigma = 3;
   str >> sigma;
-
   str.clear();
   str.str(std::string());
+
+  // Grab integration window from prompt
   str << argv[2];
   int window = 2;
   str >> window;
