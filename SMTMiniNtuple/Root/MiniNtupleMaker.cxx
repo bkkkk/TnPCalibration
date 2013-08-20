@@ -217,7 +217,7 @@ namespace MIN {
     // Loop over muons to find tags
     for(int muon = 0; muon != event->mu_staco.n(); ++muon)
     {
-      LOG_DEBUG() << "Current muon = " << muon+1 << "/" << event->mu_staco.n();
+      LOG_DEBUG() << "Current muon = " << muon + 1 << "/" << event->mu_staco.n();
       if( tagSelector->accept(event->mu_staco[muon]) &&
           mcpSelector->accept(event->mu_staco[muon]) &&
           triggerMatching->accept(event->mu_staco[muon], event->trig_EF_trigmuonef ) )
