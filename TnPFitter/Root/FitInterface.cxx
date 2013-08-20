@@ -259,7 +259,7 @@ DrawFit(FitInterface* fitter, int sigma, int window)
 
 //______________________________________________________________________________
 bool TNPFITTER::
-IsHighBackground(TH1* histogram, double fittingEdge, double threshold)
+IsLowBackground(TH1* histogram, double fittingEdge, double threshold)
 {
   // Test if histogram is valid
   if(histogram == NULL)
@@ -277,12 +277,12 @@ IsHighBackground(TH1* histogram, double fittingEdge, double threshold)
   if(histogram->GetMaximum() * threshold > testValue)
   {
     LOG_DEBUG() << "====> LOW BACKGROUND MODE ====";
-    return false;
+    return true;
   }
   else
   {
     LOG_DEBUG() << "====> HIGH BACKGROUND MODE ====";
-    return true;
+    return false;
   }
 }
 
