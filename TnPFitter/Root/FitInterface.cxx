@@ -258,5 +258,33 @@ DrawFit(FitInterface* fitter, int sigma, int window)
 }
 
 //______________________________________________________________________________
+bool TNPFITTER::
+IsHighBackground(TH1* histogram, double fittingEdge, double threshold)
+{
+  // Test if histogram is valid
+  if(histogram == NULL)
+  {
+    throw std::string ("Can't check background mode, histogram is not valid");
+  }
+
+  // Check form of threshold variable
+  if(threshold > 1) threshold *= (1/100);
+
+  // Get comparison bin
+  double testValue = histogram->GetBinContent(histogram->FindBin(fittingEdge));
+
+  // Pick mode
+  if(histogram->GetMaximum() * threshold > testValue)
+  {
+    LOG_DEBUG() << "====> LOW BACKGROUND MODE ====";
+    return false;
+  }
+  else
+  {
+    LOG_DEBUG() << "====> HIGH BACKGROUND MODE ====";
+    return true;
+  }
+}
+
 
 ClassImp(FitInterface)

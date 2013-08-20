@@ -111,6 +111,7 @@ namespace TNPFITTER
 {
   void RunFit(FitInterface* fitter);
   void DrawFit(FitInterface* fitter, int sigma, int window);
+  bool IsHighBackground(TH1* histogram, double fittingEdge, double threshold = 0.07);
 }
 
 #endif
