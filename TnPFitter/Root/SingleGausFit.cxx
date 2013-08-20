@@ -206,8 +206,7 @@ BuildSingleGausFitConfiguration(TH1* histogram)
 
   double testValue = histogram->GetBinContent( bin );
 
-  // @todo remove magic numbers
-  if(histogram->GetMaximum() * 0.07 > testValue)
+  if(TNPFITTER::IsLowBackground(histogram, min, 0.07))
   {
     LOG_DEBUG() << "====> LOW BACKGROUND MODE ====";
     fitConfig = new FitConfig(singleGaus, 3, true, min, max);
