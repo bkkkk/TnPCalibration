@@ -208,12 +208,10 @@ BuildSingleGausFitConfiguration(TH1* histogram)
 
   if(TNPFITTER::IsLowBackground(histogram, min, 0.07))
   {
-    LOG_DEBUG() << "====> LOW BACKGROUND MODE ====";
     fitConfig = new FitConfig(singleGaus, 3, true, min, max);
   }
   else
   {
-    LOG_DEBUG() << "====> HIGH BACKGROUND MODE ====";
     fitConfig = new FitConfig(polyPlusSingleGaus, 6, false, min, max);
 
     pars.push_back( ROOT::Fit::ParameterSettings("Constant", 0) );
