@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 int main(int argc, char *argv[])
 {
@@ -22,10 +23,22 @@ int main(int argc, char *argv[])
   str << argv[2];
   int window = 2;
   str >> window;
+  str.clear();
+  str.str(std::string());
+
+  // Grab binning to fit from prompt
+  str << argv[3];
+  std::string bin = "eta_-0.10_0.00";
+  str >> bin;
+  str.clear();
+  str.str(std::string());
+  
 
   std::string filepath = "./hist-user.test.root";
-  std::string highBkgHistoName = "InvMass_eta_2.00_2.50_Probe";
-  
+  std::stringstream inputHistoName;
+  inputHistoName << "InvMass_" << bin << "_Probe";
+  std::string highBkgHistoName = inputHistoName.str();
+
   TFile* testFile = new TFile(filepath.c_str(), "OPEN");
   if(testFile->IsZombie() == 1)
   {
