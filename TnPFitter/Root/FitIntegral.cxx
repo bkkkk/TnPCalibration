@@ -22,9 +22,11 @@ FitIntegral(const std::string& name, TH1F* histogram, double min, double max)
 
   if(TNPFITTER::IsLowBackground(histogram, min, threshold))
   {
+    LOG_DEBUG1() << "Running with DGaus";
     fFitter = new DoubleGausFit(name, histogram, TNPFITTER::BuildFitConfiguration(histogram));
   } else
   {
+    LOG_DEBUG1() << "Running with SGaus";
     fFitter = new SingleGausFit(name, histogram, TNPFITTER::BuildSingleGausFitConfiguration(histogram));
   }
 
