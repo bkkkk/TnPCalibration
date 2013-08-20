@@ -263,12 +263,12 @@ BuildFitConfiguration(TH1* histogram)
   // @todo remove magic numbers
   if(histogram->GetMaximum() * 0.07 > testValue)
   {
-    LOG_DEBUG() << "====> LOW BACKGROUND MODE";
+    LOG_DEBUG() << "====> LOW BACKGROUND MODE ====";
     fitConfig = new FitConfig(doubleGaus, 6, true, min, max);
   }
   else
   {
-    LOG_DEBUG() << "====> HIGH BACKGROUND MODE";
+    LOG_DEBUG() << "====> HIGH BACKGROUND MODE ====";
     fitConfig = new FitConfig(polyPlusDoubleGaus, 9, false, min, max);
 
     pars.push_back( ROOT::Fit::ParameterSettings("Constant", 0) );
