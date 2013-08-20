@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
   str >> window;
 
   std::string filepath = "./hist-user.test.root";
-  std::string highBkgHistoName = "InvMass_eta_0.10_1.10_Probe";
+  std::string highBkgHistoName = "InvMass_eta_2.00_2.50_Probe";
   
   TFile* testFile = new TFile(filepath.c_str(), "OPEN");
   if(testFile->IsZombie() == 1)
