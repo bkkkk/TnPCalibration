@@ -141,7 +141,7 @@
   /// Configure probe
   
   TJPsiProbeSelector* probeSelector = new TJPsiProbeSelector();
-  probeSelector->etaCut = 2.5; probeSelector->pCut = 6500;
+  probeSelector->etaCut = 2.5; probeSelector->pCut = 4000;
   if(probeSelector->pCut != 3000)
   {
     std::cout << "!!!!! WARNING !!!!! Running with probe pT cut : "
