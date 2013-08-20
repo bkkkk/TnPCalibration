@@ -12,7 +12,6 @@
 #include <TH1F.h>
 #include <TF1.h>
 
-
 class DoubleGausFit : public FitInterface 
 {
 public:
