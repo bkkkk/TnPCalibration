@@ -40,7 +40,7 @@ public:
 namespace TNPFITTER
 {
   // Setup a fitconfig object
-  FitConfig BuildFitConfiguration(TH1* histogram);
+  FitConfig BuildFitConfiguration(TH1* histogram, double min = 2.63, double max = 3.5);
 }
 
 #endif

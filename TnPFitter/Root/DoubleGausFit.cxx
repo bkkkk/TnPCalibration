@@ -235,12 +235,8 @@ GetSigmaAndMu(double& sigma, double& mu)
 
 //______________________________________________________________________________
 FitConfig TNPFITTER::
-BuildFitConfiguration(TH1* histogram)
+BuildFitConfiguration(TH1* histogram, double min, double max)
 {
-  // @todo remove magic numbers
-  double min = 2.63;
-  double max = 3.5;
-
   std::vector<ROOT::Fit::ParameterSettings> pars;
 
   pars.push_back( ROOT::Fit::ParameterSettings("Narrow N", histogram->GetMaximum(), 0, 0.0001, 10000000));
