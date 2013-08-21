@@ -41,7 +41,7 @@ public:
 namespace TNPFITTER
 {
   // Setup fit config object
-  FitConfig BuildSingleGausFitConfiguration(TH1* histogram);
+  FitConfig BuildSingleGausFitConfiguration(TH1* histogram, double min = 2.63, double max = 3.5);
 }
 
 #endif
