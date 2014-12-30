@@ -1,5 +1,6 @@
 #include "ut_KinematicUtils.h"
-#include "../TnPSelector/KinematicUtils.h"
+
+#include <TnPSelector/KinematicUtils.h>
 
 #include <math.h>
 
@@ -55,21 +56,14 @@ void TestKinematicUtils::testGetDeltaZ0() {
   test_assert_compare(4, TNP::GetDeltaZ0(-2, 2));
 }
 
+void TestKinematicUtils::testGetInvariantMass() {
+  const double MuonMass = 105.6583715;
+
+  TEST_ASSERT_DELTA(MuonMass, TNP::GetInvariantMass(0, -2.44, 1, 0, 2.44, 2*M_PI, 0), 0.00001);
+}
+
 int main(int argc, char const *argv[]) {
   Test::TextOutput output(Test::TextOutput::Verbose);
   TestKinematicUtils tku;
   return (tku.run(output) ? EXIT_SUCCESS : EXIT_FAILURE);
 }
-
-/*
-  TVector3 GetTrack3Vector (const float pt, const float eta, const float phi);
-  
-  TLorentzVector GetTrackVector(const float pt, const float eta, const float phi);
-
-  TLorentzVector GetMuonVector(const float pt, const float eta, const float phi, const float E);
-
-  TVector3 GetMuon3Vector(const float pt, const float eta, const float phi);
-
-  float GetInvariantMass(const float trackpt, const float tracketa, const float trackphi,
-                         const float tagpt, const float tageta, const float tagphi, const float tagE);
-*/

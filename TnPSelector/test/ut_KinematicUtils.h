@@ -12,6 +12,7 @@ public:
     TEST_ADD(TestKinematicUtils::testGetPtThrowsOnZeroQoverp)
     TEST_ADD(TestKinematicUtils::testGetDeltaR)
     TEST_ADD(TestKinematicUtils::testGetDeltaZ0)
+    TEST_ADD(TestKinematicUtils::testGetInvariantMass)
   }
   
 private:
@@ -23,6 +24,8 @@ private:
 
   void testGetDeltaR();
   void testGetDeltaZ0();
+
+  void testGetInvariantMass();
 
 private:
   std::string comparison_msg(double expected, double returned);
