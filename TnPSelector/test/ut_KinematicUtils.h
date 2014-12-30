@@ -6,12 +6,23 @@
 class TestKinematicUtils : public Test::Suite {
 public:
   TestKinematicUtils() {
-    TEST_ADD(TestKinematicUtils::testGetEtaFromZero)
+    TEST_ADD(TestKinematicUtils::testGetEta)
+    TEST_ADD(TestKinematicUtils::testGetEtaThrowsOnZeroTheta)
+    TEST_ADD(TestKinematicUtils::testGetPt)
+    TEST_ADD(TestKinematicUtils::testGetPtThrowsOnZeroQoverp)
+    TEST_ADD(TestKinematicUtils::testGetDeltaR)
+    TEST_ADD(TestKinematicUtils::testGetDeltaZ0)
   }
-  ~TestKinematicUtils() {}
   
 private:
-  void testGetEtaFromZero();
+  void testGetEta();
+  void testGetEtaThrowsOnZeroTheta();
+  
+  void testGetPt();
+  void testGetPtThrowsOnZeroQoverp();
+
+  void testGetDeltaR();
+  void testGetDeltaZ0();
 
 private:
   std::string comparison_msg(double expected, double returned);
@@ -31,10 +42,4 @@ private:
 
   float GetInvariantMass(const float trackpt, const float tracketa, const float trackphi,
                          const float tagpt, const float tageta, const float tagphi, const float tagE);
-
-  float GetPt(const float qoverp, const float theta);
-
-  float GetDeltaZ0(const float first, const float second);
-
-  float GetDeltaR(const float firstEta, const float firstPhi, const float secondEta, const float secondPhi );
 */
