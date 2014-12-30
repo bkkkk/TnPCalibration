@@ -9,60 +9,33 @@
 #include <TnPSelector/TJPsiMuonProbeSelector.h>
 #include <TnPSelector/TJPsiSMTSelector.h>
 
-class TJPsiClassifier
-{
+class TJPsiClassifier {
 public:
   TJPsiClassifier(const std::string& val_name="JPsi");
-
-public:
   virtual ~TJPsiClassifier();
 
 public:
-  // Test if all selectors are initialized
-  int initialize(void);
+  int initialize();
 
-public:
-  //
-  int classify( const D3PDReader::MuonD3PDObject& muons,
-                const D3PDReader::TrackParticleD3PDObject& tracks );
+  int classify( const IMuons& muons, const ITracks& tracks );
 
-public:
-  // Clear counts, index lists and indexes
-  int clear(void);
+  int clear();
 
-public:
-  // 
-  const std::pair<int, int>& GetSelectedPair( void );
+  const std::pair<int, int>& GetSelectedPair();
 
-public: 
-  // Returns the index to the selected probe
-  int GetSelectedProbe ( void );
+  int GetSelectedProbe ();
 
-public:
-  // Returns the index to the selected tag
-  int GetSelectedTag (void);
+  int GetSelectedTag ();
 
-public:
-  // Returns the index to the selected muon probe
-  int GetMatchedMuonProbe (void);
+  int GetMatchedMuonProbe ();
 
-public:
-  //
-  int GetSelectedMuonProbe(void) {
-    return (muonProbeIdx);
-  } 
+  inline int GetSelectedMuonProbe() { return (muonProbeIdx); } 
 
-public:
-  // Returns the dz0 of the pair
-  float GetDZ0 (void) { return (smallestDZ0); }
+  inline float GetDZ0 () { return (smallestDZ0); }
 
-public:
-  // Returns 1 if the probe is a MuonProbe
-  int IsPairMuonProbe (void);
+  int IsPairMuonProbe ();
 
-public:
-  // Returns 1 if the probe is an SMT muon
-  int IsPairSMT (void);
+  int IsPairSMT ();
 
 public:
   std::string name; ///< Name of tool
@@ -82,15 +55,16 @@ private:
   std::vector<int> tagsIndexes;
 
 public:
-  TMCPSelector* mcpSelector; ///< MCP Selector
-  TJPsiTagSelector* tagSelector; ///< Tag Selector
-  TJPsiPairSelector* pairSelector; ///< Pair Selector
-  TJPsiProbeSelector* probeSelector; ///< Probe Selector
-  TJPsiMuonProbeSelector* muonProbeSelector; ///< Muon Probe Selector
-  TJPsiSMTSelector* smtSelector; ///< SMT Selector
+  TMCPSelector* mcpSelector;
+  TJPsiTagSelector* tagSelector;
+  TJPsiPairSelector* pairSelector;
+  TJPsiProbeSelector* probeSelector;
+  TJPsiMuonProbeSelector* muonProbeSelector;
+  TJPsiSMTSelector* smtSelector;
 
-
+#ifdef __CINT__
   ClassDef(TJPsiClassifier,1)
+#endif
 };
 
 #endif

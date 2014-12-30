@@ -144,5 +144,6 @@ SaveAs(const std::string& path, const std::string& format)
   return;
 };
 
+#ifdef _MAKE_CINT_
 ClassImp(GT::ScaleFactor)
-
+#endif

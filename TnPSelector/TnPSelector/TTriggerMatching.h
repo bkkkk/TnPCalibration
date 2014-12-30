@@ -1,34 +1,21 @@
 #ifndef TTRIGGER_MATCHING_H_
 #define TTRIGGER_MATCHING_H_ 1
 
-#include <D3PDReader/TrackParticleD3PDObject.h>
-#include <D3PDReader/MuonD3PDObject.h>
-#include <D3PDReader/TrigMuonEFInfoD3PDObject.h>
+#include <D3PDReaderAdapter/ITracks.h>
+#include <D3PDReaderAdapter/IMuons.h>
+#include <D3PDReaderAdapter/ITrigMuons.h>
 
 #include <TString.h>
 
-class TTriggerMatching
-{
+class TTriggerMatching {
 public:
-	/// Standard ctor
 	TTriggerMatching(const std::string& val_name="TTriggerMatching");
-
-public:
-	/// Standard dtor
 	virtual ~TTriggerMatching();
 
 public:
-	/// Initialize
-	int initialize(void);
-
-public:
-	/// Test if muon passes
-	int accept( const D3PDReader::MuonD3PDObjectElement& muon,
-              const D3PDReader::TrigMuonEFInfoD3PDObject& trigMuonEF );
-
-public:
-	/// Finalize stuff
-	int finalize(void);
+	int initialize();
+	int accept(const IMuon& muon, const ITrigMuons& trigMuonEF);
+	int finalize();
 
 public:
 	std::string name;
@@ -36,7 +23,9 @@ public:
 public:
   float dRCut;
 
+#ifdef __ROOT_VERSION__
 	ClassDef(TTriggerMatching, 1);
-}; // End TTriggerMatching
+#endif
+};
 
-#endif // END TTRIGGER_MATCHING_H_
+#endif

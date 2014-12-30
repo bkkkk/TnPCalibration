@@ -1,12 +1,11 @@
 #ifndef TMCPSELECTOR_H_
 #define TMCPSELECTOR_H_ 1
 
-#include <D3PDReader/MuonD3PDObject.h>
-#include <D3PDReader/TrackParticleD3PDObject.h>
+#include <D3PDReaderAdapter/IMuon.h>
+#include <D3PDReaderAdapter/ITrack.h>
 #include <TString.h>
 
-class TMCPSelector
-{
+class TMCPSelector {
 public:
 	TMCPSelector(const std::string& val_name="TMCPSelector");
 
@@ -23,11 +22,11 @@ public:
 
 public:
 	/// Test if muon passes MCP cuts
-	int accept(const D3PDReader::MuonD3PDObjectElement& muon);
+	int accept(const IMuon& muon);
 
 public:
 	/// Test if muon passes MCP cuts
-	int accept(const D3PDReader::TrackParticleD3PDObjectElement& track);
+	int accept(const ITrack& track);
 
 public:
 	/// Test if variables pass cuts
@@ -55,7 +54,9 @@ public:
 	int sumHolesCut;
 	int sumTrtCut;
 
+#ifdef __CINT__
 ClassDef(TMCPSelector,1);
+#endif
 
 }; // End TMCPSelector
 

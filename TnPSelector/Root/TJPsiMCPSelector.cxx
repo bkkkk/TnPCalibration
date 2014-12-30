@@ -1,7 +1,9 @@
 #include <TnPSelector/TMCPSelector.h>
 #include <math.h>
 
+#ifdef __CINT__
 ClassImp(TMCPSelector);
+#endif
 
 TMCPSelector::TMCPSelector(const std::string& val_name)
  : name(val_name),
@@ -15,31 +17,18 @@ TMCPSelector::TMCPSelector(const std::string& val_name)
 
 };
 
-// ========================================================================
-
-TMCPSelector::~TMCPSelector(void)
-{
-
+TMCPSelector::~TMCPSelector(void) {
 };
 
-// ========================================================================
-
-int TMCPSelector::initialize(void)
-{
+int TMCPSelector::initialize(void) {
 	return (1);
 };
 
-// ========================================================================
-
-int TMCPSelector::finalize (void)
-{
+int TMCPSelector::finalize (void) {
 	return (1);
 };
 
-// ========================================================================
-
-int TMCPSelector::accept(const D3PDReader::MuonD3PDObjectElement& muon)
-{
+int TMCPSelector::accept(const IMuon& muon) {
 	return(this->accept(muon.expectBLayerHit(),
 						muon.nBLHits(),
 						muon.nPixHits(),
@@ -55,8 +44,7 @@ int TMCPSelector::accept(const D3PDReader::MuonD3PDObjectElement& muon)
 
 // ========================================================================
 
-int TMCPSelector::accept(const D3PDReader::TrackParticleD3PDObjectElement& track)
-{
+int TMCPSelector::accept(const ITrack& track) {
 	return(this->accept(track.expectBLayerHit(),
 						track.nBLHits(),
 						track.nPixHits(),
@@ -82,8 +70,7 @@ int TMCPSelector::accept(int expectBLayerHit,
 		   int nSCTHoles,
 		   int nTRTHits,
 		   int nTRTOutliers,
-		   float eta)
-{
+		   float eta) {
 	int sumPix = nPixHits + nPixelDeadSensors;
 	int sumSct = nSCTHits + nSCTDeadSensors;
 	int sumHoles = nPixHoles + nSCTHoles;
