@@ -2,7 +2,7 @@ CC      = g++
 CFLAGS  = -Wall -I../JacobUtils/ -I../D3PDReaderAdapter/ -I. -I/usr/local/Cellar/root/5.34.24/include/root/ -std=c++11 -pedantic-errors
 
 LINKER  = g++ -o
-LDFLAGS = -Wall -I./ -I../D3PDReaderAdapter/ -I/usr/local/Cellar/root/5.34.24/include/root/ -L/usr/local/lib/ -L/usr/local/Cellar/root/5.34.24/lib/root -lcpptest -lCore -lPhysics
+LDFLAGS = -Wall -I. -I../D3PDReaderAdapter/ -I/usr/local/Cellar/root/5.34.24/include/root/ -L/usr/local/lib/ -L/usr/local/Cellar/root/5.34.24/lib/root -lcpptest -lCore -lPhysics
 
 INCDIR  = TnPSelector
 OBJDIR  = lib
@@ -17,7 +17,7 @@ TSTBINS  := $(TSTFILES:$(TSTCXX)/%.cxx=$(TSTBIN)/%)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.cxx=$(OBJDIR)/%.o)
 INCLUDES := $(SOURCES:$(SRCDIR)/%.cxx=$(INCDIR)/%.hpp)
 
-all: $(TSTBINS) test
+all: $(OBJECTS) $(TSTBINS) test
 
 $(TSTBINS): $(TSTBIN)/% : $(TSTCXX)/%.cxx $(OBJECTS)
 	@$(LINKER) $@ $^ $(LDFLAGS)
@@ -30,6 +30,7 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cxx
 test-first:
 	@echo 'Running tests on Tree'
 	./test-bin/ut_KinematicUtils
+	./test-bin/ut_MuonProbeSelector
 
 print-dep:
 	@echo 'Unit tests: '$(TSTFILES)

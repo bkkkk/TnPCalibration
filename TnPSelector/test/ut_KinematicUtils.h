@@ -33,16 +33,3 @@ private:
 };
 
 #endif
-
-/*
-  TVector3 GetTrack3Vector (const float pt, const float eta, const float phi);
-  
-  TLorentzVector GetTrackVector(const float pt, const float eta, const float phi);
-
-  TLorentzVector GetMuonVector(const float pt, const float eta, const float phi, const float E);
-
-  TVector3 GetMuon3Vector(const float pt, const float eta, const float phi);
-
-  float GetInvariantMass(const float trackpt, const float tracketa, const float trackphi,
-                         const float tagpt, const float tageta, const float tagphi, const float tagE);
-*/

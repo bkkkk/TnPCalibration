@@ -7,28 +7,30 @@
 
 class TJPsiMuonProbeSelector {
 public:
-	TJPsiMuonProbeSelector(const std::string& val_name="TJPsiMuonProbeSelector");
+  TJPsiMuonProbeSelector(const std::string& name="TJPsiMuonProbeSelector");
 
-	virtual ~TJPsiMuonProbeSelector();
+  virtual ~TJPsiMuonProbeSelector();
 
-	int initialize(void);
+  int initialize(void);
 
-	int accept(const ITrack& probe, const IMuons& muons, int& muonProbeIdx);
+  int accept(const ITrack& probe, const IMuons& muons, int& muonProbeIdx);
 
-	int accept(const float& deltaR);
+  int accept(const float& deltaR);
 
-	int finalize();
+  int finalize();
 
 private:
-	float GetDeltaR(const ITrack& probe, const IMuon& muon );
+  float GetDeltaR(const ITrack& probe, const IMuon& muon);
 
 public:
-	std::string name;
-	float deltaRCut;
+  float deltaRCut;
+
+private:
+  std::string name;
 
 #ifdef __CINT__
-	ClassDef(TJPsiMuonProbeSelector, 1);
+  ClassDef(TJPsiMuonProbeSelector, 1);
 #endif
 };
 
-#endif // TJPSIMUONPROBESELECTOR_H_
+#endif
