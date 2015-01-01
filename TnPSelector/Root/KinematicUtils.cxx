@@ -105,3 +105,7 @@ float TNP::GetWrappedDeltaPhi(const float first, const float second) {
 
   return dPhiWrapped;
 }
+
+float TNP::CalculateSignificance(const float ip, const float cov) {
+  return (ip / cov);
+}

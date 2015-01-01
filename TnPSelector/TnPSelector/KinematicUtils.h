@@ -34,6 +34,8 @@ namespace TNP {
                   const float secondEta, const float secondPhi );
 
   float GetWrappedDeltaPhi(const float first, const float second);
+
+  float CalculateSignificance(const float ip, const float cov);
 };
 
 #endif

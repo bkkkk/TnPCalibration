@@ -27,7 +27,3 @@ protected:
 };
 
 #endif
-
-/*
-int accept(const ITrack& probe, const IMuons& muons, int& muonProbeIdx);
-*/

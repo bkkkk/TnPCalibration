@@ -27,9 +27,19 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cxx
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "Compiled "$<" successfully!"
 
-test-first:
-	@echo 'Running tests on Tree'
+test-tag:
+	@echo 'Testing Tag Selector'
+	@echo ''
+	./test-bin/ut_TagSelector
+
+test-kinematic:
+	@echo 'Testing KinematicUtils'
+	@echo ''
 	./test-bin/ut_KinematicUtils
+
+test-mp:
+	@echo 'Testing Muon Probe Selector'
+	@echo ''
 	./test-bin/ut_MuonProbeSelector
 
 print-dep:
@@ -45,4 +55,4 @@ clean:
 	-rm -f ./$(OBJDIR)/*.o
 	-rm -f ./$(TSTBIN)/*
 
-test: test-first
+test: test-kinematic test-tag test-mp
