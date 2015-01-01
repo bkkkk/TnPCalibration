@@ -1,29 +1,25 @@
 #ifndef TJPSIMUONPROBESELECTOR_TEST_H_
 #define TJPSIMUONPROBESELECTOR_TEST_H_ 1
 
-#include <cpptest.h>
+#include <gtest/gtest.h>
 
-class TJPsiMuonProbeSelector;
+#include <TnPSelector/TJPsiMuonProbeSelector.h>
 
-class TestMuonProbeSelector : public Test::Suite {
-private:
+class TestMuonProbeSelector : public ::testing::Test {
+protected:
   TJPsiMuonProbeSelector* mp;
 
-public:
   TestMuonProbeSelector() {
-    TEST_ADD(TestMuonProbeSelector::testInitialize)
-    TEST_ADD(TestMuonProbeSelector::testCheckNumericDeltaRCut)
-    TEST_ADD(TestMuonProbeSelector::testFinalize)
   }
 
-private:
-  void testInitialize();
-  void testCheckNumericDeltaRCut();
-  void testFinalize();
+  virtual void SetUp() {
+    mp = new TJPsiMuonProbeSelector;
+    mp->deltaRCut = 0.4;
+  }
 
-protected:
-  virtual void setup();
-  virtual void tearDown();
+  virtual void TearDown() {
+    delete mp;
+  }
 };
 
 #endif

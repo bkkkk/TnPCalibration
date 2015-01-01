@@ -1,33 +1,27 @@
 #include "ut_MuonProbeSelector.h"
-#include <TnPSelector/TJPsiMuonProbeSelector.h>
 
-void TestMuonProbeSelector::testInitialize() {
-  TEST_ASSERT(mp->initialize() == 0)
-  mp->deltaRCut = 0.4;
-  TEST_ASSERT(mp->initialize() == 1)
+TEST_F(TestMuonProbeSelector, InitializeEmpty) {
+  TJPsiMuonProbeSelector empty;
+  EXPECT_EQ(0, empty.initialize());
 }
 
-void TestMuonProbeSelector::testCheckNumericDeltaRCut() {
-  mp->deltaRCut = 0.4;
-  
-  TEST_ASSERT(mp->accept(0.1) == 1)
-  TEST_ASSERT(mp->accept(0.5) == 0)
+TEST_F(TestMuonProbeSelector, InitializeFilled) {
+  EXPECT_EQ(1, mp->initialize());
 }
 
-void TestMuonProbeSelector::testFinalize() {
-  TEST_ASSERT(1 == mp->finalize())
+TEST_F(TestMuonProbeSelector, NumericSelectionOfBadProbe) {
+  EXPECT_EQ(0, mp->accept(0.5));
 }
 
-void TestMuonProbeSelector::setup() {
-  mp = new TJPsiMuonProbeSelector();
+TEST_F(TestMuonProbeSelector, NumericSelectionOfGoodProbe) {
+  EXPECT_EQ(1, mp->accept(0.1));
 }
 
-void TestMuonProbeSelector::tearDown() {
-  delete mp;
+TEST_F(TestMuonProbeSelector, Finalize) {
+  EXPECT_EQ(1, mp->finalize());
 }
 
-int main(int argc, char const *argv[]) {
-  Test::TextOutput output(Test::TextOutput::Verbose);
-  TestMuonProbeSelector tku;
-  return (tku.run(output) ? EXIT_SUCCESS : EXIT_FAILURE);
+int main(int argc, char** argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return (RUN_ALL_TESTS());
 }
