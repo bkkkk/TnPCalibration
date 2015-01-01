@@ -8,15 +8,15 @@
 class TJPsiProbeSelector {
 public:
 	TJPsiProbeSelector(const std::string& val_name="TJPsiProbeSelector");
-	virtual ~TJPsiProbeSelector(void);
+	virtual ~TJPsiProbeSelector();
 
 public:
-	int initialize(void);
+	int initialize();
 
 	int accept (const ITrack& track);
 	int accept (const float& eta, const float& p);
 
-	int finalize(void);
+	int finalize();
 
 public:
 	std::string name;
