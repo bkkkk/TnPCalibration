@@ -8,8 +8,7 @@ TJPsiProbeSelector::TJPsiProbeSelector(const std::string& val_name)
   etaCut(std::numeric_limits<float>::max()),
   pCut(std::numeric_limits<float>::min()) { }
 
-TJPsiProbeSelector::~TJPsiProbeSelector() {
-}
+TJPsiProbeSelector::~TJPsiProbeSelector() { }
 
 int TJPsiProbeSelector::initialize(void) {
 	return (1);
@@ -27,7 +26,6 @@ int TJPsiProbeSelector::accept (const float& eta, const float& p) {
 	return (1);
 }
 
-int TJPsiProbeSelector::finalize(void)
-{
+int TJPsiProbeSelector::finalize(void) {
 	return (1);
 }
