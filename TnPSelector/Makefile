@@ -42,6 +42,11 @@ test-mp:
 	@echo ''
 	./test-bin/ut_MuonProbeSelector
 
+test-probe:
+	@echo 'Testing Probe Selector'
+	@echo ''
+	./test-bin/ut_ProbeSelector	
+
 print-dep:
 	@echo 'Unit tests: '$(TSTFILES)
 	@echo 'Unit tests bins: '$(TSTBINS)
@@ -55,4 +60,4 @@ clean:
 	-rm -f ./$(OBJDIR)/*.o
 	-rm -f ./$(TSTBIN)/*
 
-test: test-kinematic test-tag test-mp
+test: test-kinematic test-tag test-probe test-mp
