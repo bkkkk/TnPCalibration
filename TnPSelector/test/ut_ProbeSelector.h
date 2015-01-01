@@ -18,14 +18,6 @@ protected:
     delete selector;
   }
 
-  virtual void SetUp() {
-    // Code before each test
-  }
-
-  virtual void TearDown() {
-    // Code after each test
-  }
-  
   TJPsiProbeSelector* selector;
 };
 
