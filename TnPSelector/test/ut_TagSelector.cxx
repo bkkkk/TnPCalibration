@@ -1,69 +1,51 @@
 #include "ut_TagSelector.h"
 
-#include <TnPSelector/TJPsiTagSelector.h>
 #include "FakeMuon.h"
-#include <D3PDReaderAdapter/IMuon.h>
 
-void TestTagSelector::testInitializeWithNoParameters() {
+TEST_F(TestTagSelector, InitializeWithNoParameters) {
   TJPsiTagSelector* invalidSelector = new TJPsiTagSelector;
-  TEST_ASSERT(invalidSelector->initialize() == 0)
+  EXPECT_EQ(0, invalidSelector->initialize());
 }
 
-void TestTagSelector::testInitializeWithValidParameters() {
-  TEST_ASSERT(selector->initialize() == 1)
+TEST_F(TestTagSelector, InitializeWithValidParameters) {
+  EXPECT_EQ(1, selector->initialize());
 }
 
-void TestTagSelector::testIndividualCuts() {
-  TEST_ASSERT(selector->passReconstructionCuts(5000, 2.3) == 1);
-  TEST_ASSERT(selector->passIPCuts(0.2, 0.3, 1, 1) == 1);
-  TEST_ASSERT(selector->passCombinedCut(true) == 1);
+TEST_F(TestTagSelector, testIndividualCuts) {
+  EXPECT_EQ(1, selector->passReconstructionCuts(5000, 2.3));
+  EXPECT_EQ(1, selector->passIPCuts(0.2, 0.3, 1, 1));
+  EXPECT_EQ(1, selector->passCombinedCut(true));
 }
 
-void TestTagSelector::testNumericSelectionOfBadMuon() {
-  TEST_ASSERT(selector->accept(2.6, 1, 5000, 0.2, 1.4, 2.0, 2.0) == 0)
-  TEST_ASSERT(selector->accept(2.4, 0, 5000, 0.2, 1.4, 2.0, 2.0) == 0)
-  TEST_ASSERT(selector->accept(2.4, 1, 3000, 0.2, 1.4, 2.0, 2.0) == 0)
-  TEST_ASSERT(selector->accept(2.4, 1, 5000, 0.4, 1.4, 2.0, 2.0) == 0)
-  TEST_ASSERT(selector->accept(2.4, 1, 5000, 0.2, 1.6, 2.0, 2.0) == 0)
-  TEST_ASSERT(selector->accept(2.4, 1, 5000, 0.2, 1.4, 4.0, 2.0) == 0)
-  TEST_ASSERT(selector->accept(2.4, 1, 5000, 0.2, 1.4, 2.0, 4.0) == 0)
+TEST_F(TestTagSelector, NumericSelectionOfBadMuon) {
+  EXPECT_EQ(0, selector->accept(2.6, 1, 5000, 0.2, 1.4, 2.0, 2.0));
+  EXPECT_EQ(0, selector->accept(2.4, 0, 5000, 0.2, 1.4, 2.0, 2.0));
+  EXPECT_EQ(0, selector->accept(2.4, 1, 3000, 0.2, 1.4, 2.0, 2.0));
+  EXPECT_EQ(0, selector->accept(2.4, 1, 5000, 0.4, 1.4, 2.0, 2.0));
+  EXPECT_EQ(0, selector->accept(2.4, 1, 5000, 0.2, 1.6, 2.0, 2.0));
+  EXPECT_EQ(0, selector->accept(2.4, 1, 5000, 0.2, 1.4, 4.0, 2.0));
+  EXPECT_EQ(0, selector->accept(2.4, 1, 5000, 0.2, 1.4, 2.0, 4.0));
 }
 
-void TestTagSelector::testNumericSelectionOfGoodMuon() {
-  TEST_ASSERT(selector->accept(2.4, 1, 5000, 0.2, 1.4, 0.1, 0.5) == 1)  
+TEST_F(TestTagSelector, NumericSelectionOfGoodMuon) {
+  EXPECT_EQ(1, selector->accept(2.4, 1, 5000, 0.2, 1.4, 0.1, 0.5));  
 }
 
-void TestTagSelector::testSelectionFromBadMuon() {
+TEST_F(TestTagSelector, SelectionOfBadMuon) {
   FakeMuon badMuon; badMuon.constructBadTagMuon();
-  TEST_ASSERT(selector->accept(badMuon) == 0)
+  EXPECT_EQ(0, selector->accept(badMuon));
 }
 
-void TestTagSelector::testSelectionFromGoodMuon() {
+TEST_F(TestTagSelector, SelectionOfGoodMuon) {
   FakeMuon goodMuon; goodMuon.constructGoodTagMuon();
-  TEST_ASSERT(selector->accept(goodMuon) == 1)
+  EXPECT_EQ(1, selector->accept(goodMuon));
 }
 
-void TestTagSelector::testFinalize() {
-  TEST_ASSERT(selector->finalize() == 1)
+TEST_F(TestTagSelector, Finalize) {
+  EXPECT_EQ(1, selector->finalize());
 }
 
-void TestTagSelector::setup() {
-  selector = new TJPsiTagSelector();
-  selector->etaCut = 2.5;
-  selector->combinedMuonCut = 1;
-  selector->ptCut = 4000;
-  selector->d0Cut = 0.3;
-  selector->z0Cut = 1.5;
-  selector->d0SigCut = 3.0;
-  selector->z0SigCut = 3.0;
-}
-
-void TestTagSelector::tearDown() {
-  delete selector;
-}
-
-int main(int argc, char const *argv[]) {
-  Test::TextOutput output(Test::TextOutput::Verbose);
-  TestTagSelector tku;
-  return (tku.run(output) ? EXIT_SUCCESS : EXIT_FAILURE);
+int main(int argc, char** argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return (RUN_ALL_TESTS());
 }
