@@ -1,8 +1,8 @@
 CC      = g++
-CFLAGS  = -Wall -I../JacobUtils/ -I../D3PDReaderAdapter/ -I. -I/usr/local/Cellar/root/5.34.24/include/root/ -std=c++11 -pedantic-errors
+CFLAGS  = -Wall -I. -I../JacobUtils/ -I../D3PDReaderAdapter/ -I/usr/local/Cellar/root/5.34.24/include/root/ -I/usr/local/gmock/include/ -std=c++11 -pedantic-errors
 
 LINKER  = g++ -o
-LDFLAGS = -Wall -I. -I../D3PDReaderAdapter/ -I/usr/local/Cellar/root/5.34.24/include/root/ -L/usr/local/lib/ -L/usr/local/Cellar/root/5.34.24/lib/root -lcpptest -lCore -lPhysics
+LDFLAGS = -Wall -I. -I../D3PDReaderAdapter/ -I/usr/local/gmock/gtest/include/ -I/usr/local/Cellar/root/5.34.24/include/root/ -L/usr/local/gmock/build/ -lmock -L/usr/local/lib/ -L/usr/local/Cellar/root/5.34.24/lib/root -lcpptest -lCore -lPhysics
 
 INCDIR  = TnPSelector
 OBJDIR  = lib

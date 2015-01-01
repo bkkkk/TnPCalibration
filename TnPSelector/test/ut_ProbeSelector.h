@@ -1,34 +1,32 @@
 #ifndef TJPSIPROBESELECTOR_TEST_H_
 #define TJPSIPROBESELECTOR_TEST_H_ 1
 
-#include <cpptest.h>
+#include <gtest/gtest.h>
 
-class TJPsiProbeSelector;
+#include <TnPSelector/TJPsiProbeSelector.h>
 
-class TestProbeSelector : public Test::Suite {
-private:
-  TJPsiProbeSelector* selector;
+class ProbeSelectorTest : public ::testing::Test {
+protected:
+  ProbeSelectorTest() {
+    selector = new TJPsiProbeSelector;
 
-public:
-  TestProbeSelector() {
-    TEST_ADD(TestProbeSelector::testInitialize)
-    TEST_ADD(TestProbeSelector::testNumericSelection)
-    TEST_ADD(TestProbeSelector::testFinalize)
+    selector->pCut = 3000;
+    selector->etaCut = 2.5;
   }
 
-private:
-  void testInitialize();
-  void testNumericSelection();
-  void testObjectSelection();
-  void testFinalize();
+  virtual ~ProbeSelectorTest() {
+    delete selector;
+  }
 
-protected:
-  virtual void setup();
-  virtual void tearDown();
+  virtual void SetUp() {
+    // Code before each test
+  }
+
+  virtual void TearDown() {
+    // Code after each test
+  }
+  
+  TJPsiProbeSelector* selector;
 };
 
-#endif
-
-#if 0
-  int accept (const ITrack& track);
 #endif

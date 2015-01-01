@@ -1,43 +1,40 @@
 #include "ut_ProbeSelector.h"
 
-#include <TnPSelector/TJPsiProbeSelector.h>
+#include "FakeTrack.h"
 
-#include "FakeMuon.h"
-
-void TestProbeSelector::testInitialize() {
-  TJPsiProbeSelector* emptySelector = new TJPsiProbeSelector;
-  TEST_ASSERT(emptySelector->initialize() == 0)
-
-  TEST_ASSERT(selector->initialize() == 1)
+TEST_F(ProbeSelectorTest, InitializeEmpty) {
+  TJPsiProbeSelector emptySelector;
+  EXPECT_EQ(0, emptySelector.initialize());
 }
 
-void TestProbeSelector::testNumericSelection() {
-  TEST_ASSERT(selector->accept(2.6, 4000) == 0)
-  TEST_ASSERT(selector->accept(2.2, 2000) == 0)
-
-  TEST_ASSERT(selector->accept(2.1, 4000) == 1)
+TEST_F(ProbeSelectorTest, InitializeFilled) {
+  EXPECT_EQ(1, selector->initialize());
 }
 
-void TestProbeSelector::testObjectSelection() {
-  
+TEST_F(ProbeSelectorTest, NumericSelectGoodProbe) {
+  EXPECT_EQ(1, selector->accept(2.1, 4000));
 }
 
-void TestProbeSelector::testFinalize() {
-  TEST_ASSERT(selector->finalize() == 1)
+TEST_F(ProbeSelectorTest, NumericSelectBadProbe) {
+  EXPECT_EQ(0, selector->accept(2.6, 4000));
+  EXPECT_EQ(0, selector->accept(2.2, 2000));
 }
 
-void TestProbeSelector::setup() {
-  selector = new TJPsiProbeSelector;
-  selector->pCut = 3000;
-  selector->etaCut = 2.5;
+TEST_F(ProbeSelectorTest, ObjectSelectGoodProbe) {
+  FakeTrack goodProbe; goodProbe.constructGoodProbe();
+  EXPECT_EQ(1, selector->accept(goodProbe));
 }
 
-void TestProbeSelector::tearDown() {
-  delete selector;
+TEST_F(ProbeSelectorTest, ObjectSelectBadProbe) {
+  FakeTrack badProbe; badProbe.constructBadProbe();
+  EXPECT_EQ(0, selector->accept(badProbe));
 }
 
-int main(int argc, char const *argv[]) {
-  Test::TextOutput output(Test::TextOutput::Verbose);
-  TestProbeSelector tps;
-  return (tps.run(output) ? EXIT_SUCCESS : EXIT_FAILURE);
+TEST_F(ProbeSelectorTest, FinalizeNominal) {
+  EXPECT_EQ(1, selector->finalize());
+}
+
+int main(int argc, char** argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return (RUN_ALL_TESTS());
 }
