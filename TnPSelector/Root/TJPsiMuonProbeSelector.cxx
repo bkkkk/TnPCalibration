@@ -4,11 +4,6 @@
 #include <limits>
 #include <iostream>
 
-// FLAW: Object not fully initialized with valid parameters
-// Could potentially use the Essence pattern or the Fluent pattern
-// to force clients to set valid parameters before obtaining this
-// object.
-// Printing message to screen is rubbish and pollutes log.
 TJPsiMuonProbeSelector::TJPsiMuonProbeSelector(const std::string& name)
  : deltaRCut(std::numeric_limits<float>::max())
  , name(name) {
@@ -18,10 +13,7 @@ TJPsiMuonProbeSelector::~TJPsiMuonProbeSelector() {
 }
 
 int TJPsiMuonProbeSelector::initialize(void) {
-  if(deltaRCut == std::numeric_limits<float>::max()) {
-    std::cerr << "Please set DeltaRCut" << std::endl;
-    return(0);
-  }
+  if(deltaRCut == std::numeric_limits<float>::max()) return(0);
 
   return (1);
 }
