@@ -11,15 +11,24 @@ private:
 
 public:
   TestProbeSelector() {
-    TEST_ADD(TestProbeSelector::testConstruct)
+    TEST_ADD(TestProbeSelector::testInitialize)
+    TEST_ADD(TestProbeSelector::testNumericSelection)
+    TEST_ADD(TestProbeSelector::testFinalize)
   }
 
 private:
-  void testConstruct();
+  void testInitialize();
+  void testNumericSelection();
+  void testObjectSelection();
+  void testFinalize();
 
 protected:
   virtual void setup();
   virtual void tearDown();
 };
 
+#endif
+
+#if 0
+  int accept (const ITrack& track);
 #endif
