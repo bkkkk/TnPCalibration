@@ -1,11 +1,9 @@
 #ifndef D3PDREADERADAPTER_ITRACK_HPP
 #define D3PDREADERADAPTER_ITRACK_HPP 1
 
-class ITrack
-{
-public:
-  ITrack();
-  virtual ~ITrack();
+class ITrack {
+public:  
+  virtual ~ITrack() { }
   
 public:
   virtual const double pt() const = 0;
