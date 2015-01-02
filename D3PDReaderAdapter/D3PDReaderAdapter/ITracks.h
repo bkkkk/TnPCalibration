@@ -10,7 +10,6 @@ public:
   ITracks();
   virtual ~ITracks();
   
-  virtual std::size_t n() = 0;
   virtual const std::size_t n() const = 0;
 
   virtual ITrack& operator[](std::size_t idx) = 0;
