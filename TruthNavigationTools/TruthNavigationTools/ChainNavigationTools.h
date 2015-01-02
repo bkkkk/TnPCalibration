@@ -2,7 +2,7 @@
 #define CHAIN_NAVIGATION_TOOLS_H_ 1
 
 #include "TruthNavigationTools/TruthTools.h"
-#include "D3PDReaderAdapter/TruthParticleD3PDObject.h"
+#include "D3PDReaderAdapter/ITruths.h"
 
 #include <string>
 #include <vector>
@@ -15,7 +15,7 @@ private:
 
 public:
   ChainNavigationTools(const ITruths& mc);
-  virtual ~ChainNavigationTools() { }
+  virtual ~ChainNavigationTools();
 
   void PrintSiblingChain(const size_t index, const siblingType type);
   void PrintParentChain(const size_t index);

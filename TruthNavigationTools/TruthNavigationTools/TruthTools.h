@@ -4,40 +4,28 @@
 #include <string>
 #include <vector>
 #include "TruthNavigationTools/TruthEnums.h"
-#include "D3PDReader/TruthParticleD3PDObject.h"
+#include "D3PDReaderAdapter/ITruths.h"
 
-// A set of tools to work with Truth data from D3PDs
-namespace TT
-{
-  // Returns the name of a particle given PDG ID
+namespace TT {
   std::string GetParticleName(const int& pdgid);
 
-  // Returns the name of the particle given a TruthD3PDElement
-  std::string GetParticleName(const D3PDReader::TruthParticleD3PDObjectElement& truthParticle);
+  std::string GetParticleName(const ITruth& truthParticle);
   
-  // Prints information about the truth particle given simple variables
-  void PrintParticleInformation( const size_t& index,
-                                 const int& pdgid,
-                                 const int& status,
-                                 const double& pt,
-                                 const double& eta,
-                                 const std::vector<int>& parents=std::vector<int>(),
-                                 const std::vector<int>& children=std::vector<int>() );
+  void PrintParticleInformation(const size_t& index,
+                                const int& pdgid,
+                                const int& status,
+                                const double& pt,
+                                const double& eta,
+                                const std::vector<int>& parents=std::vector<int>(),
+                                const std::vector<int>& children=std::vector<int>() );
 
-  // Prints information about the truth particle
-  // given a D3PDReader::TruthParticleD3PDObjectElement
-  void PrintParticleInformation( const D3PDReader::TruthParticleD3PDObjectElement& truth,
-                                 bool doWithSiblings=false );
+  void PrintParticleInformation(const ITruth& truth, bool doWithSiblings=false);
 
-  // Prints list of siblings given vector of sibling indecies
-  void PrintParticleSiblings( const siblingType& type, 
-                              const std::vector<int>& siblings );
+  void PrintParticleSiblings(const siblingType& type, const std::vector<int>& siblings);
 
   std::string GetNameOfSibling(const siblingType& type);
-
   
-  // Convenience tool to convert int to string
-  std::string IntToString( const int& num );
+  std::string IntToString(const int& num);
 };
 
 #endif
