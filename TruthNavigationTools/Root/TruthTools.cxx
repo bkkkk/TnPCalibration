@@ -7,7 +7,7 @@
 
 namespace TT {
 std::string GetParticleName(const ITruth& truthParticle) {
-  return(GetParticleName(truthParticle.pdgId()));
+  return (GetParticleName(truthParticle.pdgId()));
 }
 
 std::string GetParticleName(const int& pdgid) {
@@ -34,62 +34,60 @@ std::string GetParticleName(const int& pdgid) {
   int absPdgId = fabs(pdgid);
 
   if (particleName.find(absPdgId) == particleName.end()) {
-    return(IntToString(absPdgId));
+    return (IntToString(absPdgId));
   }
   
-  return(particleName[absPdgId]);
+  return (particleName[absPdgId]);
 }
 
-std::string IntToString(const int& num) {
+std::string GetNameOfSibling(const siblingType type) {
+  static std::string siblingTypeName[] = { "Parent", "Current", "Children" };
+  return (siblingTypeName[type]);
+}
+
+std::string IntToString(const int num) {
   std::stringstream ss;
   ss << num;
-  return(ss.str());
+  return (ss.str());
 }
 
-void PrintParticleInformation(const ITruth& truth,
-                              bool doWithSiblings) {
-  if(doWithSiblings != 0) {
-    PrintParticleInformation( truth.GetIndex(), truth.pdgId(), truth.status(),
-                              truth.pt(), truth.eta(),
-                              truth.parents(), truth.children() );
-  } else {
-    PrintParticleInformation( truth.GetIndex(), truth.pdgId(), truth.status(),
-                              truth.pt(), truth.eta() );
-  }
-
+void PrintParticleInformation(const ITruth& truth, bool doWithSiblings) {
+  PrintParticleKinematics(truth);
+  if(doWithSiblings) PrintParticleAllSiblings(truth);
 }
 
-void PrintParticleInformation (const size_t& index,
-                               const int& pdgid,
-                               const int& status,
-                               const double& pt,
-                               const double& eta,
-                               const std::vector<int>& parents,
-                               const std::vector<int>& children) {
-  // Print particle information
-  LOG_INFO() << "-> " << index << ": " << GetParticleName(pdgid)
-             << " status: " << status
-             << " pt: " << pt
-             << " eta: " << eta;
+void PrintParticleKinematics(const ITruth& particle) {
+  std::stringstream str;
+  str << "-> " << particle.GetIndex();
+  str << ": " << GetParticleName(particle.pdgId());
+  str << " status: " << particle.status();
+  str << " pt: " << particle.pt();
+  str << " eta: " << particle.eta();
 
-  // Print siblings information if given
-  if(!parents.empty()) PrintParticleSiblings(TT::PARENT, parents);
-  if(!children.empty()) PrintParticleSiblings(TT::CHILD, children);
+  // LOG_INFO() << str.str();
 }
 
-void PrintParticleSiblings(const siblingType& type, const std::vector<int>& siblings) {
+void PrintParticleAllSiblings(const ITruth& truth) {
+  if(!HasParents(truth)) PrintParticleSiblings(TT::PARENT, truth.parents());
+  if(!HasChildren(truth)) PrintParticleSiblings(TT::CHILD, truth.children());
+}
+
+bool HasParents(const ITruth& particle) {
+  return (particle.parents().empty());
+}
+
+bool HasChildren(const ITruth& particle) {
+  return (particle.children().empty());
+}
+
+void PrintParticleSiblings(const siblingType type, const std::vector<int>& siblings) {
   std::stringstream ss;
 
   for(size_t sibling = 0; sibling != siblings.size(); sibling++) {
     ss << siblings[sibling] << ", ";
   }
 
-  LOG_INFO() << GetNameOfSibling(type) << ": " << ss.str();
-}
-
-std::string GetNameOfSibling(const siblingType& type) {
-  static std::string siblingTypeName[] = {"Parent", "Current", "Children" };
-  return(siblingTypeName[type]);
+  // LOG_INFO() << GetNameOfSibling(type) << ": " << ss.str();
 }
 
 }; // namespace

@@ -8,24 +8,22 @@
 
 namespace TT {
   std::string GetParticleName(const int& pdgid);
-
   std::string GetParticleName(const ITruth& truthParticle);
   
-  void PrintParticleInformation(const size_t& index,
-                                const int& pdgid,
-                                const int& status,
-                                const double& pt,
-                                const double& eta,
-                                const std::vector<int>& parents=std::vector<int>(),
-                                const std::vector<int>& children=std::vector<int>() );
+  bool HasParents(const ITruth& particle);
+  bool HasChildren(const ITruth& particle);
 
-  void PrintParticleInformation(const ITruth& truth, bool doWithSiblings=false);
-
-  void PrintParticleSiblings(const siblingType& type, const std::vector<int>& siblings);
-
-  std::string GetNameOfSibling(const siblingType& type);
+  void PrintParticleKinematics(const ITruth& particle);
   
-  std::string IntToString(const int& num);
+  void PrintParticleInformation(const ITruth& truth, bool doWithSiblings = false);
+
+  void PrintParticleAllSiblings(const ITruth& truth);
+
+  void PrintParticleSiblings(const siblingType type, const std::vector<int>& siblings);
+
+  std::string GetNameOfSibling(const siblingType type);
+  
+  std::string IntToString(const int num);
 };
 
 #endif

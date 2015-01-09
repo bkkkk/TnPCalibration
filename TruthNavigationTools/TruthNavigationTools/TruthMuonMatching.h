@@ -1,57 +1,33 @@
 #ifndef TRUTH_MUON_MATCHING_H_
 #define TRUTH_MUON_MATCHING_H_ 1
 
-#include "D3PDReader/TruthParticleD3PDObject.h"
-#include "D3PDReader/MuonD3PDObject.h"
-#include "D3PDReader/TrackParticleD3PDObject.h"
+#include "D3PDReaderAdapter/ITracks.h"
+#include "D3PDReaderAdapter/IMuons.h"
+#include "D3PDReaderAdapter/ITruths.h"
 
 #include <vector>
 
-namespace TT
-{
+namespace TT {
 
-class ChainNavigationTools;
-
-class TruthMuonMatching
-{
-private:
-  // Pointer to D3PDReader
-  const D3PDReader::TruthParticleD3PDObject& sink;
+class TruthMuonMatching {
 
 private:
-  // Chain Navigation Tool
-  ChainNavigationTools* navTools;
-
-public:
-  // Delta R matching cut
-  float deltaRCut;
-
-private:
-  // Vector of Found Good Muons
+  const ITruths& mcRecords;
   std::vector<int> truthMuons;
 
 public:
-  // Ctor
-  TruthMuonMatching(const D3PDReader::TruthParticleD3PDObject& mc);
-  
-public:
-  // Dtor
-  ~TruthMuonMatching();
+  float deltaRCut;
 
 public:
-  // Returns true if a pair of reco muon is matched to a pair of truth muons
-  int MatchMuonPair( const D3PDReader::MuonD3PDObjectElement& tag,
-                     const D3PDReader::MuonD3PDObjectElement& probe );
+  TruthMuonMatching(const ITruths& mc);  
+  virtual ~TruthMuonMatching();
 
-public:
-  // Returns true if a reco muon is matched to a truth muon
-  int MatchMuon( const D3PDReader::MuonD3PDObjectElement& muon,
-                 int& truthIndex );
+  int MatchMuonPair(const IMuon& tag, const IMuon& probe);
 
-public:
-  // Returns 1 if a track is matched to a truth muon
-  int MatchTrack ( const D3PDReader::TrackParticleD3PDObjectElement& track,
-                   int& truthIndex );
+  int MatchMuon(const IMuon& muon, int& truthIndex);
+  int MatchTrack(const ITrack& track, int& truthIndex);
+
+  void SetAllTruthMuons();
 };
 
 }

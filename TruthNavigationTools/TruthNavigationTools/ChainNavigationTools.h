@@ -20,9 +20,13 @@ public:
   void PrintSiblingChain(const size_t index, const siblingType type);
   void PrintParentChain(const size_t index);
   void PrintChildChain(const size_t index);
-  void PrintAllOfType(const int& pdgId);
-  std::vector<int> FindAllOfType(const int& pdgId);
+  void PrintAllOfType(const int pdgId);
+  bool IsParticleOfType(const ITruth& particle, const int pdgid);
+  std::vector<int> FindAllOfType(const int pdgId);
   void PrintAll();
+
+private:
+  bool IsParticleOfType(const int index, const int pdgid);
 };
 }
 
