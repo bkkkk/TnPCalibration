@@ -4,9 +4,13 @@ CFLAGS  = -Wall -I. -I../JacobUtils/ -I../D3PDReaderAdapter/ -I/usr/local/Cellar
 LINKER  = g++ -o
 LDFLAGS = -Wall -I. -I../D3PDReaderAdapter/ -I/usr/local/gmock/gtest/include/ -I/usr/local/Cellar/root/5.34.24/include/root/ -L/usr/local/gmock/build/ -lmock -L/usr/local/lib/ -L/usr/local/Cellar/root/5.34.24/lib/root -lCore -lPhysics
 
+ARCHIVER = ar
+ARFLAGS  = -cr
+
 INCDIR  = TnPSelector
-OBJDIR  = lib
+OBJDIR  = obj
 SRCDIR  = Root
+LIBDIR  = lib
 
 TSTCXX  = test
 TSTBIN  = test-bin
@@ -16,8 +20,9 @@ TSTFILES := $(wildcard $(TSTCXX)/*.cxx)
 TSTBINS  := $(TSTFILES:$(TSTCXX)/%.cxx=$(TSTBIN)/%)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.cxx=$(OBJDIR)/%.o)
 INCLUDES := $(SOURCES:$(SRCDIR)/%.cxx=$(INCDIR)/%.hpp)
+LIBRARY  := $(LIBDIR)/libTnPSelector.a
 
-all: $(OBJECTS) $(TSTBINS) test
+all: $(OBJECTS) $(LIBRARY) $(TSTBINS) test
 
 $(TSTBINS): $(TSTBIN)/% : $(TSTCXX)/%.cxx $(OBJECTS)
 	@$(LINKER) $@ $^ $(LDFLAGS)
@@ -26,6 +31,9 @@ $(TSTBINS): $(TSTBIN)/% : $(TSTCXX)/%.cxx $(OBJECTS)
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cxx
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "Compiled "$<" successfully!"
+
+$(LIBRARY): $(OBJECTS)
+	$(ARCHIVER) $(ARFLAGS) $(LIBRARY) $(OBJECTS)
 
 test-tag:
 	@echo 'Testing Tag Selector'
