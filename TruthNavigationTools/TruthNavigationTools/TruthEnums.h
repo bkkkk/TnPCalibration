@@ -31,7 +31,6 @@ namespace TT {
     ZBOSON = 23,
     WPLUSBOSON = 24,
   } particlePdgId;
-
 };
 
 #endif
