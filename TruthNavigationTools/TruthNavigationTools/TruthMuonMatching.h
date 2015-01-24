@@ -7,6 +7,8 @@
 
 #include <vector>
 
+class ChainNavigationTools;
+
 namespace TT {
 
 class TruthMuonMatching {
@@ -19,7 +21,8 @@ public:
   float deltaRCut;
 
 public:
-  TruthMuonMatching(const ITruths& mc);  
+  TruthMuonMatching(const ITruths& mc);
+  TruthMuonMatching(const ITruths& mc, const ChainNavigationTools& navTools);
   virtual ~TruthMuonMatching();
 
   int MatchMuonPair(const IMuon& tag, const IMuon& probe);
