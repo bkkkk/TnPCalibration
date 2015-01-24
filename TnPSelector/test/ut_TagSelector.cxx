@@ -28,7 +28,7 @@ TEST_F(TestTagSelector, NumericSelectionOfBadMuon) {
 }
 
 TEST_F(TestTagSelector, NumericSelectionOfGoodMuon) {
-  EXPECT_EQ(1, selector->accept(2.4, 1, 5000, 0.2, 1.4, 0.1, 0.5));  
+  EXPECT_EQ(1, selector->accept(2.4, 1, 5000, 0.2, 1.4, 0.1, 0.5));
 }
 
 TEST_F(TestTagSelector, SelectionOfBadMuon) {
