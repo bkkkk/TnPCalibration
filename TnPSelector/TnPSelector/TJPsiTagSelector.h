@@ -6,26 +6,44 @@
 
 class TJPsiTagSelector {
 public:
-	TJPsiTagSelector(const std::string& name="TJPsiTagSelector");
+  struct TagCuts {
+    float   etaCut;
+    int     combinedMuonCut;
+    float   trackMatchDrCut;
+    float   ptCut;
+    float   d0Cut;
+    float   z0Cut;
+    float   d0SigCut;
+    float   z0SigCut;
+  };
 
 public:
+	TJPsiTagSelector();
+  TJPsiTagSelector(const TagCuts& cuts);
 	virtual ~TJPsiTagSelector();
 
-	int initialize();
-
+public:
+	const bool initialize() const;
 	int accept(const IMuon& muon);
-
-	const int accept(float eta, int combinedMuon, float pt, float d0, float z0,
-                   float d0Sig, float z0Sig) const;
-
-	int finalize(void);
+	const int finalize(void) const;
 
 public:
-	std::string name;
+  inline const int accept(float eta, int combinedMuon, float pt,
+                          float d0, float z0, float d0Sig, float z0Sig) const {
+    if(!passReconstructionCuts(pt, eta)) return 0;
+    if(!passCombinedCut(combinedMuon)) return 0;
+    if(!passIPCuts(d0, z0, d0Sig, z0Sig)) return 0;
 
-public:
+    return (0);
+  }
+
+
   inline const bool passReconstructionCuts(float pt, float eta) const {
     return (pt > ptCut && fabs(eta) < etaCut);
+  }
+
+  inline const bool passCombinedCut(bool isCombined) const {
+    return (isCombined == combinedMuonCut);
   }
 
   inline const bool passIPCuts(float d0, float z0, float d0Sig, float z0Sig) const {
@@ -36,10 +54,6 @@ public:
     if(fabs(d0Sig) > d0SigCut) return false;
 
     return true;
-  }
-
-  inline const bool passCombinedCut(bool isCombined) const {
-   return (isCombined == combinedMuonCut);
   }
 
 public:

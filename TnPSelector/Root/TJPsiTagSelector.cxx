@@ -11,9 +11,8 @@
 ClassImp(TJPsiTagSelector);
 #endif
 
-TJPsiTagSelector::TJPsiTagSelector(const std::string& name)
- : name(name),
-   etaCut(std::numeric_limits<float>::max()),
+TJPsiTagSelector::TJPsiTagSelector()
+ : etaCut(std::numeric_limits<float>::max()),
    combinedMuonCut(-1),
    ptCut(std::numeric_limits<float>::min()),
    d0Cut(std::numeric_limits<float>::max()),
@@ -22,19 +21,28 @@ TJPsiTagSelector::TJPsiTagSelector(const std::string& name)
    z0SigCut(std::numeric_limits<float>::max()) {
  }
 
+TJPsiTagSelector::TJPsiTagSelector(const TagCuts& cuts)
+  : etaCut(cuts.etaCut),
+    combinedMuonCut(cuts.combinedMuonCut),
+    ptCut(cuts.ptCut),
+    d0Cut(cuts.d0Cut),
+    z0Cut(cuts.z0Cut),
+    d0SigCut(cuts.d0SigCut),
+    z0SigCut(cuts.z0SigCut) { }
+
 TJPsiTagSelector::~TJPsiTagSelector() {
 }
 
-int TJPsiTagSelector::initialize() {
-  if(etaCut == std::numeric_limits<float>::max()) return 0;
-  if(combinedMuonCut == -1) return 0;
-  if(ptCut == std::numeric_limits<float>::min()) return 0;
-  if(d0Cut == std::numeric_limits<float>::max()) return 0;
-  if(z0Cut == std::numeric_limits<float>::max()) return 0;
-  if(d0SigCut == std::numeric_limits<float>::max()) return 0;
-  if(z0SigCut == std::numeric_limits<float>::max()) return 0;
+const bool TJPsiTagSelector::initialize() const {
+  if(etaCut == std::numeric_limits<float>::max()) return false;
+  if(combinedMuonCut == -1) return false;
+  if(ptCut == std::numeric_limits<float>::min()) return false;
+  if(d0Cut == std::numeric_limits<float>::max()) return false;
+  if(z0Cut == std::numeric_limits<float>::max()) return false;
+  if(d0SigCut == std::numeric_limits<float>::max()) return false;
+  if(z0SigCut == std::numeric_limits<float>::max()) return false;
   
-  return (1);
+  return (true);
 }
 
 int TJPsiTagSelector::accept(const IMuon& muon) {
@@ -50,17 +58,7 @@ int TJPsiTagSelector::accept(const IMuon& muon) {
   return (accept(eta, muon.isCombinedMuon(), pt, d0, z0, d0Sig, z0Sig));
 }
 
-const int TJPsiTagSelector::accept(float eta, int combinedMuon, float pt,
-                                   float d0, float z0,
-                                   float d0Sig, float z0Sig) const {
-  if(!passReconstructionCuts(pt, eta)) return 0;
-  if(!passCombinedCut(combinedMuon)) return 0;
-  if(!passIPCuts(d0, z0, d0Sig, z0Sig)) return 0;
-
-  return (1);
-}
-
-int TJPsiTagSelector::finalize() {
+const int TJPsiTagSelector::finalize() const {
   return (1);
 }
 
