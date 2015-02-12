@@ -83,10 +83,10 @@ test-probe:
 	@echo ''
 	./test-bin/ut_ProbeSelector	
 
-perf-tag:
-	@echo 'Testing Performance Tag Selector'
+test-smt:
+	@echo 'Testing Probe Selector'
 	@echo ''
-	./test-bin/perf_TagSelector
+	./test-bin/ut_SMTSelector	
 
 print-dep:
 	@echo 'Unit tests: '$(TSTFILES)

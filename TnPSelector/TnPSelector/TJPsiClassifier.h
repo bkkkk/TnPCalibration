@@ -11,41 +11,55 @@
 
 class TJPsiClassifier {
 public:
-  TJPsiClassifier(const std::string& val_name="JPsi");
+  TJPsiClassifier();
   virtual ~TJPsiClassifier();
 
 public:
   int initialize();
 
-  int classify( const IMuons& muons, const ITracks& tracks );
+  int classify(const IMuons& muons, const ITracks& tracks);
+  void classifyTags(const IMuons& muons);
+  void classifyProbes(const ITracks& tracks);
+  void choosePair(const IMuons& muons, const ITracks& tracks);
+  void setProbePassedLevel();
 
   int clear();
-
-  const std::pair<int, int>& GetSelectedPair();
-
-  int GetSelectedProbe ();
-
-  int GetSelectedTag ();
-
-  int GetMatchedMuonProbe ();
 
   inline int GetSelectedMuonProbe() { return (muonProbeIdx); } 
 
   inline float GetDZ0 () { return (smallestDZ0); }
 
-  int IsPairMuonProbe ();
+  inline const std::pair<int, int>& GetSelectedPair() {
+    return(pair);
+  }
 
-  int IsPairSMT ();
+  inline int GetSelectedProbe () {
+    return (pair.second);
+  }
 
-public:
-  std::string name; ///< Name of tool
+  inline int GetMatchedMuonProbe () {
+    return (muonProbeIdx);
+  }
+
+  inline int GetSelectedTag () {
+    return (pair.first);
+  }
+
+  inline int IsPairMuonProbe () {
+    return (isMuonProbe);
+  }
+
+  inline int IsPairSMT () {
+    return (isSMT);
+  }
+
+public:  
+  std::pair<int, int> pair;
+
+  int isMuonProbe;
+  int isSMT;
   
-  std::pair<int, int> pair; ///< To hold pair of tag and probe
-
-  int isMuonProbe; ///< Is Muon Probe
-  int isSMT; ///< Is SMT
-  
-  int muonProbeIdx; ///< Matched muon index
+  int muonProbeIdx;
 
 private:
   float smallestDZ0;

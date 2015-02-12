@@ -34,7 +34,7 @@ public:
     if(!passCombinedCut(combinedMuon)) return 0;
     if(!passIPCuts(d0, z0, d0Sig, z0Sig)) return 0;
 
-    return (0);
+    return (1);
   }
 
 

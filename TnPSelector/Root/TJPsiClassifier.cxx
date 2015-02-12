@@ -1,40 +1,45 @@
 #include <TnPSelector/TJPsiClassifier.h>
 #include <TnPSelector/KinematicUtils.h>
 
-TJPsiClassifier::TJPsiClassifier(const std::string& val_name)
- : name(val_name),
-   pair(std::make_pair(-9999, -9999)),
+TJPsiClassifier::TJPsiClassifier()
+ : pair(std::make_pair(-9999, -9999)),
    isMuonProbe(0),
    isSMT(0),
    muonProbeIdx(10000),
    smallestDZ0(1000),
-   mcpSelector(NULL),
-   tagSelector(NULL),
-   pairSelector(NULL),
-   probeSelector(NULL),
-   muonProbeSelector(NULL),
-   smtSelector(NULL) { }
+   mcpSelector(nullptr),
+   tagSelector(nullptr),
+   pairSelector(nullptr),
+   probeSelector(nullptr),
+   muonProbeSelector(nullptr),
+   smtSelector(nullptr) { }
 
 TJPsiClassifier::~TJPsiClassifier() {
+  if(mcpSelector) delete mcpSelector;
+  if(tagSelector) delete tagSelector;
+  if(pairSelector) delete pairSelector;
+  if(probeSelector) delete probeSelector;
+  if(muonProbeSelector) delete muonProbeSelector;
+  if(smtSelector) delete smtSelector;
 }
 
-int TJPsiClassifier::initialize(void) {
-  if(mcpSelector == NULL) {
+int TJPsiClassifier::initialize() {
+  if(mcpSelector == nullptr) {
     return (0);
   }
-  if(tagSelector == NULL) {
+  if(tagSelector == nullptr) {
     return (0);
   }
-  if(pairSelector == NULL) {
+  if(pairSelector == nullptr) {
     return (0);
   }
-  if(probeSelector == NULL) {
+  if(probeSelector == nullptr) {
     return (0);
   }
-  if(muonProbeSelector == NULL) {
+  if(muonProbeSelector == nullptr) {
     return (0);
   }
-  if(smtSelector == NULL) {
+  if(smtSelector == nullptr) {
     return (0);
   }
 
@@ -42,44 +47,29 @@ int TJPsiClassifier::initialize(void) {
 }
 
 int TJPsiClassifier::classify(const IMuons& muons, const ITracks& tracks) {
+
   clear();
 
-  int nMuons = muons.n();
-  int nTracks = tracks.n();
+  classifyTags(muons);
+  classifyProbes(tracks);
+  
+  auto chosenTag = -99999;
+  auto chosenProbe = -99999;
 
-  for (int muon = 0; muon != nMuons; muon++) {
-    if(tagSelector->accept(muons[muon]) == 1 &&
-       mcpSelector->accept(muons[muon]) == 1 ) {
-      tagsIndexes.push_back(muon);
-    }
-  }
-
-  for(int track = 0; track != nTracks; track++) {
-    if( probeSelector->accept(tracks[track]) == 1 &&
-        mcpSelector->accept(tracks[track]) == 1 ) {
-      probesIndexes.push_back(track);
-    }
-  }
-
-  smallestDZ0 = 1000.;
-  int chosenTag = -9999;
-  int chosenProbe = -9999;
-
-  // Loop over probes
-  std::vector<int>::iterator probeIdx = probesIndexes.begin();
-  std::vector<int>::iterator probeLast = probesIndexes.end();
+  auto probeIdx = probesIndexes.begin();
+  auto probeLast = probesIndexes.end();
   for(; probeIdx != probeLast; probeIdx++) {
-    // Loop over tag
-    std::vector<int>::iterator tagIdx = tagsIndexes.begin();
-    std::vector<int>::iterator tagLast = tagsIndexes.end();
+    
+    auto tagIdx = tagsIndexes.begin();
+    auto tagLast = tagsIndexes.end();
     for(;tagIdx != tagLast; tagIdx++) {
 
-      if( pairSelector->accept( muons[*tagIdx], tracks[*probeIdx] ) != 1) continue;
+      if(!pairSelector->accept(muons[*tagIdx], tracks[*probeIdx])) continue;
 
-      float trk_z0_wrtPV = tracks[*probeIdx].z0_wrtPV();
-      float tag_id_z0_wrtPV = muons[*tagIdx].id_z0_exPV();
+      auto trk_z0_wrtPV = tracks[*probeIdx].z0_wrtPV();
+      auto tag_id_z0_wrtPV = muons[*tagIdx].id_z0_exPV();
 
-      float dz0 = TNP::GetDeltaZ0(trk_z0_wrtPV, tag_id_z0_wrtPV);
+      auto dz0 = TNP::GetDeltaZ0(trk_z0_wrtPV, tag_id_z0_wrtPV);
 
       if(smallestDZ0 > dz0) {
         smallestDZ0 = dz0;
@@ -106,7 +96,27 @@ int TJPsiClassifier::classify(const IMuons& muons, const ITracks& tracks) {
   return (1);
 }
 
-int TJPsiClassifier::clear(void) {
+void TJPsiClassifier::classifyTags(const IMuons& muons) {
+  auto nMuons = muons.n();
+  for (auto muon = 0; muon != nMuons; muon++) {
+    if(tagSelector->accept(muons[muon]) &&
+       mcpSelector->accept(muons[muon]) ) {
+      tagsIndexes.push_back(muon);
+    }
+  }
+}
+
+void TJPsiClassifier::classifyProbes(const ITracks& tracks) {
+  auto nTracks = tracks.n();
+  for(auto track = 0; track != nTracks; track++) {
+    if( probeSelector->accept(tracks[track]) == 1 &&
+        mcpSelector->accept(tracks[track]) == 1 ) {
+      probesIndexes.push_back(track);
+    }
+  }
+}
+
+int TJPsiClassifier::clear() {
   isMuonProbe = 0;
   isSMT = 0;
   muonProbeIdx = -9999;
@@ -114,30 +124,6 @@ int TJPsiClassifier::clear(void) {
   probesIndexes.clear();
   pair = std::make_pair(-9999,-9999);
   return (1);
-}
-
-const std::pair<int, int>& TJPsiClassifier::GetSelectedPair() {
-  return(pair);
-}
-
-int TJPsiClassifier::GetSelectedProbe () {
-  return (pair.second);
-}
-
-int TJPsiClassifier::GetMatchedMuonProbe () {
-  return (muonProbeIdx);
-}
-
-int TJPsiClassifier::GetSelectedTag () {
-  return (pair.first);
-}
-
-int TJPsiClassifier::IsPairMuonProbe (void) {
-  return (isMuonProbe);
-}
-
-int TJPsiClassifier::IsPairSMT (void) {
-  return (isSMT);
 }
 
 #ifdef __CINT__

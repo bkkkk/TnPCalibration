@@ -5,6 +5,35 @@
 
 class FakeMuon : public IMuon {
 public:
+  static FakeMuon ConstructGoodTagMuon() {
+    FakeMuon muon;
+    muon.mId_d0_exPV = 0.3;
+    muon.mId_z0_exPV = 0.5;
+    muon.mId_cov_d0_exPV = 1;
+    muon.mId_cov_z0_exPV = 1;
+    muon.mId_theta = 0.5;
+    muon.mId_qoverp = 0.0001;
+    muon.mIsCombinedMuon = true;
+    muon.mMatchchi2 = 6;
+    muon.mMatchndof = 6;
+    return (muon);
+  }
+
+  static FakeMuon ConstructBadTagMuon() {
+    FakeMuon muon;
+    muon.mId_d0_exPV = 100;
+    muon.mId_z0_exPV = 100;
+    muon.mId_cov_d0_exPV = 0.1; 
+    muon.mId_cov_z0_exPV = 0.1;
+    muon.mId_theta = 6.28;
+    muon.mId_qoverp = 1;
+    muon.mIsCombinedMuon = false;
+    muon.mMatchchi2 = -999;
+    muon.mMatchndof = -999;
+    return (muon);
+  }
+
+public:
   FakeMuon()
    : mId_d0_exPV(-1),
      mId_z0_exPV(-1),
@@ -42,26 +71,6 @@ public:
   
   virtual ~FakeMuon() { }
 
-  void constructGoodTagMuon() {
-    mId_d0_exPV = 0.3;
-    mId_z0_exPV = 0.5;
-    mId_cov_d0_exPV = 1;
-    mId_cov_z0_exPV = 1;
-    mId_theta = 0.5;
-    mId_qoverp = 0.0001;
-    mIsCombinedMuon = true;
-  }
-
-  void constructBadTagMuon() {
-    mId_d0_exPV = 100;
-    mId_z0_exPV = 100;
-    mId_cov_d0_exPV = 0.1; 
-    mId_cov_z0_exPV = 0.1;
-    mId_theta = 6.28;
-    mId_qoverp = 1;
-    mIsCombinedMuon = false;
-  }
-
   inline const double id_d0_exPV() const { return mId_d0_exPV; }
   inline const double id_z0_exPV() const { return mId_z0_exPV; }
   inline const double id_cov_d0_exPV() const { return mId_cov_d0_exPV; }
@@ -96,7 +105,7 @@ public:
   inline const double matchchi2() const { return mMatchchi2; }
   inline const double matchndof() const { return mMatchndof; }
   
-private:
+public:
   double mId_d0_exPV;
   double mId_z0_exPV;
   double mId_cov_d0_exPV;

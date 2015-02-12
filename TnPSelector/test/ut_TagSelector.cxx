@@ -28,16 +28,16 @@ TEST_F(TestTagSelector, NumericSelectionOfBadMuon) {
 }
 
 TEST_F(TestTagSelector, NumericSelectionOfGoodMuon) {
-  EXPECT_EQ(1, selector->accept(2.4, 1, 5000, 0.2, 1.4, 0.1, 0.5));
+  EXPECT_EQ(1, selector->accept(2.4, 1, 5000, 0.2, 1.4, 2.0, 2.0));
 }
 
 TEST_F(TestTagSelector, SelectionOfBadMuon) {
-  FakeMuon badMuon; badMuon.constructBadTagMuon();
+  auto badMuon = FakeMuon::ConstructBadTagMuon();
   EXPECT_EQ(0, selector->accept(badMuon));
 }
 
 TEST_F(TestTagSelector, SelectionOfGoodMuon) {
-  FakeMuon goodMuon; goodMuon.constructGoodTagMuon();
+  auto goodMuon = FakeMuon::ConstructGoodTagMuon();
   EXPECT_EQ(1, selector->accept(goodMuon));
 }
 
