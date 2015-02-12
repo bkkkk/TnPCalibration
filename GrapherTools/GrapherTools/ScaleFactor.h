@@ -10,52 +10,48 @@
 namespace GT
 {
 
-class ScaleFactor
-{
+struct SFAttributes {
+  SFAttributes() {
+  }
+
+  std::string Title;
+  std::string xAxisTitle;
+  std::string yAxisTitle;
+  const float titleSize;
+  const float titleOffset;
+  const int markerStyle;
+  const int markerColor;
+  float minimum;
+  float maximum;
+};
+
+struct SFComponent {
+  SFComponent(std::unique_ptr<TH1> histogram, const std::string& title, Style_t markerStyle, Color_t color) : histogram(std::move(histogram)), title(title), markerStyle(markerStyle), color(color) {}
+
+  std::unique_ptr<TH1> histogram;
+  std::string title;
+  Style_t markerStyle;
+  Color_t color;
+};
+
+class ScaleFactor {  
 
 ClassDef(ScaleFactor, 1);
 
 private:
-  // Histogram Coloring
-  TH1* histo1;
-
-  TH1* histo2;
-
-  
-  // Canvas 
-  TCanvas* canvas;
-
-  // Pads
-  TPad* padTopLeft;
-  TPad* padBottomRight;
-
-  // Stack
-  THStack* stack;
-  
-  // SF 
+  TCanvas canvas;
+  TPad padTopLeft;
+  TPad padBottomRight;
+  THStack stack;
   TH1* SF;
 
 public:
-  std::string histo1Title; Style_t markerStyleOne; Color_t colorOne;
-  std::string histo2Title; Style_t markerStyleTwo; Color_t colorTwo;
-  int doLog;
-  
-private:
-  // SF Attributes
-  std::string sfTitle;
-  std::string xAxisTitle;
-  std::string yAxisTitle;
-  const float sfTitleSize;
-  const float sfTitleOffset;
-  const int sfMarkerStyle;
-  const int sfMarkerColor;
-  float sfRangeMin;
-  float sfRangeMax;
-
+  SFComponent numerator;
+  SFComponent denominator;
+  SFAttributes attributes;
 
 public:
-  // Create a new Scale Factor object
-  ScaleFactor( const std::string& name,  TH1* h1,  TH1* h2);
+  ScaleFactor(const std::string& name, const SFComponent& numerator, const SFComponent& denominator);
 
 public:
   void SetXaxisTitle(const std::string& title);
