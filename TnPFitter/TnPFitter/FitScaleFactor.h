@@ -1,39 +1,29 @@
 #ifndef TNPFITTER_FITSCALEFACTOR_H_ 
 #define TNPFITTER_FITSCALEFACTOR_H_ 1
 
-class FitEfficiency;
-
 #include <string>
 #include "TObject.h"
 
-class FitScaleFactor
-{
-public:
-  // Ctor
-  FitScaleFactor(const std::string& name, FitEfficiency* data, FitEfficiency* mc);
+class FitEfficiency;
 
+class FitScaleFactor {
 public:
-  // Dtor
+  FitScaleFactor(const std::string& name, FitEfficiency* data, FitEfficiency* mc);
   ~FitScaleFactor();
 
-public:
-  double GetRecoScaleFactor(void);
-
-public:
-  double GetRecoScaleFactorError(void);
-
-public:
-  double GetSMTScaleFactor(void);
-
-public:
-  double GetSMTScaleFactorError(void);
-
-  ClassDef(FitScaleFactor, 1)
+  double GetRecoScaleFactor();
+  double GetRecoScaleFactorError();
+  double GetSMTScaleFactor();
+  double GetSMTScaleFactorError();
 
 private:
-  std::string fName; // Name
-  FitEfficiency* fData; // Data object
-  FitEfficiency* fMC; // MC object
+  std::string fName;
+  FitEfficiency* fData;
+  FitEfficiency* fMC;
+
+#ifdef __CINT__
+  ClassDef(FitScaleFactor, 1)
+#endif
 };
 
 #endif

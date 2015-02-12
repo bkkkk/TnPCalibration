@@ -1,121 +1,83 @@
 #include "TnPFitter/FitEfficiency.h"
 #include "TnPFitter/DoubleGausFit.h"
 #include "TnPFitter/FitIntegral.h"
-#include "JacobUtils/LoggingUtility.h"
 #include "TH1F.h"
 
-//______________________________________________________________________________
-FitEfficiency::
-FitEfficiency(const std::string& name,
-              TH1F* probeHisto,
-              TH1F* muonProbeHisto,
-              TH1F* smtHisto,
-              double min,
-              double max)
-  : fName(name)
-{
-  std::string probeName = name + "_probe";
-  std::string muonProbeName = name + "_muonprobe";
-  std::string smtName = name + "_smt";
-
-  LOG_DEBUG() << "Building fit objects";
-
-  if(probeHisto == NULL || muonProbeHisto == NULL || smtHisto == NULL)
-  {
-    LOG_ERROR() << "Histograms not properly constructed";
-    throw;
+FitEfficiency::FitEfficiency(const std::string& name,
+                             TH1F* probeHisto, TH1F* muonProbeHisto, TH1F* smtHisto,
+                             double min, double max)
+  : fName(name) {
+  if(probeHisto == nullptr) {
+    throw(std::runtime_error("The probe histogram is empty"));
   }
+  fProbeIntegral = new FitIntegral(name + "_probe", probeHisto, min, max);
 
-  fProbeIntegral = new FitIntegral(probeName, probeHisto, min, max);
-  fMuonProbeIntegral = new FitIntegral(muonProbeName, muonProbeHisto, min, max);
-  fSmtIntegral = new FitIntegral(smtName, smtHisto, min, max);
+  if(muonProbeHisto == nullptr) {
+    throw(std::runtime_error("The muon probe histogram is empty"));
+  }
+  fMuonProbeIntegral = new FitIntegral(name + "_muonprobe", muonProbeHisto, min, max);
+
+  if(smtHisto == nullptr) {
+    throw(std::runtime_error("The SMT histogram is empty"));
+  }
+  fSmtIntegral = new FitIntegral(name + "_smt", smtHisto, min, max);
+
 }
 
-//______________________________________________________________________________
-FitEfficiency::
-~FitEfficiency()
-{
-
+FitEfficiency::FitEfficiency(const std::string& name,
+                             FitIntegral* probeIntegral,
+                             FitIntegral* muonProbeIntegral,
+                             FitIntegral* smtIntegral)
+  : fName {name}
+  , fProbeIntegral {probeIntegral}
+  , fMuonProbeIntegral {muonProbeIntegral}
+  , fSmtIntegral {smtIntegral} {
 }
 
-//_______________________________________________________________________________
-void FitEfficiency::
-Draw(void)
-{
-  LOG_DEBUG1() << "Drawing fits";
+FitEfficiency::~FitEfficiency() {
+}
+
+void FitEfficiency::Draw() {
   fProbeIntegral->Draw();
   fMuonProbeIntegral->Draw();
   fSmtIntegral->Draw();
 }
 
-//______________________________________________________________________________
-double FitEfficiency::
-GetSMTError(int nSigma, int windowSize)
-{
+double FitEfficiency::GetSMTError(int nSigma, int windowSize) {
   return(TNPFITTER::GetTotalUncertainty(fSmtIntegral, fMuonProbeIntegral, nSigma, windowSize));
-};
+}
 
-//______________________________________________________________________________
-double FitEfficiency::
-GetSMTEfficiency(int nSigma)
-{
-  LOG_DEBUG2() << "SMT efficiency: ";
+double FitEfficiency::GetSMTEfficiency(int nSigma) {
   return(TNPFITTER::GetEfficiency(fSmtIntegral, fMuonProbeIntegral, nSigma));
-};
+}
 
-//______________________________________________________________________________
-double FitEfficiency::
-GetRecoError(int nSigma, int windowSize)
-{
+double FitEfficiency::GetRecoError(int nSigma, int windowSize) {
   return(TNPFITTER::GetTotalUncertainty(fMuonProbeIntegral, fProbeIntegral, nSigma, windowSize));
-};
+}
 
-//______________________________________________________________________________
-double FitEfficiency::
-GetRecoEfficiency(int nSigma)
-{
-  LOG_DEBUG2() << "Reco efficiency: ";
+double FitEfficiency::GetRecoEfficiency(int nSigma) {
   return(TNPFITTER::GetEfficiency(fMuonProbeIntegral, fProbeIntegral, nSigma));
-};
+}
 
-//______________________________________________________________________________
-// Convenience functions
+namespace TNPFITTER {
+  double GetEfficiency(FitIntegral* top, FitIntegral* bottom, int nSigma) {
+    auto topYield = top->GetCorrectedYield(nSigma);
+    auto bottomYield = bottom->GetCorrectedYield(nSigma);
 
-//______________________________________________________________________________
-double TNPFITTER::
-GetEfficiency(FitIntegral* top, FitIntegral* bottom, int nSigma)
-{
-  double topYield = top->GetCorrectedYield(nSigma);
-  double bottomYield = bottom->GetCorrectedYield(nSigma);
-  return(GetEfficiency(topYield, bottomYield));
-};
+    auto eff = GetEfficiency(topYield, bottomYield);
 
-//______________________________________________________________________________
-double TNPFITTER::
-GetEfficiency(double top, double bottom)
-{
-  double eff = top/bottom;
+    return(eff);
+  }
 
-  LOG_DEBUG2() << "Top = " << top << ", Bottom = " << bottom;
-  LOG_DEBUG2() << "Efficiency = " << eff;
-  return(eff);
-};
+  double GetTotalUncertainty(FitIntegral* top, FitIntegral* bottom, int nSigma, int windowSize) {
+    auto topUncertainty = top->GetTotalUncertainty(nSigma, windowSize);
+    auto bottomUncertainty =  bottom->GetTotalUncertainty(nSigma, windowSize);
+    auto totalUncerainty = GetTotalUncertainty(topUncertainty, bottomUncertainty);
 
-//______________________________________________________________________________
-double TNPFITTER::
-GetTotalUncertainty(FitIntegral* top, FitIntegral* bottom, int nSigma, int windowSize)
-{
-  return(TNPFITTER::GetTotalUncertainty(top->GetTotalUncertainty(nSigma, windowSize),
-                                        bottom->GetTotalUncertainty(nSigma, windowSize)));
-};
+    return(totalUncerainty);
+  }
+}
 
-//______________________________________________________________________________
-double TNPFITTER::
-GetTotalUncertainty(double top, double bottom)
-{
-  double uncertainty = sqrt(top * top + bottom * bottom);
-  return(uncertainty);
-};
-
-// RootCint Streamer Support
+#ifdef __CINT__
 ClassImp(FitEfficiency);
+#endif

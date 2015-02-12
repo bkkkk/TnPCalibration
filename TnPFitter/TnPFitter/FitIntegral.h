@@ -35,7 +35,9 @@ private:
   std::string fName;
 	FitInterface* fFitter;
 
+#ifdef __CINT__
 	ClassDef(FitIntegral, 1)
+#endif
 };
 
 #endif

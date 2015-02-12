@@ -2,7 +2,6 @@
 
 #include "TnPFitter/DoubleGausFit.h"
 #include "TnPFitter/SingleGausFit.h"
-#include "TnPFitter/DoubleGausLandauFit.h"
 #include "TnPFitter/FitInterface.h"
 #include "TnPFitter/FitConfig.h"
 #include "TnPFitter/FitIntegral.h"
@@ -24,7 +23,6 @@
 #pragma link C++ defined_in "TnPFitter/SingleGausFit.h";
 #pragma link C++ defined_in "TnPFitter/FitEfficiency.h";
 #pragma link C++ defined_in "TnPFitter/FitScaleFactor.h";
-#pragma link C++ defined_int "TnPFitter/DoubleGausLandauFit.h";
 #pragma link C++ defined_int "TnPFitter/FitterDraw.h";
 
 #endif

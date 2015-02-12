@@ -1,7 +1,6 @@
 #ifndef TNPFITTER_FITTERDRAW_H_
 #define TNPFITTER_FITTERDRAW_H_ 1
 
-// predeclaration
 class TCanvas;
 class TF1;
 class TH1F;
@@ -11,19 +10,15 @@ class TPaveText;
 
 #include "TObject.h"
 
-// RC packages
 #include "TnPFitter/FitInterface.h"
 #include "JacobUtils/LoggingUtility.h"
 
-// C++
 #include <string>
 
-class FitterDraw
-{
+class FitterDraw {
 
 public:
-  struct LineAttrib
-  {
+  struct LineAttrib {
     std::string name;
     int color;
     int style;
@@ -32,9 +27,7 @@ public:
   };
 
 public:
-  FitterDraw(FitInterface* fitter = NULL, int sigma = 3, int window = 2);
-  
-public:
+  FitterDraw(FitInterface* fitter = nullptr, int sigma = 3, int window = 2);
   ~FitterDraw(void);
 
 public:
@@ -44,16 +37,13 @@ public:
   void Draw(const std::string& options="");
 
 private:
-  // Fitter
   FitInterface* fFitter; 
   int fSigma;
   int fWindow;
 
-  // Sizes
   float histMin;
   float histMax;
 
-  // Colors and widths
   TFile* configFile;
   LineAttrib* bkgUp;
   LineAttrib* bkgDown;
@@ -61,7 +51,6 @@ private:
   LineAttrib* signal;
   LineAttrib* bkg;
 
-  // Lines
   TLine* fiveLow;
   TLine* fiveHigh;
   TLine* threeLow;
@@ -69,7 +58,9 @@ private:
   
   TPaveText* box;
 
+#ifdef __CINT__
   ClassDef(FitterDraw, 1)
+#endif
 };
 
 #endif

@@ -3,48 +3,28 @@
 
 #include <map>
 #include <string>
+#include <cassert>
 
-class FitResult
-{
+class FitResult {
 public:
-	FitResult(const std::string& name, const size_t NPars)
-	: fName( name )
-	{
-	}
+  using SimpleParameter = std::pair<double, double>;
+  using SimpleParameters = std::map<std::string, SimpleParameter>;
 
 public:
-	~FitResult()
-	{
-		fName = "";
-		fParameters.clear();
-	}
+  FitResult(const std::string& name, const std::size_t NPars = 0);
+  ~FitResult();
 
 public:
-	int AddParameter(std::string name, float val, float error)
-	{
-		fParameters[name] = std::make_pair (val, error);
-		return (1);
-	}
-
-public:
-	size_t GetNPars(void) { return(fParameters.size()); }
-
-public:
-	std::map<std::string, std::pair<float, float > >& GetParameters() { return (fParameters); }
-
-public:
-	std::pair<float, float>& GetParameter(std::string parName) { return (fParameters[parName]); }
-
-public:
-	float GetParValue(const std::string& name) { return (fParameters[name].first); }
-
-public:
-	float GetParError(const std::string& name) { return (fParameters[name].second); }
+  int AddParameter(std::string name, double val, double error);
+  const std::size_t GetNPars() const;
+  const SimpleParameters& GetParameters() const;
+  SimpleParameter GetParameter(const std::string& parName);
+  double GetParValue(const std::string& name) const;
+  double GetParError(const std::string& name) const;
 
 private:
-	// Holds parameters
-	std::string fName;
-	std::map<std::string, std::pair<float, float > > fParameters;
+  std::string name;
+  SimpleParameters parameters;
 };
 
 #endif

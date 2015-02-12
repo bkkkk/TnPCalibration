@@ -1,55 +1,39 @@
 #include "TnPFitter/FitScaleFactor.h"
 #include "TnPFitter/FitEfficiency.h"
 
-//_____________________________________________________________________________
-FitScaleFactor::
-FitScaleFactor(const std::string& name, FitEfficiency* data, FitEfficiency* mc)
+FitScaleFactor::FitScaleFactor(const std::string& name, FitEfficiency* data, FitEfficiency* mc)
   : fName(name),
     fData(data),
-    fMC(mc)
-{
+    fMC(mc) { }
 
-};
+FitScaleFactor::~FitScaleFactor() { }
 
-//_____________________________________________________________________________
-FitScaleFactor::
-~FitScaleFactor()
-{
+double FitScaleFactor::GetRecoScaleFactor() {
+  auto recoEffData = fData->GetRecoEfficiency();
+  auto recoEffMC = fMC->GetRecoEfficiency();
 
-};
+  auto sf = recoEffData/recoEffMC;
 
-//_____________________________________________________________________________
-double FitScaleFactor::
-GetRecoScaleFactor(void)
-{
-  double recoEffData = fData->GetRecoEfficiency();
-  double recoEffMC = fMC->GetRecoEfficiency();
+  return(sf);
+}
 
-  return(recoEffData/recoEffMC);
-};
+double FitScaleFactor::GetRecoScaleFactorError() {
+  return(0.f);
+}
 
-//_____________________________________________________________________________
-double FitScaleFactor::
-GetRecoScaleFactorError(void)
-{
+double FitScaleFactor::GetSMTScaleFactor() {
+  auto smtEffData = fData->GetSMTEfficiency();
+  auto smtEffMC = fMC->GetSMTEfficiency();
+
+  auto sf = smtEffData / smtEffMC;
+
+  return(sf);
+}
+
+double FitScaleFactor::GetSMTScaleFactorError(void) {
   return(0.);
-};
+}
 
-//_____________________________________________________________________________
-double FitScaleFactor::
-GetSMTScaleFactor(void)
-{
-  double smtEffData = fData->GetSMTEfficiency();
-  double smtEffMC = fMC->GetSMTEfficiency();
-
-  return(smtEffData / smtEffMC);
-};
-
-//_____________________________________________________________________________
-double FitScaleFactor::
-GetSMTScaleFactorError(void)
-{
-  return(0.);
-};
-
+#ifdef __CINT__
 ClassImp(FitScaleFactor)
+#endif

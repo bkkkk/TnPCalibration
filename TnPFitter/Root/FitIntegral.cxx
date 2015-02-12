@@ -6,198 +6,136 @@
 #include <JacobUtils/LoggingUtility.h>
 #include <stdexcept>
 
-FitIntegral::
-FitIntegral(const std::string& name, TH1F* histogram, double min, double max)
+FitIntegral::FitIntegral(const std::string& name, TH1F* histogram, double min, double max)
   : fName(name),
-    fFitter(NULL)
-{
-  if(histogram == NULL)
-  {
-    LOG_ERROR() << "This histogram is empty";
-    throw;
+    fFitter(nullptr) {
+  
+  if(histogram == nullptr) {
+    throw(std::runtime_error("This histogram is empty"));
   }
 
-  // Used for determining what is low and high background
-  double threshold = 0.07;
+  auto threshold = 0.07;
 
-  if(TNPFITTER::IsLowBackground(histogram, min, threshold))
-  {
-    LOG_DEBUG1() << "Running with DGaus";
-    fFitter = new DoubleGausFit(name, histogram, TNPFITTER::BuildFitConfiguration(histogram, min, max));
-  } else
-  {
-    LOG_DEBUG1() << "Running with SGaus";
-    fFitter = new SingleGausFit(name, histogram, TNPFITTER::BuildSingleGausFitConfiguration(histogram, min, max));
+  if(TNPFITTER::IsLowBackground(histogram, min, threshold)) {
+    fFitter = new DoubleGausFit(fName, histogram, TNPFITTER::BuildFitConfiguration(histogram, min, max));
+  } else {
+    fFitter = new SingleGausFit(fName, histogram, TNPFITTER::BuildSingleGausFitConfiguration(histogram, min, max));
   }
 
-  TNPFITTER::RunFit( fFitter );
+  TNPFITTER::RunFit(fFitter);
 }
 
-//______________________________________________________________________________
-FitIntegral::
-FitIntegral( FitInterface* fitter )
+FitIntegral::FitIntegral(FitInterface* fitter)
   : fName(""),
-    fFitter(fitter)
-{
-  if(fFitter == NULL)
-  {
-    LOG_ERROR() << "Fitter object not constructed properly";
+    fFitter(fitter) {
+  if(fFitter == nullptr) {
     throw(std::runtime_error(""));
   }
 
   fName = fFitter->GetName();
-  TNPFITTER::RunFit( fFitter );
+  TNPFITTER::RunFit(fFitter);
 }
 
-//______________________________________________________________________________
-FitIntegral::
-~FitIntegral()
-{
+FitIntegral::~FitIntegral() {
   delete fFitter;
 }
 
-//______________________________________________________________________________
-double FitIntegral::
-GetBackgroundIntegral(int sigma)
-{
-  double lowLimit = fFitter->GetSigmaLow(sigma);
-  double highLimit = fFitter->GetSigmaHigh(sigma);
+double FitIntegral::GetBackgroundIntegral(int sigma) {
+  auto lowLimit = fFitter->GetSigmaLow(sigma);
+  auto highLimit = fFitter->GetSigmaHigh(sigma);
+  auto integral = fFitter->GetBackgroundFunction()->Integral(lowLimit, highLimit);
 
-  return(fFitter->GetBackgroundFunction()->Integral(lowLimit, highLimit));
+  return(integral);
 }
 
-//______________________________________________________________________________
-double FitIntegral::
-GetSignalIntegral(int sigma)
-{
-  TH1* histogram = fFitter->GetHistogram();
+double FitIntegral::GetSignalIntegral(int sigma) {
+  auto histogram = fFitter->GetHistogram();
 
-  if(histogram == NULL)
-  {
-    LOG_WARNING() << "Histogram not available";
-    return (0);
+  if(histogram == nullptr) {
+    return (0.0);
   }
 
-  int binMin = histogram->FindBin(fFitter->GetSigmaLow(sigma));
-  int binMax = histogram->FindBin(fFitter->GetSigmaHigh(sigma));
+  auto binMin = histogram->FindBin(fFitter->GetSigmaLow(sigma));
+  auto binMax = histogram->FindBin(fFitter->GetSigmaHigh(sigma));
 
-  return( histogram->Integral(binMin, binMax) );
+  return(histogram->Integral(binMin, binMax));
 }
 
-//______________________________________________________________________________
-double FitIntegral::
-GetCorrectedYield(int sigma)
-{
-  double sig = GetSignalIntegral(sigma);
-  double bkg = GetBackgroundIntegral(sigma);
+double FitIntegral::GetCorrectedYield(int sigma) {
+  auto sig = GetSignalIntegral(sigma);
+  auto bkg = GetBackgroundIntegral(sigma);
 
-  return ( sig - bkg );
+  auto corrected_yield = sig - bkg;
+
+  return (corrected_yield);
 }
 
-//______________________________________________________________________________
-double FitIntegral::
-GetBackgroundDownIntegral(int sigma)
-{
-  TF1* func = fFitter->GetBackgroundDownFunction();
-  if(func == NULL)
-  {
-    throw;
+double FitIntegral::GetBackgroundDownIntegral(int sigma) {
+  auto function = fFitter->GetBackgroundDownFunction();
+  if(function == nullptr) {
+    throw(std::runtime_error("Background down function is empty"));
   }
 
-  double lowLimit = fFitter->GetSigmaLow(sigma);
-  double highLimit = fFitter->GetSigmaHigh(sigma);
+  auto low_limit = fFitter->GetSigmaLow(sigma);
+  auto high_limit = fFitter->GetSigmaHigh(sigma);
+  auto integral = function->Integral(low_limit, high_limit);
 
-  return(func->Integral(lowLimit, highLimit));
-};
-
-//______________________________________________________________________________
-double FitIntegral::
-GetBackgroundUpIntegral(int sigma)
-{
-  TF1* func = fFitter->GetBackgroundUpFunction();
-  if(func == NULL)
-  {
-    throw;
-  }
-
-  double lowLimit = fFitter->GetSigmaLow(sigma);
-  double highLimit = fFitter->GetSigmaHigh(sigma);
-
-  return(func->Integral(lowLimit, highLimit));
-};
-
-//______________________________________________________________________________
-double FitIntegral::
-GetBackgroundUncertainty (int sigma)
-{
-  double nominal = GetBackgroundIntegral(sigma);
-  double up = fabs(GetBackgroundUpIntegral(sigma) - nominal);
-  double down = fabs(GetBackgroundDownIntegral(sigma) - nominal);
-
-  double unc = 0;
-
-  if(up < down)
-  {
-    unc = down;
-  }
-  else
-  {
-    unc = up;
-  }
-
-  LOG_DEBUG1() << "Uncertainty Up: " << up << ", Uncertainty Down: " << down;
-  LOG_DEBUG1() << "Uncertainty Percentage: " << unc;
-
-  if(unc == 0)
-  {
-    return (0);
-  }
-
-  return(unc/nominal);
+  return(integral);
 }
 
-//______________________________________________________________________________
-double FitIntegral::
-GetSignalWindowUncertainty(int sigma, int window)
-{
-  double nominal = GetCorrectedYield(sigma);
-  double wide = GetCorrectedYield(sigma + window);
-
-  LOG_DEBUG1() << "Nominal: " << nominal << ", Wide: " << wide;
-  LOG_DEBUG1() << "Uncertainty: " << fabs(wide - nominal) / nominal;
-
-  if(fabs(wide - nominal) == 0)
-  {
-    return (0);
+double FitIntegral::GetBackgroundUpIntegral(int sigma) {
+  auto function = fFitter->GetBackgroundUpFunction();
+  
+  if(function == nullptr) {
+    throw(std::runtime_error("Background down function is empty"));
   }
 
-  return(fabs(wide - nominal) / nominal);
+  auto low_limit = fFitter->GetSigmaLow(sigma);
+  auto high_limit = fFitter->GetSigmaHigh(sigma);
+  auto integral = function->Integral(low_limit, high_limit);
+
+  return(integral);
 }
 
-//______________________________________________________________________________
-double FitIntegral::
-GetTotalUncertainty(int sigma, int window)
-{
-  double sig = GetSignalWindowUncertainty(sigma, window);
-  double bkg = GetBackgroundUncertainty(sigma);
-  double err = sqrt(sig * sig + bkg * bkg);
+double FitIntegral::GetBackgroundUncertainty (int sigma) {
+  auto nominal = GetBackgroundIntegral(sigma);
+  auto up = fabs(GetBackgroundUpIntegral(sigma) - nominal);
+  auto down = fabs(GetBackgroundDownIntegral(sigma) - nominal);
+
+  auto uncertainty = std::max(up, down);
+
+  return((uncertainty == 0) ? 0 : uncertainty/nominal);
+}
+
+double FitIntegral::GetSignalWindowUncertainty(int sigma, int window) {
+  auto nominal = GetCorrectedYield(sigma);
+  auto wide = GetCorrectedYield(sigma + window);
+
+  auto difference = fabs(wide - nominal);
+
+  auto relative_difference = difference / nominal;
+  
+  return(relative_difference);
+}
+
+double FitIntegral::GetTotalUncertainty(int sigma, int window) {
+  auto sig = GetSignalWindowUncertainty(sigma, window);
+  auto bkg = GetBackgroundUncertainty(sigma);
+  auto err = sqrt(sig * sig + bkg * bkg);
 
   return(err);
 }
 
-//______________________________________________________________________________
-void FitIntegral::
-Draw(int sigma, int window)
-{
-  if(fFitter == NULL)
-  {
-    throw;
+void FitIntegral::Draw(int sigma, int window) {
+  if(fFitter == nullptr) {
+    throw(std::runtime_error("Fitter improperly set"));
   }
   
   TNPFITTER::DrawFit(fFitter, sigma, window);
 }
 
-// Streamer support
+#ifdef __CINT__
 ClassImp(FitIntegral)
+#endif
 
 

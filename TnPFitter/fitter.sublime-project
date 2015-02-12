@@ -1,0 +1,11 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": ".",
+      "folder_exclude_patterns": ["lib", "obj", "cmt", "data", "test-bin"],
+      "file_exclude_patterns": ["*workspace"]
+		}
+	]
+}

@@ -1,114 +1,85 @@
 #ifndef TNPFITTER_FITINTERFACE_H_
 #define TNPFITTER_FITINTERFACE_H_ 1
 
-//
 #include <string>
 #include <stdexcept>
 
-// Root
 #include <TF1.h>
 #include <TH1F.h>
 
-//
 #include "TnPFitter/FitConfig.h"
 #include "TnPFitter/FitResult.h"
 
-class FitInterface
-{
+class FitInterface {
 public:
-  FitInterface(const std::string& name,
+  FitInterface(std::string name,
                TH1F* val_histogram,
                const FitConfig& val_fitConfig);
   
-  virtual ~FitInterface(void);
+  virtual ~FitInterface();
 
 public:
-  TF1* GetSignalFunction (void);
-  TF1* GetBackgroundFunction (void);
-  TF1* GetCompositeFunction (void);
-  TF1* GetBackgroundUpFunction (void);
-  TF1* GetBackgroundDownFunction (void);
-  TF1* GetCompositeUpFunction (void);
-  TF1* GetCompositeDownFunction (void);
+  TF1* GetSignalFunction();
+  TF1* GetBackgroundFunction();
+  TF1* GetCompositeFunction();
+  TF1* GetBackgroundUpFunction();
+  TF1* GetBackgroundDownFunction();
+  TF1* GetCompositeUpFunction();
+  TF1* GetCompositeDownFunction();
 
 public:  
-  // Set component functions
-  virtual void FitCompositeFunction(void);
-  virtual void SetSignalFunction (void) = 0;
-  virtual void SetBackgroundFunction (void) = 0;
-  virtual void SetCompositeUpFunction (void) = 0;
-  virtual void SetCompositeDownFunction (void) = 0;
+  virtual void FitCompositeFunction();
+  virtual void SetSignalFunction () = 0;
+  virtual void SetBackgroundFunction () = 0;
+  virtual void SetCompositeUpFunction () = 0;
+  virtual void SetCompositeDownFunction () = 0;
 
 public:
-  // Get Name
-  const std::string GetName(void) const { return name; }
-  std::string GetName(void) { return name; }
-
-public:
-  // Get Histogram
-  TH1F* GetHistogram (void) { return histogram; }
-  const TH1F* GetHistogram (void) const  { return histogram; }
+  const std::string GetName() const { return name; }
+  TH1F* GetHistogram() const  { return histogram; }
+  const FitConfig GetFitConfig() const { return fitConfig; }
+  const std::string& GetFunctionName() const { return functionName; }
   
-public:
-  // Helper functions
   virtual double GetSigmaLow (int nSigma = 3);
   virtual double GetSigmaHigh (int nSigma = 3);
-  virtual void GetSigmaAndMu(double& sigma, double& mu) = 0;
+  virtual std::pair<double, double> GetSigmaAndMu() = 0;
   void SetFitLimits(const double min, const double max);
-
-public:
-  // Get Fit Configuration
-  const FitConfig GetFitConfig() const { return fitConfig; }
-  FitConfig GetFitConfig() { return fitConfig; }
-
-public:
-  // Get Function Name
-  const std::string& GetFunctionName() const { return functionName; }
-  std::string& GetFunctionName() { return functionName; }
 
 protected:
   const void PrintVariable(const std::string& name, double var, double err) const;
 
 protected:
-  // Test functions
   void testSignalFunction();
   void testBackgroundFunction();
   void testCompositeFunction();
 
-protected:    
-  // Name
   std::string name;
   FitConfig fitConfig;
   std::string functionName;
 
-  // Input histogram
   TH1F* histogram;
   std::string histogramName;
   
-  // Nominal functions
   TF1* compositeFunction;
   TF1* signalFunction;
   TF1* backgroundFunction;
   
-  // Variation histograms
   TF1* compositeUpFunction;
   TF1* compositeDownFunction;
   TF1* backgroundUpFunction;
   TF1* backgroundDownFunction;
 
-  // Fit Limits
   double bottomFitLimit;
   double topFitLimit;
 
-  // Fit Results
   FitResult* fitResult;
 
+#ifdef __CINT__
   ClassDef(FitInterface, 1)
-
+#endif
 };
 
-namespace TNPFITTER
-{
+namespace TNPFITTER {
   void RunFit(FitInterface* fitter);
   void DrawFit(FitInterface* fitter, int sigma, int window);
   bool IsLowBackground(TH1* histogram, double fittingEdge, double threshold = 0.07);

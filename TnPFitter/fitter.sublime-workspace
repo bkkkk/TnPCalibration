@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"Simep",
+				"SimpleParameters"
+			],
+			[
+				"isLow",
+				"isLowBkg"
+			],
+			[
+				"isLowB",
+				"isLowBackground"
+			],
+			[
+				"LIB",
+				"LIBDIR"
+			],
+			[
 				"fFit",
 				"fFitOptions"
 			],
@@ -189,63 +205,52 @@
 			]
 		]
 	},
-	"buffers":
-	[
-		{
-			"file": "TnPFitter/DoubleGausFit.h",
-			"settings":
-			{
-				"buffer_size": 2375,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "TnPFitter/FitConfig.h",
-			"settings":
-			{
-				"buffer_size": 2940,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Root/FitConfig.cxx",
-			"settings":
-			{
-				"buffer_size": 1058,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Root/DoubleGausFit.cxx",
-			"settings":
-			{
-				"buffer_size": 15445,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "test/ut_DoubleGausFit.cxx",
-			"settings":
-			{
-				"buffer_size": 1311,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "test/ut_SetupDoubleGaus.cxx",
-			"settings":
-			{
-				"buffer_size": 2458,
-				"line_ending": "Unix"
-			}
-		}
-	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 47.0,
+		"height": 67.0,
 		"selected_items":
 		[
+			[
+				"convert to ",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"list p",
+				"Package Control: List Packages"
+			],
+			[
+				"list pac",
+				"Package Control: List Packages"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"c++",
+				"Set Syntax: C++11"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"remove ",
+				"Package Control: Remove Package"
+			],
+			[
+				"remove packa",
+				"Package Control: Remove Package"
+			],
+			[
+				"syntaxc++",
+				"Set Syntax: C++"
+			],
+			[
+				"syntax c++",
+				"Set Syntax: C++"
+			],
 			[
 				"instal",
 				"Package Control: Install Package"
@@ -265,13 +270,9 @@
 			[
 				"latex",
 				"Set Syntax: LaTeX"
-			],
-			[
-				"c++",
-				"Set Syntax: C++"
 			]
 		],
-		"width": 384.0
+		"width": 492.0
 	},
 	"console":
 	{
@@ -291,6 +292,36 @@
 	},
 	"file_history":
 	[
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitResult.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitEfficiency.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitResult.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Makefile",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitConfig.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/LinkDef.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitIntegral.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitInterface.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitterDraw.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitInterface.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitIntegral.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitEfficiency.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitterDraw.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitScaleFactor.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitScaleFactor.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/test/ut_FitConfig.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/test/ut_FitConfig.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/DoubleGausFit.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/SingleGausFit.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/DoubleGausFit.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/SingleGausFit.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitConfig.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/fitter.sublime-project",
+		"/Users/jayb88/Projects/TnPCalibration/TnPSelector/test/ut_TagSelector.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPSelector/Root/TJPsiTagSelector.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPSelector/test/ut_TagSelector.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/test/ut_FitConfig.hpp",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/test/ut_FitEfficiency.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/test/ut_SetupDoubleGaus.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/test/ut_DoubleGausFit.cxx",
 		"/Users/jayb88/Dropbox/TopWork/PhD Reports/Year3 Report/report.tex",
 		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/TnPFitter/DoubleGausFit.h",
 		"/Users/jayb88/jblanco/CalibrationWork/TnPFitter/test/ut_DoubleGausFit.cxx",
@@ -341,9 +372,10 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
+			""
 		]
 	},
 	"find_state":
@@ -351,6 +383,73 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"NPars",
+			"float",
+			"fParameters",
+			"fName",
+			"TFitResult",
+			" {",
+			"inline ",
+			"bkgParameterIndex",
+			"bkgParameter",
+			"BackgroundFitFunction",
+			"Bkg",
+			"fitFunction",
+			"settings.",
+			"double",
+			"inline",
+			"test_max",
+			"test_min",
+			"FitConfig {",
+			"{ ",
+			"void ",
+			"inline",
+			" {",
+			"inline",
+			"ClassImp",
+			"ClassDef",
+			"TestTagSelector",
+			"TNPFITTER_FITCONFIG_TEST",
+			"TestTagSelector",
+			"ROOT::Fit",
+			"void",
+			"fSettings.",
+			"fFunction",
+			"fFitOpti",
+			"firstBkgIndx",
+			"return (",
+			"{ return",
+			"const",
+			"void",
+			"return (",
+			"::string",
+			"//",
+			"void",
+			"testFile",
+			"argv",
+			"5.34.24",
+			"double",
+			"std::string",
+			"LOG_",
+			"float",
+			"//______________________________________________________________________________",
+			"LOG_DEBUG",
+			"LOG_ERROR()",
+			"double",
+			"double ",
+			"double",
+			"int",
+			"double",
+			"std::string",
+			"TNPFITTER::",
+			"double",
+			"LOG",
+			"( ",
+			"double",
+			"float",
+			"NULL",
+			"void",
+			"double",
 			"funcNameComp,",
 			"funcNameBkg,",
 			"funcNameBkg",
@@ -411,22 +510,7 @@
 			"high",
 			"highBkgFile",
 			"highBkgFitter",
-			"compQuadFunc",
-			"functionIdx",
-			"n",
-			"N",
-			"n",
-			"par[1]",
-			"alpha",
-			"muonProbeIdx",
-			"include",
-			"pileupTool",
-			";",
-			"public:",
-			"name",
-			"public",
-			"LOG_ERROR",
-			"Muons   "
+			"compQuadFunc"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -441,191 +525,9 @@
 		"whole_word": false,
 		"wrap": true
 	},
-	"groups":
-	[
-		{
-			"selected": 3,
-			"sheets":
-			[
-				{
-					"buffer": 0,
-					"file": "TnPFitter/DoubleGausFit.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2375,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								572,
-								572
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 8.0,
-						"translation.y": 439.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "TnPFitter/FitConfig.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2940,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2160,
-								2160
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "Root/FitConfig.cxx",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1058,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								591,
-								591
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "Root/DoubleGausFit.cxx",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 15445,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7290,
-								7290
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 8.0,
-						"translation.y": 2535.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "test/ut_DoubleGausFit.cxx",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1311,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "test/ut_SetupDoubleGaus.cxx",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2458,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2362,
-								2362
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 262.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
-			]
-		}
-	],
 	"incremental_find":
 	{
-		"height": 23.0
+		"height": 25.0
 	},
 	"input":
 	{
@@ -654,10 +556,17 @@
 		]
 	},
 	"menu_visible": true,
-	"project": "tnpfitter.sublime-project",
+	"output.exec":
+	{
+		"height": 112.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
 	"replace":
 	{
-		"height": 42.0
+		"height": 46.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -666,24 +575,96 @@
 		"selected_items":
 		[
 			[
+				"make",
+				"Makefile"
+			],
+			[
+				"fitres",
+				"TnPFitter/FitResult.h"
+			],
+			[
+				".h",
+				"TnPFitter/FitResult.h"
+			],
+			[
+				"fit",
+				"TnPFitter/FitEfficiency.h"
+			],
+			[
 				"ut",
-				"unit-tests/ut_SetupDoubleGaus.cxx"
+				"test/ut_FitConfig.h"
+			],
+			[
+				"fitconfig",
+				"Root/FitConfig.cxx"
+			],
+			[
+				"fitconfi",
+				"Root/FitConfig.cxx"
+			],
+			[
+				"ut_fit",
+				"test/ut_FitConfig.h"
+			],
+			[
+				"ut_",
+				"test/ut_FitConfig.cxx"
+			],
+			[
+				"fitterdr",
+				"Root/FitterDraw.cxx"
+			],
+			[
+				"fitterdraw",
+				"TnPFitter/FitterDraw.h"
+			],
+			[
+				"fiteff",
+				"Root/FitEfficiency.cxx"
 			],
 			[
 				"double",
-				"Source/DoubleGausFit.cxx"
+				"Root/DoubleGausFit.cxx"
+			],
+			[
+				"project",
+				"fitter.sublime-project"
+			],
+			[
+				"fitscale",
+				"TnPFitter/FitScaleFactor.h"
+			],
+			[
+				"fitsca",
+				"Root/FitScaleFactor.cxx"
+			],
+			[
+				"single",
+				"Root/SingleGausFit.cxx"
+			],
+			[
+				"fitter",
+				"Root/FitterDraw.cxx"
+			],
+			[
+				"fitinter",
+				"Root/FitInterface.cxx"
+			],
+			[
+				"fitinteg",
+				"Root/FitIntegral.cxx"
+			],
+			[
+				"singlegausfit",
+				"Root/SingleGausFit.cxx"
+			],
+			[
+				"fitin",
+				"Root/FitInterface.cxx"
 			],
 			[
 				"fitco",
 				"Source/FitConfig.cxx"
-			],
-			[
-				"make",
-				"cmt/Makefile.RootCore"
-			],
-			[
-				"fit",
-				"TnPFitter/FitConfig.h"
 			],
 			[
 				"makehisto",
@@ -720,10 +701,6 @@
 			[
 				"effi",
 				"MuonEfficiency/Root/EfficiencyMaker.cxx"
-			],
-			[
-				"single",
-				"MuonEfficiency/MuonEfficiency/SingleGausFit.h"
 			],
 			[
 				"singl",
@@ -803,11 +780,11 @@
 	"settings":
 	{
 	},
-	"show_minimap": true,
+	"show_minimap": false,
 	"show_open_files": true,
 	"show_tabs": true,
-	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_visible": false,
+	"side_bar_width": 243.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

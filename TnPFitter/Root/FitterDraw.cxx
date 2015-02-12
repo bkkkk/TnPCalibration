@@ -1,32 +1,23 @@
-// Self inclusion
 #include "TnPFitter/FitterDraw.h"
 
 #include <iostream>
 
-// ROOT
-#include <TFile.h>
-#include <TLine.h>
+#include "TFile.h"
+#include "TLine.h"
 #include <TF1.h>
 #include <TH1F.h>
 #include <TCanvas.h>
 #include <TPaveText.h>
 
-//______________________________________________________________________________
-FitterDraw::
-FitterDraw(FitInterface* fitter, int sigma, int window)
+FitterDraw::FitterDraw(FitInterface* fitter, int sigma, int window)
   : fFitter(fitter),
     fSigma(sigma),
-    fWindow(window)
-{
-  configFile = TFile::Open("$ROOTCOREDIR/data/TnPFitter/TnPFitter-FittingConfig.xml", "OPEN");
+    fWindow(window) {
+  configFile = new TFile("$ROOTCOREDIR/data/TnPFitter/TnPFitter-FittingConfig.xml", "OPEN");
 
-  if(configFile->IsZombie() == 1)
-  {
-    LOG_ERROR() << "Failed to load configuration XML file";
-    throw;
+  if(configFile->IsZombie()) {
+    throw(std::runtime_error("Failed to load configuration XML file"));
   }
-
-  LOG_DEBUG() << "Loading line configuration file";
 
   configFile->GetObject("BkgUpConfig", bkgUp);
   configFile->GetObject("BkgDownConfig", bkgDown);
@@ -37,26 +28,17 @@ FitterDraw(FitInterface* fitter, int sigma, int window)
   configFile->Close();
   delete configFile;
 
-  LOG_DEBUG() << "Loading succesfully completed";
-
-  if(fFitter == NULL)
-  {
-    LOG_ERROR() << "Fitter object is not configured correctly";
-    throw;
+  if(fFitter == nullptr) {
+    throw(std::runtime_error("Fitter object is not configured correctly"));
   }
 
-  TH1* histogram = fFitter->GetHistogram();
+  auto histogram = fFitter->GetHistogram();
 
   histMin = histogram->GetMinimum() - histogram->GetMaximum() * 0.05;
   histMax = histogram->GetMaximum() * 1.2;
-
-  LOG_DEBUG1() << "Histogram min: " << histMin << " max: " << histMax;
 }
 
-//______________________________________________________________________________
-FitterDraw::
-~FitterDraw(void)
-{
+FitterDraw::~FitterDraw() {
   configFile->Close();
 
   delete bkgUp;
@@ -67,11 +49,7 @@ FitterDraw::
   delete configFile;
 }
 
-//______________________________________________________________________________
-void FitterDraw::
-SetupLines(const std::string& options)
-{
-  // Set up function
+void FitterDraw::SetupLines(const std::string& options) {
   SetupLine(fFitter->GetSignalFunction(), signal);
   SetupLine(fFitter->GetBackgroundFunction(), bkg);
   SetupLine(fFitter->GetCompositeFunction(), nominal);
@@ -80,13 +58,11 @@ SetupLines(const std::string& options)
   SetupLine(fFitter->GetCompositeDownFunction(), bkgDown);
   SetupLine(fFitter->GetCompositeUpFunction(), bkgUp);
 
-  // Get Ranges
-  float narrowSigmaLow = fFitter->GetSigmaLow(fSigma);
-  float narrowSigmaHigh = fFitter->GetSigmaHigh(fSigma);
-  float wideSigmaLow = fFitter->GetSigmaLow(fSigma + fWindow);
-  float wideSigmaHigh = fFitter->GetSigmaHigh(fSigma + fWindow);
+  auto narrowSigmaLow = fFitter->GetSigmaLow(fSigma);
+  auto narrowSigmaHigh = fFitter->GetSigmaHigh(fSigma);
+  auto wideSigmaLow = fFitter->GetSigmaLow(fSigma + fWindow);
+  auto wideSigmaHigh = fFitter->GetSigmaHigh(fSigma + fWindow);
 
-  // Set up lines
   fiveLow = new TLine( wideSigmaLow, histMin, wideSigmaLow, histMax );
   fiveHigh = new TLine( wideSigmaHigh, histMin, wideSigmaHigh, histMax );
   threeLow = new TLine( narrowSigmaLow, histMin, narrowSigmaLow, histMax );
@@ -103,45 +79,33 @@ SetupLines(const std::string& options)
   threeHigh->SetLineWidth(2);
 }
 
-//______________________________________________________________________________
-void FitterDraw::
-SetupBox(void)
-{
+void FitterDraw::SetupBox() {
   box = new TPaveText(0.2, 0.48, 0.45, 0.9, "NDC");
-  for(size_t parIdx = 0; parIdx != fFitter->GetCompositeFunction()->GetNpar(); parIdx++)
-  {
-    std::string name = fFitter->GetCompositeFunction()->GetParName(parIdx);
-    double val = fFitter->GetCompositeFunction()->GetParameter(parIdx);
-    double err = fFitter->GetCompositeFunction()->GetParError(parIdx);
+  for(size_t parIdx = 0; parIdx != fFitter->GetCompositeFunction()->GetNpar(); parIdx++) {
+    auto name = fFitter->GetCompositeFunction()->GetParName(parIdx);
+    auto val = fFitter->GetCompositeFunction()->GetParameter(parIdx);
+    auto err = fFitter->GetCompositeFunction()->GetParError(parIdx);
     std::stringstream str;
     str << name << " : " << val << "+-" << err;
 
-    box->AddText(str.str().data());
+    box->AddText(str.str().c_str());
   }
 }
 
-//______________________________________________________________________________
-void FitterDraw::
-Draw(const std::string& options)
-{
-  // Setup the lines
+void FitterDraw::Draw(const std::string& options) {
   SetupLines(options);
   SetupBox();
 
-  // Canvas and other thingies
-  std::string name = fFitter->GetName();
-  TCanvas* c1 = new TCanvas(name.c_str(), name.c_str(), 0, 0, 800, 600);
-  TH1* histogram = fFitter->GetHistogram();
+  auto name = fFitter->GetName();
+  auto c1 = new TCanvas(name.c_str(), name.c_str(), 0, 0, 800, 600);
+  auto histogram = fFitter->GetHistogram();
   histogram->GetYaxis()->SetRangeUser(histMin, histMax);
 
-  // Canvas + histogram
   c1->Draw();
   histogram->Draw();
 
-  // Draw function
   fFitter->GetCompositeFunction()->Draw("SAME");
-  if(fFitter->GetFitConfig().GetMode() != 1)
-  {
+  if(!fFitter->GetFitConfig().IsLowBackground()) {
     fFitter->GetBackgroundFunction()->Draw("SAME");
     fFitter->GetSignalFunction()->Draw("SAME");
     fFitter->GetBackgroundDownFunction()->Draw("SAME");
@@ -156,33 +120,25 @@ Draw(const std::string& options)
   threeHigh->Draw();
   box->Draw();
 
-  std::string filename = fFitter->GetFunctionName() + "-" + name + ".pdf";
+  auto filename = fFitter->GetFunctionName() + "-" + name + ".pdf";
 
-  LOG_INFO() << "Filename: " << filename;
   c1->SaveAs(filename.c_str(), "pdf");
   c1->Close();
 }
 
-//______________________________________________________________________________
-void FitterDraw::
-SetupLine(TF1* line, LineAttrib* attribute)
-{
-  if(line == NULL)
-  {
-    LOG_WARNING() << "Function of line not setup correctly";
+void FitterDraw::SetupLine(TF1* line, LineAttrib* attribute) {
+  if(line == nullptr) {
+    std::cerr << "This line is not properly setup\n";
     return;
   }
 
-  LOG_DEBUG1() << "Setting up line: " << attribute->name;
-
-  // Setup the line
   line->SetLineColor(attribute->color);
   line->SetLineWidth(attribute->width);
   line->SetLineStyle(attribute->style);
-  // @BUG :: Npx value not saved to the XML file
-  line->SetNpx(1000);
 
-  return;
+  line->SetNpx(1000);
 }
 
+#ifdef __CINT__
 ClassImp(FitterDraw)
+#endif

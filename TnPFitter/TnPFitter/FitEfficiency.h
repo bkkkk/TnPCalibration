@@ -2,60 +2,53 @@
 #define TNPFITTER_FITEFFICIENCY_H_ 1
 
 #include <string>
-#include "TObject.h"
+#include <math.h>
 
 class DoubleGausFit;
 class FitIntegral;
 class TH1F;
 
-class FitEfficiency
-{
+class FitEfficiency {
 public:
-  // Integration objects
+  FitEfficiency(const std::string& name,
+                TH1F* probeHisto, TH1F* muonProbeHisto, TH1F* smtHisto,
+                double min = 2.61, double max = 3.5);  
+  FitEfficiency(const std::string& name,
+                FitIntegral* probeIntegral,
+                FitIntegral* muonProbeIntegral,
+                FitIntegral* smtIntegral);
+  ~FitEfficiency();
+
+public:
+  void Draw(void);
+
+  double GetSMTError(int nSigma = 3, int windowSize = 2);
+  double GetSMTEfficiency(int nSigma = 3);
+  double GetRecoError(int nSigma = 3, int windowSize = 2);
+  double GetRecoEfficiency(int nSigma = 3);
+
+public:
   std::string fName;
   FitIntegral* fProbeIntegral;
   FitIntegral* fMuonProbeIntegral;
   FitIntegral* fSmtIntegral;
 
-public:
-  FitEfficiency( const std::string& name,
-                 TH1F* probeHisto,
-                 TH1F* muonProbeHisto,
-                 TH1F* smtHisto,
-                 double min = 2.61,
-                 double max = 3.5 );
-  
-public:
-  ~FitEfficiency();
-
-public:
-  // Draws all the fitted plots
-  void Draw(void);
-
-public:
-  double GetSMTError(int nSigma = 3, int windowSize = 2);
-  double GetSMTEfficiency(int nSigma = 3);
-
-public:
-  double GetRecoError(int nSigma = 3, int windowSize = 2);
-  double GetRecoEfficiency(int nSigma = 3);
-
+#ifdef __CINT__
   ClassDef(FitEfficiency, 1)
+#endif
 };
 
-namespace TNPFITTER 
-{
-  // Returns efficiency based on two FitIntegral objects
+namespace TNPFITTER {
   double GetEfficiency(FitIntegral* top, FitIntegral* bottom, int nSigma = 3);
-
-  // Returns efficiency based on two yields
-  double GetEfficiency(double top, double bottom);
-
-  // Returns the total uncertainty based on two FitIntegral objects
+  inline constexpr double GetEfficiency(double top, double bottom) {
+    return(top/bottom);
+  }
+  
   double GetTotalUncertainty(FitIntegral* top, FitIntegral* bottom, int nSigma = 3, int windowSize = 2);
 
-  // Retrusn the total uncertainty based on two uncertainties
-  double GetTotalUncertainty(double top, double bottom);
+  inline double GetTotalUncertainty(double top, double bottom) {
+    return(sqrt(top * top + bottom * bottom));
+  }
 }
 
 #endif

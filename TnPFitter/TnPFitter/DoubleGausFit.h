@@ -12,33 +12,31 @@
 #include <TH1F.h>
 #include <TF1.h>
 
-class DoubleGausFit : public FitInterface 
-{
+class DoubleGausFit : public FitInterface {
 public:
-  DoubleGausFit(const std::string& val_name,
+  DoubleGausFit(std::string val_name,
                 TH1F* val_histogram,
                 const FitConfig& val_fitConfig);
 
 public:
-  // dtor
   ~DoubleGausFit(void);
 
 public:  
-  // Set component functions
-  void SetSignalFunction (void);
-  void SetBackgroundFunction (void);
-  void SetCompositeUpFunction (void);
-  void SetCompositeDownFunction (void);
+  void SetSignalFunction();
+  void SetBackgroundFunction();
+  void SetCompositeUpFunction();
+  void SetCompositeDownFunction();
 
 public:
   void SetCompositeErrFunction(TF1* function, double poly, double slope, double constant);
-  void GetSigmaAndMu(double& sigma, double& mu);
+  std::pair<double, double> GetSigmaAndMu();
 
+#ifdef __CINT__
   ClassDef(DoubleGausFit, 1)
+#endif
 };
 
-namespace TNPFITTER
-{
+namespace TNPFITTER {
   // Setup a fitconfig object
   FitConfig BuildFitConfiguration(TH1* histogram, double min = 2.63, double max = 3.5);
 }
