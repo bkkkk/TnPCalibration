@@ -6,8 +6,7 @@
 
 class IMuons {
 public:
-  IMuons();
-  ~IMuons();
+  virtual ~IMuons();
 
   virtual std::size_t n() = 0;  
   virtual const std::size_t n() const = 0;
