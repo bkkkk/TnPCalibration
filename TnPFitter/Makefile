@@ -71,10 +71,13 @@ print-dep:
 	@echo 'Inlcudes files: '$(INCLUDES)
 	@echo 'Object targets: '$(OBJECTS)
 
-test: test-fitconfig
+test: test-fitconfig test-singlegaus
 
 test-fitconfig:
 	$(TSTBIN)/ut_FitConfig
+
+test-singlegaus:
+	$(TSTBIN)/ut_SingleGausFit
 
 .PHONY: clean
 
