@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"bkg_function",
+				"bkg_function_name"
+			],
+			[
+				"sigma",
+				"sigmaWide"
+			],
+			[
+				"bottom",
+				"bottomUncertainty"
+			],
+			[
+				"muon",
+				"muonProbeIntegrator"
+			],
+			[
+				"probeI",
+				"fProbeIntegral"
+			],
+			[
 				"Simep",
 				"SimpleParameters"
 			],
@@ -208,9 +228,65 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 67.0,
+		"height": 87.0,
 		"selected_items":
 		[
+			[
+				"sytnax c++",
+				"Set Syntax: C++11"
+			],
+			[
+				"install p",
+				"Package Control: Install Package"
+			],
+			[
+				"remove packa",
+				"Package Control: Remove Package"
+			],
+			[
+				"syntaxc ++",
+				"Set Syntax: C++"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"remove ",
+				"Package Control: Remove Package"
+			],
+			[
+				"synta C++11",
+				"Set Syntax: C++11"
+			],
+			[
+				"Syntax C++11",
+				"Set Syntax: C++11"
+			],
+			[
+				"upper case",
+				"Convert Case: Upper Case"
+			],
+			[
+				"c++11",
+				"Set Syntax: C++11"
+			],
+			[
+				"synta c++",
+				"Set Syntax: C++11"
+			],
+			[
+				"syntax C++11",
+				"Set Syntax: C++11"
+			],
+			[
+				"syntax c++11",
+				"Set Syntax: C++11"
+			],
+			[
+				"syntax c++",
+				"Set Syntax: C++11"
+			],
 			[
 				"convert to ",
 				"Indentation: Convert to Spaces"
@@ -236,28 +312,12 @@
 				"Package Control: Install Package"
 			],
 			[
-				"remove ",
-				"Package Control: Remove Package"
-			],
-			[
-				"remove packa",
-				"Package Control: Remove Package"
-			],
-			[
 				"syntaxc++",
-				"Set Syntax: C++"
-			],
-			[
-				"syntax c++",
 				"Set Syntax: C++"
 			],
 			[
 				"instal",
 				"Package Control: Install Package"
-			],
-			[
-				"remove",
-				"Package Control: Remove Package"
 			],
 			[
 				"package",
@@ -272,7 +332,7 @@
 				"Set Syntax: LaTeX"
 			]
 		],
-		"width": 492.0
+		"width": 593.0
 	},
 	"console":
 	{
@@ -292,29 +352,38 @@
 	},
 	"file_history":
 	[
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitResult.cxx",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitEfficiency.h",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitResult.h",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Makefile",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitConfig.h",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/LinkDef.h",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitIntegral.h",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitInterface.h",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitterDraw.cxx",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitInterface.cxx",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitIntegral.cxx",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitEfficiency.cxx",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitterDraw.h",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitScaleFactor.cxx",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitScaleFactor.h",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/test/ut_FitConfig.cxx",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/test/ut_FitConfig.h",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/DoubleGausFit.cxx",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/SingleGausFit.cxx",
-		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/DoubleGausFit.h",
 		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/SingleGausFit.h",
+		"/Users/jayb88/Library/Application Support/Sublime Text 3/Installed Packages/C++11.sublime-package",
+		"/Users/jayb88/Library/Application Support/Sublime Text 3/Packages/User/C.sublime-settings",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitResult.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/IFitter.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitIntegral.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitIntegral.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitDrawingHelpers.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/SingleGausFit.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/LinkDef.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitterDraw.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitterDraw.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/DoubleGausFit.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitDrawingHelpers.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/DoubleGausFit.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitInterface.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitInterface.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitResult.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/test/ut_FitConfig.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitConfigurationHelpers.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitConfigurationHelpers.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitEfficiency.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/test/ut_SingleGausFit.h",
 		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitConfig.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitConfig.h",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/test/ut_SingleGausFit.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Makefile",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/test/ut_FitConfig.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitEfficiency.cxx",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/TnPFitter/FitScaleFactor.h",
 		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/fitter.sublime-project",
+		"/Users/jayb88/Projects/TnPCalibration/TnPFitter/Root/FitScaleFactor.cxx",
 		"/Users/jayb88/Projects/TnPCalibration/TnPSelector/test/ut_TagSelector.cxx",
 		"/Users/jayb88/Projects/TnPCalibration/TnPSelector/Root/TJPsiTagSelector.cxx",
 		"/Users/jayb88/Projects/TnPCalibration/TnPSelector/test/ut_TagSelector.h",
@@ -383,6 +452,95 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"FitInterface",
+			"TNPFITTER_FITINTERFACE_H_",
+			"FitInterface",
+			"functionName",
+			"parName",
+			"cassert",
+			"FitResult",
+			"name",
+			" config",
+			"config",
+			" config",
+			"config",
+			"histogram",
+			"histogram.",
+			"TNPFITTER_DRAWINGHELPERS_H_",
+			"SYMBOL",
+			"IsLowBackground",
+			"val_name",
+			"histogram",
+			"testCompositeFunction",
+			"TObject",
+			" (",
+			"being",
+			"begin",
+			"NULL",
+			"(void)",
+			"push_back",
+			"ROOT::Fit::ParameterSettings(",
+			"std::string",
+			"push_back",
+			"pars.push_back",
+			"push_back",
+			"TNPFITTER::RunFit",
+			"RunFit",
+			"fFitter",
+			"SetBackgroundFunction",
+			"GetSigmaAndMu",
+			"pair",
+			"sigma_mu",
+			"tuple",
+			"GetSigmaAndMu",
+			"GetSigma",
+			"(void)",
+			"func ",
+			"highLimit",
+			"lowLimit",
+			"func",
+			"highLimit",
+			"lowLimit",
+			"GetSigmaAndMu",
+			"GetHistogram",
+			"parameter.",
+			"parameter",
+			"parIdx",
+			"for(",
+			"for",
+			"GetMode",
+			"funcNameBkg",
+			"funcNameComp",
+			"backgroundFunction",
+			"funcNameComp",
+			"backgroundFunctionName",
+			"funcNameBkg",
+			"fFitter",
+			"GetMode",
+			"0.f",
+			"double",
+			"(void)",
+			"void",
+			"(void)",
+			"functionName",
+			"std::string",
+			"double",
+			"std::string",
+			"GetMode",
+			"fitConfig.ParSettings(parIdx)",
+			"double",
+			"for",
+			"TObject",
+			"std::unique_ptr<",
+			"{",
+			"new",
+			"histograms",
+			"One of the histograms",
+			"||",
+			"FitEfficiency",
+			"Histo",
+			"Integrator",
+			"Histo",
 			"NPars",
 			"float",
 			"fParameters",
@@ -421,96 +579,7 @@
 			"{ return",
 			"const",
 			"void",
-			"return (",
-			"::string",
-			"//",
-			"void",
-			"testFile",
-			"argv",
-			"5.34.24",
-			"double",
-			"std::string",
-			"LOG_",
-			"float",
-			"//______________________________________________________________________________",
-			"LOG_DEBUG",
-			"LOG_ERROR()",
-			"double",
-			"double ",
-			"double",
-			"int",
-			"double",
-			"std::string",
-			"TNPFITTER::",
-			"double",
-			"LOG",
-			"( ",
-			"double",
-			"float",
-			"NULL",
-			"void",
-			"double",
-			"funcNameComp,",
-			"funcNameBkg,",
-			"funcNameBkg",
-			"GetSignalFunction",
-			"fitConfig.GetBackgroundFunction",
-			"const",
-			"// ",
-			"c1->",
-			"};",
-			"MuonEfficiency",
-			"truthMatchingTool",
-			"lumiCalcFile",
-			"jpsiClassifier",
-			"JPsiClassifier",
-			"jpsiClassifier",
-			"LUMIFLE",
-			"DATASET",
-			"mu_staco_trackz0pvunbiased",
-			"st_",
-			"smallest_",
-			"_smallest_",
-			"_wgt",
-			"h_mu_staco_matchchi2_ndof_",
-			"///<",
-			"*",
-			"trk_z0_wrtPV",
-			"h_muonprobe_trackpvz0unbiased",
-			"h_tag_trackpvz0unbiased",
-			"h_mu_staco_z0_trk_mu",
-			"m_npar",
-			"// ",
-			"//",
-			"// ",
-			"m_inDetFitResult",
-			"6",
-			"0",
-			"m_compositeFunction",
-			"4",
-			"3",
-			"ROOT::Fit::",
-			"(*rhs)->",
-			"FitConfig",
-			";",
-			"public:",
-			"const",
-			"ROOT:",
-			"fitConfig->",
-			"double",
-			"tempFunction",
-			";",
-			"std::string",
-			";",
-			"public:",
-			"m_npar",
-			"My",
-			"ncIntegralUpErr",
-			"tempFunction",
-			"high",
-			"highBkgFile",
-			"highBkgFitter",
-			"compQuadFunc"
+			"return ("
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -575,8 +644,176 @@
 		"selected_items":
 		[
 			[
+				"fitdraw",
+				"Root/FitDrawingHelpers.cxx"
+			],
+			[
+				"double",
+				"TnPFitter/DoubleGausFit.h"
+			],
+			[
+				"doublegau",
+				"Root/DoubleGausFit.cxx"
+			],
+			[
+				"fitterdraw",
+				"TnPFitter/FitterDraw.h"
+			],
+			[
+				"fitinter",
+				"Root/FitInterface.cxx"
+			],
+			[
+				"fitinterface",
+				"TnPFitter/FitInterface.h"
+			],
+			[
+				"fitresult",
+				"TnPFitter/FitResult.h"
+			],
+			[
+				"fitresult.h",
+				"TnPFitter/FitResult.h"
+			],
+			[
+				"singleg",
+				"Root/SingleGausFit.cxx"
+			],
+			[
+				"ut_singe",
+				"test/ut_SingleGausFit.cxx"
+			],
+			[
+				"singlegau",
+				"TnPFitter/SingleGausFit.h"
+			],
+			[
+				"single",
+				"Root/SingleGausFit.cxx"
+			],
+			[
+				"draw",
+				"Root/FitDrawingHelpers.cxx"
+			],
+			[
+				"fithelp",
+				"TnPFitter/FitConfigurationHelpers.h"
+			],
+			[
+				"dra",
+				"TnPFitter/FitDrawingHelpers.h"
+			],
+			[
+				"fitintegral",
+				"Root/FitIntegral.cxx"
+			],
+			[
+				"helpers",
+				"TnPFitter/FitConfigurationHelpers.h"
+			],
+			[
+				"fitconfig",
+				"Root/FitConfig.cxx"
+			],
+			[
+				"fitinte",
+				"TnPFitter/FitInterface.h"
+			],
+			[
+				"fitinterf",
+				"Root/FitInterface.cxx"
+			],
+			[
+				"fitinterface.cxx",
+				"Root/FitInterface.cxx"
+			],
+			[
+				"ut_sing",
+				"test/ut_SingleGausFit.cxx"
+			],
+			[
 				"make",
 				"Makefile"
+			],
+			[
+				"ut_fi",
+				"test/ut_FitConfig.cxx"
+			],
+			[
+				"ut_",
+				"test/ut_FitConfig.h"
+			],
+			[
+				"fitef",
+				"Root/FitEfficiency.cxx"
+			],
+			[
+				"fiteff",
+				"TnPFitter/FitEfficiency.h"
+			],
+			[
+				"signle",
+				"TnPFitter/SingleGausFit.h"
+			],
+			[
+				"sing",
+				"Root/SingleGausFit.cxx"
+			],
+			[
+				"fit",
+				"Root/FitIntegral.cxx"
+			],
+			[
+				"double.h",
+				"TnPFitter/DoubleGausFit.h"
+			],
+			[
+				"inteface.",
+				"TnPFitter/FitInterface.h"
+			],
+			[
+				"intef",
+				"Root/FitInterface.cxx"
+			],
+			[
+				"fitintegra",
+				"Root/FitIntegral.cxx"
+			],
+			[
+				"sign",
+				"TnPFitter/SingleGausFit.h"
+			],
+			[
+				"doublega",
+				"Root/DoubleGausFit.cxx"
+			],
+			[
+				"fitterdra",
+				"Root/FitterDraw.cxx"
+			],
+			[
+				"fiteffi",
+				"TnPFitter/FitEfficiency.h"
+			],
+			[
+				"",
+				"Root/FitEfficiency.cxx"
+			],
+			[
+				"ftterdra",
+				"Root/FitterDraw.cxx"
+			],
+			[
+				"fitinterface.h",
+				"TnPFitter/FitInterface.h"
+			],
+			[
+				"fitcon",
+				"TnPFitter/FitConfig.h"
+			],
+			[
+				"fite",
+				"TnPFitter/FitEfficiency.h"
 			],
 			[
 				"fitres",
@@ -587,16 +824,8 @@
 				"TnPFitter/FitResult.h"
 			],
 			[
-				"fit",
-				"TnPFitter/FitEfficiency.h"
-			],
-			[
 				"ut",
 				"test/ut_FitConfig.h"
-			],
-			[
-				"fitconfig",
-				"Root/FitConfig.cxx"
 			],
 			[
 				"fitconfi",
@@ -607,24 +836,8 @@
 				"test/ut_FitConfig.h"
 			],
 			[
-				"ut_",
-				"test/ut_FitConfig.cxx"
-			],
-			[
 				"fitterdr",
 				"Root/FitterDraw.cxx"
-			],
-			[
-				"fitterdraw",
-				"TnPFitter/FitterDraw.h"
-			],
-			[
-				"fiteff",
-				"Root/FitEfficiency.cxx"
-			],
-			[
-				"double",
-				"Root/DoubleGausFit.cxx"
 			],
 			[
 				"project",
@@ -639,16 +852,8 @@
 				"Root/FitScaleFactor.cxx"
 			],
 			[
-				"single",
-				"Root/SingleGausFit.cxx"
-			],
-			[
 				"fitter",
 				"Root/FitterDraw.cxx"
-			],
-			[
-				"fitinter",
-				"Root/FitInterface.cxx"
 			],
 			[
 				"fitinteg",
@@ -687,10 +892,6 @@
 				"MuonEfficiency/Root/TnPJPsiFitter.cxx"
 			],
 			[
-				"ut_sing",
-				"MuonEfficiency/test/ut_SingleGausFit.cxx"
-			],
-			[
 				"eff",
 				"MuonEfficiency/Root/EfficiencyMaker.cxx"
 			],
@@ -711,24 +912,12 @@
 				"MuonEfficiency/MuonEfficiency/FitConfig.h"
 			],
 			[
-				"fitcon",
-				"MuonEfficiency/Root/FitConfig.cxx"
-			],
-			[
 				"tnpj",
 				"MuonEfficiency/Root/TnPJPsiFitter.cxx"
 			],
 			[
-				"sign",
-				"MuonEfficiency/MuonEfficiency/SingleGausFit.h"
-			],
-			[
 				"singe",
 				"MuonEfficiency/Root/SingleGausFit.cxx"
-			],
-			[
-				"sing",
-				"MuonEfficiency/MuonEfficiency/SingleGausFit.h"
 			],
 			[
 				"tn",
