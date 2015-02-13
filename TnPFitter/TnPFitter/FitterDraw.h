@@ -10,7 +10,7 @@ class TPaveText;
 
 #include "TObject.h"
 
-#include "TnPFitter/FitInterface.h"
+#include "TnPFitter/IFitter.h"
 #include "JacobUtils/LoggingUtility.h"
 
 #include <string>
@@ -27,7 +27,7 @@ public:
   };
 
 public:
-  FitterDraw(FitInterface* fitter = nullptr, int sigma = 3, int window = 2);
+  FitterDraw(IFitter* fitter = nullptr, int sigma = 3, int window = 2);
   ~FitterDraw(void);
 
 public:
@@ -37,7 +37,7 @@ public:
   void Draw(const std::string& options="");
 
 private:
-  FitInterface* fFitter; 
+  IFitter* fFitter; 
   int fSigma;
   int fWindow;
 

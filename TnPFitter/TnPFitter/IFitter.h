@@ -1,5 +1,5 @@
-#ifndef TNPFITTER_FITINTERFACE_H_
-#define TNPFITTER_FITINTERFACE_H_ 1
+#ifndef TNPFITTER_IFITTER_H_
+#define TNPFITTER_IFITTER_H_ 1
 
 #include <string>
 #include <stdexcept>
@@ -10,13 +10,11 @@
 #include "TnPFitter/FitConfig.h"
 #include "TnPFitter/FitResult.h"
 
-class FitInterface {
+class IFitter {
 public:
-  FitInterface(std::string name,
-               TH1F* val_histogram,
-               const FitConfig& val_fitConfig);
+  IFitter(std::string name, TH1F* val_histogram, const FitConfig& val_fitConfig);
   
-  virtual ~FitInterface();
+  virtual ~IFitter();
 
 public:
   TF1* GetSignalFunction();
@@ -72,17 +70,15 @@ protected:
   double bottomFitLimit;
   double topFitLimit;
 
-  FitResult* fitResult;
+  FitResult fitResult;
 
 #ifdef __CINT__
-  ClassDef(FitInterface, 1)
+  ClassDef(IFitter, 1)
 #endif
 };
 
 namespace TNPFITTER {
-  void RunFit(FitInterface* fitter);
-  void DrawFit(FitInterface* fitter, int sigma, int window);
-  bool IsLowBackground(TH1* histogram, double fittingEdge, double threshold = 0.07);
+  void RunFit(IFitter* fitter);
 }
 
 #endif

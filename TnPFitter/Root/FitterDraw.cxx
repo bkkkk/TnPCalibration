@@ -9,7 +9,7 @@
 #include <TCanvas.h>
 #include <TPaveText.h>
 
-FitterDraw::FitterDraw(FitInterface* fitter, int sigma, int window)
+FitterDraw::FitterDraw(IFitter* fitter, int sigma, int window)
   : fFitter(fitter),
     fSigma(sigma),
     fWindow(window) {

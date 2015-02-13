@@ -1,14 +1,17 @@
 #include "TnPFitter/SingleGausFit.h"
 
-#include "JacobUtils/LoggingUtility.h"
-
 #include "TCanvas.h"
 #include "TLine.h"
 #include "TF1.h"
 #include "TH1F.h"
 
-SingleGausFit::SingleGausFit(const std::string& name, TH1F* histogram, const FitConfig& fitConfig)
- : FitInterface(name, histogram, fitConfig) {
+#include "JacobUtils/LoggingUtility.h"
+
+#include "TnPFitter/FitConfigurationHelpers.h"
+#include "TnPFitter/FitDrawingHelpers.h"
+
+SingleGausFit::SingleGausFit(std::string name, TH1F* histogram, const FitConfig& fitConfig)
+ : IFitter(name, histogram, fitConfig) {
   functionName = "SGaus";
 }
 
@@ -31,7 +34,7 @@ void SingleGausFit::SetBackgroundFunction() {
   }
 }
 
-void SingleGausFit::SetSignalFunction(void) {
+void SingleGausFit::SetSignalFunction() {
   testCompositeFunction();
 
   auto funcName = functionName + "_signal_" + histogramName;
@@ -139,15 +142,19 @@ std::pair<double, double> SingleGausFit::GetSigmaAndMu() {
 }
 
 FitConfig TNPFITTER::BuildSingleGausFitConfiguration(TH1* histogram, double min, double max) {
-  std::vector<ROOT::Fit::ParameterSettings> pars;
+  if(histogram == nullptr) {
+    throw(std::runtime_error("Histogram is not setup properly"));
+  }
 
-  pars.push_back( ROOT::Fit::ParameterSettings("Gaus N", histogram->GetMaximum(), 0, 0.0001, 10000000));
-  pars.push_back( ROOT::Fit::ParameterSettings("Gaus Mean", 3.097, 0, 2.8, 3.3) );
-  pars.push_back( ROOT::Fit::ParameterSettings("Gaus Sigma", 0.1, 0, 0.02, 0.2) );
+  Parameters pars = {
+    {"Gaus N", histogram->GetMaximum(), 0, 0.0001, 10000000},
+    {"Gaus Mean", 3.097, 0, 2.8, 3.3},
+    {"Gaus Sigma", 0.1, 0, 0.02, 0.2},
+  };
 
-  std::string polyPlusSingleGaus = "gaus(0) + [3] + [4] * x + [5] * x * x";
-  std::string singleGaus = "gaus(0)";
-  std::string poly = "[0] + [1] * x + [2] * x * x";
+  auto polyPlusSingleGaus = "gaus(0) + [3] + [4] * x + [5] * x * x";
+  auto singleGaus = "gaus(0)";
+  auto poly = "[0] + [1] * x + [2] * x * x";
 
   FitConfig* fitConfig;
 
@@ -156,9 +163,9 @@ FitConfig TNPFITTER::BuildSingleGausFitConfiguration(TH1* histogram, double min,
   } else {
     fitConfig = new FitConfig(polyPlusSingleGaus, 6, false, min, max);
 
-    pars.push_back( ROOT::Fit::ParameterSettings("Constant", 0) );
-    pars.push_back( ROOT::Fit::ParameterSettings("Slope", 0) );
-    pars.push_back( ROOT::Fit::ParameterSettings("Poly", 0) );
+    pars.push_back({"Constant", 0});
+    pars.push_back({"Slope", 0});
+    pars.push_back({"Poly", 0});
   }
 
   fitConfig->SetSignalFitFunction(singleGaus);

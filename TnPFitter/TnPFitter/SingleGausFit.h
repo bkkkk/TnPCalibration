@@ -3,7 +3,7 @@
 
 #include <TnPFitter/FitConfig.h>
 #include <TnPFitter/FitResult.h>
-#include <TnPFitter/FitInterface.h>
+#include <TnPFitter/IFitter.h>
 
 #include <Fit/ParameterSettings.h>
 
@@ -12,20 +12,19 @@
 class TF1;
 class TH1F;
 
-class SingleGausFit : public FitInterface {
+class SingleGausFit : public IFitter {
 public:
-  SingleGausFit(const std::string& name, TH1F* histogram,
-                const FitConfig& fitConfig);
+  SingleGausFit(std::string name, TH1F* histogram, const FitConfig& fitConfig);
   ~SingleGausFit();
 
 public:
-  void SetSignalFunction (void);
-  void SetBackgroundFunction (void);
-  void SetCompositeUpFunction (void);
-  void SetCompositeDownFunction (void);
+  void SetSignalFunction();
+  void SetBackgroundFunction();
+  void SetCompositeUpFunction();
+  void SetCompositeDownFunction();
 
   void SetCompositeErrFunction(TF1* function, double poly, double slope, double constant);
-  std::pair<double, double> GetSigmaAndMu(); 
+  std::pair<double, double> GetSigmaAndMu();
 };
 
 namespace TNPFITTER {

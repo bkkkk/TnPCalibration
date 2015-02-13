@@ -2,6 +2,7 @@
 
 #include "TFitResult.h"
 
+#include "TnPFitter/FitConfigurationHelpers.h"
 #include "JacobUtils/LoggingUtility.h"
 
 FitConfig::FitConfig(std::string function, unsigned npar, bool isLowBkg, double min, double max)
@@ -119,7 +120,7 @@ void FitConfig::SetFromFitResult(const TFitResultPtr& rhs) {
   for(auto parIdx = 0; parIdx != npar; parIdx++) {
     auto name = rhs->GetParameterName(parIdx);
     auto value = pars[parIdx];
-    parameters.push_back( { name, value } );
+    parameters.push_back({name, value});
   }
 }
 

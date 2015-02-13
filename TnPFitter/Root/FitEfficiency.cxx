@@ -3,10 +3,10 @@
 #include "TnPFitter/FitIntegral.h"
 #include "TH1F.h"
 
-FitEfficiency::FitEfficiency(const std::string& name,
+FitEfficiency::FitEfficiency(std::string name,
                              TH1F* probeHisto, TH1F* muonProbeHisto, TH1F* smtHisto,
                              double min, double max)
-  : fName(name) {
+  : fName(std::move(name)) {
   if(probeHisto == nullptr) {
     throw(std::runtime_error("The probe histogram is empty"));
   }
@@ -24,11 +24,11 @@ FitEfficiency::FitEfficiency(const std::string& name,
 
 }
 
-FitEfficiency::FitEfficiency(const std::string& name,
+FitEfficiency::FitEfficiency(std::string name,
                              FitIntegral* probeIntegral,
                              FitIntegral* muonProbeIntegral,
                              FitIntegral* smtIntegral)
-  : fName {name}
+  : fName {std::move(name)}
   , fProbeIntegral {probeIntegral}
   , fMuonProbeIntegral {muonProbeIntegral}
   , fSmtIntegral {smtIntegral} {

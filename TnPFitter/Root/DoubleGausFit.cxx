@@ -1,4 +1,6 @@
 #include "TnPFitter/DoubleGausFit.h"
+#include "TnPFitter/FitConfigurationHelpers.h"
+#include "TnPFitter/FitDrawingHelpers.h"
 
 #include "JacobUtils/LoggingUtility.h"
 
@@ -10,7 +12,7 @@ ClassImp(DoubleGausFit)
 #endif
 
 DoubleGausFit::DoubleGausFit(std::string val_name, TH1F* val_histogram, const FitConfig& val_fitConfig)
-  : FitInterface(val_name, val_histogram, val_fitConfig) {
+  : IFitter(val_name, val_histogram, val_fitConfig) {
     functionName = "DGaus";
 }
 
@@ -168,15 +170,14 @@ std::pair<double, double> DoubleGausFit::GetSigmaAndMu() {
 }
 
 FitConfig TNPFITTER::BuildFitConfiguration(TH1* histogram, double min, double max) {
-  Parameters pars;
-
-  pars.push_back( ROOT::Fit::ParameterSettings("Narrow N", histogram->GetMaximum(), 0, 0.0001, 10000000));
-  pars.push_back( ROOT::Fit::ParameterSettings("Narrow Mean", 3.097, 0, 2.8, 3.3) );
-  pars.push_back( ROOT::Fit::ParameterSettings("Narrow Sigma", 0.1, 0, 0.02, 0.2) );
-
-  pars.push_back( ROOT::Fit::ParameterSettings("Wide N", histogram->GetMaximum(), 0, 0.0001, 10000000));
-  pars.push_back( ROOT::Fit::ParameterSettings("Wide Mean", 3.097, 0, 2.7, 3.4) );
-  pars.push_back( ROOT::Fit::ParameterSettings("Wide Sigma", 0.3, 0, 0.08, 0.7) );
+  Parameters pars = {
+    {"Narrow N", histogram->GetMaximum(), 0, 0.0001, 10000000 },
+    {"Narrow Mean", 3.097, 0, 2.8, 3.3 },
+    {"Narrow Sigma", 0.1, 0, 0.02, 0.2 },
+    {"Wide N", histogram->GetMaximum(), 0, 0.0001, 10000000 },
+    {"Wide Mean", 3.097, 0, 2.7, 3.4},
+    {"Wide Sigma", 0.3, 0, 0.08, 0.7}
+  };
 
   auto polyPlusDoubleGaus = "gaus(0) + gaus(3) + [6] + [7] * x + [8] * x * x";
   auto doubleGaus = "gaus(0) + gaus(3)";
@@ -190,9 +191,9 @@ FitConfig TNPFITTER::BuildFitConfiguration(TH1* histogram, double min, double ma
   } else {
     fitConfig = new FitConfig(polyPlusDoubleGaus, 9, false, min, max);
 
-    pars.push_back(ROOT::Fit::ParameterSettings("Constant", 0));
-    pars.push_back(ROOT::Fit::ParameterSettings("Slope", 0));
-    pars.push_back(ROOT::Fit::ParameterSettings("Poly", 0));
+    pars.push_back({"Constant", 0});
+    pars.push_back({"Slope", 0});
+    pars.push_back({"Poly", 0});
   }
 
   fitConfig->SetSignalFitFunction(doubleGaus);

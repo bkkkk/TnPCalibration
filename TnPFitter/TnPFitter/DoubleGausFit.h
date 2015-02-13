@@ -1,18 +1,19 @@
 #ifndef DOUBLEGAUSFIT_H_
 #define DOUBLEGAUSFIT_H_ 1
 
-// C++
 #include <string>
 
-// Root
-#include <Fit/ParameterSettings.h>
+#include <TnPFitter/IFitter.h>
+
 #include <TnPFitter/FitConfig.h>
 #include <TnPFitter/FitResult.h>
-#include <TnPFitter/FitInterface.h>
+
+#include <Fit/ParameterSettings.h>
+
 #include <TH1F.h>
 #include <TF1.h>
 
-class DoubleGausFit : public FitInterface {
+class DoubleGausFit : public IFitter {
 public:
   DoubleGausFit(std::string val_name,
                 TH1F* val_histogram,

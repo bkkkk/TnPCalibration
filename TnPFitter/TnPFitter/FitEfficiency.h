@@ -10,10 +10,10 @@ class TH1F;
 
 class FitEfficiency {
 public:
-  FitEfficiency(const std::string& name,
+  FitEfficiency(std::string name,
                 TH1F* probeHisto, TH1F* muonProbeHisto, TH1F* smtHisto,
                 double min = 2.61, double max = 3.5);  
-  FitEfficiency(const std::string& name,
+  FitEfficiency(std::string name,
                 FitIntegral* probeIntegral,
                 FitIntegral* muonProbeIntegral,
                 FitIntegral* smtIntegral);

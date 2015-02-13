@@ -1,13 +1,18 @@
+#include <stdexcept>
+
 #include <TnPFitter/FitIntegral.h>
 #include <TnPFitter/DoubleGausFit.h>
 #include <TnPFitter/SingleGausFit.h>
 #include <TH1F.h>
 #include <TF1.h>
-#include <JacobUtils/LoggingUtility.h>
-#include <stdexcept>
+#include <TObject.h>
 
-FitIntegral::FitIntegral(const std::string& name, TH1F* histogram, double min, double max)
-  : fName(name),
+#include "JacobUtils/LoggingUtility.h"
+#include "TnPFitter/FitConfigurationHelpers.h"
+#include "TnPFitter/FitDrawingHelpers.h"
+
+FitIntegral::FitIntegral(std::string name, TH1F* histogram, double min, double max)
+  : fName(std::move(name)),
     fFitter(nullptr) {
   
   if(histogram == nullptr) {
@@ -25,11 +30,11 @@ FitIntegral::FitIntegral(const std::string& name, TH1F* histogram, double min, d
   TNPFITTER::RunFit(fFitter);
 }
 
-FitIntegral::FitIntegral(FitInterface* fitter)
+FitIntegral::FitIntegral(IFitter* fitter)
   : fName(""),
     fFitter(fitter) {
   if(fFitter == nullptr) {
-    throw(std::runtime_error(""));
+    throw(std::runtime_error("Fitter object is not properly constructed"));
   }
 
   fName = fFitter->GetName();
@@ -45,7 +50,7 @@ double FitIntegral::GetBackgroundIntegral(int sigma) {
   auto highLimit = fFitter->GetSigmaHigh(sigma);
   auto integral = fFitter->GetBackgroundFunction()->Integral(lowLimit, highLimit);
 
-  return(integral);
+  return (integral);
 }
 
 double FitIntegral::GetSignalIntegral(int sigma) {
@@ -58,7 +63,7 @@ double FitIntegral::GetSignalIntegral(int sigma) {
   auto binMin = histogram->FindBin(fFitter->GetSigmaLow(sigma));
   auto binMax = histogram->FindBin(fFitter->GetSigmaHigh(sigma));
 
-  return(histogram->Integral(binMin, binMax));
+  return (histogram->Integral(binMin, binMax));
 }
 
 double FitIntegral::GetCorrectedYield(int sigma) {
@@ -80,7 +85,7 @@ double FitIntegral::GetBackgroundDownIntegral(int sigma) {
   auto high_limit = fFitter->GetSigmaHigh(sigma);
   auto integral = function->Integral(low_limit, high_limit);
 
-  return(integral);
+  return (integral);
 }
 
 double FitIntegral::GetBackgroundUpIntegral(int sigma) {
@@ -94,7 +99,7 @@ double FitIntegral::GetBackgroundUpIntegral(int sigma) {
   auto high_limit = fFitter->GetSigmaHigh(sigma);
   auto integral = function->Integral(low_limit, high_limit);
 
-  return(integral);
+  return (integral);
 }
 
 double FitIntegral::GetBackgroundUncertainty (int sigma) {
@@ -104,7 +109,7 @@ double FitIntegral::GetBackgroundUncertainty (int sigma) {
 
   auto uncertainty = std::max(up, down);
 
-  return((uncertainty == 0) ? 0 : uncertainty/nominal);
+  return ((uncertainty == 0) ? 0 : uncertainty/nominal);
 }
 
 double FitIntegral::GetSignalWindowUncertainty(int sigma, int window) {
@@ -115,7 +120,7 @@ double FitIntegral::GetSignalWindowUncertainty(int sigma, int window) {
 
   auto relative_difference = difference / nominal;
   
-  return(relative_difference);
+  return (relative_difference);
 }
 
 double FitIntegral::GetTotalUncertainty(int sigma, int window) {
@@ -123,14 +128,10 @@ double FitIntegral::GetTotalUncertainty(int sigma, int window) {
   auto bkg = GetBackgroundUncertainty(sigma);
   auto err = sqrt(sig * sig + bkg * bkg);
 
-  return(err);
+  return (err);
 }
 
 void FitIntegral::Draw(int sigma, int window) {
-  if(fFitter == nullptr) {
-    throw(std::runtime_error("Fitter improperly set"));
-  }
-  
   TNPFITTER::DrawFit(fFitter, sigma, window);
 }
 

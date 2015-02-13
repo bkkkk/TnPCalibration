@@ -1,13 +1,11 @@
-#include "TnPFitter/FitInterface.h"
+#include "TnPFitter/IFitter.h"
 #include "TnPFitter/FitterDraw.h"
 
-FitInterface::
-FitInterface(std::string val_name, TH1F* val_histogram, const FitConfig& val_fitConfig)
-  : name(std::move(val_name)),
+IFitter::IFitter(std::string name, TH1F* val_histogram, const FitConfig& val_fitConfig)
+  : name(std::move(name)),
     fitConfig(val_fitConfig),
     functionName("NotDefined"),
     histogram(val_histogram),
-    histogramName(histogram->GetName()),
     compositeFunction(nullptr),
     signalFunction(nullptr),
     backgroundFunction(nullptr),
@@ -16,12 +14,17 @@ FitInterface(std::string val_name, TH1F* val_histogram, const FitConfig& val_fit
     backgroundUpFunction(nullptr),
     backgroundDownFunction(nullptr),
     bottomFitLimit(fitConfig.GetFitMin()),
-    topFitLimit(fitConfig.GetFitMax()) {
-  fitResult = new FitResult (name, fitConfig.NPar());
+    topFitLimit(fitConfig.GetFitMax()),
+    fitResult{} {
+
+  if(val_histogram == nullptr) {
+    throw(std::runtime_error("Histogram is not setup properly"));
+  }
+  
+  histogramName = histogram->GetName();
 }
 
-FitInterface::~FitInterface() {
-  delete fitResult;
+IFitter::~IFitter() {
   delete compositeFunction;
   delete backgroundFunction;
   delete signalFunction;
@@ -31,7 +34,7 @@ FitInterface::~FitInterface() {
   delete compositeUpFunction;
 }
 
-void FitInterface::FitCompositeFunction() {
+void IFitter::FitCompositeFunction() {
   compositeFunction = new TF1(functionName.c_str(), fitConfig.GetFitFunction().c_str(), bottomFitLimit, topFitLimit);
 
   for(auto parIdx = 0; parIdx != compositeFunction->GetNpar(); parIdx++) {
@@ -57,46 +60,46 @@ void FitInterface::FitCompositeFunction() {
 
     PrintVariable(parName, parValue, parError);
 
-    fitResult->AddParameter(parName, parValue, parError);
+    fitResult.AddParameter(parName, parValue, parError);
   }
 }
 
-TF1* FitInterface::GetBackgroundDownFunction() {
+TF1* IFitter::GetBackgroundDownFunction() {
   testCompositeFunction();
   return(backgroundDownFunction);
 }
 
-TF1* FitInterface::GetBackgroundUpFunction() {
+TF1* IFitter::GetBackgroundUpFunction() {
   testCompositeFunction();
   return (backgroundUpFunction);
 }
 
-TF1* FitInterface::GetCompositeDownFunction() {
+TF1* IFitter::GetCompositeDownFunction() {
   testCompositeFunction();
   return (compositeDownFunction);
 }
 
-TF1* FitInterface::GetCompositeUpFunction() {
+TF1* IFitter::GetCompositeUpFunction() {
   testCompositeFunction();
   return (compositeUpFunction);
 }
 
-TF1* FitInterface::GetCompositeFunction() {
+TF1* IFitter::GetCompositeFunction() {
   testCompositeFunction();
   return (compositeFunction);
 }
 
-TF1* FitInterface::GetSignalFunction() {
+TF1* IFitter::GetSignalFunction() {
   testSignalFunction();
   return (signalFunction);
 }
 
-TF1* FitInterface::GetBackgroundFunction() {
+TF1* IFitter::GetBackgroundFunction() {
   testBackgroundFunction();
   return (backgroundFunction);
 }
 
-double FitInterface::GetSigmaLow(int nSigma) {
+double IFitter::GetSigmaLow(int nSigma) {
   testCompositeFunction();
 
   auto sigma_mu_pair = GetSigmaAndMu();
@@ -105,7 +108,7 @@ double FitInterface::GetSigmaLow(int nSigma) {
   return(lowEdge);
 }
 
-double FitInterface::GetSigmaHigh(int nSigma) {
+double IFitter::GetSigmaHigh(int nSigma) {
   testCompositeFunction();
   auto sigma_mu_pair = GetSigmaAndMu();
 
@@ -114,34 +117,34 @@ double FitInterface::GetSigmaHigh(int nSigma) {
   return(highEdge);
 }
 
-void FitInterface::SetFitLimits(const double min, const double max) {
+void IFitter::SetFitLimits(const double min, const double max) {
   bottomFitLimit = min;
   topFitLimit = max;
   return;
 }
 
-void FitInterface::testCompositeFunction() {
+void IFitter::testCompositeFunction() {
   if(compositeFunction == nullptr) {
     FitCompositeFunction();
   }
 }
 
-void FitInterface::testSignalFunction() {
+void IFitter::testSignalFunction() {
   if(signalFunction == nullptr) {
     SetSignalFunction();
   }
 }
 
-void FitInterface::testBackgroundFunction() {
+void IFitter::testBackgroundFunction() {
   if(backgroundFunction == nullptr) {
     SetBackgroundFunction();
   }
 }
 
-const void FitInterface::PrintVariable(const std::string& name, double var, double err) const {
+const void IFitter::PrintVariable(const std::string& name, double var, double err) const {
 }
 
-void TNPFITTER::RunFit(FitInterface* fitter) {
+void TNPFITTER::RunFit(IFitter* fitter) {
   if(fitter == nullptr) {
     throw(std::runtime_error("Fitter function not setup correctly"));
   }
@@ -153,34 +156,6 @@ void TNPFITTER::RunFit(FitInterface* fitter) {
   fitter->SetCompositeUpFunction();
 }
 
-void TNPFITTER::DrawFit(FitInterface* fitter, int sigma, int window) {
-  if(fitter == nullptr) {
-    throw(std::runtime_error("Fitter function not setup correctly"));
-  }
-
-  FitterDraw* fitterDraw = new FitterDraw(fitter, sigma, window);
-  fitterDraw->Draw();
-}
-
-bool TNPFITTER::IsLowBackground(TH1* histogram, double fittingEdge, double threshold) {
-  if(histogram == nullptr) {
-    throw std::string ("Can't check background mode, histogram is not valid");
-  }
-
-  // Check form of threshold variable
-  if(threshold > 1) threshold *= (1/100);
-
-  // Get comparison bin
-  double testValue = histogram->GetBinContent(histogram->FindBin(fittingEdge));
-
-  // Pick mode
-  if(histogram->GetMaximum() * threshold > testValue) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 #ifdef __CINT__
-ClassImp(FitInterface)
+ClassImp(IFitter)
 #endif
