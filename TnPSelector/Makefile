@@ -7,7 +7,7 @@ EXTRA_CCFLAGS = -Wall
 CINCLUDES = -I. \
 						-I../JacobUtils/ \
 						-I../D3PDReaderAdapter/ \
-						-I/usr/local/Cellar/root/5.34.24/include/root/ \
+						-I/usr/local/Cellar/root/5.34.25/include/root/ \
 						-I/usr/local/gmock/include/
 
 CFLAGS  = $(EXTRA_CCFLAGS) \
@@ -18,11 +18,11 @@ CFLAGS  = $(EXTRA_CCFLAGS) \
 LDINCLUDES = -I. \
 						 -I../D3PDReaderAdapter/ \
 						 -I/usr/local/gmock/gtest/include/ \
-						 -I/usr/local/Cellar/root/5.34.24/include/root/ \
+						 -I/usr/local/Cellar/root/5.34.25/include/root/ \
 
 LDLIBS     = -L/usr/local/gmock/build/ -lmock \
 				     -L/usr/local/lib/ \
-				     -L/usr/local/Cellar/root/5.34.24/lib/root -lCore -lPhysics \
+				     -L/usr/local/Cellar/root/5.34.25/lib/root -lCore -lPhysics \
 				     -lc++
 
 LINKER  = clang -o
