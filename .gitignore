@@ -8,6 +8,9 @@ RunPileupPRW/Prw*
 
 TODO
 
+*.sublime-project
+*.sublime-workspace
+
 # Compiled Dynamic libraries
 *.so
 *.dylib
