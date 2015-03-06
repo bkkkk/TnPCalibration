@@ -16,6 +16,16 @@ public:
     muon.mIsCombinedMuon = true;
     muon.mMatchchi2 = 6;
     muon.mMatchndof = 6;
+    muon.mExpectBLayerHit = 1;
+    muon.mNBLHits = 1;
+    muon.mNPixHits = 1;
+    muon.mNPixelDeadSensors = 1;
+    muon.mNSCTHits = 3;
+    muon.mNSCTDeadSensors = 3;
+    muon.mNPixHoles = 1;
+    muon.mNSCTHoles = 2;
+    muon.mNTRTHits = 12;
+    muon.mNTRTOutliers = 1;
     return (muon);
   }
 
