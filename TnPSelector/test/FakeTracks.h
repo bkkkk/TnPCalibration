@@ -1,7 +1,8 @@
 #ifndef TNPSELECTOR_FAKETRACKS_H_
 #define TNPSELECTOR_FAKETRACKS_H_ 1
 
-#include <D3PDReaderAdapter/ITrack.h>
+#include "D3PDReaderAdapter/ITrack.h"
+#include "D3PDReaderAdapter/ITracks.h"
 #include "FakeTrack.h"
 
 class FakeTracks : public ITracks {
