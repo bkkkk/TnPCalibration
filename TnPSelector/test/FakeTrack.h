@@ -34,7 +34,7 @@ public:
   double nTRTOutliers() const { return (mNTRTOutliers); }
   double qoverp_wrtPV() const { return (mQoverp_wrtPV); }
 
-private:
+public:
   float mPt;
   float mEta;
   float mPhi_wrtPV;
