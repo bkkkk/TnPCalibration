@@ -27,9 +27,9 @@ int TJPsiSMTSelector::accept(const IMuon& muon) {
   auto theta = muon.id_theta();
   auto z0sintheta = z0 * sin(theta);
 
-  auto chi2 = muon.matchchi2() / muon.matchndof();
+  auto reduced_chi2 = muon.matchchi2() / muon.matchndof();
 
-  return (accept(d0, z0sintheta, chi2));
+  return (accept(d0, z0sintheta, reduced_chi2));
 }
 
 int TJPsiSMTSelector::accept(float d0, float z0sintheta, float chi2) {
