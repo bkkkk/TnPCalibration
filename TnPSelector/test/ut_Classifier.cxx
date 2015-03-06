@@ -21,10 +21,13 @@ TEST_F(TestClassifier, ClassifySingleTrackThatIsAProbe) {
   FakeTrack probeTrack;
   probeTrack.constructGoodProbe();
 
+  FakeTrack badProbe;
+  badProbe.constructBadProbe();
+
   FakeTracks tracks;
   tracks.push_back(probeTrack);
-  tracks.push_back(probeTrack);
-  tracks.push_back(probeTrack);
+  tracks.push_back(badProbe);
+  tracks.push_back(badProbe);
 
   classifier->classifyProbes(tracks);
 
