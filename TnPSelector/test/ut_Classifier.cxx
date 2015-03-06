@@ -49,7 +49,7 @@ TEST_F(TestClassifier, ClassifySingleMuonThatIsATag) {
 }
 
 // Initial attempt to get function into harness
-TEST_F(TestClassifier, ClassifyPairsInitialTesting) {
+TEST_F(TestClassifier, ClassifyPairsWhenThereArentAny) {
   auto muons = FakeMuons {
     FakeMuon::ConstructGoodTagMuon(),
     FakeMuon::ConstructGoodTagMuon(),
@@ -68,7 +68,10 @@ TEST_F(TestClassifier, ClassifyPairsInitialTesting) {
     badProbe
   };
 
-  classifier->classify(muons, tracks);
+  classifier->classifyTags(muons);
+  classifier->classifyProbes(tracks);
+  auto pair = classifier->classifyPairs(muons, tracks);
+  EXPECT_EQ(pair.first, -99999);
 }
 
 int main(int argc, char** argv) {
