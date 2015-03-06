@@ -27,10 +27,9 @@ TEST_F(TestClassifier, ClassifySingleTrackThatIsAProbe) {
   FakeTrack badProbe;
   badProbe.constructBadProbe();
 
-  FakeTracks tracks;
-  tracks.push_back(probeTrack);
-  tracks.push_back(badProbe);
-  tracks.push_back(badProbe);
+  auto tracks = FakeTracks {
+    probeTrack, badProbe, badProbe
+  };
 
   classifier->classifyProbes(tracks);
 
