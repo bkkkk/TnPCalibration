@@ -2,38 +2,29 @@
 #include "SMTMiniNtuple/SkimListExceptions.h"
 #include "JacobUtils/LoggingUtility.h"
 
-//______________________________________________________________________________
-Skimming::SkimListMaker::
-SkimListMaker(const std::string& listName)
- : fListName(listName) 
-{
-  std::string prefix = "SkimDB-";
+
+Skimming::SkimListMaker::SkimListMaker(const std::string& listName)
+ : fListName(listName)  {
+  auto prefix = "SkimDB-";
 
   fFilename = prefix + fListName + ".xml";
 
-  fFile = TFile::Open(fFilename.data(), "RECREATE");  
+  fFile = TFile::Open(fFilename.data(), "RECREATE");
 
-  // Check if file has been created properly
-  if(fFile == NULL || fFile->IsZombie() != false)
-  {
+  if(fFile || fFile->IsZombie()) {
     throw cannot_create_file(fFilename);
-  } 
+  }
 }
 
-//______________________________________________________________________________
-Skimming::SkimListMaker::
-~SkimListMaker(void)
-{
+
+Skimming::SkimListMaker::~SkimListMaker() {
   fListName = "";
   fFilename = "";
-  fFile->Close();
-  fFile = NULL;
+  delete fFile;
 }
 
-//______________________________________________________________________________
-void Skimming::SkimListMaker::
-Add(const std::string& name, const std::string& path, const std::string& label)
-{
+
+void Skimming::SkimListMaker::Add(const std::string& name, const std::string& path, const std::string& label) {
   SkimListItem sample;
   sample.name = name;
   sample.path = path;
@@ -42,27 +33,21 @@ Add(const std::string& name, const std::string& path, const std::string& label)
   fSkimList.push_back(sample);
 }
 
-//______________________________________________________________________________
-void Skimming::SkimListMaker::
-Write(void)
-{
-  LOG_INFO() << "Writing to file";
 
+void Skimming::SkimListMaker::Write() {
   fFile->WriteObject(&fSkimList, fListName.data());
 }
 
-//______________________________________________________________________________
-const std::string& Skimming::SkimListMaker::
-GetFileName(void) const
-{
+
+const std::string Skimming::SkimListMaker::GetFileName(void) const {
   return(fFilename);
 }
 
-//______________________________________________________________________________
-std::string& Skimming::SkimListMaker::
-GetFileName(void)
-{
+
+std::string Skimming::SkimListMaker::GetFileName(void) {
   return(fFilename);
 }
 
+#ifdef __CINT__
 ClassImp(Skimming::SkimListMaker)
+#endif

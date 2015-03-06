@@ -8,38 +8,42 @@
 #include "SMTMiniNtuple/SkimListMaker.h"
 #include "SMTMiniNtuple/SkimListExceptions.h"
 
-int main()
-{
-  std::string sampleCollectionName = "p1328";
+int main() {
+  using SampleAndFilename = std::pair<std::string, std::string>;
+
+  auto sampleCollectionName = "p1328";
 
   Skimming::SkimListMaker* listMaker;
 
-  try
-  {
+  try {
     listMaker = new Skimming::SkimListMaker(sampleCollectionName);
-  } catch ( const Skimming::cannot_create_file& e ) {
+  } catch (const Skimming::cannot_create_file& e) {
     std::cout << "Could not open file: " << e.filename << std::endl;
     return (1);
   }
 
-  // Trying to get the list of names from the directory is a pain
-  // Dont wanna do Regex stuff
-  listMaker->Add("NonPromptJPsi", "/home/jblanco/WorkArea/CalibrationWork/RootCore/data/PileupReweighting/PrwConfig-p1328_NonPromptJPsi-v1.root", "NonPromptJPsi");
-  listMaker->Add("PromptJPsi", "/home/jblanco/WorkArea/CalibrationWork/RootCore/data/PileupReweighting/PrwConfig-p1328_PromptJPsi-v1.root", "PromptJPsi");
-  listMaker->Add("PeriodA", "/home/jblanco/WorkArea/CalibrationWork/RootCore/data/PileupReweighting/LumiCalc-p1328_PeriodA.root", "PeriodA");
-  listMaker->Add("PeriodAB", "/home/jblanco/WorkArea/CalibrationWork/RootCore/data/PileupReweighting/LumiCalc-p1328_PeriodAB-v1.root", "PeriodAB");
-  listMaker->Add("PeriodAL", "/home/jblanco/WorkArea/CalibrationWork/RootCore/data/PileupReweighting/LumiCalc-p1328_PeriodAL-v1.root", "PeriodAL");
-  listMaker->Add("PeriodB", "/home/jblanco/WorkArea/CalibrationWork/RootCore/data/PileupReweighting/LumiCalc-p1328_PeriodB.root", "PeriodB");
-  listMaker->Add("PeriodC", "/home/jblanco/WorkArea/CalibrationWork/RootCore/data/PileupReweighting/LumiCalc-p1328_PeriodC.root", "PeriodC");
-  listMaker->Add("PeriodD", "/home/jblanco/WorkArea/CalibrationWork/RootCore/data/PileupReweighting/LumiCalc-p1328_PeriodD-v1.root", "PeriodD");
-  listMaker->Add("PeriodE", "/home/jblanco/WorkArea/CalibrationWork/RootCore/data/PileupReweighting/LumiCalc-p1328_PeriodE-v1.root", "PeriodE");
-  listMaker->Add("PeriodG", "/home/jblanco/WorkArea/CalibrationWork/RootCore/data/PileupReweighting/LumiCalc-p1328_PeriodG-v1.root", "PeriodG");
-  listMaker->Add("PeriodH", "/home/jblanco/WorkArea/CalibrationWork/RootCore/data/PileupReweighting/LumiCalc-p1328_PeriodH-v1.root", "PeriodH");
-  listMaker->Add("PeriodI", "/home/jblanco/WorkArea/CalibrationWork/RootCore/data/PileupReweighting/LumiCalc-p1328_PeriodI-v1.root", "PeriodI");
-  listMaker->Add("PeriodJ", "/home/jblanco/WorkArea/CalibrationWork/RootCore/data/PileupReweighting/LumiCalc-p1328_PeriodJ-v1.root", "PeriodJ");
-  listMaker->Add("PeriodL", "/home/jblanco/WorkArea/CalibrationWork/RootCore/data/PileupReweighting/LumiCalc-p1328_PeriodL-v1.root", "PeriodL");
+  auto path_prefix = "/home/jblanco/WorkArea/CalibrationWork/RootCore/data/PileupReweighting/";
 
-  listMaker->Write();
+  std::vector<SampleAndFilename> samples = {
+    {"NonPromptJPsi", "PrwConfig-p1328_NonPromptJPsi-v1.root"},
+    {"PromptJPsi", "PrwConfig-p1328_PromptJPsi-v1.root"},
+    {"PeriodA", "LumiCalc-p1328_PeriodA.root"},
+    {"PeriodAB", "LumiCalc-p1328_PeriodAB-v1.root"},
+    {"PeriodAL", "LumiCalc-p1328_PeriodAL-v1.root"},
+    {"PeriodB", "LumiCalc-p1328_PeriodB.root"},
+    {"PeriodC", "LumiCalc-p1328_PeriodC.root"},
+    {"PeriodD", "LumiCalc-p1328_PeriodD-v1.root"},
+    {"PeriodE", "LumiCalc-p1328_PeriodE-v1.root"},
+    {"PeriodG", "LumiCalc-p1328_PeriodG-v1.root"},
+    {"PeriodH", "LumiCalc-p1328_PeriodH-v1.root"},
+    {"PeriodI", "LumiCalc-p1328_PeriodI-v1.root"},
+    {"PeriodJ", "LumiCalc-p1328_PeriodJ-v1.root"},
+    {"PeriodL", "LumiCalc-p1328_PeriodL-v1.root"}
+  };
+
+  for(const auto& sample : samples) {
+    listMaker->Write(sample.first, path_prefix + sample.second);
+  }
 
   return (0);
-};
+}

@@ -1,23 +1,22 @@
 #ifndef SKIMMING_SKIMLIST_H_
 #define SKIMMING_SKIMLIST_H_ 1
 
-// C++
 #include <vector>
 #include <string>
-#include "TObject.h"
 
 namespace Skimming {
 
-struct SkimListItem
-{
+struct SkimListItem {
   std::string name;
   std::string path;
   std::string label;
 
+#ifdef __CINT__
   ClassDef(SkimListItem, 1);
+#endif
 };
 
-typedef std::vector<SkimListItem> SkimList;
+using SkimList = std::vector<SkimListItem>;
 
 }
 
