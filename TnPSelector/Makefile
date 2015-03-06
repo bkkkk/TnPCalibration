@@ -72,6 +72,9 @@ test:
 test-classifier:
 	test-bin/ut_Classifier
 
+test-pair:
+	test-bin/ut_PairSelector
+
 .PHONY: clean distclean test print-dep
 
 distclean: clean
