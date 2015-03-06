@@ -15,31 +15,31 @@ TJPsiClassifier::TJPsiClassifier()
    smtSelector(nullptr) { }
 
 TJPsiClassifier::~TJPsiClassifier() {
-  if(mcpSelector) delete mcpSelector;
-  if(tagSelector) delete tagSelector;
-  if(pairSelector) delete pairSelector;
-  if(probeSelector) delete probeSelector;
-  if(muonProbeSelector) delete muonProbeSelector;
-  if(smtSelector) delete smtSelector;
+  if (mcpSelector) delete mcpSelector;
+  if (tagSelector) delete tagSelector;
+  if (pairSelector) delete pairSelector;
+  if (probeSelector) delete probeSelector;
+  if (muonProbeSelector) delete muonProbeSelector;
+  if (smtSelector) delete smtSelector;
 }
 
 int TJPsiClassifier::initialize() {
-  if(mcpSelector == nullptr) {
+  if (mcpSelector == nullptr) {
     return (0);
   }
-  if(tagSelector == nullptr) {
+  if (tagSelector == nullptr) {
     return (0);
   }
-  if(pairSelector == nullptr) {
+  if (pairSelector == nullptr) {
     return (0);
   }
-  if(probeSelector == nullptr) {
+  if (probeSelector == nullptr) {
     return (0);
   }
-  if(muonProbeSelector == nullptr) {
+  if (muonProbeSelector == nullptr) {
     return (0);
   }
-  if(smtSelector == nullptr) {
+  if (smtSelector == nullptr) {
     return (0);
   }
 
@@ -47,31 +47,24 @@ int TJPsiClassifier::initialize() {
 }
 
 int TJPsiClassifier::classify(const IMuons& muons, const ITracks& tracks) {
-
   clear();
 
   classifyTags(muons);
   classifyProbes(tracks);
-  
+
   auto chosenTag = -99999;
   auto chosenProbe = -99999;
 
-  auto probeIdx = probesIndexes.begin();
-  auto probeLast = probesIndexes.end();
-  for(; probeIdx != probeLast; probeIdx++) {
-    
-    auto tagIdx = tagsIndexes.begin();
-    auto tagLast = tagsIndexes.end();
-    for(;tagIdx != tagLast; tagIdx++) {
-
-      if(!pairSelector->accept(muons[*tagIdx], tracks[*probeIdx])) continue;
+  for(auto probeIdx = probesIndexes.begin(); probeIdx != probesIndexes.end(); probeIdx++) {
+    for(auto tagIdx = tagsIndexes.begin(); tagIdx != tagsIndexes.end(); tagIdx++) {
+      if (!pairSelector->accept(muons[*tagIdx], tracks[*probeIdx])) continue;
 
       auto trk_z0_wrtPV = tracks[*probeIdx].z0_wrtPV();
       auto tag_id_z0_wrtPV = muons[*tagIdx].id_z0_exPV();
 
       auto dz0 = TNP::GetDeltaZ0(trk_z0_wrtPV, tag_id_z0_wrtPV);
 
-      if(smallestDZ0 > dz0) {
+      if (smallestDZ0 > dz0) {
         smallestDZ0 = dz0;
         chosenTag = *tagIdx;
         chosenProbe = *probeIdx;
@@ -79,18 +72,18 @@ int TJPsiClassifier::classify(const IMuons& muons, const ITracks& tracks) {
     }
   }
 
-  if(smallestDZ0 == 1000.) {
+  if (smallestDZ0 == 1000.) {
     return 0;
   }
 
   pair = std::make_pair(chosenTag, chosenProbe);
 
   isMuonProbe = muonProbeSelector->accept(tracks[chosenProbe], muons, muonProbeIdx);
-  
-  if(isMuonProbe != 1) {
+
+  if (isMuonProbe != 1) {
     return (1);
   }
-  
+
   isSMT = smtSelector->accept(muons[muonProbeIdx]);
 
   return (1);
@@ -99,8 +92,8 @@ int TJPsiClassifier::classify(const IMuons& muons, const ITracks& tracks) {
 void TJPsiClassifier::classifyTags(const IMuons& muons) {
   auto nMuons = muons.n();
   for (auto muon = 0ul; muon != nMuons; muon++) {
-    if(tagSelector->accept(muons[muon]) &&
-       mcpSelector->accept(muons[muon]) ) {
+    if (tagSelector->accept(muons[muon]) &&
+        mcpSelector->accept(muons[muon])) {
       tagsIndexes.push_back(muon);
     }
   }
@@ -108,9 +101,9 @@ void TJPsiClassifier::classifyTags(const IMuons& muons) {
 
 void TJPsiClassifier::classifyProbes(const ITracks& tracks) {
   auto nTracks = tracks.n();
-  for(auto track = 0ul; track != nTracks; track++) {
-    if( probeSelector->accept(tracks[track]) == 1 &&
-        mcpSelector->accept(tracks[track]) == 1 ) {
+  for (auto track = 0ul; track != nTracks; track++) {
+    if (probeSelector->accept(tracks[track]) == 1 &&
+        mcpSelector->accept(tracks[track]) == 1) {
       probesIndexes.push_back(track);
     }
   }
@@ -122,10 +115,10 @@ int TJPsiClassifier::clear() {
   muonProbeIdx = -9999;
   tagsIndexes.clear();
   probesIndexes.clear();
-  pair = std::make_pair(-9999,-9999);
+  pair = std::make_pair(-9999, -9999);
   return (1);
 }
 
 #ifdef __CINT__
-ClassImp(TJPsiClassifier)
+  ClassImp(TJPsiClassifier)
 #endif
