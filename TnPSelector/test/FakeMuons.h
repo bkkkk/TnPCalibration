@@ -7,7 +7,9 @@
 
 class FakeMuons : public IMuons {
 public:
-  FakeMuons() { }
+  FakeMuons() = default;
+
+
   FakeMuons(std::initializer_list<FakeMuon> il)
    : muons{il} { }
 
