@@ -29,7 +29,7 @@ int TJPsiPairSelector::accept(const IMuon& tag, const IMuon& muonProbe) {
                                              tag.phi(), tag.E());
 
   TLorentzVector muonProbeVec = TNP::GetMuonVector(muonProbe.pt(),
-                                                   muonProbe.eta(), 
+                                                   muonProbe.eta(),
                                                    muonProbe.phi(),
                                                    muonProbe.E());
 
@@ -47,14 +47,22 @@ int TJPsiPairSelector::accept(const IMuon& tag, const ITrack& probe) {
 
   float deltaR = tagVec.DeltaR(probeVec);
   float sign = tag.charge() * (fabs(probe.qoverp_wrtPV()) / probe.qoverp_wrtPV());
+  // GetChargeSign(charge, qoverp)
   float invMass = (tagVec + probeVec).M();
   float deltaZ0 = GetDeltaZ0(probe.z0_wrtPV(), tag.id_z0_exPV());
 
   return (accept(deltaR, sign, invMass, deltaZ0));
 }
 
-int TJPsiPairSelector::accept(const float& deltaR, const float& sign,
-                              const float& invMass, const float& deltaZ0) {
+float GetChargeSign(float charge, float qoverp) {
+  return (charge * (fabs(qoverp) / qoverp));
+}
+
+float TJPsiPairSelector::GetDeltaZ0(float first, float second) {
+  return (fabs(second - first));
+}
+
+int TJPsiPairSelector::accept(float deltaR, float sign, float invMass, float deltaZ0) {
   if(minMassCut > invMass) return 0;
   if(maxMassCut < invMass) return 0;
   if(deltaRCutMax < deltaR) return 0;
@@ -69,14 +77,4 @@ int TJPsiPairSelector::finalize() {
   return (1);
 }
 
-float TJPsiPairSelector::GetDeltaZ0(const float& first, const float& second) {
-  float deltaZ0 = 0;
 
-  if(first < second) {
-    deltaZ0 = fabs(second - first);
-  } else if(first > second) {
-    deltaZ0 = fabs(first - second);
-  }
-
-  return deltaZ0;
-}

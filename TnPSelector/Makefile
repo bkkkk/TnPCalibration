@@ -1,106 +1,72 @@
-CC      		  = clang -O2
-ERROR_LEVEL   = -pedantic-errors
-DEBUG_LEVEL   = -lprofiler
-COMPILER_STD  = -std=c++11
-EXTRA_CCFLAGS = -Wall
+TARGET := TnPSelector
 
-CINCLUDES = -I. \
-						-I../JacobUtils/ \
-						-I../D3PDReaderAdapter/ \
-						-I/usr/local/Cellar/root/5.34.25/include/root/ \
-						-I/usr/local/gmock/include/
+MKDIR_P = mkdir -p
 
-CFLAGS  = $(EXTRA_CCFLAGS) \
-				  $(ERROR_LEVEL) \
-				  $(COMPILER_STD) \
-				  $(CINCLUDES) \
+CXXFLAGS += -Wall -Wextra -Wstring-plus-int -pedantic -Werror -Wunreachable-code -std=c++11
+CXXFLAGS += -I.
+CXXFLAGS += -I../JacobUtils
+CXXFLAGS += -I../D3PDReaderAdapter
+CXXFLAGS += -I/usr/local/Cellar/root6/6.02.05/include/root
+CXXFLAGS += -I/usr/local/gmock/include
+CXXFLAGS += -I/usr/local/gmock/gtest/include
 
-LDINCLUDES = -I. \
-						 -I../D3PDReaderAdapter/ \
-						 -I/usr/local/gmock/gtest/include/ \
-						 -I/usr/local/Cellar/root/5.34.25/include/root/ \
+LDFLAGS += -L/usr/local/gmock/build/
+LDFLAGS += -L/usr/local/lib/
+LDFLAGS += -L/usr/local/Cellar/root6/6.02.05/lib/root
 
-LDLIBS     = -L/usr/local/gmock/build/ -lmock \
-				     -L/usr/local/lib/ \
-				     -L/usr/local/Cellar/root/5.34.25/lib/root -lCore -lPhysics \
-				     -lc++
+LDLIBS += -lc++
+LDLIBS += -lCore -lRIO -lNet -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lMathCore -lThread -lpthread -lm -ldl
+LDLIBS += -lmock
 
-LINKER  = clang -o
-LDFLAGS = $(EXTRA_CCFLAGS) \
-				  $(DEBUG_LEVEL) \
-				  $(COMPILER_STD) \
-				  $(LDINCLUDES) \
-				  $(LDLIBS)
+# Input directories
+ROOT = $(shell dirname 'pwd')
+SOURCE_DIR := $(ROOT)/src
+INCLUDE_DIR := $(ROOT)/TnPSelector
+TEST_DIR := $(ROOT)/test
 
-ARCHIVER = ar
-ARFLAGS  = -cr
+# Output directories
+OBJECT_DIR := obj
+LIBRARY_DIR := lib
+TEST_BIN_DIR := test-bin
 
-INCDIR  = TnPSelector
-OBJDIR  = obj
-SRCDIR  = Root
-LIBDIR  = lib
+# Input files
+SOURCES = $(wildcard $(SOURCE_DIR)/*.cxx)
+INCLUDES = $(SOURCES:$(SOURCE_DIR)/%.cxx=$(INCLUDE_DIR)/%.hpp)
+TEST_SOURCES = $(wildcard $(TEST_DIR)/*.cxx)
 
-TSTCXX  = test
-TSTBIN  = test-bin
+# Output
+OBJECTS = $(SOURCES:$(SOURCE_DIR)/%.cxx=$(OBJECT_DIR)/%.o)
+LIBRARY = $(LIBRARY_DIR)/libTnPSelector.a
+TEST_BINS = $(TEST_SOURCES:$(TEST_DIR)/%.cxx=$(TEST_BIN_DIR)/%)
 
-SOURCES  := $(wildcard $(SRCDIR)/*.cxx)
-TSTFILES := $(wildcard $(TSTCXX)/*.cxx)
-TSTBINS  := $(TSTFILES:$(TSTCXX)/%.cxx=$(TSTBIN)/%)
-OBJECTS  := $(SOURCES:$(SRCDIR)/%.cxx=$(OBJDIR)/%.o)
-INCLUDES := $(SOURCES:$(SRCDIR)/%.cxx=$(INCDIR)/%.hpp)
-LIBRARY  := $(LIBDIR)/libTnPSelector.a
+all: directories $(LIBRARY) $(TEST_BINS)
 
-all: $(OBJECTS) $(LIBRARY) $(TSTBINS)
+directories:
+	@$(MKDIR_P) $(OBJECT_DIR)
+	@$(MKDIR_P) $(LIBRARY_DIR)
+	@$(MKDIR_P) $(TEST_BIN_DIR)
 
-$(TSTBINS): $(TSTBIN)/% : $(TSTCXX)/%.cxx $(OBJECTS)
-	@$(LINKER) $@ $^ $(LDFLAGS)
-	@echo "Linking completed!"
+$(TEST_BIN_DIR)/%: $(TEST_DIR)/%.cxx
+	$(LINK.cc) $(LDLIBS) -L$(LIBRARY_DIR) -l$(TARGET) $< -o $@ 
 
-$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cxx
-	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo "Compiled "$<" successfully!"
+$(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.cxx
+	$(COMPILE.cc) $< -o $@
 
 $(LIBRARY): $(OBJECTS)
-	$(ARCHIVER) $(ARFLAGS) $(LIBRARY) $(OBJECTS)
-
-test-tag:
-	@echo 'Testing Tag Selector'
-	@echo ''
-	./test-bin/ut_TagSelector
-
-test-kinematic:
-	@echo 'Testing KinematicUtils'
-	@echo ''
-	./test-bin/ut_KinematicUtils
-
-test-mp:
-	@echo 'Testing Muon Probe Selector'
-	@echo ''
-	./test-bin/ut_MuonProbeSelector
-
-test-probe:
-	@echo 'Testing Probe Selector'
-	@echo ''
-	./test-bin/ut_ProbeSelector	
-
-test-smt:
-	@echo 'Testing Probe Selector'
-	@echo ''
-	./test-bin/ut_SMTSelector	
+	$(AR) $(ARFLAGS) $(LIBRARY) $(OBJECTS)
 
 print-dep:
-	@echo 'Unit tests: '$(TSTFILES)
-	@echo 'Unit tests bins: '$(TSTBINS)
+	@echo 'Unit tests: '$(TEST_SOURCES)
+	@echo 'Unit tests bins: '$(TEST_BINS)
 	@echo 'Source files: '$(SOURCES)
 	@echo 'Inlcudes files: '$(INCLUDES)
 	@echo 'Object targets: '$(OBJECTS)
 
-.PHONY: clean
+.PHONY: clean distclean test print-dep
+
+distclean: clean
 
 clean:
-	-rm -f ./$(OBJDIR)/*.o
-	-rm -f ./$(TSTBIN)/*
-
-test: test-kinematic test-tag test-probe test-mp
-
-test-perf: perf-tag
+	$(RM) ./$(OBJECT_DIR)/*.o
+	$(RM) ./$(TEST_BIN_DIR)/*
+	$(RM) ./$(LIBRARY_DIR)/*

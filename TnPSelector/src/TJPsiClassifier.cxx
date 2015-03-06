@@ -98,7 +98,7 @@ int TJPsiClassifier::classify(const IMuons& muons, const ITracks& tracks) {
 
 void TJPsiClassifier::classifyTags(const IMuons& muons) {
   auto nMuons = muons.n();
-  for (auto muon = 0; muon != nMuons; muon++) {
+  for (auto muon = 0ul; muon != nMuons; muon++) {
     if(tagSelector->accept(muons[muon]) &&
        mcpSelector->accept(muons[muon]) ) {
       tagsIndexes.push_back(muon);
@@ -108,7 +108,7 @@ void TJPsiClassifier::classifyTags(const IMuons& muons) {
 
 void TJPsiClassifier::classifyProbes(const ITracks& tracks) {
   auto nTracks = tracks.n();
-  for(auto track = 0; track != nTracks; track++) {
+  for(auto track = 0ul; track != nTracks; track++) {
     if( probeSelector->accept(tracks[track]) == 1 &&
         mcpSelector->accept(tracks[track]) == 1 ) {
       probesIndexes.push_back(track);

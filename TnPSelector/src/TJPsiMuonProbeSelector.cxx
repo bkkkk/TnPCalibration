@@ -21,7 +21,7 @@ int TJPsiMuonProbeSelector::initialize(void) {
 int TJPsiMuonProbeSelector::accept(const ITrack& probe, const IMuons& muons, int& muonProbeIdx) {
   float deltaR = std::numeric_limits<float>::max();
 
-  for(int muon = 0; muon != muons.n(); muon++) {
+  for(auto muon = 0ul; muon != muons.n(); muon++) {
     if(muons[muon].isCombinedMuon() != 1) continue;
 
     float deltaRCandidate = GetDeltaR(probe, muons[muon]);

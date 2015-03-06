@@ -2,14 +2,20 @@
 #include <JacobUtils/LoggingUtility.h>
 
 void PrintUtils::PrintInfoTrack(const ITrack& track) {
+  (void)track;
 // LOG_DEBUG1() << "Track:" << " pT = " << track.pt() << " eta = " << track.eta() << " phi = " << track.phi_wrtPV();
 }
 
-void PrintUtils::PrintInfoMuon(const IMuon& muon) { }
+void PrintUtils::PrintInfoMuon(const IMuon& muon) {
+  (void)muon;
+}
 
-void PrintUtils::PrintMuonTrackInfo(const IMuon& muon) { }
+void PrintUtils::PrintMuonTrackInfo(const IMuon& muon) {
+  (void)muon;
+}
 
-void PrintUtils::PrintMuonIsoInfo( const IMuon& muon ) {
+void PrintUtils::PrintMuonIsoInfo(const IMuon& muon) {
+  (void)muon;
 #if 0
   float etcone20 = muon.etcone20();
   float etcone30 = muon.etcone30();

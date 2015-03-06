@@ -33,7 +33,7 @@ TJPsiTagSelector::TJPsiTagSelector(const TagCuts& cuts)
 TJPsiTagSelector::~TJPsiTagSelector() {
 }
 
-const bool TJPsiTagSelector::initialize() const {
+bool TJPsiTagSelector::initialize() const {
   if(etaCut == std::numeric_limits<float>::max()) return false;
   if(combinedMuonCut == -1) return false;
   if(ptCut == std::numeric_limits<float>::min()) return false;
@@ -58,7 +58,7 @@ int TJPsiTagSelector::accept(const IMuon& muon) {
   return (accept(eta, muon.isCombinedMuon(), pt, d0, z0, d0Sig, z0Sig));
 }
 
-const int TJPsiTagSelector::finalize() const {
+int TJPsiTagSelector::finalize() const {
   return (1);
 }
 
