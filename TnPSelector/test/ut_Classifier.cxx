@@ -5,8 +5,11 @@
 #include "TnPSelector/TJPsiProbeSelector.h"
 #include "TnPSelector/TJPsiMuonProbeSelector.h"
 #include "TnPSelector/TJPsiSMTSelector.h"
+
 #include "FakeTracks.h"
 #include "FakeTrack.h"
+#include "FakeMuons.h"
+#include "FakeMuon.h"
 
 TEST_F(TestClassifier, ConstructingEmptyClassifierShouldReturnZero) {
   classifier = new TJPsiClassifier();
@@ -32,6 +35,18 @@ TEST_F(TestClassifier, ClassifySingleTrackThatIsAProbe) {
   classifier->classifyProbes(tracks);
 
   EXPECT_EQ(1ul, classifier->getProbeIndexes().size());
+}
+
+TEST_F(TestClassifier, ClassifySingleMuonThatIsATag) {
+  auto muons = FakeMuons {
+    FakeMuon::ConstructGoodTagMuon(),
+    FakeMuon::ConstructGoodTagMuon(),
+    FakeMuon::ConstructGoodTagMuon()
+  };
+
+  classifier->classifyTags(muons);
+
+  EXPECT_EQ(3ul, classifier->getTagIndexes().size());
 }
 
 int main(int argc, char** argv) {
