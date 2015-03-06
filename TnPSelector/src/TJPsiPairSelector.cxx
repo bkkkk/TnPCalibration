@@ -8,8 +8,8 @@
 #include <limits>
 
 
-TJPsiPairSelector::TJPsiPairSelector(const std::string& val_name)
- : name(val_name),
+TJPsiPairSelector::TJPsiPairSelector(const std::string& name)
+ : name(name),
    deltaRCutMax(std::numeric_limits<float>::max()),
    deltaRCutMin(std::numeric_limits<float>::min()),
    signCut(std::numeric_limits<float>::max()),
