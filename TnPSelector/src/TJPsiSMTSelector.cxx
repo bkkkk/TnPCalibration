@@ -7,10 +7,10 @@ TJPsiSMTSelector::TJPsiSMTSelector()
  : d0Cut(std::numeric_limits<float>::max()),
    z0SinCut(std::numeric_limits<float>::max()),
    chi2Cut(std::numeric_limits<float>::max()) {
+}
 
-};
-
-TJPsiSMTSelector::~TJPsiSMTSelector() { }
+TJPsiSMTSelector::~TJPsiSMTSelector() {
+}
 
 int TJPsiSMTSelector::initialize() {
   if (d0Cut == std::numeric_limits<float>::max()) return (0);
@@ -30,16 +30,15 @@ int TJPsiSMTSelector::accept(const IMuon& muon) {
   auto chi2 = muon.matchchi2() / muon.matchndof();
 
   return (accept(d0, z0sintheta, chi2));
-};
+}
 
 int TJPsiSMTSelector::accept(float d0, float z0sintheta, float chi2) {
   if (fabs(d0) > d0Cut) return 0;
   if (fabs(z0sintheta) > z0SinCut) return 0;
   if (chi2 > chi2Cut) return 0;
   return (1);
-};
+}
 
 int TJPsiSMTSelector::finalize() {
   return (1);
-};
-
+}
