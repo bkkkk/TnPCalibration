@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export RUNDIR=/home/jblanco/WorkArea/CalibrationWork/RunKinematics
+export RUNDIR=/home/jblanco/WorkArea/CalibrationWork/run/kinematics
 export OUTPUTDIR=$RUNDIR/output
 export JODIR=$RUNDIR/jobOptions
 export CONTROLDIR=$RUNDIR/control

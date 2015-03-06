@@ -4,10 +4,10 @@ if [[ -z $ROOTCOREDIR ]]; then
   echo "Setting RootCore"
   cd /home/jblanco/WorkArea/CalibrationWork/
   source RootCore/scripts/setup.sh
-  cd /home/jblanco/WorkArea/CalibrationWork/RunSkim/scripts
+  cd /home/jblanco/WorkArea/CalibrationWork/run/skim/scripts
 fi
 
-source $ROOTCOREDIR/../RunSkim/scripts/setup.sh
+source $ROOTCOREDIR/../run/skim/scripts/setup.sh
 
 # Print help
 usage()

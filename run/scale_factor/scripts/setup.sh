@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export RUNDIR="/home/jblanco/WorkArea/CalibrationWork/RunMakeSF"
+export RUNDIR="/home/jblanco/WorkArea/CalibrationWork/run/scale_factor"
 export OUTPUTDIR=$RUNDIR/output
 export JODIR=$RUNDIR/jobOptions
 export CONTROLDIR=$ROOTCOREDIR/data/MuonEfficiency/

@@ -2,7 +2,7 @@
 
 T="$(date +%Y%m%d%H%M%S)"
 
-export RUNDIR=/home/jblanco/WorkArea/CalibrationWork/RunPairing
+export RUNDIR=/home/jblanco/WorkArea/CalibrationWork/run/pairing
 export OUTPUTDIR=/scratch3/jblanco/CalibrationHistograms
 export JODIR=$RUNDIR/jobOptions
 export CONTROLDIR=$RUNDIR/control

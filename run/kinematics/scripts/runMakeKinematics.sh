@@ -4,10 +4,10 @@ if [[ -z $ROOTCOREDIR ]]; then
   echo "Setting RootCore"
   cd /home/jblanco/WorkArea/CalibrationWork/
   source RootCore/scripts/setup.sh
-  cd /home/jblanco/WorkArea/CalibrationWork/RunKinematics/scripts
+  cd /home/jblanco/WorkArea/CalibrationWork/run/kinematics/scripts
 fi
 
-source $ROOTCOREDIR/../RunKinematics/scripts/setup.sh
+source $ROOTCOREDIR/../run/kinematics/scripts/setup.sh
 
 usage()
 {
@@ -84,7 +84,7 @@ fi
 PROCESSINGTAGNAME=
 INPUTDIRNAME=
 if [[ $PROCESSINGFLAG == 1 ]]; then
-  INPUTDIRNAME="Batch-p1067"
+  INPUTDIRNAME="Batch-13-06-17_VxpVariables"
   PROCESSINGTAGNAME="p1067"
 else
   INPUTDIRNAME="Batch-p1328"
@@ -99,6 +99,6 @@ echo $INPUTDIR
 T="$(date +%Y%m%d%H%M%S)"
 OUTPUTDIRNAME="$OUTPUTDIR/kinematics."$T"_"$INPUTTAG"."$PROCESSINGTAGNAME"_"$LABEL""$PUPROFILE""
 
-root -b -l -q "$JODIR/MakeKinematicsFaraday.cxx(\"$INPUTDIR\",\"$OUTPUTDIRNAME\",\"$LUMIFILE\",$DOPU)"
+root -b -l -q "$JODIR/MakeKinematics.cxx(\"$INPUTDIR\",\"$OUTPUTDIRNAME\",\"$LUMIFILE\",$DOPU,$MAXEVENTS)"
 echo -e "\v"
 echo "Output files in : $OUTPUTDIRNAME"

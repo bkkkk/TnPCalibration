@@ -1,14 +1,12 @@
-void MakeKinematics (const std::string& inputDir,
-                     const std::string& submitDir,
-                     const std::string& lumiCalcFile="ilumicalc_histograms_AllPeriodData12.root",
-                     const int& doPU=0,
-                     const float& maxEvents=0)
-{
-  // Load the libraries for all packages
+void MakeKinematicsFaraday(const std::string& inputDir,
+                           const std::string& submitDir,
+                           const std::string& lumiCalcFile = "ilumicalc_histograms_AllPeriodData12.root",
+                           int doPU = 0) {
   gROOT->ProcessLine(".x $ROOTCOREDIR/scripts/load_packages.C+");
 
-  // Output name
   std::string outputName = "output";
+
+  submitDir.append("_faraday");
 
   // Create a new SampleHandler to grab all samples
   SH::SampleHandler sh;
@@ -30,18 +28,18 @@ void MakeKinematics (const std::string& inputDir,
   /// Initialize and configure Tag Selector
   TJPsiTagSelector* tagSelector = new TJPsiTagSelector();
   tagSelector->etaCut = 2.5; tagSelector->combinedMuonCut = 1;
-  tagSelector->ptCut = 4000; 
-  tagSelector->d0Cut = 0.3; tagSelector->d0SigCut = 3.0;
-  tagSelector->z0Cut = 1.5; tagSelector->z0SigCut = 3.0;
-  
+  tagSelector->ptCut = 4000; tagSelector->d0Cut = 0.3;
+  tagSelector->z0Cut = 1.5; tagSelector->d0SigCut = 3.0;
+  tagSelector->z0SigCut = 3.0;
+
   /// Configure probe
   TJPsiProbeSelector* probeSelector = new TJPsiProbeSelector();
-  probeSelector->etaCut = 2.5; probeSelector->pCut = 4000;
+  probeSelector->etaCut = 2.5; probeSelector->pCut = 3000;
 
   /// Configure pair
   TJPsiPairSelector* pairSelector = new TJPsiPairSelector();
-  pairSelector->signCut = -1;
-  pairSelector->deltaRCutMin = 0.2; pairSelector->deltaRCutMax = 3.5;
+  pairSelector->deltaRCutMax = 3.5; pairSelector->signCut = -1;
+  pairSelector->deltaRCutMin = 0.2;
   pairSelector->minMassCut = 2000.; pairSelector->maxMassCut = 4000.;
   pairSelector->deltaZ0Cut = 2;
 
@@ -56,7 +54,7 @@ void MakeKinematics (const std::string& inputDir,
 
   /// Configure MCP selector
   TMCPSelector* mcpSelector = new TMCPSelector();
-
+  
   std::cout << "Setting up classifier" << std::endl;
   TJPsiClassifier* jpsiClassifier = new TJPsiClassifier();
   jpsiClassifier->tagSelector = tagSelector;
@@ -87,16 +85,24 @@ void MakeKinematics (const std::string& inputDir,
   /// Set the number of events to print full debug information for
   job.algsAdd(sampleHistograms);
   sampleHistograms->nDebugEvents = 1000;
-  if(maxEvents != 0)
-  {
-    job.options()->setDouble (EL::Job::optMaxEvents, maxEvents);
-  }
 
   std::cout << "Driver" << std::endl;
+  
+  std::string optionMergeLogs = "-j oe";
+  std::string optionQueue = "-q long ";
+  std::string option = optionMergeLogs + " " + optionQueue;
 
-  // Create a new driver
-  EL::DirectDriver driver;
+  std::cout << "Options for submission: " << option << std::endl;
+
+  EL::TorqueDriver driver;
+  driver.shellInit = "export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase && source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh && eval localSetupROOT --skipConfirm --rootVersion=\"5.30.06-x86_64-slc5-gcc4.3\"  && echo setup success || echo setup failure; which root; which root.exe; echo $PATH; cat /etc/redhat-release";
+  
+  job.options()->setString(EL::Job::optSubmitFlags, option);
+  job.options()->setDouble(EL::Job::optFilesPerWorker, 10);
+  
+
+  std::cout << "Submitting" << std::endl;
 
   // process the job using the driver
-  driver.submit (job, submitDir);
+  driver.submitOnly (job, submitDir);
 }
