@@ -28,17 +28,12 @@ int TMCPSelector::finalize() {
 
 
 int TMCPSelector::accept(const IMuon& muon) {
-  return(this->accept(muon.expectBLayerHit(),
-            muon.nBLHits(),
-            muon.nPixHits(),
-            muon.nPixelDeadSensors(),
-            muon.nSCTHits(),
-            muon.nSCTDeadSensors(),
-            muon.nPixHoles(),
-            muon.nSCTHoles(),
-            muon.nTRTHits(),
-            muon.nTRTOutliers(),
-            muon.eta()));
+  return(accept(muon.expectBLayerHit(), muon.nBLHits(),
+                muon.nPixHits(), muon.nPixelDeadSensors(),
+                muon.nSCTHits(), muon.nSCTDeadSensors(),
+                muon.nPixHoles(), muon.nSCTHoles(),
+                muon.nTRTHits(), muon.nTRTOutliers(),
+                muon.eta()));
 }
 
 
