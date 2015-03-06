@@ -1,8 +1,12 @@
+BUILD ?= debug
+
 TARGET := TnPSelector
 
 MKDIR_P = mkdir -p
 
 CXXFLAGS += -Wall -Wextra -Wstring-plus-int -pedantic -Werror -Wunreachable-code -std=c++11
+CXXFLAGS += $(CXXFLAGS_$(BUILD))
+CXXFLAGS_debug = -g
 CXXFLAGS += -I.
 CXXFLAGS += -I../JacobUtils
 CXXFLAGS += -I../D3PDReaderAdapter
