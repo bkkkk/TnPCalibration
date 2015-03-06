@@ -10,11 +10,22 @@ public:
   void constructGoodProbe() {
     mPt = 4000;
     mEta = 1.2;
+    mExpectBLayerHit = 1;
+    mNBLHits = 1;
+    mNPixHits = 1;
+    mNPixelDeadSensors = 1;
+    mNSCTHits = 3;
+    mNSCTDeadSensors = 3;
+    mNPixHoles = 1;
+    mNSCTHoles = 2;
+    mNTRTHits = 12;
+    mNTRTOutliers = 1;
   }
 
   void constructBadProbe() {
     mPt = 2000;
     mEta = 2.7;
+    mExpectBLayerHit = 0;
   }
 
 public:
