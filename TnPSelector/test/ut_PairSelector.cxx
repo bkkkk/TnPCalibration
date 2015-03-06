@@ -27,10 +27,13 @@ TEST_F(TestPairSelector, TestGoodPairPassesNumericAccept) {
   EXPECT_EQ(1, selector->accept(0.5, -1, 3.14, 0.05));
 }
 
+TEST_F(TestPairSelector, TestBadPairFailsNumericAccept) {
+  EXPECT_EQ(0, selector->accept(100.0, -1, 3.14, 0.05));
+}
+
 /*
 int accept(const IMuon& tag, const IMuon& muonProbe);
 int accept(const IMuon& tag, const ITrack& probe);
-int accept(float deltaR, float sign, float invMass, float deltaZ0);
 */
 
 int main(int argc, char** argv) {
