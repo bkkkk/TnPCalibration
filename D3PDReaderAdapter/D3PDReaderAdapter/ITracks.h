@@ -4,12 +4,11 @@
 #include <D3PDReaderAdapter/ITrack.h>
 #include <cstddef>
 
-class ITracks
-{
+class ITracks {
 public:
-  ITracks();
-  virtual ~ITracks();
-  
+  virtual ~ITracks() {
+  }
+
   virtual std::size_t n() const = 0;
 
   virtual ITrack& operator[](std::size_t idx) = 0;
