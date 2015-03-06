@@ -48,7 +48,7 @@ int TMCPSelector::accept(const ITrack& track) {
                 track.nSCTHits(), track.nSCTDeadSensors(),
                 track.nPixHoles(), track.nSCTHoles(),
                 track.nTRTHits(), track.nTRTOutliers(),
-                track.eta()));  
+                track.eta()));
 }
 
 
@@ -63,13 +63,12 @@ int TMCPSelector::accept(int expectBLayerHit, int nBLHits,
   int sumHoles = nPixHoles + nSCTHoles;
   int sumTrt = nTRTHits + nTRTOutliers;
 
-  /// These cuts are stupid
-  if(expectBLayerHit != expectBLayerHitCut) return 0;
-  if(nBLHits < nBLHitCut) return 0;
-  if(sumPix < sumPixCut) return 0;
-  if(sumSct < sumSctCut) return 0;
-  if(sumHoles > sumHolesCut) return 0;
-  if(fabs(eta) > 0.1 && fabs(eta) < 1.9) {
+  if (expectBLayerHit != expectBLayerHitCut) return 0;
+  if (nBLHits < nBLHitCut) return 0;
+  if (sumPix < sumPixCut) return 0;
+  if (sumSct < sumSctCut) return 0;
+  if (sumHoles > sumHolesCut) return 0;
+  if (fabs(eta) > 0.1 && fabs(eta) < 1.9) {
     if (sumTrt < sumTrtCut) return 0;
     if (0.9 * sumTrt < nTRTOutliers) return 0;
   } else {
