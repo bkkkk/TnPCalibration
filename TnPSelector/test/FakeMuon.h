@@ -13,6 +13,8 @@ public:
     muon.mId_cov_z0_exPV = 1;
     muon.mId_theta = 0.5;
     muon.mId_qoverp = 0.0001;
+    muon.mEta = 1.3;
+    muon.mPhi = 0.5;
     muon.mIsCombinedMuon = true;
     muon.mMatchchi2 = 6;
     muon.mMatchndof = 6;
