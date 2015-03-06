@@ -13,8 +13,8 @@ public:
 
   virtual void SetUp() {
     selector = new TJPsiPairSelector();
-    selector->deltaRCutMax = 0.1;
-    selector->deltaRCutMin = 1.5;
+    selector->deltaRCutMin = 0.1;
+    selector->deltaRCutMax = 1.5;
     selector->signCut = -1;
     selector->minMassCut = 1.5;
     selector->maxMassCut = 4.2;
