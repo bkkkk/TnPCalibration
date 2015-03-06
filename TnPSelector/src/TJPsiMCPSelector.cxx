@@ -58,10 +58,10 @@ int TMCPSelector::accept(int expectBLayerHit, int nBLHits,
                          int nPixHoles, int nSCTHoles,
                          int nTRTHits, int nTRTOutliers,
                          float eta) {
-  int sumPix = nPixHits + nPixelDeadSensors;
-  int sumSct = nSCTHits + nSCTDeadSensors;
-  int sumHoles = nPixHoles + nSCTHoles;
-  int sumTrt = nTRTHits + nTRTOutliers;
+  auto sumPix = nPixHits + nPixelDeadSensors;
+  auto sumSct = nSCTHits + nSCTDeadSensors;
+  auto sumHoles = nPixHoles + nSCTHoles;
+  auto sumTrt = nTRTHits + nTRTOutliers;
 
   if (expectBLayerHit != expectBLayerHitCut) return 0;
   if (nBLHits < nBLHitCut) return 0;
