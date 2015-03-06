@@ -13,10 +13,10 @@ public:
   explicit TMCPSelector(const std::string& val_name="TMCPSelector");
 
 public:
-  virtual ~TMCPSelector (void);
+  virtual ~TMCPSelector();
 
-  int initialize (void);
-  int finalize (void);
+  int initialize();
+  int finalize();
 
   int accept(const IMuon& muon);
   int accept(const ITrack& track);
@@ -41,7 +41,7 @@ public:
   int sumTrtCut;
 
 #ifdef __CINT__
-  ClassDef(TMCPSelector,1);
+  ClassDef(TMCPSelector, 1);
 #endif
 };
 
