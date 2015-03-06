@@ -13,10 +13,6 @@ TMCPSelector::TMCPSelector(const std::string& name)
 }
 
 
-TMCPSelector::~TMCPSelector() {
-}
-
-
 int TMCPSelector::initialize() {
   return (1);
 }

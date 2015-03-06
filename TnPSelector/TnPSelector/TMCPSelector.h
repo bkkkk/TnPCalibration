@@ -13,7 +13,7 @@ public:
   explicit TMCPSelector(const std::string& val_name="TMCPSelector");
 
 public:
-  virtual ~TMCPSelector();
+  virtual ~TMCPSelector() = default;
 
   int initialize();
   int finalize();
