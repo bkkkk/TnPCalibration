@@ -30,6 +30,7 @@ int TJPsiPairSelector::initialize() {
   if (maxMassCut == std::numeric_limits<float>::max()) return (0);
   if (maxMassCut <= minMassCut) return (0);
   if (deltaZ0Cut == std::numeric_limits<float>::max()) return (0);
+  if (deltaZ0Cut == 0.0) return (0);
   return (1);
 }
 

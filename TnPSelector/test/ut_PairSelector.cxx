@@ -23,6 +23,11 @@ TEST_F(TestPairSelector, TestInitializeFailsForBadInvariantMassRange) {
   EXPECT_EQ(0, selector->initialize());
 }
 
+TEST_F(TestPairSelector, TestInitializeFailsForBadDeltaZCut) {
+  selector->deltaZ0Cut = 0.0;
+  EXPECT_EQ(0, selector->initialize());
+}
+
 TEST_F(TestPairSelector, TestInitializePassForFilledSelector) {
   EXPECT_EQ(1, selector->initialize());
 }
