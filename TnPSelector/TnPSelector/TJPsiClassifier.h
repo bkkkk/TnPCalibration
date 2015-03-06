@@ -53,6 +53,10 @@ public:
     return (isSMT);
   }
 
+  inline std::vector<int> getProbeIndexes() const {
+    return (probesIndexes);
+  }
+
 public:  
   std::pair<int, int> pair;
 
