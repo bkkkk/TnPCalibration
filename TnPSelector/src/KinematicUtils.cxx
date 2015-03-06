@@ -90,6 +90,9 @@ float TNP::GetDeltaZ0(const float first, const float second) {
   return (fabs(first - second));
 }
 
+float TNP::GetDeltaR(const IMuon& first, const IMuon& second) {
+  return (TNP::GetDeltaR(first.eta(), first.phi(), second.eta(), second.phi()));
+}
 
 float TNP::GetDeltaR(const float firstEta, const float firstPhi,
                      const float secondEta, const float secondPhi ) {

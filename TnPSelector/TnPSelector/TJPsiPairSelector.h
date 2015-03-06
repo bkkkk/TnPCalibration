@@ -20,8 +20,6 @@ public:
   bool isInInvariantMassRange(float invariantMass) const;
   bool isInDeltaRRange(float deltaR) const;
 
-  float getDeltaR(const IMuon& first, const IMuon& second);
-
 private:
   float GetDeltaZ0(float first, float second);
   float GetChargeSign(float charge, float qoverp);

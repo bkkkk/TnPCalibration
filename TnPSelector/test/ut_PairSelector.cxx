@@ -48,19 +48,6 @@ TEST_F(TestPairSelector, TestBadPairFailsNumericAccept) {
   EXPECT_EQ(0, selector->accept(100.0, -1, 3.14, 0.05));
 }
 
-TEST_F(TestPairSelector, TestDeltaRCalculationWithPairOfIdenticalTags) {
-  FakeMuon tag = FakeMuon::ConstructGoodTagMuon();
-  EXPECT_EQ(0.0, selector->getDeltaR(tag, tag));
-}
-
-TEST_F(TestPairSelector, TestDeltaRCalculationWithSmallSeparation) {
-  FakeMuon tag = FakeMuon::ConstructGoodTagMuon();
-
-  FakeMuon furtherOut = FakeMuon::ConstructGoodTagMuon();
-  furtherOut.mEta += 0.3;
-  EXPECT_(0.3, selector->getDeltaR(tag, furtherOut));
-}
-
 /*
 int accept(const IMuon& tag, const IMuon& muonProbe);
 int accept(const IMuon& tag, const ITrack& probe);
