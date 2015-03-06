@@ -23,13 +23,13 @@ public:
 	virtual ~TJPsiTagSelector();
 
 public:
-	const bool initialize() const;
+	bool initialize() const;
 	int accept(const IMuon& muon);
-	const int finalize(void) const;
+	int finalize(void) const;
 
 public:
-  inline const int accept(float eta, int combinedMuon, float pt,
-                          float d0, float z0, float d0Sig, float z0Sig) const {
+  inline int accept(float eta, int combinedMuon, float pt,
+                    float d0, float z0, float d0Sig, float z0Sig) const {
     if(!passReconstructionCuts(pt, eta)) return 0;
     if(!passCombinedCut(combinedMuon)) return 0;
     if(!passIPCuts(d0, z0, d0Sig, z0Sig)) return 0;
@@ -38,15 +38,15 @@ public:
   }
 
 
-  inline const bool passReconstructionCuts(float pt, float eta) const {
+  inline bool passReconstructionCuts(float pt, float eta) const {
     return (pt > ptCut && fabs(eta) < etaCut);
   }
 
-  inline const bool passCombinedCut(bool isCombined) const {
+  inline bool passCombinedCut(bool isCombined) const {
     return (isCombined == combinedMuonCut);
   }
 
-  inline const bool passIPCuts(float d0, float z0, float d0Sig, float z0Sig) const {
+  inline bool passIPCuts(float d0, float z0, float d0Sig, float z0Sig) const {
     if(fabs(d0) > d0Cut) return false; 
     if(fabs(z0) > z0Cut) return false;
 

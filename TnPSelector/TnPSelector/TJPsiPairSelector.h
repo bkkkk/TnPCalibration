@@ -5,38 +5,31 @@
 #include <D3PDReaderAdapter/ITrack.h>
 #include <string>
 
-class TJPsiPairSelector
-{
+class TJPsiPairSelector {
 public:
   TJPsiPairSelector(const std::string& val_name="TJPsiPairSelector");
-
-public:
-  virtual ~TJPsiPairSelector(void);
+  virtual ~TJPsiPairSelector();
 
   int initialize(void);
 
-  int accept( const IMuon& tag, const IMuon& muonProbe );
-
-  int accept( const IMuon& tag,
-              const ITrack& probe );
-
-  int accept( const float& deltaR, const float& sign, const float& invMass, 
-              const float& deltaZ0 );
-
-  int finalize(void);
+  int accept(const IMuon& tag, const IMuon& muonProbe);
+  int accept(const IMuon& tag, const ITrack& probe);
+  int accept(float deltaR, float sign, float invMass, float deltaZ0);
+  int finalize();
 
 private:
-  float GetDeltaZ0( const float& first, const float& second );
+  float GetDeltaZ0(float first, float second);
+  float GetChargeSign(float charge, float qoverp);
 
 public:
   std::string name;
 
-  float   deltaRCutMax;
-  float   deltaRCutMin;
-  float   signCut;
-  float   minMassCut;
-  float   maxMassCut;
-  float   deltaZ0Cut;
+  float deltaRCutMax;
+  float deltaRCutMin;
+  float signCut;
+  float minMassCut;
+  float maxMassCut;
+  float deltaZ0Cut;
 
 #ifdef __CINT__
   ClassDef(TJPsiPairSelector, 1);
