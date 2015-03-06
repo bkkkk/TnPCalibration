@@ -19,6 +19,10 @@ TEST_F(TestPairSelector, TestGoodPairPassesNumericInvariantMassCheck) {
   EXPECT_EQ(true, selector->isInInvariantMassRange(3.14));
 }
 
+TEST_F(TestPairSelector, TestGoodPairPassesDeltaRCheck) {
+  EXPECT_EQ(true, selector->isInDeltaRRange(1.0));
+}
+
 /*
 TEST_F(TestPairSelector, TestGoodPairPassesNumericAccept) {
   EXPECT_EQ(1, selector->accept(0.5, -1, 3.14, 0.05));
