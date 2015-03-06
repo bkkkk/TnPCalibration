@@ -52,6 +52,25 @@ int TJPsiClassifier::classify(const IMuons& muons, const ITracks& tracks) {
   classifyTags(muons);
   classifyProbes(tracks);
 
+  pair = classifyPairs(muons, tracks);
+
+  if (smallestDZ0 == 1000.) {
+    return 0;
+  }
+
+  isMuonProbe = muonProbeSelector->accept(tracks[pair.second], muons, muonProbeIdx);
+
+  if (isMuonProbe != 1) {
+    return (1);
+  }
+
+  isSMT = smtSelector->accept(muons[muonProbeIdx]);
+
+  return (1);
+}
+
+std::pair<int, int> TJPsiClassifier::classifyPairs(const IMuons& muons, const ITracks& tracks) {
+
   auto chosenTag = -99999;
   auto chosenProbe = -99999;
 
@@ -72,21 +91,7 @@ int TJPsiClassifier::classify(const IMuons& muons, const ITracks& tracks) {
     }
   }
 
-  if (smallestDZ0 == 1000.) {
-    return 0;
-  }
-
-  pair = std::make_pair(chosenTag, chosenProbe);
-
-  isMuonProbe = muonProbeSelector->accept(tracks[chosenProbe], muons, muonProbeIdx);
-
-  if (isMuonProbe != 1) {
-    return (1);
-  }
-
-  isSMT = smtSelector->accept(muons[muonProbeIdx]);
-
-  return (1);
+  return (std::make_pair(chosenTag, chosenProbe));
 }
 
 void TJPsiClassifier::classifyTags(const IMuons& muons) {

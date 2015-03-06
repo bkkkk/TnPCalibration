@@ -20,6 +20,8 @@ public:
   int initialize();
 
   int classify(const IMuons& muons, const ITracks& tracks);
+  std::pair<int, int> classifyPairs(const IMuons& muons,
+                                    const ITracks& tracks);
 
   void classifyTags(const IMuons& muons);
   bool isGoodMcpTag(const IMuon& muon);
