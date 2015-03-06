@@ -17,6 +17,12 @@ TEST_F(TestPairSelector, TestInitializeFailsForBadlySetupDeltaRCuts) {
   EXPECT_EQ(0, selector->initialize());
 }
 
+TEST_F(TestPairSelector, TestInitializeFailsForBadInvariantMassRange) {
+  selector->minMassCut = 0.4;
+  selector->maxMassCut = 0.1;
+  EXPECT_EQ(0, selector->initialize());
+}
+
 TEST_F(TestPairSelector, TestInitializePassForFilledSelector) {
   EXPECT_EQ(1, selector->initialize());
 }
