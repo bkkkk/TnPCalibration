@@ -9,8 +9,10 @@ class TestPairSelector : public ::testing::Test {
 public:
   TestPairSelector() = default;
 
+  TJPsiPairSelector* selector;
+
   virtual void SetUp() {
-    TJPsiPairSelector* selector = new TJPsiPairSelector();
+    selector = new TJPsiPairSelector();
     selector->deltaRCutMax = 0.1;
     selector->deltaRCutMin = 1.5;
     selector->signCut = -1;
