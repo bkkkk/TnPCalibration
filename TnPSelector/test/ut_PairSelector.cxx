@@ -12,13 +12,6 @@ TEST_F(TestPairSelector, TestInitializeFailsForEmptySelector) {
 }
 
 TEST_F(TestPairSelector, TestInitializePassForFilledSelector) {
-  TJPsiPairSelector* selector = new TJPsiPairSelector();
-  selector->deltaRCutMax = 0.1;
-  selector->deltaRCutMin = 1.5;
-  selector->signCut = -1;
-  selector->minMassCut = 1.5;
-  selector->maxMassCut = 4.2;
-  selector->deltaZ0Cut = 0.1;
   EXPECT_EQ(1, selector->initialize());
 }
 
