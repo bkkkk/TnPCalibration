@@ -10,7 +10,7 @@
 
 class TMCPSelector {
 public:
-  TMCPSelector(const std::string& val_name="TMCPSelector");
+  explicit TMCPSelector(const std::string& val_name="TMCPSelector");
 
 public:
   virtual ~TMCPSelector (void);
