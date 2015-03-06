@@ -7,8 +7,8 @@
 #include "FakeMuon.h"
 
 TEST_F(TestPairSelector, TestInitializeFailsForEmptySelector) {
-  TJPsiPairSelector* selector = new TJPsiPairSelector();
-  EXPECT_EQ(0, selector->initialize());
+  TJPsiPairSelector* emptySelector = new TJPsiPairSelector();
+  EXPECT_EQ(0, emptySelector->initialize());
 }
 
 TEST_F(TestPairSelector, TestInitializePassForFilledSelector) {
