@@ -70,14 +70,17 @@ float TJPsiPairSelector::GetDeltaZ0(float first, float second) {
 }
 
 int TJPsiPairSelector::accept(float deltaR, float sign, float invMass, float deltaZ0) {
-  if(minMassCut > invMass) return 0;
-  if(maxMassCut < invMass) return 0;
+  if(!isInInvariantMassRange(invMass)) return (0);
   if(deltaRCutMax < deltaR) return 0;
   if(deltaRCutMin > deltaR) return 0;
   if(sign != signCut) return 0;
   if(deltaZ0 > deltaZ0Cut) return 0;
 
   return (1);
+}
+
+bool TJPsiPairSelector::isInInvariantMassRange(float invariantMass) const {
+  return (minMassCut < invariantMass && invariantMass < maxMassCut);
 }
 
 int TJPsiPairSelector::finalize() {

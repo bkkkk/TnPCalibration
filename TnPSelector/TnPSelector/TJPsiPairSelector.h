@@ -17,6 +17,8 @@ public:
   int accept(float deltaR, float sign, float invMass, float deltaZ0);
   int finalize();
 
+  bool isInInvariantMassRange(float invariantMass) const;
+
 private:
   float GetDeltaZ0(float first, float second);
   float GetChargeSign(float charge, float qoverp);
