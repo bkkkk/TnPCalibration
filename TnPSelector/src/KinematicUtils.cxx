@@ -18,9 +18,8 @@ TLorentzVector TNP::GetTrackVector (const ITrack& track) {
 
 TLorentzVector TNP::GetTrackVector(const float pt, const float eta, const float phi) {
   const double MuonMass = 105.6583715;
-  
-  TLorentzVector trackVector;
-  trackVector.SetVectM(GetTrack3Vector(pt, eta, phi), MuonMass);
+
+  TLorentzVector trackVector(GetTrack3Vector(pt, eta, phi), MuonMass);
 
   return trackVector;
 }
