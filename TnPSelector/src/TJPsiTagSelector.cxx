@@ -46,14 +46,13 @@ bool TJPsiTagSelector::initialize() const {
 }
 
 int TJPsiTagSelector::accept(const IMuon& muon) {
-  float d0 = muon.id_d0_exPV();
-  float z0 = muon.id_z0_exPV();
-  float d0Sig = TNP::CalculateSignificance(d0, muon.id_cov_d0_exPV());
-  float z0Sig = TNP::CalculateSignificance(z0, muon.id_cov_z0_exPV());
-  
-  float theta = muon.id_theta();
-  float eta = TNP::GetEta(theta);
-  float pt = TNP::GetPt(muon.id_qoverp(), theta);
+  auto d0 = muon.id_d0_exPV();
+  auto z0 = muon.id_z0_exPV();
+  auto d0Sig = TNP::CalculateSignificance(d0, muon.id_cov_d0_exPV());
+  auto z0Sig = TNP::CalculateSignificance(z0, muon.id_cov_z0_exPV());
+  auto theta = muon.id_theta();
+  auto eta = TNP::GetEta(theta);
+  auto pt = TNP::GetPt(muon.id_qoverp(), theta);
 
   return (accept(eta, muon.isCombinedMuon(), pt, d0, z0, d0Sig, z0Sig));
 }
