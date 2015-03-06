@@ -48,6 +48,29 @@ TEST_F(TestClassifier, ClassifySingleMuonThatIsATag) {
   EXPECT_EQ(3ul, classifier->getTagIndexes().size());
 }
 
+// Initial attempt to get function into harness
+TEST_F(TestClassifier, ClassifyPairsInitialTesting) {
+  auto muons = FakeMuons {
+    FakeMuon::ConstructGoodTagMuon(),
+    FakeMuon::ConstructGoodTagMuon(),
+    FakeMuon::ConstructGoodTagMuon()
+  };
+
+  FakeTrack probeTrack;
+  probeTrack.constructGoodProbe();
+
+  FakeTrack badProbe;
+  badProbe.constructBadProbe();
+
+  auto tracks = FakeTracks {
+    probeTrack,
+    probeTrack,
+    badProbe
+  };
+
+  classifier->classify(muons, tracks);
+}
+
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return (RUN_ALL_TESTS());
@@ -55,8 +78,6 @@ int main(int argc, char** argv) {
 
 /*
 int classify(const IMuons& muons, const ITracks& tracks);
-void classifyTags(const IMuons& muons);
-void classifyProbes(const ITracks& tracks);
 void choosePair(const IMuons& muons, const ITracks& tracks);
 void setProbePassedLevel();
 
