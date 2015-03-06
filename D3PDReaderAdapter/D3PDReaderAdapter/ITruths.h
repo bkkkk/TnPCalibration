@@ -13,29 +13,14 @@ public:
   virtual const std::vector<std::size_t> parent_index() const = 0;
   virtual std::vector<std::size_t> parent_index() = 0;
 
-  virtual const int pdgId() const = 0;
-  virtual int pdgId() = 0;
-
-  virtual const int eta() const = 0;
-  virtual int eta() = 0;
-
-  virtual const int phi() const = 0;
-  virtual int phi() = 0;
-
-  virtual const int pt() const = 0;
-  virtual int pt() = 0;
-
-  virtual const std::vector<int> children() const = 0;
-  virtual std::vector<int> children() = 0;
-
-  virtual const std::vector<int> parents() const = 0;
-  virtual std::vector<int> parents() = 0;
-
-  virtual const int GetIndex() const = 0;
-  virtual int GetIndex() = 0;
-
-  virtual const int status() const = 0;
-  virtual int status() = 0;
+  virtual int pdgId() const = 0;
+  virtual int eta() const = 0;
+  virtual int phi() const = 0;
+  virtual int pt() const = 0;
+  virtual std::vector<int> children() const = 0;
+  virtual std::vector<int> parents() const = 0;
+  virtual int GetIndex() const = 0;
+  virtual int status() const = 0;
 };
 
 class ITruths {
