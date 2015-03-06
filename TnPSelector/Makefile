@@ -62,6 +62,9 @@ print-dep:
 	@echo 'Inlcudes files: '$(INCLUDES)
 	@echo 'Object targets: '$(OBJECTS)
 
+test:
+	sh ./run_tests.sh
+
 .PHONY: clean distclean test print-dep
 
 distclean: clean
