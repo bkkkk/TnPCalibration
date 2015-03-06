@@ -91,11 +91,14 @@ int TJPsiClassifier::classify(const IMuons& muons, const ITracks& tracks) {
 
 void TJPsiClassifier::classifyTags(const IMuons& muons) {
   for (auto muon = 0ul; muon != muons.n(); muon++) {
-    if (tagSelector->accept(muons[muon]) &&
-        mcpSelector->accept(muons[muon])) {
+    if (isGoodMcpTag(muons[muon])) {
       tagsIndexes.push_back(muon);
     }
   }
+}
+
+bool TJPsiClassifier::isGoodMcpTag(const IMuon& muon) {
+  return (tagSelector->accept(muon) && mcpSelector->accept(muon));
 }
 
 void TJPsiClassifier::classifyProbes(const ITracks& tracks) {
