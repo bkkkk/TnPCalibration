@@ -24,6 +24,7 @@ TJPsiPairSelector::~TJPsiPairSelector() { }
 int TJPsiPairSelector::initialize() {
   if (deltaRCutMax == std::numeric_limits<float>::max()) return (0);
   if (deltaRCutMin == std::numeric_limits<float>::min()) return (0);
+  if (deltaRCutMax <= deltaRCutMin) return (0);
   if (signCut == std::numeric_limits<float>::max()) return (0);
   if (minMassCut == std::numeric_limits<float>::min()) return (0);
   if (maxMassCut == std::numeric_limits<float>::max()) return (0);

@@ -11,6 +11,12 @@ TEST_F(TestPairSelector, TestInitializeFailsForEmptySelector) {
   EXPECT_EQ(0, emptySelector->initialize());
 }
 
+TEST_F(TestPairSelector, TestInitializeFailsForBadlySetupDeltaRCuts) {
+  selector->deltaRCutMax = 0.1;
+  selector->deltaRCutMin = 1.5;
+  EXPECT_EQ(0, selector->initialize());
+}
+
 TEST_F(TestPairSelector, TestInitializePassForFilledSelector) {
   EXPECT_EQ(1, selector->initialize());
 }
