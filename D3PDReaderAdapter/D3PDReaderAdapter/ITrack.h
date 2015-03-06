@@ -3,7 +3,7 @@
 
 class ITrack {
 public:  
-  virtual ~ITrack() { }
+  virtual ~ITrack() = default;
   
 public:
   virtual double pt() const = 0;

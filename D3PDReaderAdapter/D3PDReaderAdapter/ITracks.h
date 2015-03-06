@@ -6,8 +6,7 @@
 
 class ITracks {
 public:
-  virtual ~ITracks() {
-  }
+  virtual ~ITracks() = default;
 
   virtual std::size_t n() const = 0;
 

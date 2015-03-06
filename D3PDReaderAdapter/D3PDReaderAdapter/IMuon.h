@@ -3,7 +3,7 @@
 
 class IMuon {
 public:
-  virtual ~IMuon() {}
+  virtual ~IMuon() = default;
 
 public:
   virtual double id_d0_exPV() const = 0;

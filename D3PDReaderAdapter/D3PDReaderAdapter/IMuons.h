@@ -6,9 +6,8 @@
 
 class IMuons {
 public:
-  virtual ~IMuons();
+  virtual ~IMuons() = default;
 
-  virtual std::size_t n() = 0;  
   virtual std::size_t n() const = 0;
 
   virtual IMuon& operator[](std::size_t idx) = 0;
