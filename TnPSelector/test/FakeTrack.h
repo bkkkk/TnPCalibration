@@ -18,21 +18,21 @@ public:
   }
 
 public:
-  const double pt() const { return (mPt); }
-  const double eta() const { return (mEta); }
-  const double phi_wrtPV() const { return (mPhi_wrtPV); }
-  const double z0_wrtPV() const { return (mZ0_wrtPV); }
-  const double expectBLayerHit() const { return (mExpectBLayerHit); }
-  const double nBLHits() const { return (mNBLHits); }
-  const double nPixHits() const { return (mNPixHits); }
-  const double nPixelDeadSensors() const { return (mNPixelDeadSensors); }
-  const double nSCTHits() const { return (mNSCTHits); }
-  const double nSCTDeadSensors() const { return (mNSCTDeadSensors); }
-  const double nPixHoles() const { return (mNPixHoles); }
-  const double nSCTHoles() const { return (mNSCTHoles); }
-  const double nTRTHits() const { return (mNTRTHits); }
-  const double nTRTOutliers() const { return (mNTRTOutliers); }
-  const double qoverp_wrtPV() const { return (mQoverp_wrtPV); }
+  double pt() const { return (mPt); }
+  double eta() const { return (mEta); }
+  double phi_wrtPV() const { return (mPhi_wrtPV); }
+  double z0_wrtPV() const { return (mZ0_wrtPV); }
+  double expectBLayerHit() const { return (mExpectBLayerHit); }
+  double nBLHits() const { return (mNBLHits); }
+  double nPixHits() const { return (mNPixHits); }
+  double nPixelDeadSensors() const { return (mNPixelDeadSensors); }
+  double nSCTHits() const { return (mNSCTHits); }
+  double nSCTDeadSensors() const { return (mNSCTDeadSensors); }
+  double nPixHoles() const { return (mNPixHoles); }
+  double nSCTHoles() const { return (mNSCTHoles); }
+  double nTRTHits() const { return (mNTRTHits); }
+  double nTRTOutliers() const { return (mNTRTOutliers); }
+  double qoverp_wrtPV() const { return (mQoverp_wrtPV); }
 
 private:
   float mPt;

@@ -71,39 +71,39 @@ public:
   
   virtual ~FakeMuon() { }
 
-  inline const double id_d0_exPV() const { return mId_d0_exPV; }
-  inline const double id_z0_exPV() const { return mId_z0_exPV; }
-  inline const double id_cov_d0_exPV() const { return mId_cov_d0_exPV; }
-  inline const double id_cov_z0_exPV() const { return mId_cov_z0_exPV; }
-  inline const double id_theta() const { return mId_theta; }
-  inline const double id_qoverp() const { return mId_qoverp; }
-  inline const bool isCombinedMuon() const { return mIsCombinedMuon; }
-  inline const double phi() const { return mPhi; }
-  inline const double E() const { return mE; }
-  inline const double eta() const { return mEta; }
-  inline const double pt() const { return mPt; }
-  inline const double charge() const { return mCharge; }
-  inline const double etcone20() const { return mEtcone20; }
-  inline const double etcone30() const { return mEtcone30; }
-  inline const double etcone40() const { return mEtcone40; }
-  inline const double nucone20() const { return mNucone20; }
-  inline const double nucone30() const { return mNucone30; }
-  inline const double nucone40() const { return mNucone40; }
-  inline const double ptcone20() const { return mPtcone20; }
-  inline const double ptcone30() const { return mPtcone30; }
-  inline const double ptcone40() const { return mPtcone40; }
-  inline const double expectBLayerHit() const { return mExpectBLayerHit; }
-  inline const double nBLHits() const { return mNBLHits; }
-  inline const double nPixHits() const { return mNPixHits; }
-  inline const double nPixelDeadSensors() const { return mNPixelDeadSensors; }
-  inline const double nSCTHits() const { return mNSCTHits; }
-  inline const double nSCTDeadSensors() const { return mNSCTDeadSensors; }
-  inline const double nPixHoles() const { return mNPixHoles; }
-  inline const double nSCTHoles() const { return mNSCTHoles; }
-  inline const double nTRTHits() const { return mNTRTHits; }
-  inline const double nTRTOutliers() const { return mNTRTOutliers; }
-  inline const double matchchi2() const { return mMatchchi2; }
-  inline const double matchndof() const { return mMatchndof; }
+  inline double id_d0_exPV() const { return mId_d0_exPV; }
+  inline double id_z0_exPV() const { return mId_z0_exPV; }
+  inline double id_cov_d0_exPV() const { return mId_cov_d0_exPV; }
+  inline double id_cov_z0_exPV() const { return mId_cov_z0_exPV; }
+  inline double id_theta() const { return mId_theta; }
+  inline double id_qoverp() const { return mId_qoverp; }
+  inline bool isCombinedMuon() const { return mIsCombinedMuon; }
+  inline double phi() const { return mPhi; }
+  inline double E() const { return mE; }
+  inline double eta() const { return mEta; }
+  inline double pt() const { return mPt; }
+  inline double charge() const { return mCharge; }
+  inline double etcone20() const { return mEtcone20; }
+  inline double etcone30() const { return mEtcone30; }
+  inline double etcone40() const { return mEtcone40; }
+  inline double nucone20() const { return mNucone20; }
+  inline double nucone30() const { return mNucone30; }
+  inline double nucone40() const { return mNucone40; }
+  inline double ptcone20() const { return mPtcone20; }
+  inline double ptcone30() const { return mPtcone30; }
+  inline double ptcone40() const { return mPtcone40; }
+  inline double expectBLayerHit() const { return mExpectBLayerHit; }
+  inline double nBLHits() const { return mNBLHits; }
+  inline double nPixHits() const { return mNPixHits; }
+  inline double nPixelDeadSensors() const { return mNPixelDeadSensors; }
+  inline double nSCTHits() const { return mNSCTHits; }
+  inline double nSCTDeadSensors() const { return mNSCTDeadSensors; }
+  inline double nPixHoles() const { return mNPixHoles; }
+  inline double nSCTHoles() const { return mNSCTHoles; }
+  inline double nTRTHits() const { return mNTRTHits; }
+  inline double nTRTOutliers() const { return mNTRTOutliers; }
+  inline double matchchi2() const { return mMatchchi2; }
+  inline double matchndof() const { return mMatchndof; }
   
 public:
   double mId_d0_exPV;
