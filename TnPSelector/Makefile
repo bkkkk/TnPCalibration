@@ -69,10 +69,6 @@ print-dep:
 test:
 	sh ./run_tests.sh
 
-fulltest:
-	export VALGRIND="valgrind --track-origins=yes"
-	sh ./run_tests.sh
-
 .PHONY: clean distclean test print-dep
 
 distclean: clean
