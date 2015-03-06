@@ -6,28 +6,36 @@
 
 class FakeTracks : public ITracks {
 public:
+  FakeTracks() = default;
+
+
+  FakeTracks(std::initializer_list<FakeTrack> il)
+   : tracks{il} { }
+
+
   ~FakeTracks() {
-    Tracks.clear();
+    tracks.clear();
   }
 
+
   std::size_t n() const {
-    return (Tracks.size());
+    return (tracks.size());
   }
 
   ITrack& operator[](std::size_t idx) {
-    return (Tracks[idx]);
+    return (tracks[idx]);
   }
 
   const ITrack& operator[](std::size_t idx) const {
-    return (Tracks[idx]);
+    return (tracks[idx]);
   }
 
   void push_back(const FakeTrack& Track) {
-    Tracks.push_back(Track);
+    tracks.push_back(Track);
   }
 
 private:
-  std::vector<FakeTrack> Tracks;
+  std::vector<FakeTrack> tracks;
 };
 
 #endif
