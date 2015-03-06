@@ -6,6 +6,7 @@
 #include <TLorentzVector.h>
 
 #include <limits>
+#include <string>
 
 
 TJPsiPairSelector::TJPsiPairSelector(const std::string& name)
