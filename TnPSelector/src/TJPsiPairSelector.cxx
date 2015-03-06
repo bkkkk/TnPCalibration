@@ -42,13 +42,23 @@ int TJPsiPairSelector::accept(const IMuon& tag, const IMuon& muonProbe) {
                                                    muonProbe.eta(),
                                                    muonProbe.phi(),
                                                    muonProbe.E());
-
-  float deltaR = tagVec.DeltaR(muonProbeVec);
+  float deltaR = GetDeltaR(tag, muonProbe);
   float sign = tag.charge() * muonProbe.charge();
   float invMass = (tagVec + muonProbeVec).M();
   float deltaZ0 = GetDeltaZ0(muonProbe.id_z0_exPV(), tag.id_z0_exPV());
 
   return (accept(deltaR, sign, invMass, deltaZ0));
+}
+
+float TJPsiPairSelector::getDeltaR(const IMuon& first, const IMuon& second) {
+  TLorentzVector firstVector = TNP::GetMuonVector(first.pt(), first.eta(),
+                                             first.phi(), first.E());
+
+  TLorentzVector secondVector = TNP::GetMuonVector(second.pt(),
+                                                   second.eta(),
+                                                   second.phi(),
+                                                   second.E());
+  return (firstVector.DeltaR(secondVector));
 }
 
 int TJPsiPairSelector::accept(const IMuon& tag, const ITrack& probe) {
