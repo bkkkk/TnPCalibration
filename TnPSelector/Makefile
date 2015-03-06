@@ -2,11 +2,11 @@ BUILD ?= debug
 
 TARGET := TnPSelector
 
+RM += -r
+
 MKDIR_P = mkdir -p
 
 CXXFLAGS += -Wall -Wextra -Wstring-plus-int -pedantic -Werror -Wunreachable-code -std=c++11
-CXXFLAGS += $(CXXFLAGS_$(BUILD))
-CXXFLAGS_debug = -g
 CXXFLAGS += -I.
 CXXFLAGS += -I../JacobUtils
 CXXFLAGS += -I../D3PDReaderAdapter
@@ -69,11 +69,14 @@ print-dep:
 test:
 	sh ./run_tests.sh
 
+test-classifier:
+	test-bin/ut_Classifier
+
 .PHONY: clean distclean test print-dep
 
 distclean: clean
 
 clean:
-	$(RM) ./$(OBJECT_DIR)/*.o
-	$(RM) ./$(TEST_BIN_DIR)/*
-	$(RM) ./$(LIBRARY_DIR)/*
+	$(RM) ./$(OBJECT_DIR)
+	$(RM) ./$(TEST_BIN_DIR)
+	$(RM) ./$(LIBRARY_DIR)
