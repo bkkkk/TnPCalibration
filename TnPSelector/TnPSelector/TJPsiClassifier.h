@@ -1,13 +1,15 @@
 #ifndef TJPSI_CLASSIFIER_H_
 #define TJPSI_CLASSIFIER_H_ 1
 
-/// Selectors
-#include <TnPSelector/TMCPSelector.h>
-#include <TnPSelector/TJPsiPairSelector.h>
-#include <TnPSelector/TJPsiProbeSelector.h>
-#include <TnPSelector/TJPsiTagSelector.h>
-#include <TnPSelector/TJPsiMuonProbeSelector.h>
-#include <TnPSelector/TJPsiSMTSelector.h>
+#include <vector>
+#include <utility>
+
+#include "TnPSelector/TMCPSelector.h"
+#include "TnPSelector/TJPsiPairSelector.h"
+#include "TnPSelector/TJPsiProbeSelector.h"
+#include "TnPSelector/TJPsiTagSelector.h"
+#include "TnPSelector/TJPsiMuonProbeSelector.h"
+#include "TnPSelector/TJPsiSMTSelector.h"
 
 class TJPsiClassifier {
 public:
@@ -25,7 +27,7 @@ public:
 
   int clear();
 
-  inline int GetSelectedMuonProbe() { return (muonProbeIdx); } 
+  inline int GetSelectedMuonProbe() { return (muonProbeIdx); }
 
   inline float GetDZ0 () { return (smallestDZ0); }
 
@@ -33,23 +35,23 @@ public:
     return(pair);
   }
 
-  inline int GetSelectedProbe () {
+  inline int GetSelectedProbe() {
     return (pair.second);
   }
 
-  inline int GetMatchedMuonProbe () {
+  inline int GetMatchedMuonProbe() {
     return (muonProbeIdx);
   }
 
-  inline int GetSelectedTag () {
+  inline int GetSelectedTag() {
     return (pair.first);
   }
 
-  inline int IsPairMuonProbe () {
+  inline int IsPairMuonProbe() {
     return (isMuonProbe);
   }
 
-  inline int IsPairSMT () {
+  inline int IsPairSMT() {
     return (isSMT);
   }
 
@@ -57,12 +59,16 @@ public:
     return (probesIndexes);
   }
 
+  inline std::vector<int> getTagIndexes() const {
+    return (tagsIndexes);
+  }
+
 public:  
   std::pair<int, int> pair;
 
   int isMuonProbe;
   int isSMT;
-  
+
   int muonProbeIdx;
 
 private:
