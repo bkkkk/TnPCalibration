@@ -23,6 +23,7 @@ public:
   void classifyTags(const IMuons& muons);
   bool isGoodMcpTag(const IMuon& muon);
   void classifyProbes(const ITracks& tracks);
+  bool isGoodMcpProbe(const ITrack& track);
   void choosePair(const IMuons& muons, const ITracks& tracks);
   void setProbePassedLevel();
 

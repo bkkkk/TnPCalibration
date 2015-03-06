@@ -103,11 +103,14 @@ bool TJPsiClassifier::isGoodMcpTag(const IMuon& muon) {
 
 void TJPsiClassifier::classifyProbes(const ITracks& tracks) {
   for (auto track = 0ul; track != tracks.n(); track++) {
-    if (probeSelector->accept(tracks[track]) == 1 &&
-        mcpSelector->accept(tracks[track]) == 1) {
+    if (isGoodMcpProbe(tracks[track])) {
       probesIndexes.push_back(track);
     }
   }
+}
+
+bool TJPsiClassifier::isGoodMcpProbe(const ITrack& track) {
+  return (probeSelector->accept(track) && mcpSelector->accept(track));
 }
 
 int TJPsiClassifier::clear() {
