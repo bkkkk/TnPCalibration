@@ -1,72 +1,55 @@
-CC      		  = clang -O2
-ERROR_LEVEL   = -pedantic-errors
-DEBUG_LEVEL   = -lprofiler
-COMPILER_STD  = -std=c++11
-EXTRA_CCFLAGS = -Wall
+MKDIR_P = mkdir -p
 
-CINCLUDES = -I. \
-						-I../JacobUtils/ \
-						-I../D3PDReaderAdapter/ \
-						-I/usr/local/Cellar/root/5.34.25/include/root/ \
-						-I/usr/local/gmock/include/
+CXXFLAGS += -Wall -pedantic-errors -std=c++11
+CXXFLAGS += -I.
+CXXFLAGS += -I../JacobUtils
+CXXFLAGS += -I../D3PDReaderAdapter
+CXXFLAGS += -I/usr/local/Cellar/root6/6.02.05/include/root
+CXXFLAGS += -I/usr/local/gmock/include
 
-CFLAGS  = $(EXTRA_CCFLAGS) \
-				  $(ERROR_LEVEL) \
-				  $(COMPILER_STD) \
-				  $(CINCLUDES) \
+LDFLAGS += -L/usr/local/gmock/build/
+LDFLAGS += -L/usr/local/lib/
+LDFLAGS += -L/usr/local/Cellar/root6/6.02.05/lib/root
 
-LDINCLUDES = -I. \
-						 -I../D3PDReaderAdapter/ \
-						 -I../JacobUtils/ \
-						 -I/usr/local/gmock/gtest/include/ \
-						 -I/usr/local/Cellar/root/5.34.25/include/root/ \
+LDLIBS += -lc++
+LDLIBS += -lCore -lCint -lRIO -lNet -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lMathCore -lThread -lpthread -lmock
 
-LDLIBS     = -L/usr/local/gmock/build/ -lmock \
-				     -L/usr/local/lib/ \
-				     -L/usr/local/Cellar/root/5.34.25/lib/root -lCore -lCint -lRIO -lNet -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lMathCore -lThread -lpthread \
-				     -lc++
+INCLUDE_DIR := TnPFitter
+OBJECT_DIR := obj
+SOURCE_DIR  = Root
+LIBRARY_DIR := lib
 
-LINKER  = clang -o
-LDFLAGS = $(EXTRA_CCFLAGS) \
-				  $(DEBUG_LEVEL) \
-				  $(COMPILER_STD) \
-				  $(LDINCLUDES) \
-				  $(LDLIBS)
+TEST_DIR  = test
+TEST_BIN  = test-bin
 
-ARCHIVER = ar
-ARFLAGS  = -cr
+SOURCES := $(wildcard $(SOURCE_DIR)/*.cxx)
+INCLUDES := $(SOURCES:$(SOURCE_DIR)/%.cxx=$(INCLUDE_DIR)/%.hpp)
+TEST_SOURCES := $(wildcard $(TEST_DIR)/*.cxx)
+TEST_BINS := $(TEST_SOURCES:$(TEST_DIR)/%.cxx=$(TEST_BIN)/%)
+OBJECTS := $(SOURCES:$(SOURCE_DIR)/%.cxx=$(OBJECT_DIR)/%.o)
+LIBRARY := $(LIBRARY_DIR)/libTnPFitter.a
 
-INCDIR  = TnPFitter
-OBJDIR  = obj
-SRCDIR  = Root
-LIBDIR  = lib
+all: directories $(LIBRARY) $(TEST_BINS)
 
-TSTCXX  = test
-TSTBIN  = test-bin
+directories:
+	$(MKDIR_P) "obj"
+	$(MKDIR_P) lib
+	$(MKDIR_P) test-bin
 
-SOURCES  := $(wildcard $(SRCDIR)/*.cxx)
-TSTFILES := $(wildcard $(TSTCXX)/*.cxx)
-TSTBINS  := $(TSTFILES:$(TSTCXX)/%.cxx=$(TSTBIN)/%)
-OBJECTS  := $(SOURCES:$(SRCDIR)/%.cxx=$(OBJDIR)/%.o)
-INCLUDES := $(SOURCES:$(SRCDIR)/%.cxx=$(INCDIR)/%.hpp)
-LIBRARY  := $(LIBDIR)/libTnPFitter.a
-
-all: $(OBJECTS) $(LIBRARY) $(TSTBINS)
-
-$(TSTBINS): $(TSTBIN)/% : $(TSTCXX)/%.cxx $(OBJECTS)
-	@$(LINKER) $@ $^ $(LDFLAGS)
+$(TEST_BINS): $(TEST_SOURCES) $(OBJECTS)
+	@$(LINK.cc) $@ $^
 	@echo "Linking completed!"
 
-$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cxx
-	@$(CC) $(CFLAGS) -c $< -o $@
+$(OBJECTS): $(SOURCES)
+	$(COMPILE.cc) $< -o $@
 	@echo "Compiled "$<" successfully!"
 
 $(LIBRARY): $(OBJECTS)
-	$(ARCHIVER) $(ARFLAGS) $(LIBRARY) $(OBJECTS)
+	$(AR) $(ARFLAGS) $(LIBRARY) $(OBJECTS)
 
 print-dep:
-	@echo 'Unit tests: '$(TSTFILES)
-	@echo 'Unit tests bins: '$(TSTBINS)
+	@echo 'Unit tests: '$(TEST_SOURCES)
+	@echo 'Unit tests bins: '$(TEST_BINS)
 	@echo 'Source files: '$(SOURCES)
 	@echo 'Inlcudes files: '$(INCLUDES)
 	@echo 'Object targets: '$(OBJECTS)
@@ -74,14 +57,16 @@ print-dep:
 test: test-fitconfig test-singlegaus
 
 test-fitconfig:
-	$(TSTBIN)/ut_FitConfig
+	$(TEST_BIN)/ut_FitConfig
 
 test-singlegaus:
-	$(TSTBIN)/ut_SingleGausFit
+	$(TEST_BIN)/ut_SingleGausFit
 
-.PHONY: clean
+.PHONY: clean distclean test
+
+distclean: clean
 
 clean:
-	-rm -f ./$(OBJDIR)/*.o
-	-rm -f ./$(TSTBIN)/*
-	-rm -f ./$(LIBDIR)/*
+	$(RM) ./$(OBJECT_DIR)/*.o
+	$(RM) ./$(TEST_BIN)/*
+	$(RM) ./$(LIBRARY_DIR)/*
