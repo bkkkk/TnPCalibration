@@ -8,12 +8,14 @@
 namespace TNP {
   TVector3 GetTrack3Vector(const ITrack& track);
   TVector3 GetTrack3Vector(const float pt, const float eta, const float phi);
-  
+
   TLorentzVector GetTrackVector(const ITrack& track);
-  TLorentzVector GetTrackVector(const float pt, const float eta, const float phi);
+  TLorentzVector GetTrackVector(const float pt, const float eta,
+                                const float phi);
 
   TLorentzVector GetMuonVector(const IMuon& muon);
-  TLorentzVector GetMuonVector(const float pt, const float eta, const float phi, const float E);
+  TLorentzVector GetMuonVector(const float pt, const float eta, const float phi,
+                               const float E);
 
   TVector3 GetMuon3Vector(const IMuon& muon);
   TVector3 GetMuon3Vector(const float pt, const float eta, const float phi);
@@ -32,7 +34,7 @@ namespace TNP {
   float GetDeltaR(const IMuon& first, const IMuon& second);
   float GetDeltaR(const IMuon& muon, const ITrack& track);
   float GetDeltaR(const float firstEta, const float firstPhi,
-                  const float secondEta, const float secondPhi );
+                  const float secondEta, const float secondPhi);
 
   int GetChargeSign(int aCharge, int anotherCharge);
 
