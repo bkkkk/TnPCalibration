@@ -19,8 +19,6 @@ TJPsiPairSelector::TJPsiPairSelector(const std::string& name)
    deltaZ0Cut(std::numeric_limits<float>::max()) {
 }
 
-TJPsiPairSelector::~TJPsiPairSelector() { }
-
 int TJPsiPairSelector::initialize() {
   if (deltaRCutMax == std::numeric_limits<float>::max()) return (0);
   if (deltaRCutMin == std::numeric_limits<float>::min()) return (0);
