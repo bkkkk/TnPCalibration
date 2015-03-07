@@ -8,26 +8,33 @@
 #include <limits>
 #include <string>
 
-
 TJPsiPairSelector::TJPsiPairSelector()
- : deltaRCutMax(std::numeric_limits<float>::max()),
-   deltaRCutMin(std::numeric_limits<float>::min()),
-   signCut(std::numeric_limits<float>::max()),
-   minMassCut(std::numeric_limits<float>::min()),
-   maxMassCut(std::numeric_limits<float>::max()),
-   deltaZ0Cut(std::numeric_limits<float>::max()) {
-}
+    : deltaRCutMax(std::numeric_limits<float>::max()),
+      deltaRCutMin(std::numeric_limits<float>::min()),
+      signCut(std::numeric_limits<float>::max()),
+      minMassCut(std::numeric_limits<float>::min()),
+      maxMassCut(std::numeric_limits<float>::max()),
+      deltaZ0Cut(std::numeric_limits<float>::max()) {}
 
 int TJPsiPairSelector::initialize() {
-  if (deltaRCutMax == std::numeric_limits<float>::max()) return (0);
-  if (deltaRCutMin == std::numeric_limits<float>::min()) return (0);
-  if (deltaRCutMax <= deltaRCutMin) return (0);
-  if (signCut == std::numeric_limits<float>::max()) return (0);
-  if (minMassCut == std::numeric_limits<float>::min()) return (0);
-  if (maxMassCut == std::numeric_limits<float>::max()) return (0);
-  if (maxMassCut <= minMassCut) return (0);
-  if (deltaZ0Cut == std::numeric_limits<float>::max()) return (0);
-  if (deltaZ0Cut == 0.0) return (0);
+  if (deltaRCutMax == std::numeric_limits<float>::max())
+    return (0);
+  if (deltaRCutMin == std::numeric_limits<float>::min())
+    return (0);
+  if (deltaRCutMax <= deltaRCutMin)
+    return (0);
+  if (signCut == std::numeric_limits<float>::max())
+    return (0);
+  if (minMassCut == std::numeric_limits<float>::min())
+    return (0);
+  if (maxMassCut == std::numeric_limits<float>::max())
+    return (0);
+  if (maxMassCut <= minMassCut)
+    return (0);
+  if (deltaZ0Cut == std::numeric_limits<float>::max())
+    return (0);
+  if (deltaZ0Cut == 0.0)
+    return (0);
   return (1);
 }
 
@@ -51,10 +58,14 @@ int TJPsiPairSelector::accept(const IMuon& tag, const ITrack& probe) {
 
 int TJPsiPairSelector::accept(float deltaR, float sign, float invMass,
                               float deltaZ0) {
-  if (!isInInvariantMassRange(invMass)) return (0);
-  if (!isInDeltaRRange(deltaR)) return (0);
-  if (sign != signCut) return (0);
-  if (deltaZ0 > deltaZ0Cut) return (0);
+  if (!isInInvariantMassRange(invMass))
+    return (0);
+  if (!isInDeltaRRange(deltaR))
+    return (0);
+  if (sign != signCut)
+    return (0);
+  if (deltaZ0 > deltaZ0Cut)
+    return (0);
 
   return (1);
 }
@@ -67,8 +78,4 @@ bool TJPsiPairSelector::isInDeltaRRange(float deltaR) const {
   return (deltaRCutMin < deltaR && deltaR < deltaRCutMax);
 }
 
-int TJPsiPairSelector::finalize() {
-  return (1);
-}
-
-
+int TJPsiPairSelector::finalize() { return (1); }
