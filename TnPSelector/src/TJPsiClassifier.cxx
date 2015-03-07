@@ -1,26 +1,34 @@
-#include <TnPSelector/TJPsiClassifier.h>
-#include <TnPSelector/KinematicUtils.h>
+#include <utility>
+
+#include "TnPSelector/TJPsiClassifier.h"
+#include "TnPSelector/KinematicUtils.h"
 
 TJPsiClassifier::TJPsiClassifier()
- : pair(std::make_pair(-9999, -9999)),
-   isMuonProbe(0),
-   isSMT(0),
-   muonProbeIdx(10000),
-   smallestDZ0(1000),
-   mcpSelector(nullptr),
-   tagSelector(nullptr),
-   pairSelector(nullptr),
-   probeSelector(nullptr),
-   muonProbeSelector(nullptr),
-   smtSelector(nullptr) { }
+    : pair(std::make_pair(-9999, -9999)),
+      isMuonProbe(0),
+      isSMT(0),
+      muonProbeIdx(10000),
+      smallestDZ0(1000),
+      mcpSelector(nullptr),
+      tagSelector(nullptr),
+      pairSelector(nullptr),
+      probeSelector(nullptr),
+      muonProbeSelector(nullptr),
+      smtSelector(nullptr) {}
 
 TJPsiClassifier::~TJPsiClassifier() {
-  if (mcpSelector) delete mcpSelector;
-  if (tagSelector) delete tagSelector;
-  if (pairSelector) delete pairSelector;
-  if (probeSelector) delete probeSelector;
-  if (muonProbeSelector) delete muonProbeSelector;
-  if (smtSelector) delete smtSelector;
+  if (mcpSelector)
+    delete mcpSelector;
+  if (tagSelector)
+    delete tagSelector;
+  if (pairSelector)
+    delete pairSelector;
+  if (probeSelector)
+    delete probeSelector;
+  if (muonProbeSelector)
+    delete muonProbeSelector;
+  if (smtSelector)
+    delete smtSelector;
 }
 
 int TJPsiClassifier::initialize() {
@@ -58,7 +66,8 @@ int TJPsiClassifier::classify(const IMuons& muons, const ITracks& tracks) {
     return 0;
   }
 
-  isMuonProbe = muonProbeSelector->accept(tracks[pair.second], muons, muonProbeIdx);
+  isMuonProbe =
+      muonProbeSelector->accept(tracks[pair.second], muons, muonProbeIdx);
 
   if (isMuonProbe != 1) {
     return (1);
@@ -69,14 +78,17 @@ int TJPsiClassifier::classify(const IMuons& muons, const ITracks& tracks) {
   return (1);
 }
 
-std::pair<int, int> TJPsiClassifier::classifyPairs(const IMuons& muons, const ITracks& tracks) {
-
+std::pair<int, int> TJPsiClassifier::classifyPairs(const IMuons& muons,
+                                                   const ITracks& tracks) {
   auto chosenTag = -99999;
   auto chosenProbe = -99999;
 
-  for(auto probeIdx = probesIndexes.begin(); probeIdx != probesIndexes.end(); probeIdx++) {
-    for(auto tagIdx = tagsIndexes.begin(); tagIdx != tagsIndexes.end(); tagIdx++) {
-      if (!pairSelector->accept(muons[*tagIdx], tracks[*probeIdx])) continue;
+  for (auto probeIdx = probesIndexes.begin(); probeIdx != probesIndexes.end();
+       probeIdx++) {
+    for (auto tagIdx = tagsIndexes.begin(); tagIdx != tagsIndexes.end();
+         tagIdx++) {
+      if (!pairSelector->accept(muons[*tagIdx], tracks[*probeIdx]))
+        continue;
 
       auto trk_z0_wrtPV = tracks[*probeIdx].z0_wrtPV();
       auto tag_id_z0_wrtPV = muons[*tagIdx].id_z0_exPV();
