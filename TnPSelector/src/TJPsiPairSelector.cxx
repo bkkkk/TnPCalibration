@@ -52,7 +52,8 @@ int TJPsiPairSelector::accept(const IMuon& tag, const ITrack& probe) {
   return (accept(deltaR, sign, invMass, deltaZ0));
 }
 
-int TJPsiPairSelector::accept(float deltaR, float sign, float invMass, float deltaZ0) {
+int TJPsiPairSelector::accept(float deltaR, float sign, float invMass,
+                              float deltaZ0) {
   if (!isInInvariantMassRange(invMass)) return (0);
   if (!isInDeltaRRange(deltaR)) return (0);
   if (sign != signCut) return 0;
