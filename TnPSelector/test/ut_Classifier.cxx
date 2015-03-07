@@ -21,14 +21,10 @@ TEST_F(TestClassifier, ConstructingFilledClassifierShouldReturnOne) {
 }
 
 TEST_F(TestClassifier, ClassifySingleTrackThatIsAProbe) {
-  FakeTrack probeTrack;
-  probeTrack.constructGoodProbe();
-
-  FakeTrack badProbe;
-  badProbe.constructBadProbe();
-
   auto tracks = FakeTracks {
-    probeTrack, badProbe, badProbe
+    FakeTrack::ConstructGoodProbe(),
+    FakeTrack::ConstructBadProbe(),
+    FakeTrack::ConstructBadProbe()
   };
 
   classifier->classifyProbes(tracks);
@@ -54,16 +50,10 @@ TEST_F(TestClassifier, ClassifyPairsWhenThereArentAny) {
     FakeMuon::ConstructGoodTagMuon()
   };
 
-  FakeTrack probeTrack;
-  probeTrack.constructGoodProbe();
-
-  FakeTrack badProbe;
-  badProbe.constructBadProbe();
-
   auto tracks = FakeTracks {
-    probeTrack,
-    badProbe,
-    badProbe
+    FakeTrack::ConstructGoodProbe(),
+    FakeTrack::ConstructBadProbe(),
+    FakeTrack::ConstructBadProbe()
   };
 
   classifier->classifyTags(muons);

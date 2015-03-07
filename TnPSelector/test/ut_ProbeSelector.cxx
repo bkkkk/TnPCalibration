@@ -21,13 +21,11 @@ TEST_F(ProbeSelectorTest, NumericSelectBadProbe) {
 }
 
 TEST_F(ProbeSelectorTest, ObjectSelectGoodProbe) {
-  FakeTrack goodProbe; goodProbe.constructGoodProbe();
-  EXPECT_EQ(1, selector->accept(goodProbe));
+  EXPECT_EQ(1, selector->accept(FakeTrack::ConstructGoodProbe()));
 }
 
 TEST_F(ProbeSelectorTest, ObjectSelectBadProbe) {
-  FakeTrack badProbe; badProbe.constructBadProbe();
-  EXPECT_EQ(0, selector->accept(badProbe));
+  EXPECT_EQ(0, selector->accept(FakeTrack::ConstructBadProbe()));
 }
 
 TEST_F(ProbeSelectorTest, FinalizeNominal) {

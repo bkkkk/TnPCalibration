@@ -8,26 +8,30 @@ class FakeTrack : public ITrack {
 public:
   FakeTrack() = default;
 
-  void constructGoodProbe() {
-    mPt = 4000;
-    mEta = 1.2;
-    mPhi_wrtPV = 0.0;
-    mExpectBLayerHit = 1;
-    mNBLHits = 1;
-    mNPixHits = 1;
-    mNPixelDeadSensors = 1;
-    mNSCTHits = 3;
-    mNSCTDeadSensors = 3;
-    mNPixHoles = 1;
-    mNSCTHoles = 2;
-    mNTRTHits = 12;
-    mNTRTOutliers = 1;
+  static FakeTrack ConstructGoodProbe() {
+    FakeTrack result;
+    result.mPt = 4000;
+    result.mEta = 1.2;
+    result.mPhi_wrtPV = 0.0;
+    result.mExpectBLayerHit = 1;
+    result.mNBLHits = 1;
+    result.mNPixHits = 1;
+    result.mNPixelDeadSensors = 1;
+    result.mNSCTHits = 3;
+    result.mNSCTDeadSensors = 3;
+    result.mNPixHoles = 1;
+    result.mNSCTHoles = 2;
+    result.mNTRTHits = 12;
+    result.mNTRTOutliers = 1;
+    return result;
   }
 
-  void constructBadProbe() {
-    mPt = 2000;
-    mEta = 2.7;
-    mExpectBLayerHit = 0;
+  static FakeTrack ConstructBadProbe() {
+    FakeTrack result;
+    result.mPt = 2000;
+    result.mEta = 2.7;
+    result.mExpectBLayerHit = 0;
+    return result;
   }
 
 public:
