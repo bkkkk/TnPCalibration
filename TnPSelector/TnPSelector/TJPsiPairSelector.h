@@ -20,9 +20,6 @@ public:
   bool isInInvariantMassRange(float invariantMass) const;
   bool isInDeltaRRange(float deltaR) const;
 
-private:
-  float GetDeltaZ0(float first, float second);
-
 public:
   std::string name;
 
