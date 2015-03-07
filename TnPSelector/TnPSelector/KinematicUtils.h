@@ -30,6 +30,7 @@ namespace TNP {
   float GetDeltaZ0(const float first, const float second);
 
   float GetDeltaR(const IMuon& first, const IMuon& second);
+  float GetDeltaR(const IMuon& muon, const ITrack& track);
   float GetDeltaR(const float firstEta, const float firstPhi,
                   const float secondEta, const float secondPhi );
 

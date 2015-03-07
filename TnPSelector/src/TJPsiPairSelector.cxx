@@ -47,7 +47,7 @@ int TJPsiPairSelector::accept(const IMuon& tag, const ITrack& probe) {
   TLorentzVector tagVec = TNP::GetMuonVector(tag.pt(), tag.eta(), tag.phi(), tag.E());
   TLorentzVector probeVec = TNP::GetTrackVector(probe.pt(), probe.eta(), probe.phi_wrtPV());
 
-  float deltaR = tagVec.DeltaR(probeVec);
+  float deltaR = TNP::GetDeltaR(tag, probe);
   float sign = tag.charge() * (fabs(probe.qoverp_wrtPV()) / probe.qoverp_wrtPV());
   // GetChargeSign(charge, qoverp)
   float invMass = (tagVec + probeVec).M();

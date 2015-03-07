@@ -92,6 +92,10 @@ float TNP::GetDeltaR(const IMuon& first, const IMuon& second) {
   return (TNP::GetDeltaR(first.eta(), first.phi(), second.eta(), second.phi()));
 }
 
+float TNP::GetDeltaR(const IMuon& muon, const ITrack& track) {
+  return (TNP::GetDeltaR(muon.eta(), muon.phi(), track.eta(), track.phi_wrtPV())); 
+}
+
 float TNP::GetDeltaR(const float firstEta, const float firstPhi,
                      const float secondEta, const float secondPhi ) {
   float dPhi = GetWrappedDeltaPhi(firstPhi, secondPhi);
