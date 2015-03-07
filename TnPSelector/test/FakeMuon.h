@@ -116,6 +116,15 @@ public:
   inline double nTRTOutliers() const { return mNTRTOutliers; }
   inline double matchchi2() const { return mMatchchi2; }
   inline double matchndof() const { return mMatchndof; }
+  inline double x() const { 
+    return (fabs(mPt) * cos(mPhi));
+  }
+  inline double y() const { 
+    return (fabs(mPt) * sin(mPhi));
+  }
+  inline double z() const { 
+    return (fabs(mPt) / tan(2.0 * atan(exp(-mEta))));
+  }
   
 public:
   double mId_d0_exPV;

@@ -39,6 +39,9 @@ public:
   virtual double nTRTOutliers() const = 0;
   virtual double matchchi2() const = 0;
   virtual double matchndof() const = 0;
+  virtual double x() const = 0;
+  virtual double y() const = 0;
+  virtual double z() const = 0;
 };
 
 #endif

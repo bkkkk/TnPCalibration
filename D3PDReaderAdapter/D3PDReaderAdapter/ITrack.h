@@ -21,6 +21,9 @@ public:
   virtual double nTRTHits() const = 0;
   virtual double nTRTOutliers() const = 0;
   virtual double qoverp_wrtPV() const = 0;
+  virtual double x() const = 0;
+  virtual double y() const = 0;
+  virtual double z() const = 0;
 };
 
 #endif

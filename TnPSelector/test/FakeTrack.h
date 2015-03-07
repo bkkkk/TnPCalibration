@@ -2,6 +2,7 @@
 #define TNPSELECTOR_FAKETRACK_H_ 1
 
 #include <D3PDReaderAdapter/ITrack.h>
+#include <cmath>
 
 class FakeTrack : public ITrack {
 public:
@@ -44,6 +45,15 @@ public:
   double nTRTHits() const { return (mNTRTHits); }
   double nTRTOutliers() const { return (mNTRTOutliers); }
   double qoverp_wrtPV() const { return (mQoverp_wrtPV); }
+  double x() const { 
+    return (fabs(mPt) * cos(mPhi_wrtPV));
+  }
+  double y() const { 
+    return (fabs(mPt) * sin(mPhi_wrtPV));
+  }
+  double z() const { 
+    return (fabs(mPt) / tan(2.0 * atan(exp(-mEta))));
+  }
 
 public:
   float mPt;
