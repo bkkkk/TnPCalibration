@@ -1,5 +1,5 @@
 #include <TnPSelector/KinematicUtils.h>
-#include <math.h>
+#include <cmath>
 
 TVector3 TNP::GetTrack3Vector (const ITrack& track) {
   return (GetTrack3Vector(track.pt(), track.eta(), track.phi_wrtPV()));
@@ -57,11 +57,26 @@ float TNP::GetInvariantMass(const float trackpt, const float tracketa,
                             const float trackphi, const float tagpt,
                             const float tageta, const float tagphi,
                             const float tagE) {
+  const double MuonMass = 105.6583715;
+  double trackAbsPt = fabs(trackpt);
+  double trackX = trackAbsPt * cos(trackphi);
+  double trackY = trackAbsPt * sin(trackphi);
+  double trackZ = trackAbsPt / tan(2.0 * atan(exp(-tracketa)));
+  double trackT = sqrt(trackX*trackX+trackY*trackY+trackZ*trackZ+MuonMass*MuonMass);
 
-  TLorentzVector tag = TNP::GetMuonVector(tagpt, tageta, tagphi, tagE);
-  TLorentzVector probe = TNP::GetTrackVector(trackpt, tracketa, trackphi);
+  double tagAbsPt = fabs(tagpt);
+  double tagX = tagAbsPt * cos(tagphi);
+  double tagY = tagAbsPt * sin(tagphi);
+  double tagZ = tagAbsPt / tan(2.0 * atan(exp(-tageta)));
 
-  return (GetInvariantMass(tag, probe));
+  auto sumX = tagX + trackX;
+  auto sumY = tagY + trackY;
+  auto sumZ = tagZ + trackZ;
+  auto sumT = tagE + trackT;
+
+  auto mag = sqrt(sumX*sumX+sumY*sumY+sumZ*sumZ+sumT*sumT);
+
+  return (mag);
 }
 
 float TNP::GetInvariantMass(const TLorentzVector& first, const TLorentzVector& second) {
