@@ -1,10 +1,10 @@
 #include "ut_PairSelector.h"
 #include "TnPSelector/TJPsiPairSelector.h"
 
-#include "FakeTracks.h"
-#include "FakeTrack.h"
-#include "FakeMuons.h"
-#include "FakeMuon.h"
+#include "./FakeTracks.h"
+#include "./FakeTrack.h"
+#include "./FakeMuons.h"
+#include "./FakeMuon.h"
 
 TEST_F(TestPairSelector, TestInitializeFailsForEmptySelector) {
   TJPsiPairSelector* emptySelector = new TJPsiPairSelector();
