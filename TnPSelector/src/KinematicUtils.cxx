@@ -47,10 +47,8 @@ TVector3 TNP::GetMuon3Vector(const float pt, const float eta, const float phi) {
 }
 
 float TNP::GetInvariantMass(const ITrack& probe, const IMuon& tag) {
-  TLorentzVector tagVector = TNP::GetMuonVector(tag);
-  TLorentzVector probeVector = TNP::GetTrackVector(probe);
-
-  return (GetInvariantMass(tagVector, probeVector));
+  return (GetInvariantMass(probe.pt(), probe.eta(), probe.phi_wrtPV(), 
+                           tag.pt(), tag.eta(), tag.phi(), tag.E()));
 }
 
 float TNP::GetInvariantMass(const float trackpt, const float tracketa,
