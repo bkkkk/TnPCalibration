@@ -1,6 +1,6 @@
 #include "ut_ProbeSelector.h"
 
-#include "FakeTrack.h"
+#include "./FakeTrack.h"
 
 TEST_F(ProbeSelectorTest, InitializeEmpty) {
   TJPsiProbeSelector emptySelector;
