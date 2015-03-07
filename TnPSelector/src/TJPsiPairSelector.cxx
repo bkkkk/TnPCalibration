@@ -35,13 +35,6 @@ int TJPsiPairSelector::initialize() {
 }
 
 int TJPsiPairSelector::accept(const IMuon& tag, const IMuon& muonProbe) {
-  TLorentzVector tagVec = TNP::GetMuonVector(tag.pt(), tag.eta(),
-                                             tag.phi(), tag.E());
-
-  TLorentzVector muonProbeVec = TNP::GetMuonVector(muonProbe.pt(),
-                                                   muonProbe.eta(),
-                                                   muonProbe.phi(),
-                                                   muonProbe.E());
   float deltaR = TNP::GetDeltaR(tag, muonProbe);
   float sign = tag.charge() * muonProbe.charge();
   float invMass = TNP::GetInvariantMass(tag, muonProbe);
