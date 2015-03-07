@@ -7,7 +7,7 @@
 
 class TJPsiPairSelector {
 public:
-  TJPsiPairSelector(const std::string& name="TJPsiPairSelector");
+  explicit TJPsiPairSelector(const std::string& name="TJPsiPairSelector");
   virtual ~TJPsiPairSelector() = default
 
   int initialize(void);
