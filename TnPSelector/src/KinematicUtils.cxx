@@ -1,22 +1,24 @@
 #include <TnPSelector/KinematicUtils.h>
 #include <cmath>
 
-TVector3 TNP::GetTrack3Vector (const ITrack& track) {
+TVector3 TNP::GetTrack3Vector(const ITrack& track) {
   return (GetTrack3Vector(track.pt(), track.eta(), track.phi_wrtPV()));
 }
 
-TVector3 TNP::GetTrack3Vector (const float pt, const float eta, const float phi) {
+TVector3 TNP::GetTrack3Vector(const float pt, const float eta,
+                              const float phi) {
   TVector3 trackVector;
   trackVector.SetPtEtaPhi(pt, eta, phi);
-  
+
   return (trackVector);
 }
 
-TLorentzVector TNP::GetTrackVector (const ITrack& track) {
+TLorentzVector TNP::GetTrackVector(const ITrack& track) {
   return (GetTrackVector(track.pt(), track.eta(), track.phi_wrtPV()));
 }
 
-TLorentzVector TNP::GetTrackVector(const float pt, const float eta, const float phi) {
+TLorentzVector TNP::GetTrackVector(const float pt, const float eta,
+                                   const float phi) {
   const double MuonMass = 105.6583715;
 
   TLorentzVector trackVector(GetTrack3Vector(pt, eta, phi), MuonMass);
@@ -28,7 +30,8 @@ TLorentzVector TNP::GetMuonVector(const IMuon& muon) {
   return (TNP::GetMuonVector(muon.pt(), muon.eta(), muon.phi(), muon.E()));
 }
 
-TLorentzVector TNP::GetMuonVector(const float pt, const float eta, const float phi, const float E) {
+TLorentzVector TNP::GetMuonVector(const float pt, const float eta,
+                                  const float phi, const float E) {
   TLorentzVector muonVector;
   muonVector.SetPtEtaPhiE(pt, eta, phi, E);
 
@@ -49,12 +52,12 @@ TVector3 TNP::GetMuon3Vector(const float pt, const float eta, const float phi) {
 float TNP::GetInvariantMass(const IMuon& tag, const ITrack& probe) {
   const double MuonMass = 105.6583715;
 
-  return (GetInvariantMass(probe.x(), probe.y(), probe.z(), MuonMass,  
+  return (GetInvariantMass(probe.x(), probe.y(), probe.z(), MuonMass,
                            tag.x(), tag.y(), tag.z(), tag.E()));
 }
 
 float TNP::GetInvariantMass(const IMuon& tag, const IMuon& mp) {
-  return (GetInvariantMass(mp.x(), mp.y(), mp.z(), mp.E(),  
+  return (GetInvariantMass(mp.x(), mp.y(), mp.z(), mp.E(),
                            tag.x(), tag.y(), tag.z(), tag.E()));
 }
 
@@ -69,7 +72,7 @@ float TNP::GetInvariantMass(float x1, float y1, float z1, float t1,
 }
 
 float TNP::GetEta(const float theta) {
-  if(theta == 0.0) {
+  if (theta == 0.0) {
     throw std::logic_error("Particle has infinite pseudorapidity");
   }
 
@@ -77,7 +80,7 @@ float TNP::GetEta(const float theta) {
 }
 
 float TNP::GetPt(const float qoverp, const float theta) {
-  if(qoverp == 0.0) {
+  if (qoverp == 0.0) {
     throw std::logic_error("This particle has zero momentum");
   }
 
@@ -93,7 +96,8 @@ float TNP::GetDeltaR(const IMuon& first, const IMuon& second) {
 }
 
 float TNP::GetDeltaR(const IMuon& muon, const ITrack& track) {
-  return (TNP::GetDeltaR(muon.eta(), muon.phi(), track.eta(), track.phi_wrtPV())); 
+  return (TNP::GetDeltaR(muon.eta(), muon.phi(), track.eta(),
+                         track.phi_wrtPV()));
 }
 
 float TNP::GetDeltaR(const float firstEta, const float firstPhi,
