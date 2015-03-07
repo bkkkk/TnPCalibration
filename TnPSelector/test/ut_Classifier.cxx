@@ -6,10 +6,10 @@
 #include "TnPSelector/TJPsiMuonProbeSelector.h"
 #include "TnPSelector/TJPsiSMTSelector.h"
 
-#include "FakeTracks.h"
-#include "FakeTrack.h"
-#include "FakeMuons.h"
-#include "FakeMuon.h"
+#include "./FakeTracks.h"
+#include "./FakeTrack.h"
+#include "./FakeMuons.h"
+#include "./FakeMuon.h"
 
 TEST_F(TestClassifier, ConstructingEmptyClassifierShouldReturnZero) {
   classifier = new TJPsiClassifier();
@@ -21,11 +21,9 @@ TEST_F(TestClassifier, ConstructingFilledClassifierShouldReturnOne) {
 }
 
 TEST_F(TestClassifier, ClassifySingleTrackThatIsAProbe) {
-  auto tracks = FakeTracks {
-    FakeTrack::ConstructGoodProbe(),
-    FakeTrack::ConstructBadProbe(),
-    FakeTrack::ConstructBadProbe()
-  };
+  auto tracks = FakeTracks { FakeTrack::ConstructGoodProbe(),
+                             FakeTrack::ConstructBadProbe(),
+                             FakeTrack::ConstructBadProbe() };
 
   classifier->classifyProbes(tracks);
 
@@ -33,11 +31,9 @@ TEST_F(TestClassifier, ClassifySingleTrackThatIsAProbe) {
 }
 
 TEST_F(TestClassifier, ClassifySingleMuonThatIsATag) {
-  auto muons = FakeMuons {
-    FakeMuon::ConstructGoodTagMuon(),
-    FakeMuon::ConstructGoodTagMuon(),
-    FakeMuon::ConstructGoodTagMuon()
-  };
+  auto muons = FakeMuons { FakeMuon::ConstructGoodTagMuon(),
+                           FakeMuon::ConstructGoodTagMuon(),
+                           FakeMuon::ConstructGoodTagMuon() };
 
   classifier->classifyTags(muons);
 
@@ -46,15 +42,11 @@ TEST_F(TestClassifier, ClassifySingleMuonThatIsATag) {
 
 // Initial attempt to get function into harness
 TEST_F(TestClassifier, ClassifyPairsWhenThereArentAny) {
-  auto muons = FakeMuons {
-    FakeMuon::ConstructGoodTagMuon()
-  };
+  auto muons = FakeMuons { FakeMuon::ConstructGoodTagMuon() };
 
-  auto tracks = FakeTracks {
-    FakeTrack::ConstructGoodProbe(),
-    FakeTrack::ConstructBadProbe(),
-    FakeTrack::ConstructBadProbe()
-  };
+  auto tracks = FakeTracks { FakeTrack::ConstructGoodProbe(),
+                             FakeTrack::ConstructBadProbe(),
+                             FakeTrack::ConstructBadProbe() };
 
   classifier->classifyTags(muons);
   classifier->classifyProbes(tracks);
