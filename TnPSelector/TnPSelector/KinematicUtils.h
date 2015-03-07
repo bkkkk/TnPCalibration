@@ -34,6 +34,8 @@ namespace TNP {
   float GetDeltaR(const float firstEta, const float firstPhi,
                   const float secondEta, const float secondPhi );
 
+  int GetChargeSign(int aCharge, int anotherCharge);
+
   float GetWrappedDeltaPhi(const float first, const float second);
 
   float CalculateSignificance(const float ip, const float cov);

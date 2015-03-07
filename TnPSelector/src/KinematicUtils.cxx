@@ -104,12 +104,15 @@ float TNP::GetDeltaR(const float firstEta, const float firstPhi,
   return (sqrt(dPhi*dPhi + dEta*dEta));
 }
 
-
 float TNP::GetWrappedDeltaPhi(const float first, const float second) {
   float dPhi = fabs(first - second);
   float dPhiWrapped = fabs(fabs(dPhi - M_PI) - M_PI);
 
   return dPhiWrapped;
+}
+
+int TNP::GetChargeSign(int aCharge, int anotherCharge) {
+  return (aCharge * anotherCharge);
 }
 
 float TNP::CalculateSignificance(const float ip, const float cov) {
