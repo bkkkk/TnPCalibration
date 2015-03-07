@@ -22,7 +22,6 @@ public:
 
 private:
   float GetDeltaZ0(float first, float second);
-  float GetChargeSign(float charge, float qoverp);
 
 public:
   std::string name;

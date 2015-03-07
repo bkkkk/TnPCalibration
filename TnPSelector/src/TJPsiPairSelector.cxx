@@ -36,7 +36,7 @@ int TJPsiPairSelector::initialize() {
 
 int TJPsiPairSelector::accept(const IMuon& tag, const IMuon& muonProbe) {
   auto deltaR = TNP::GetDeltaR(tag, muonProbe);
-  auto sign = tag.charge() * muonProbe.charge();
+  auto sign = TNP::GetChargeSign(tag.charge(), muonProbe.charge());
   auto invMass = TNP::GetInvariantMass(tag, muonProbe);
   auto deltaZ0 = GetDeltaZ0(muonProbe.id_z0_exPV(), tag.id_z0_exPV());
 
@@ -45,15 +45,11 @@ int TJPsiPairSelector::accept(const IMuon& tag, const IMuon& muonProbe) {
 
 int TJPsiPairSelector::accept(const IMuon& tag, const ITrack& probe) {
   auto deltaR = TNP::GetDeltaR(tag, probe);
-  auto sign = GetChargeSign(tag.charge(), probe.charge());
+  auto sign = TNP::GetChargeSign(tag.charge(), probe.charge());
   auto invMass = TNP::GetInvariantMass(tag, probe);
   auto deltaZ0 = GetDeltaZ0(probe.z0_wrtPV(), tag.id_z0_exPV());
 
   return (accept(deltaR, sign, invMass, deltaZ0));
-}
-
-float TJPsiPairSelector::GetChargeSign(float aCharge, float anotherCharge) {
-  return (aCharge * anotherCharge);
 }
 
 float TJPsiPairSelector::GetDeltaZ0(float first, float second) {
