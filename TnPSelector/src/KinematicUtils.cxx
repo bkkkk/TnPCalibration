@@ -47,40 +47,25 @@ TVector3 TNP::GetMuon3Vector(const float pt, const float eta, const float phi) {
 }
 
 float TNP::GetInvariantMass(const ITrack& probe, const IMuon& tag) {
-  return (GetInvariantMass(probe.pt(), probe.eta(), probe.phi_wrtPV(), 
-                           tag.pt(), tag.eta(), tag.phi(), tag.E()));
-}
-
-float TNP::GetInvariantMass(const float trackpt, const float tracketa,
-                            const float trackphi, const float tagpt,
-                            const float tageta, const float tagphi,
-                            const float tagE) {
   const double MuonMass = 105.6583715;
-  double trackAbsPt = fabs(trackpt);
-  double trackX = trackAbsPt * cos(trackphi);
-  double trackY = trackAbsPt * sin(trackphi);
-  double trackZ = trackAbsPt / tan(2.0 * atan(exp(-tracketa)));
-  double trackT = sqrt(trackX*trackX+trackY*trackY+trackZ*trackZ+MuonMass*MuonMass);
 
-  double tagAbsPt = fabs(tagpt);
-  double tagX = tagAbsPt * cos(tagphi);
-  double tagY = tagAbsPt * sin(tagphi);
-  double tagZ = tagAbsPt / tan(2.0 * atan(exp(-tageta)));
-
-  auto sumX = tagX + trackX;
-  auto sumY = tagY + trackY;
-  auto sumZ = tagZ + trackZ;
-  auto sumT = tagE + trackT;
-
-  auto mag = sqrt(sumX*sumX+sumY*sumY+sumZ*sumZ+sumT*sumT);
-
-  return (mag);
+  return (GetInvariantMass(probe.x(), probe.y(), probe.z(), MuonMass,  
+                           tag.x(), tag.y(), tag.z(), tag.E()));
 }
 
-float TNP::GetInvariantMass(const TLorentzVector& first, const TLorentzVector& second) {
-  TLorentzVector combined(first + second);
+float TNP::GetInvariantMass(const IMuon& tag, const IMuon& mp) {
+  return (GetInvariantMass(mp.x(), mp.y(), mp.z(), mp.E(),  
+                           tag.x(), tag.y(), tag.z(), tag.E()));
+}
 
-  return (combined.M());
+float TNP::GetInvariantMass(float x1, float y1, float z1, float t1,
+                       float x2, float y2, float z2, float t2) {
+  auto sumX = x1 + x2;
+  auto sumY = y1 + y2;
+  auto sumZ = z1 + z2;
+  auto sumT = t1 + t2;
+
+  return(sqrt(sumX*sumX+sumY*sumY+sumZ*sumZ+sumT*sumT));
 }
 
 float TNP::GetEta(const float theta) {

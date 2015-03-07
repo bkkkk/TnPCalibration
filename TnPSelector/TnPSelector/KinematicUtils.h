@@ -19,9 +19,9 @@ namespace TNP {
   TVector3 GetMuon3Vector(const float pt, const float eta, const float phi);
 
   float GetInvariantMass(const ITrack& probe, const IMuon& tag);
-  float GetInvariantMass(const float trackpt, const float tracketa, const float trackphi,
-                         const float tagpt, const float tageta, const float tagphi, const float tagE);
-  float GetInvariantMass(const TLorentzVector& first, const TLorentzVector& second);
+  float GetInvariantMass(const IMuon& tag, const IMuon& mp);
+  float GetInvariantMass(float x1, float y1, float z1, float t1,
+                         float x2, float y2, float z2, float t2);
 
   float GetEta(const float theta);
 
