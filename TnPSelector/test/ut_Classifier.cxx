@@ -51,8 +51,6 @@ TEST_F(TestClassifier, ClassifySingleMuonThatIsATag) {
 // Initial attempt to get function into harness
 TEST_F(TestClassifier, ClassifyPairsWhenThereArentAny) {
   auto muons = FakeMuons {
-    FakeMuon::ConstructGoodTagMuon(),
-    FakeMuon::ConstructGoodTagMuon(),
     FakeMuon::ConstructGoodTagMuon()
   };
 
@@ -64,7 +62,7 @@ TEST_F(TestClassifier, ClassifyPairsWhenThereArentAny) {
 
   auto tracks = FakeTracks {
     probeTrack,
-    probeTrack,
+    badProbe,
     badProbe
   };
 
