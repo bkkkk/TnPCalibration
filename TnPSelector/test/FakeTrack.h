@@ -6,7 +6,7 @@
 
 class FakeTrack : public ITrack {
 public:
-  FakeTrack() { }
+  FakeTrack() {}
 
   void constructGoodProbe() {
     mPt = 4000;
@@ -45,18 +45,10 @@ public:
   double nTRTHits() const { return (mNTRTHits); }
   double nTRTOutliers() const { return (mNTRTOutliers); }
   double qoverp_wrtPV() const { return (mQoverp_wrtPV); }
-  double x() const { 
-    return (fabs(mPt) * cos(mPhi_wrtPV));
-  }
-  double y() const { 
-    return (fabs(mPt) * sin(mPhi_wrtPV));
-  }
-  double z() const { 
-    return (fabs(mPt) / tan(2.0 * atan(exp(-mEta))));
-  }
-  int charge() const {
-    return (fabs(mQoverp_wrtPV) / mQoverp_wrtPV);
-  }
+  double x() const { return (fabs(mPt) * cos(mPhi_wrtPV)); }
+  double y() const { return (fabs(mPt) * sin(mPhi_wrtPV)); }
+  double z() const { return (fabs(mPt) / tan(2.0 * atan(exp(-mEta)))); }
+  int charge() const { return (fabs(mQoverp_wrtPV) / mQoverp_wrtPV); }
 
 public:
   float mPt;
