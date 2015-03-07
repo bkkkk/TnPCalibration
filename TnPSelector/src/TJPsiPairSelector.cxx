@@ -50,7 +50,7 @@ int TJPsiPairSelector::accept(const IMuon& tag, const ITrack& probe) {
   float deltaR = TNP::GetDeltaR(tag, probe);
   float sign = tag.charge() * (fabs(probe.qoverp_wrtPV()) / probe.qoverp_wrtPV());
   // GetChargeSign(charge, qoverp)
-  float invMass = (tagVec + probeVec).M();
+  float invMass = TNP::GetInvariantMass(tag, probe);
   float deltaZ0 = GetDeltaZ0(probe.z0_wrtPV(), tag.id_z0_exPV());
 
   return (accept(deltaR, sign, invMass, deltaZ0));
