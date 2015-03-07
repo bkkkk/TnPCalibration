@@ -54,6 +54,9 @@ public:
   double z() const { 
     return (fabs(mPt) / tan(2.0 * atan(exp(-mEta))));
   }
+  int charge() const {
+    return (fabs(mQoverp_wrtPV) / mQoverp_wrtPV);
+  }
 
 public:
   float mPt;
