@@ -11,6 +11,7 @@ public:
   void constructGoodProbe() {
     mPt = 4000;
     mEta = 1.2;
+    mPhi_wrtPV = 0.0;
     mExpectBLayerHit = 1;
     mNBLHits = 1;
     mNPixHits = 1;
