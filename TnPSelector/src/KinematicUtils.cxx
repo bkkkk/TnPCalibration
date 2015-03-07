@@ -46,7 +46,7 @@ TVector3 TNP::GetMuon3Vector(const float pt, const float eta, const float phi) {
   return muonVector;
 }
 
-float TNP::GetInvariantMass(const ITrack& probe, const IMuon& tag) {
+float TNP::GetInvariantMass(const IMuon& tag, const ITrack& probe) {
   const double MuonMass = 105.6583715;
 
   return (GetInvariantMass(probe.x(), probe.y(), probe.z(), MuonMass,  
