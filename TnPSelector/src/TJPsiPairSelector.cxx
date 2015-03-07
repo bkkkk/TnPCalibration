@@ -52,7 +52,7 @@ int TJPsiPairSelector::accept(const IMuon& tag, const ITrack& probe) {
   return (accept(deltaR, sign, invMass, deltaZ0));
 }
 
-float GetChargeSign(float aCharge, float anotherCharge) {
+float TJPsiPairSelector::GetChargeSign(float aCharge, float anotherCharge) {
   return (aCharge * anotherCharge);
 }
 
