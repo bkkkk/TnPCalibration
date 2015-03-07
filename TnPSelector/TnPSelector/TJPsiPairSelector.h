@@ -7,8 +7,8 @@
 
 class TJPsiPairSelector {
 public:
-  explicit TJPsiPairSelector(const std::string& name="TJPsiPairSelector");
-  virtual ~TJPsiPairSelector() = default
+  TJPsiPairSelector();
+  virtual ~TJPsiPairSelector() = default;
 
   int initialize(void);
 
@@ -21,8 +21,6 @@ public:
   bool isInDeltaRRange(float deltaR) const;
 
 public:
-  std::string name;
-
   float deltaRCutMax;
   float deltaRCutMin;
   float signCut;
