@@ -56,8 +56,8 @@ int TJPsiPairSelector::accept(float deltaR, float sign, float invMass,
                               float deltaZ0) {
   if (!isInInvariantMassRange(invMass)) return (0);
   if (!isInDeltaRRange(deltaR)) return (0);
-  if (sign != signCut) return 0;
-  if (deltaZ0 > deltaZ0Cut) return 0;
+  if (sign != signCut) return (0);
+  if (deltaZ0 > deltaZ0Cut) return (0);
 
   return (1);
 }
