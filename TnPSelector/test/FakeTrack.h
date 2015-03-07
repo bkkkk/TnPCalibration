@@ -6,7 +6,7 @@
 
 class FakeTrack : public ITrack {
 public:
-  FakeTrack() {}
+  FakeTrack() = default;
 
   void constructGoodProbe() {
     mPt = 4000;
