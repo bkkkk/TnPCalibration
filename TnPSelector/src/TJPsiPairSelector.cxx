@@ -45,7 +45,7 @@ int TJPsiPairSelector::accept(const IMuon& tag, const IMuon& muonProbe) {
 
 int TJPsiPairSelector::accept(const IMuon& tag, const ITrack& probe) {
   auto deltaR = TNP::GetDeltaR(tag, probe);
-  auto sign = GetChargeSign(tag.charge(), fabs(probe.qoverp_wrtPV()) / probe.qoverp_wrtPV());
+  auto sign = GetChargeSign(tag.charge(), probe.charge());
   auto invMass = TNP::GetInvariantMass(tag, probe);
   auto deltaZ0 = GetDeltaZ0(probe.z0_wrtPV(), tag.id_z0_exPV());
 
