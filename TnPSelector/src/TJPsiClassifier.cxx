@@ -4,17 +4,17 @@
 #include "TnPSelector/KinematicUtils.h"
 
 TJPsiClassifier::TJPsiClassifier()
-    : pair(std::make_pair(-9999, -9999)),
-      isMuonProbe(0),
-      isSMT(0),
-      muonProbeIdx(10000),
-      smallestDZ0(1000),
-      mcpSelector(nullptr),
-      tagSelector(nullptr),
-      pairSelector(nullptr),
-      probeSelector(nullptr),
-      muonProbeSelector(nullptr),
-      smtSelector(nullptr) {}
+    : pair{9999, -9999},
+      isMuonProbe{0},
+      isSMT{0},
+      muonProbeIdx{10000},
+      smallestDZ0{1000},
+      mcpSelector{nullptr},
+      tagSelector{nullptr},
+      pairSelector{nullptr},
+      probeSelector{nullptr},
+      muonProbeSelector{nullptr},
+      smtSelector{nullptr} { }
 
 TJPsiClassifier::~TJPsiClassifier() {
   if (mcpSelector)
