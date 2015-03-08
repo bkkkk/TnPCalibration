@@ -57,6 +57,24 @@ TEST_F(TestClassifier, ClassifyPairsWhenThereIsOnlyOne) {
   EXPECT_EQ(pair.first, 0);
 }
 
+TEST_F(TestClassifier, ClassifyPairsWhenThereAreTwo) {
+  auto aCloseProbe = FakeTrack::ConstructGoodProbe();
+  auto aCloserProbe = FakeTrack::ConstructGoodProbe();
+  aCloserProbe.mZ0_wrtPV = 0.44;
+
+  auto muons = FakeMuons { FakeMuon::ConstructGoodTagMuon() };
+  auto tracks = FakeTracks { aCloseProbe, aCloserProbe };
+
+  classifier->classifyTags(muons);
+  classifier->classifyProbes(tracks);
+
+  ASSERT_EQ(1ul, classifier->getTagIndexes().size());
+  ASSERT_EQ(2ul, classifier->getProbeIndexes().size());
+
+  auto pair = classifier->classifyPairs(muons, tracks);
+  EXPECT_EQ(pair.second, 1);
+}
+
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return (RUN_ALL_TESTS());
