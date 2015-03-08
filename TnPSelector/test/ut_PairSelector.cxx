@@ -33,7 +33,7 @@ TEST_F(TestPairSelector, TestInitializePassForFilledSelector) {
 }
 
 TEST_F(TestPairSelector, TestGoodPairPassesNumericInvariantMassCheck) {
-  EXPECT_EQ(true, selector->isInInvariantMassRange(3.14));
+  EXPECT_EQ(true, selector->isInInvariantMassRange(3140));
 }
 
 TEST_F(TestPairSelector, TestGoodPairPassesDeltaRCheck) {
@@ -41,11 +41,11 @@ TEST_F(TestPairSelector, TestGoodPairPassesDeltaRCheck) {
 }
 
 TEST_F(TestPairSelector, TestGoodPairPassesNumericAccept) {
-  EXPECT_EQ(1, selector->accept(0.5, -1, 3.14, 0.05));
+  EXPECT_EQ(1, selector->accept(0.5, -1, 3140, 0.05));
 }
 
 TEST_F(TestPairSelector, TestBadPairFailsNumericAccept) {
-  EXPECT_EQ(0, selector->accept(100.0, -1, 3.14, 0.05));
+  EXPECT_EQ(0, selector->accept(100.0, -1, 3140, 0.05));
 }
 
 TEST_F(TestPairSelector, TestGoodProbePairFailsAccept) {

@@ -16,8 +16,8 @@ public:
     selector->deltaRCutMin = 0.1;
     selector->deltaRCutMax = 1.5;
     selector->signCut = -1;
-    selector->minMassCut = 1.5;
-    selector->maxMassCut = 4.2;
+    selector->minMassCut = 1500;
+    selector->maxMassCut = 4200;
     selector->deltaZ0Cut = 0.1;
   }
 };
