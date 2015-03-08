@@ -1,4 +1,4 @@
-#include "ut_PairSelector.h"
+#include "./ut_PairSelector.h"
 #include "TnPSelector/TJPsiPairSelector.h"
 
 #include "./FakeTracks.h"
@@ -61,7 +61,7 @@ TEST_F(TestPairSelector, BadProbePairFailsAccept) {
 TEST_F(TestPairSelector, GoodMuonProbePairPassesAccept) {
   auto aMuon = FakeMuon::ConstructGoodTagMuon();
   auto anotherMuon = FakeMuon::ConstructGoodMuonProbe();
-  
+
   EXPECT_EQ(1, selector->accept(aMuon, anotherMuon));
 }
 
@@ -71,10 +71,6 @@ TEST_F(TestPairSelector, BadMuonProbePairFailsAccept) {
 
   EXPECT_EQ(0, selector->accept(aMuon, anotherMuon));
 }
-
-/*
-int accept(const IMuon& tag, const IMuon& muonProbe);
-*/
 
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
