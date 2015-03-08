@@ -87,7 +87,7 @@ std::pair<int, int> TJPsiClassifier::classifyPairs(const IMuons& muons,
        probeIdx++) {
     for (auto tagIdx = tagsIndexes.begin(); tagIdx != tagsIndexes.end();
          tagIdx++) {
-      if (!pairSelector->accept(muons[*tagIdx], tracks[*probeIdx]))
+      if (!isGoodPair(muons[*tagIdx], tracks[*probeIdx]))
         continue;
 
       auto trk_z0_wrtPV = tracks[*probeIdx].z0_wrtPV();
@@ -104,6 +104,10 @@ std::pair<int, int> TJPsiClassifier::classifyPairs(const IMuons& muons,
   }
 
   return (std::make_pair(chosenTag, chosenProbe));
+}
+
+bool TJPsiClassifier::isGoodPair(const IMuon& muon, const ITrack& track) {
+  return (pairSelector->accept(muon, track) == 1);
 }
 
 void TJPsiClassifier::classifyTags(const IMuons& muons) {
