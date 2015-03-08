@@ -35,6 +35,13 @@ public:
     return (muon);
   }
 
+  static FakeMuon ConstructGoodMuonProbe() {
+    FakeMuon muon = FakeMuon::ConstructGoodTagMuon();
+    muon.mEta = 0.5;
+    muon.mCharge *= -1;
+    return (muon);
+  }
+
   static FakeMuon ConstructBadTagMuon() {
     FakeMuon muon;
     muon.mId_d0_exPV = 100;
