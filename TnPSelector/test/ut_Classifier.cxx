@@ -41,7 +41,8 @@ TEST_F(TestClassifier, ClassifySingleMuonThatIsATag) {
 }
 
 TEST_F(TestClassifier, ClassifyPairsWhenThereIsOnlyOne) {
-  ASSERT_EQ(true, classifier->isGoodPair(FakeMuon::ConstructGoodTagMuon(),  FakeTrack::ConstructGoodProbe()));
+  ASSERT_EQ(true, classifier->isGoodPair(FakeMuon::ConstructGoodTagMuon(),
+                                         FakeTrack::ConstructGoodProbe()));
 
   auto muons = FakeMuons { FakeMuon::ConstructGoodTagMuon() };
   auto tracks = FakeTracks { FakeTrack::ConstructGoodProbe() };
@@ -49,8 +50,8 @@ TEST_F(TestClassifier, ClassifyPairsWhenThereIsOnlyOne) {
   classifier->classifyTags(muons);
   classifier->classifyProbes(tracks);
 
-  EXPECT_EQ(1ul, classifier->getTagIndexes().size());
-  EXPECT_EQ(1ul, classifier->getProbeIndexes().size());
+  ASSERT_EQ(1ul, classifier->getTagIndexes().size());
+  ASSERT_EQ(1ul, classifier->getProbeIndexes().size());
 
   auto pair = classifier->classifyPairs(muons, tracks);
   EXPECT_EQ(pair.first, 0);
