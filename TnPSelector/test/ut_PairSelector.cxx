@@ -65,6 +65,13 @@ TEST_F(TestPairSelector, GoodMuonProbePairPassesAccept) {
   EXPECT_EQ(1, selector->accept(aMuon, anotherMuon));
 }
 
+TEST_F(TestPairSelector, BadMuonProbePairFailsAccept) {
+  auto aMuon = FakeMuon::ConstructGoodTagMuon();
+  auto anotherMuon = FakeMuon::ConstructGoodTagMuon();
+
+  EXPECT_EQ(0, selector->accept(aMuon, anotherMuon));
+}
+
 /*
 int accept(const IMuon& tag, const IMuon& muonProbe);
 */
