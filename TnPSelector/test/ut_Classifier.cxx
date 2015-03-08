@@ -40,18 +40,20 @@ TEST_F(TestClassifier, ClassifySingleMuonThatIsATag) {
   EXPECT_EQ(3ul, classifier->getTagIndexes().size());
 }
 
-// Initial attempt to get function into harness
-TEST_F(TestClassifier, ClassifyPairsWhenThereArentAny) {
-  auto muons = FakeMuons { FakeMuon::ConstructGoodTagMuon() };
+TEST_F(TestClassifier, ClassifyPairsWhenThereIsOnlyOne) {
+  ASSERT_EQ(true, classifier->isGoodPair(FakeMuon::ConstructGoodTagMuon(),  FakeTrack::ConstructGoodProbe()));
 
-  auto tracks = FakeTracks { FakeTrack::ConstructGoodProbe(),
-                             FakeTrack::ConstructBadProbe(),
-                             FakeTrack::ConstructBadProbe() };
+  auto muons = FakeMuons { FakeMuon::ConstructGoodTagMuon() };
+  auto tracks = FakeTracks { FakeTrack::ConstructGoodProbe() };
 
   classifier->classifyTags(muons);
   classifier->classifyProbes(tracks);
+
+  EXPECT_EQ(1ul, classifier->getTagIndexes().size());
+  EXPECT_EQ(1ul, classifier->getProbeIndexes().size());
+
   auto pair = classifier->classifyPairs(muons, tracks);
-  EXPECT_EQ(pair.first, -99999);
+  EXPECT_EQ(pair.first, 0);
 }
 
 int main(int argc, char** argv) {
