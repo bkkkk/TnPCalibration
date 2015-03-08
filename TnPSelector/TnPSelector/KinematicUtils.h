@@ -22,8 +22,8 @@ namespace TNP {
 
   float GetInvariantMass(const IMuon& tag, const ITrack& probe);
   float GetInvariantMass(const IMuon& tag, const IMuon& mp);
-  float GetInvariantMass(float x1, float y1, float z1, float t1,
-                         float x2, float y2, float z2, float t2);
+  float GetInvariantMass(float pt1, float eta1, float phi1,
+                         float pt2, float eta2, float phi2);
 
   float GetEta(const float theta);
 

@@ -50,25 +50,19 @@ TVector3 TNP::GetMuon3Vector(const float pt, const float eta, const float phi) {
 }
 
 float TNP::GetInvariantMass(const IMuon& tag, const ITrack& probe) {
-  const double MuonMass = 105.6583715;
-
-  return (GetInvariantMass(probe.x(), probe.y(), probe.z(), MuonMass,
-                           tag.x(), tag.y(), tag.z(), tag.E()));
+  return (GetInvariantMass(probe.pt(), probe.eta(), probe.phi_wrtPV(),
+                           tag.pt(), tag.eta(), tag.phi()));
 }
 
 float TNP::GetInvariantMass(const IMuon& tag, const IMuon& mp) {
-  return (GetInvariantMass(mp.x(), mp.y(), mp.z(), mp.E(),
-                           tag.x(), tag.y(), tag.z(), tag.E()));
+  return (GetInvariantMass(mp.pt(), mp.eta(), mp.phi(),
+                           tag.pt(), tag.eta(), tag.phi()));
 }
 
-float TNP::GetInvariantMass(float x1, float y1, float z1, float t1,
-                       float x2, float y2, float z2, float t2) {
-  auto sumX = x1 + x2;
-  auto sumY = y1 + y2;
-  auto sumZ = z1 + z2;
-  auto sumT = t1 + t2;
-
-  return(sqrt(sumX*sumX+sumY*sumY+sumZ*sumZ+sumT*sumT));
+float TNP::GetInvariantMass(float pt1, float eta1, float phi1,
+                            float pt2, float eta2, float phi2) {
+  float M2 = 2 * pt1 * pt2 * (cosh(eta1 - eta2) - cos(phi1 - phi2));
+  return(sqrt(M2));
 }
 
 float TNP::GetEta(const float theta) {
