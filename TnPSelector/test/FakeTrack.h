@@ -10,9 +10,9 @@ public:
 
   static FakeTrack ConstructGoodProbe() {
     FakeTrack result;
-    result.mPt = 4000;
-    result.mEta = 1.2;
-    result.mPhi_wrtPV = 0.0;
+    result.mPt = 3050;
+    result.mEta = 0.5;
+    result.mPhi_wrtPV = 0.4;
     result.mExpectBLayerHit = 1;
     result.mNBLHits = 1;
     result.mNPixHits = 1;
@@ -23,6 +23,8 @@ public:
     result.mNSCTHoles = 2;
     result.mNTRTHits = 12;
     result.mNTRTOutliers = 1;
+    result.mQoverp_wrtPV = -1;
+    result.mZ0_wrtPV = 0.43;
     return result;
   }
 

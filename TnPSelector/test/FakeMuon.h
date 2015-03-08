@@ -3,18 +3,21 @@
 
 #include <D3PDReaderAdapter/IMuon.h>
 
+#include <cmath>
+
 class FakeMuon : public IMuon {
 public:
   static FakeMuon ConstructGoodTagMuon() {
     FakeMuon muon;
+    muon.mPt = 4500;
+    muon.mEta = 1.3;
+    muon.mPhi = 0.4;
     muon.mId_d0_exPV = 0.3;
     muon.mId_z0_exPV = 0.5;
     muon.mId_cov_d0_exPV = 1;
     muon.mId_cov_z0_exPV = 1;
     muon.mId_theta = 0.5;
     muon.mId_qoverp = 0.0001;
-    muon.mEta = 1.3;
-    muon.mPhi = 0.5;
     muon.mIsCombinedMuon = true;
     muon.mMatchchi2 = 6;
     muon.mMatchndof = 6;
@@ -28,6 +31,7 @@ public:
     muon.mNSCTHoles = 2;
     muon.mNTRTHits = 12;
     muon.mNTRTOutliers = 1;
+    muon.mCharge = 1;
     return (muon);
   }
 
