@@ -53,6 +53,11 @@ TEST_F(TestPairSelector, TestGoodProbePairPassesAccept) {
                                 FakeTrack::ConstructGoodProbe()));
 }
 
+TEST_F(TestPairSelector, TestBadProbePairFailsAccept) {
+  EXPECT_EQ(0, selector->accept(FakeMuon::ConstructGoodTagMuon(),
+                                FakeTrack::ConstructBadProbe()));
+}
+
 /*
 int accept(const IMuon& tag, const IMuon& muonProbe);
 int accept(const IMuon& tag, const ITrack& probe);
