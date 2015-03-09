@@ -6,7 +6,6 @@
 
 #include <TnPSelector/KinematicUtils.h>
 
-
 TJPsiMuonProbeSelector::TJPsiMuonProbeSelector(const std::string& name)
     : deltaRCut(std::numeric_limits<float>::max()), name(name) {}
 
@@ -20,7 +19,20 @@ int TJPsiMuonProbeSelector::initialize() {
 }
 
 int TJPsiMuonProbeSelector::accept(const ITrack& probe, const IMuons& muons,
-                                   int& muonProbeIdx) {
+                                   std::size_t& muonProbeIdx) {
+  muonProbeIdx = findNearestMuonToProbe(probe, muons);
+  if (muonProbeIdx == muons.n() + 1) {
+    return (0);
+  }
+
+  auto deltaR = TNP::GetDeltaR(muons[muonProbeIdx], probe);
+
+  return (accept(deltaR));
+}
+
+unsigned TJPsiMuonProbeSelector::findNearestMuonToProbe(const ITrack& probe,
+                                                        const IMuons& muons) {
+  auto muonProbeIdx = muons.n() + 1;
   auto deltaR = std::numeric_limits<float>::max();
 
   for (auto muon = 0ul; muon != muons.n(); muon++) {
@@ -35,7 +47,7 @@ int TJPsiMuonProbeSelector::accept(const ITrack& probe, const IMuons& muons,
     }
   }
 
-  return (accept(deltaR));
+  return (muonProbeIdx);
 }
 
 int TJPsiMuonProbeSelector::accept(float deltaR) {

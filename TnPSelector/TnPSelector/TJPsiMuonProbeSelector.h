@@ -13,11 +13,14 @@ public:
 
   int initialize(void);
 
-  int accept(const ITrack& probe, const IMuons& muons, int& muonProbeIdx);
+  int accept(const ITrack& probe, const IMuons& muons, std::size_t& muonProbeIdx);
 
-  int accept(const float& deltaR);
+  int accept(float deltaR);
 
   int finalize();
+
+private:
+  unsigned findNearestMuonToProbe(const ITrack& probe, const IMuons& muons);
 
 public:
   float deltaRCut;
