@@ -83,22 +83,20 @@ std::pair<int, int> TJPsiClassifier::classifyPairs(const IMuons& muons,
   auto chosenTag = -99999;
   auto chosenProbe = -99999;
 
-  for (auto probeIdx = probesIndexes.begin(); probeIdx != probesIndexes.end();
-       probeIdx++) {
-    for (auto tagIdx = tagsIndexes.begin(); tagIdx != tagsIndexes.end();
-         tagIdx++) {
-      if (!isGoodPair(muons[*tagIdx], tracks[*probeIdx]))
+  for (const auto probeIdx : probesIndexes) {
+    for (const auto tagIdx : tagsIndexes) {
+      if (!isGoodPair(muons[tagIdx], tracks[probeIdx]))
         continue;
 
-      auto trk_z0_wrtPV = tracks[*probeIdx].z0_wrtPV();
-      auto tag_id_z0_wrtPV = muons[*tagIdx].id_z0_exPV();
+      auto trk_z0_wrtPV = tracks[probeIdx].z0_wrtPV();
+      auto tag_id_z0_wrtPV = muons[tagIdx].id_z0_exPV();
 
       auto dz0 = TNP::GetDeltaZ0(trk_z0_wrtPV, tag_id_z0_wrtPV);
 
       if (smallestDZ0 > dz0) {
         smallestDZ0 = dz0;
-        chosenTag = *tagIdx;
-        chosenProbe = *probeIdx;
+        chosenTag = tagIdx;
+        chosenProbe = probeIdx;
       }
     }
   }

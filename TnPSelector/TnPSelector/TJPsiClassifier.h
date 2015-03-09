@@ -77,7 +77,7 @@ public:
   int isMuonProbe;
   int isSMT;
 
-  int muonProbeIdx;
+  std::size_t muonProbeIdx;
 
 private:
   float smallestDZ0;
