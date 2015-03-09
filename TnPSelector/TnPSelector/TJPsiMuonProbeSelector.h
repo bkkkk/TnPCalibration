@@ -7,13 +7,14 @@
 
 class TJPsiMuonProbeSelector {
 public:
-  TJPsiMuonProbeSelector(const std::string& name="TJPsiMuonProbeSelector");
+  TJPsiMuonProbeSelector(const std::string& name = "TJPsiMuonProbeSelector");
 
   virtual ~TJPsiMuonProbeSelector();
 
   int initialize(void);
 
-  int accept(const ITrack& probe, const IMuons& muons, std::size_t& muonProbeIdx);
+  int accept(const ITrack& probe, const IMuons& muons,
+             std::size_t& muonProbeIdx);
 
   int accept(float deltaR);
 
