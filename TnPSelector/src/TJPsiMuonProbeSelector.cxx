@@ -38,7 +38,7 @@ int TJPsiMuonProbeSelector::accept(const ITrack& probe, const IMuons& muons,
   return (accept(deltaR));
 }
 
-int TJPsiMuonProbeSelector::accept(const float& deltaR) {
+int TJPsiMuonProbeSelector::accept(float deltaR) {
   if (deltaR > deltaRCut)
     return (0);
   return (1);
