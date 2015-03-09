@@ -62,8 +62,8 @@ TEST_F(TestClassifier, ClassifyPairsWhenThereAreTwo) {
   auto aCloserProbe = FakeTrack::ConstructGoodProbe();
   aCloserProbe.mZ0_wrtPV = 0.44;
 
-  auto muons = FakeMuons { FakeMuon::ConstructGoodTagMuon() };
-  auto tracks = FakeTracks { aCloseProbe, aCloserProbe };
+  auto muons = FakeMuons{FakeMuon::ConstructGoodTagMuon()};
+  auto tracks = FakeTracks{aCloseProbe, aCloserProbe};
 
   classifier->classifyTags(muons);
   classifier->classifyProbes(tracks);
