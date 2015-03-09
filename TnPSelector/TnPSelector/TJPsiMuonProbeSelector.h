@@ -7,7 +7,7 @@
 
 class TJPsiMuonProbeSelector {
 public:
-  TJPsiMuonProbeSelector(const std::string& name = "TJPsiMuonProbeSelector");
+  TJPsiMuonProbeSelector();
 
   virtual ~TJPsiMuonProbeSelector();
 
@@ -25,9 +25,6 @@ private:
 
 public:
   float deltaRCut;
-
-private:
-  std::string name;
 
 #ifdef __CINT__
   ClassDef(TJPsiMuonProbeSelector, 1);

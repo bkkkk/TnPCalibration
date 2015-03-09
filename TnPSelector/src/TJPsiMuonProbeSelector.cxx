@@ -6,8 +6,8 @@
 
 #include <TnPSelector/KinematicUtils.h>
 
-TJPsiMuonProbeSelector::TJPsiMuonProbeSelector(const std::string& name)
-    : deltaRCut(std::numeric_limits<float>::max()), name(name) {}
+TJPsiMuonProbeSelector::TJPsiMuonProbeSelector()
+    : deltaRCut{std::numeric_limits<float>::max()} {}
 
 TJPsiMuonProbeSelector::~TJPsiMuonProbeSelector() {}
 
