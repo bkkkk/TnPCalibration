@@ -24,7 +24,7 @@ int TJPsiMuonProbeSelector::accept(const ITrack& probe, const IMuons& muons, int
   for(auto muon = 0ul; muon != muons.n(); muon++) {
     if(muons[muon].isCombinedMuon() != 1) continue;
 
-    float deltaRCandidate = GetDeltaR(probe, muons[muon]);
+    float deltaRCandidate = TNP::GetDeltaR(muons[muon], probe);
         
     if(deltaRCandidate < deltaR) {
       deltaR = deltaRCandidate;
