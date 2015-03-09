@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 
-#include <TVector3.h>
 #include <TnPSelector/KinematicUtils.h>
 
 
@@ -37,18 +36,6 @@ int TJPsiMuonProbeSelector::accept(const ITrack& probe, const IMuons& muons,
   }
 
   return (accept(deltaR));
-}
-
-// MARK FOR DEMOLITION
-float TJPsiMuonProbeSelector::GetDeltaR(const ITrack& probe,
-                                        const IMuon& muon) {
-  TLorentzVector probeVec =
-      TNP::GetTrackVector(probe.pt(), probe.eta(), probe.phi_wrtPV());
-
-  TLorentzVector muonVec =
-      TNP::GetMuonVector(muon.pt(), muon.eta(), muon.phi(), muon.E());
-
-  return (probeVec.DeltaR(muonVec));
 }
 
 int TJPsiMuonProbeSelector::accept(const float& deltaR) {

@@ -19,9 +19,6 @@ public:
 
   int finalize();
 
-private:
-  float GetDeltaR(const ITrack& probe, const IMuon& muon);
-
 public:
   float deltaRCut;
 
