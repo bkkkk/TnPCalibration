@@ -57,9 +57,9 @@ TEST(GetDeltaZ0Test, MixedSign) {
 }
 
 TEST(GetInvariantMass, Nominal) {
-  const double MuonMass = 105.6583715;
-  auto result = TNP::GetInvariantMass(0, 0, 0, MuonMass, 0, 0, 0, MuonMass);
-  EXPECT_FLOAT_EQ(2 * MuonMass, result);
+  const double Expected = 3043.45;
+  auto result = TNP::GetInvariantMass(4500, 1.3, 0.4, 3050, 0.5, 0.4);
+  EXPECT_FLOAT_EQ(Expected, result);
 }
 
 int main(int argc, char** argv) {
