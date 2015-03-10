@@ -27,13 +27,13 @@ class MiniNtupleMaker : public EL::Algorithm {
 
  public:
   virtual EL::StatusCode setupJob(EL::Job& job);
-  virtual EL::StatusCode histInitialize(void);
+  virtual EL::StatusCode histInitialize();
   virtual EL::StatusCode changeInput(bool firstFile);
-  virtual EL::StatusCode initialize(void);
-  virtual EL::StatusCode execute(void);
-  virtual EL::StatusCode postExecute(void);
-  virtual EL::StatusCode finalize(void);
-  virtual EL::StatusCode histFinalize(void);
+  virtual EL::StatusCode initialize();
+  virtual EL::StatusCode execute();
+  virtual EL::StatusCode postExecute();
+  virtual EL::StatusCode finalize();
+  virtual EL::StatusCode histFinalize();
 
  public:
   EL::NTupleSvc* output;  //!
