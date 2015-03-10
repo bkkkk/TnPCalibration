@@ -19,9 +19,9 @@ namespace MIN {
 
 MiniNtupleMaker::MiniNtupleMaker()
     : doTriggerCut(true),
-      tagSelector(NULL),
-      mcpSelector(NULL),
-      triggerMatching(NULL),
+      tagSelector(nullptr),
+      mcpSelector(nullptr),
+      triggerMatching(nullptr),
       eventDebug(20) {
 }
 
@@ -46,7 +46,7 @@ EL::StatusCode MiniNtupleMaker::changeInput(bool firstFile) {
       dynamic_cast<TTree*>(wk()->inputFile()->Get("physicsMeta/TrigConfTree"));
   TTree* eventTree = dynamic_cast<TTree*>(wk()->inputFile()->Get("physics"));
 
-  if ((eventTree == NULL) || (trigConfTree == NULL)) {
+  if (eventTree || trigConfTree) {
     LOG_ERROR() << "Trigger Conf/Event Tree not present";
     return EL::StatusCode::FAILURE;
   } else {
