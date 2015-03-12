@@ -8,9 +8,6 @@ TJPsiProbeSelector::TJPsiProbeSelector()
       pCut(std::numeric_limits<float>::min()) {
 }
 
-TJPsiProbeSelector::~TJPsiProbeSelector() {
-}
-
 int TJPsiProbeSelector::initialize() {
   if (etaCut == std::numeric_limits<float>::max())
     return (0);

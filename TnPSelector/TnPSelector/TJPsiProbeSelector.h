@@ -6,7 +6,7 @@
 class TJPsiProbeSelector {
  public:
   TJPsiProbeSelector();
-  virtual ~TJPsiProbeSelector();
+  virtual ~TJPsiProbeSelector() = default;
 
  public:
   int initialize();
