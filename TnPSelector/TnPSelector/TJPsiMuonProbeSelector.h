@@ -8,7 +8,7 @@ class TJPsiMuonProbeSelector {
 public:
   TJPsiMuonProbeSelector();
 
-  virtual ~TJPsiMuonProbeSelector();
+  ~TJPsiMuonProbeSelector() = default;
 
   int initialize();
 
