@@ -5,69 +5,42 @@
 #include <TString.h>
 
 class TJPsiTagSelector {
-public:
-  struct TagCuts {
-    float   etaCut;
-    int     combinedMuonCut;
-    float   trackMatchDrCut;
-    float   ptCut;
-    float   d0Cut;
-    float   z0Cut;
-    float   d0SigCut;
-    float   z0SigCut;
-  };
+ public:
+  TJPsiTagSelector();
+  virtual ~TJPsiTagSelector();
 
-public:
-	TJPsiTagSelector();
-  TJPsiTagSelector(const TagCuts& cuts);
-	virtual ~TJPsiTagSelector();
+ public:
+  bool initialize() const;
+  int accept(const IMuon& muon);
+  int finalize() const;
 
-public:
-	bool initialize() const;
-	int accept(const IMuon& muon);
-	int finalize(void) const;
+ public:
+  int accept(float eta,
+             int combinedMuon,
+             float pt,
+             float d0,
+             float z0,
+             float d0Sig,
+             float z0Sig) const;
 
-public:
-  inline int accept(float eta, int combinedMuon, float pt,
-                    float d0, float z0, float d0Sig, float z0Sig) const {
-    if(!passReconstructionCuts(pt, eta)) return 0;
-    if(!passCombinedCut(combinedMuon)) return 0;
-    if(!passIPCuts(d0, z0, d0Sig, z0Sig)) return 0;
+  bool passReconstructionCuts(float pt, float eta) const;
 
-    return (1);
-  }
+  bool passCombinedCut(bool isCombined) const;
 
+  bool passIPCuts(float d0, float z0, float d0Sig, float z0Sig) const;
 
-  inline bool passReconstructionCuts(float pt, float eta) const {
-    return (pt > ptCut && fabs(eta) < etaCut);
-  }
-
-  inline bool passCombinedCut(bool isCombined) const {
-    return (isCombined == combinedMuonCut);
-  }
-
-  inline bool passIPCuts(float d0, float z0, float d0Sig, float z0Sig) const {
-    if(fabs(d0) > d0Cut) return false; 
-    if(fabs(z0) > z0Cut) return false;
-
-    if(fabs(z0Sig) > z0SigCut) return false;
-    if(fabs(d0Sig) > d0SigCut) return false;
-
-    return true;
-  }
-
-public:
-  float   etaCut;
-  int     combinedMuonCut;
-  float 	trackMatchDrCut;
-  float   ptCut;
-  float   d0Cut;
-  float   z0Cut;
-  float   d0SigCut;
-  float   z0SigCut;
+ public:
+  float etaCut;
+  int combinedMuonCut;
+  float trackMatchDrCut;
+  float ptCut;
+  float d0Cut;
+  float z0Cut;
+  float d0SigCut;
+  float z0SigCut;
 
 #ifdef __CINT__
-	ClassDef(TJPsiTagSelector, 1);
+  ClassDef(TJPsiTagSelector, 1);
 #endif
 };
 
