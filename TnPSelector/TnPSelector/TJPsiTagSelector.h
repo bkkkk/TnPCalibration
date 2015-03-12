@@ -1,5 +1,5 @@
-#ifndef TJPSITASELECTOR_H_
-#define TJPSITASELECTOR_H_ 1
+#ifndef TJPSITAGSELECTOR_H_
+#define TJPSITAGSELECTOR_H_ 1
 
 #include <D3PDReaderAdapter/IMuon.h>
 
