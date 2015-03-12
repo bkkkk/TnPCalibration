@@ -3,7 +3,6 @@
 
 #include <D3PDReaderAdapter/IMuons.h>
 #include <D3PDReaderAdapter/ITracks.h>
-#include <string>
 
 class TJPsiMuonProbeSelector {
 public:
@@ -11,7 +10,7 @@ public:
 
   virtual ~TJPsiMuonProbeSelector();
 
-  int initialize(void);
+  int initialize();
 
   int accept(const ITrack& probe, const IMuons& muons,
              std::size_t& muonProbeIdx);
