@@ -7,6 +7,7 @@ RM += -r
 MKDIR_P = mkdir -p
 
 CXXFLAGS += -Wall -Wextra -Wstring-plus-int -pedantic -Werror -Wunreachable-code -std=c++11
+CXXFLAGS += -MMD -MP
 CXXFLAGS += -I.
 CXXFLAGS += -I../JacobUtils
 CXXFLAGS += -I../D3PDReaderAdapter
@@ -32,6 +33,7 @@ TEST_DIR := $(ROOT)/test
 OBJECT_DIR := obj
 LIBRARY_DIR := lib
 TEST_BIN_DIR := test-bin
+DEP_DIR = .deps
 
 # Input files
 SOURCES = $(wildcard $(SOURCE_DIR)/*.cxx)
@@ -41,6 +43,7 @@ TEST_SOURCES = $(wildcard $(TEST_DIR)/*.cxx)
 # Output
 OBJECTS = $(SOURCES:$(SOURCE_DIR)/%.cxx=$(OBJECT_DIR)/%.o)
 LIBRARY = $(LIBRARY_DIR)/libTnPSelector.a
+DEP_FILES = $(DEP_DIR)/$(*F)
 TEST_BINS = $(TEST_SOURCES:$(TEST_DIR)/%.cxx=$(TEST_BIN_DIR)/%)
 
 all: directories $(LIBRARY) $(TEST_BINS)
@@ -49,16 +52,25 @@ directories:
 	@$(MKDIR_P) $(OBJECT_DIR)
 	@$(MKDIR_P) $(LIBRARY_DIR)
 	@$(MKDIR_P) $(TEST_BIN_DIR)
+	@$(MKDIR_P) $(DEP_DIR)
+
+-include $(TEST_SOURCES:$(TEST_DIR)/%.cxx=$(DEP_DIR)/%.d)
 
 $(TEST_BIN_DIR)/%: $(TEST_DIR)/%.cxx
-	$(LINK.cc) $(LDLIBS) -L$(LIBRARY_DIR) -l$(TARGET) $< -o $@ 
+	$(LINK.cc) $(LDLIBS) -L$(LIBRARY_DIR) -l$(TARGET) $< -o $@
+	@mv $(TEST_BIN_DIR)/*.d $(DEP_DIR)/
+
+-include $(SOURCES:$(SOURCE_DIR)/%.cxx=$(DEP_DIR)/%.d)
 
 $(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.cxx
+	@echo "Linking: $@"
 	$(COMPILE.cc) $< -o $@
+	@mv $(OBJECT_DIR)/*.d $(DEP_DIR)/
 
 $(LIBRARY): $(OBJECTS)
 	$(AR) $(ARFLAGS) $(LIBRARY) $(OBJECTS)
 
+.PHONY: print-dep
 print-dep:
 	@echo 'Unit tests: '$(TEST_SOURCES)
 	@echo 'Unit tests bins: '$(TEST_BINS)
@@ -66,6 +78,7 @@ print-dep:
 	@echo 'Inlcudes files: '$(INCLUDES)
 	@echo 'Object targets: '$(OBJECTS)
 
+.PHONY: test
 test:
 	sh ./run_tests.sh
 
@@ -75,10 +88,10 @@ test-classifier:
 test-pair:
 	test-bin/ut_PairSelector
 
-.PHONY: clean distclean test print-dep
-
+.PHONY: distclean
 distclean: clean
 
+.PHONY: clean
 clean:
 	$(RM) ./$(OBJECT_DIR)
 	$(RM) ./$(TEST_BIN_DIR)
