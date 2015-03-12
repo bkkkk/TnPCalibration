@@ -2,7 +2,6 @@
 #define TJPSITASELECTOR_H_ 1
 
 #include <D3PDReaderAdapter/IMuon.h>
-#include <TString.h>
 
 class TJPsiTagSelector {
  public:
