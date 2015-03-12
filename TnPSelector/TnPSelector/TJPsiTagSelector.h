@@ -12,9 +12,6 @@ class TJPsiTagSelector {
  public:
   bool initialize() const;
   int accept(const IMuon& muon);
-  int finalize() const;
-
- public:
   int accept(float eta,
              int combinedMuon,
              float pt,
@@ -28,6 +25,7 @@ class TJPsiTagSelector {
   bool passCombinedCut(bool isCombined) const;
 
   bool passIPCuts(float d0, float z0, float d0Sig, float z0Sig) const;
+  int finalize() const;
 
  public:
   float etaCut;
