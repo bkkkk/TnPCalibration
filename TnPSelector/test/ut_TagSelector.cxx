@@ -12,9 +12,9 @@ TEST_F(TestTagSelector, InitializeWithValidParameters) {
 }
 
 TEST_F(TestTagSelector, testIndividualCuts) {
-  EXPECT_EQ(1, selector->passReconstructionCuts(5000, 2.3));
-  EXPECT_EQ(1, selector->passIPCuts(0.2, 0.3, 1, 1));
-  EXPECT_EQ(1, selector->passCombinedCut(true));
+  EXPECT_TRUE(selector->passReconstructionCuts(5000, 2.3));
+  EXPECT_TRUE(selector->passIPCuts(0.2, 0.3, 1, 1));
+  EXPECT_TRUE(selector->passCombinedCut(true));
 }
 
 TEST_F(TestTagSelector, NumericSelectionOfBadMuon) {
