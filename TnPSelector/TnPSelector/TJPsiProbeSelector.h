@@ -3,28 +3,25 @@
 
 #include "D3PDReaderAdapter/ITrack.h"
 
-#include <string>
-
 class TJPsiProbeSelector {
-public:
-	TJPsiProbeSelector(const std::string& val_name="TJPsiProbeSelector");
-	virtual ~TJPsiProbeSelector();
+ public:
+  TJPsiProbeSelector();
+  virtual ~TJPsiProbeSelector();
 
-public:
-	int initialize();
+ public:
+  int initialize();
 
-	int accept (const ITrack& track);
-	int accept (const float& eta, const float& p);
+  int accept(const ITrack& track);
+  int accept(const float& eta, const float& p);
 
-	int finalize();
+  int finalize();
 
-public:
-	std::string name;
+ public:
   float etaCut;
   float pCut;
 
-#ifdef __CINT__    
-	ClassDef(TJPsiProbeSelector, 1);
+#ifdef __CINT__
+  ClassDef(TJPsiProbeSelector, 1);
 #endif
 };
 

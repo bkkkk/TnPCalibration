@@ -3,9 +3,8 @@
 #include <limits>
 #include <cmath>
 
-TJPsiProbeSelector::TJPsiProbeSelector(const std::string& val_name)
-: name(val_name),
-  etaCut(std::numeric_limits<float>::max()),
+TJPsiProbeSelector::TJPsiProbeSelector()
+: etaCut(std::numeric_limits<float>::max()),
   pCut(std::numeric_limits<float>::min()) { }
 
 TJPsiProbeSelector::~TJPsiProbeSelector() { }
