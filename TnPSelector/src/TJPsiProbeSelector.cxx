@@ -4,14 +4,18 @@
 #include <cmath>
 
 TJPsiProbeSelector::TJPsiProbeSelector()
-: etaCut(std::numeric_limits<float>::max()),
-  pCut(std::numeric_limits<float>::min()) { }
+    : etaCut(std::numeric_limits<float>::max()),
+      pCut(std::numeric_limits<float>::min()) {
+}
 
-TJPsiProbeSelector::~TJPsiProbeSelector() { }
+TJPsiProbeSelector::~TJPsiProbeSelector() {
+}
 
 int TJPsiProbeSelector::initialize() {
-  if(etaCut == std::numeric_limits<float>::max()) return (0);
-  if(pCut == std::numeric_limits<float>::min()) return (0);
+  if (etaCut == std::numeric_limits<float>::max())
+    return (0);
+  if (pCut == std::numeric_limits<float>::min())
+    return (0);
 
   return (1);
 }
@@ -23,8 +27,10 @@ int TJPsiProbeSelector::accept(const ITrack& track) {
 }
 
 int TJPsiProbeSelector::accept(const float& eta, const float& p) {
-  if(std::fabs(eta) > etaCut) return (0);
-  if(p < pCut) return (0);
+  if (std::fabs(eta) > etaCut)
+    return (0);
+  if (p < pCut)
+    return (0);
   return (1);
 }
 
