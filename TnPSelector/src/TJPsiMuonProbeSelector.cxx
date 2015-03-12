@@ -9,8 +9,6 @@
 TJPsiMuonProbeSelector::TJPsiMuonProbeSelector()
     : deltaRCut{std::numeric_limits<float>::max()} {}
 
-TJPsiMuonProbeSelector::~TJPsiMuonProbeSelector() {}
-
 int TJPsiMuonProbeSelector::initialize() {
   if (deltaRCut == std::numeric_limits<float>::max())
     return (0);
