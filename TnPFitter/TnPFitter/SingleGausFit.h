@@ -1,11 +1,7 @@
 #ifndef SINGLEGAUSFIT_H_
 #define SINGLEGAUSFIT_H_ 1
 
-#include <TnPFitter/FitConfig.h>
-#include <TnPFitter/FitResult.h>
 #include <TnPFitter/IFitter.h>
-
-#include <Fit/ParameterSettings.h>
 
 #include <string>
 
