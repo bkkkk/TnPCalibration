@@ -50,6 +50,7 @@ FitterDraw::~FitterDraw() {
 }
 
 void FitterDraw::SetupLines(const std::string& options) {
+  (void) options;
   SetupLine(fFitter->GetSignalFunction(), signal);
   SetupLine(fFitter->GetBackgroundFunction(), bkg);
   SetupLine(fFitter->GetCompositeFunction(), nominal);
@@ -81,7 +82,7 @@ void FitterDraw::SetupLines(const std::string& options) {
 
 void FitterDraw::SetupBox() {
   box = new TPaveText(0.2, 0.48, 0.45, 0.9, "NDC");
-  for(size_t parIdx = 0; parIdx != fFitter->GetCompositeFunction()->GetNpar(); parIdx++) {
+  for(auto parIdx = 0; parIdx != fFitter->GetCompositeFunction()->GetNpar(); parIdx++) {
     auto name = fFitter->GetCompositeFunction()->GetParName(parIdx);
     auto val = fFitter->GetCompositeFunction()->GetParameter(parIdx);
     auto err = fFitter->GetCompositeFunction()->GetParError(parIdx);

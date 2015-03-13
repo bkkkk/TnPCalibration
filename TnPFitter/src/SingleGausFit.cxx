@@ -66,9 +66,9 @@ void SingleGausFit::SetCompositeUpFunction (void) {
                                 bottomFitLimit, topFitLimit );
 
   if(!fitConfig.IsLowBackground()) {
-    auto constant = fitResult->GetParValue("Constant") + fitResult->GetParError("Constant");
-    auto slope = fitResult->GetParValue("Slope") - fitResult->GetParError("Slope");
-    auto poly = fitResult->GetParValue("Poly") + fitResult->GetParError("Poly");
+    auto constant = fitResult.GetParValue("Constant") + fitResult.GetParError("Constant");
+    auto slope = fitResult.GetParValue("Slope") - fitResult.GetParError("Slope");
+    auto poly = fitResult.GetParValue("Poly") + fitResult.GetParError("Poly");
 
     SetCompositeErrFunction(compositeUpFunction, poly, slope, constant);
 
@@ -99,9 +99,9 @@ void SingleGausFit::SetCompositeDownFunction() {
                                   bottomFitLimit, topFitLimit);
 
   if(!fitConfig.IsLowBackground()) {
-    auto constant = fitResult->GetParValue("Constant") - fitResult->GetParError("Constant");
-    auto slope = fitResult->GetParValue("Slope") + fitResult->GetParError("Slope");
-    auto poly = fitResult->GetParValue("Poly") - fitResult->GetParError("Poly");
+    auto constant = fitResult.GetParValue("Constant") - fitResult.GetParError("Constant");
+    auto slope = fitResult.GetParValue("Slope") + fitResult.GetParError("Slope");
+    auto poly = fitResult.GetParValue("Poly") - fitResult.GetParError("Poly");
 
     SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);
 

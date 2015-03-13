@@ -141,7 +141,10 @@ void IFitter::testBackgroundFunction() {
   }
 }
 
-const void IFitter::PrintVariable(const std::string& name, double var, double err) const {
+void IFitter::PrintVariable(const std::string& name, double var, double err) const {
+  (void) name;
+  (void) var;
+  (void) err;
 }
 
 void TNPFITTER::RunFit(IFitter* fitter) {

@@ -14,7 +14,7 @@ FitConfig::FitConfig(std::string function, unsigned npar, bool isLowBkg, double 
    sigFunction(""),
    parameters(npar),
    isLowBackground(false) {
-  
+  (void) isLowBkg;
   if(npar == 0) {
     throw(std::runtime_error("Number of parameters is zero"));
   }
@@ -117,7 +117,7 @@ void FitConfig::SetFromFitResult(const TFitResultPtr& rhs) {
   auto npar = rhs->NPar();
   auto pars = rhs->GetParams();
 
-  for(auto parIdx = 0; parIdx != npar; parIdx++) {
+  for(auto parIdx = 0ul; parIdx != npar; parIdx++) {
     auto name = rhs->GetParameterName(parIdx);
     auto value = pars[parIdx];
     parameters.push_back({name, value});
@@ -130,12 +130,8 @@ void FitConfig::Print() {
   }
 }
 
-void FitConfig::PrintParameter(const Parameter& par) {  
-  auto name = par.Name();
-  auto val = par.Value();
-  auto lowLimit = par.LowerLimit();
-  auto topLimit = par.UpperLimit();
-  // LOG_INFO() << "| " << name << " | " << val << " | " << lowLimit << " | " << topLimit;
+void FitConfig::PrintParameter(const Parameter& par) {
+  (void) par;
 }
 
 #ifdef __CINT__

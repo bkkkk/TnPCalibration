@@ -14,7 +14,7 @@ public:
 
 public:
   void AddParameter(std::string name, double val, double error);
-  const std::size_t GetNPars() const;
+  std::size_t GetNPars() const;
   const SimpleParameters& GetParameters() const;
   SimpleParameter GetParameter(const std::string& parName) const;
   double GetParValue(const std::string& name) const;

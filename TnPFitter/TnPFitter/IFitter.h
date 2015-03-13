@@ -44,7 +44,7 @@ public:
   void SetFitLimits(const double min, const double max);
 
 protected:
-  const void PrintVariable(const std::string& name, double var, double err) const;
+  void PrintVariable(const std::string& name, double var, double err) const;
 
 protected:
   void testSignalFunction();

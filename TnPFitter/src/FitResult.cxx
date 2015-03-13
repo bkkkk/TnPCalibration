@@ -6,7 +6,7 @@ void FitResult::AddParameter(std::string name, double val, double error) {
   assert(!parameters.empty());
 }
 
-const std::size_t FitResult::GetNPars() const {
+std::size_t FitResult::GetNPars() const {
   return(parameters.size());
 }
 
