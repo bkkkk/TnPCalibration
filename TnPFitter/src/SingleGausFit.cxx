@@ -1,9 +1,9 @@
 #include "TnPFitter/SingleGausFit.h"
 
-#include "TCanvas.h"
-#include "TLine.h"
-#include "TF1.h"
-#include "TH1F.h"
+#include <TCanvas.h>
+#include <TLine.h>
+#include <TF1.h>
+#include <TH1F.h>
 #include <Fit/ParameterSettings.h>
 
 #include "JacobUtils/LoggingUtility.h"
