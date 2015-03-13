@@ -73,10 +73,9 @@ void SingleGausFit::SetCompositeUpFunction(void) {
                                 bottomFitLimit,
                                 topFitLimit);
 
-  auto constant =
-      fitResult.GetParValue("Constant") + fitResult.GetParError("Constant");
-  auto slope = fitResult.GetParValue("Slope") - fitResult.GetParError("Slope");
-  auto poly = fitResult.GetParValue("Poly") + fitResult.GetParError("Poly");
+  auto constant = getParameterUpVariation("Constant");
+  auto slope = getParamterDownVariation("Slope");
+  auto poly = getParameterUpVariation("Poly");
 
   SetCompositeErrFunction(compositeUpFunction, poly, slope, constant);
 
@@ -85,6 +84,14 @@ void SingleGausFit::SetCompositeUpFunction(void) {
   backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(3));
   backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(4));
   backgroundUpFunction->SetParameter(2, compositeUpFunction->GetParameter(5));
+}
+
+double SingleGausFit::getParameterUpVariation(const std::string& name) {
+  return (fitResult.GetParValue(name) + fitResult.GetParError(name));
+}
+
+double SingleGausFit::getParamterDownVariation(const std::string& name) {
+  return (fitResult.GetParValue(name) - fitResult.GetParError(name));
 }
 
 void SingleGausFit::SetCompositeDownFunction() {
@@ -107,10 +114,9 @@ void SingleGausFit::SetCompositeDownFunction() {
                                   bottomFitLimit,
                                   topFitLimit);
 
-  auto constant =
-      fitResult.GetParValue("Constant") - fitResult.GetParError("Constant");
-  auto slope = fitResult.GetParValue("Slope") + fitResult.GetParError("Slope");
-  auto poly = fitResult.GetParValue("Poly") - fitResult.GetParError("Poly");
+  auto constant = getParamterDownVariation("Constant");
+  auto slope = getParameterUpVariation("Slope");
+  auto poly = getParamterDownVariation("Poly");
 
   SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);
 
