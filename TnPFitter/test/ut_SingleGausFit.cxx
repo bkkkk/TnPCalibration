@@ -2,18 +2,18 @@
 #include "TnPFitter/SingleGausFit.h"
 #include "TH1F.h"
 
-TEST_F(TestSingleGausFit, CreateEmptyConfiguration) {
+TEST_F(TestSingleGausFit, ThrowWhenConstructingConfigWithEmptyHistogram) {
   EXPECT_ANY_THROW(TNPFITTER::BuildSingleGausFitConfiguration(nullptr));
 }
 
-TEST_F(TestSingleGausFit, InitializeWithEmptyVariables) {
+TEST_F(TestSingleGausFit, ThrowWhenConstructingFitterWithEmptyHistogram) {
   auto empty_histogram = new TH1F("test_canvas", "test_canvas", 100, 2.0, 5.0);
   FitConfig empty_config = TNPFITTER::BuildSingleGausFitConfiguration(empty_histogram);
 
   EXPECT_ANY_THROW(new SingleGausFit("", nullptr, empty_config));
 }
 
-TEST_F(TestSingleGausFit, InitializeWithDefaultVariables) {
+TEST_F(TestSingleGausFit, ConstructSuccessfullyWithInitializedParameters) {
   auto empty_histogram = new TH1F("test_canvas", "test_canvas", 100, 2.0, 5.0);
   FitConfig empty_config = TNPFITTER::BuildSingleGausFitConfiguration(empty_histogram);
 
