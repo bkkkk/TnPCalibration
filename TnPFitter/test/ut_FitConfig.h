@@ -6,9 +6,7 @@
 
 class TestFitConfig : public ::testing::Test {
  protected:
-  virtual void SetUp() {
-    fit = new FitConfig("test_function", 6, true, 1.2f, 3.4f);
-  }
+  virtual void SetUp() { fit = new FitConfig("test_function", 6, 1.2f, 3.4f); }
 
   virtual void TearDown() { delete fit; }
 

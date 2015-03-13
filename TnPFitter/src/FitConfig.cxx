@@ -2,12 +2,10 @@
 
 #include "TFitResult.h"
 
-#include "TnPFitter/FitConfigurationHelpers.h"
 #include "JacobUtils/LoggingUtility.h"
 
 FitConfig::FitConfig(std::string function,
                      unsigned npar,
-                     bool isLowBkg,
                      double min,
                      double max)
     : fitOptions("MERQB"),
@@ -16,9 +14,7 @@ FitConfig::FitConfig(std::string function,
       fitFunction(std::move(function)),
       bkgFunction(""),
       sigFunction(""),
-      parameters(npar),
-      isLowBackground(false) {
-  (void)isLowBkg;
+      parameters(npar) {
   if (npar == 0) {
     throw(std::runtime_error("Number of parameters is zero"));
   }
@@ -94,10 +90,6 @@ void FitConfig::SetFitOptions(const std::string& options) {
 }
 std::string FitConfig::GetFitOptions() const {
   return (fitOptions);
-}
-
-bool FitConfig::GetMode() const {
-  return (isLowBackground);
 }
 
 const Parameter& FitConfig::ParSettings(std::size_t i) const {

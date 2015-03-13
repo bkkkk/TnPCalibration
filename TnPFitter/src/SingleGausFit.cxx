@@ -11,7 +11,6 @@
 #include "TnPFitter/FitConfig.h"
 #include "TnPFitter/FitResult.h"
 
-#include "TnPFitter/FitConfigurationHelpers.h"
 #include "TnPFitter/FitDrawingHelpers.h"
 
 SingleGausFit::SingleGausFit(std::string name,
@@ -32,14 +31,10 @@ void SingleGausFit::SetBackgroundFunction() {
                                bottomFitLimit,
                                topFitLimit);
 
-  if (!fitConfig.IsLowBackground()) {
-    backgroundFunction->FixParameter(
-        0, compositeFunction->GetParameter("Constant"));
-    backgroundFunction->FixParameter(1,
-                                     compositeFunction->GetParameter("Slope"));
-    backgroundFunction->FixParameter(2,
-                                     compositeFunction->GetParameter("Poly"));
-  }
+  backgroundFunction->FixParameter(0,
+                                   compositeFunction->GetParameter("Constant"));
+  backgroundFunction->FixParameter(1, compositeFunction->GetParameter("Slope"));
+  backgroundFunction->FixParameter(2, compositeFunction->GetParameter("Poly"));
 }
 
 void SingleGausFit::SetSignalFunction() {
@@ -78,21 +73,18 @@ void SingleGausFit::SetCompositeUpFunction(void) {
                                 bottomFitLimit,
                                 topFitLimit);
 
-  if (!fitConfig.IsLowBackground()) {
-    auto constant =
-        fitResult.GetParValue("Constant") + fitResult.GetParError("Constant");
-    auto slope =
-        fitResult.GetParValue("Slope") - fitResult.GetParError("Slope");
-    auto poly = fitResult.GetParValue("Poly") + fitResult.GetParError("Poly");
+  auto constant =
+      fitResult.GetParValue("Constant") + fitResult.GetParError("Constant");
+  auto slope = fitResult.GetParValue("Slope") - fitResult.GetParError("Slope");
+  auto poly = fitResult.GetParValue("Poly") + fitResult.GetParError("Poly");
 
-    SetCompositeErrFunction(compositeUpFunction, poly, slope, constant);
+  SetCompositeErrFunction(compositeUpFunction, poly, slope, constant);
 
-    histogram->Fit(compositeUpFunction, fitConfig.GetFitOptions().c_str());
+  histogram->Fit(compositeUpFunction, fitConfig.GetFitOptions().c_str());
 
-    backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(3));
-    backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(4));
-    backgroundUpFunction->SetParameter(2, compositeUpFunction->GetParameter(5));
-  }
+  backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(3));
+  backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(4));
+  backgroundUpFunction->SetParameter(2, compositeUpFunction->GetParameter(5));
 }
 
 void SingleGausFit::SetCompositeDownFunction() {
@@ -115,24 +107,21 @@ void SingleGausFit::SetCompositeDownFunction() {
                                   bottomFitLimit,
                                   topFitLimit);
 
-  if (!fitConfig.IsLowBackground()) {
-    auto constant =
-        fitResult.GetParValue("Constant") - fitResult.GetParError("Constant");
-    auto slope =
-        fitResult.GetParValue("Slope") + fitResult.GetParError("Slope");
-    auto poly = fitResult.GetParValue("Poly") - fitResult.GetParError("Poly");
+  auto constant =
+      fitResult.GetParValue("Constant") - fitResult.GetParError("Constant");
+  auto slope = fitResult.GetParValue("Slope") + fitResult.GetParError("Slope");
+  auto poly = fitResult.GetParValue("Poly") - fitResult.GetParError("Poly");
 
-    SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);
+  SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);
 
-    histogram->Fit(compositeDownFunction, fitConfig.GetFitOptions().c_str());
+  histogram->Fit(compositeDownFunction, fitConfig.GetFitOptions().c_str());
 
-    backgroundDownFunction->SetParameter(
-        0, compositeDownFunction->GetParameter(3));
-    backgroundDownFunction->SetParameter(
-        1, compositeDownFunction->GetParameter(4));
-    backgroundDownFunction->SetParameter(
-        2, compositeDownFunction->GetParameter(5));
-  }
+  backgroundDownFunction->SetParameter(0,
+                                       compositeDownFunction->GetParameter(3));
+  backgroundDownFunction->SetParameter(1,
+                                       compositeDownFunction->GetParameter(4));
+  backgroundDownFunction->SetParameter(2,
+                                       compositeDownFunction->GetParameter(5));
 }
 
 void SingleGausFit::SetCompositeErrFunction(TF1* function,
@@ -182,17 +171,11 @@ FitConfig TNPFITTER::BuildSingleGausFitConfiguration(TH1* histogram,
   auto singleGaus = "gaus(0)";
   auto poly = "[0] + [1] * x + [2] * x * x";
 
-  FitConfig* fitConfig;
+  FitConfig* fitConfig = new FitConfig(polyPlusSingleGaus, 6, min, max);
 
-  if (TNPFITTER::IsLowBackground(histogram, min, 0.07)) {
-    fitConfig = new FitConfig(singleGaus, 3, true, min, max);
-  } else {
-    fitConfig = new FitConfig(polyPlusSingleGaus, 6, false, min, max);
-
-    pars.push_back({"Constant", 0});
-    pars.push_back({"Slope", 0});
-    pars.push_back({"Poly", 0});
-  }
+  pars.push_back({"Constant", 0});
+  pars.push_back({"Slope", 0});
+  pars.push_back({"Poly", 0});
 
   fitConfig->SetSignalFitFunction(singleGaus);
   fitConfig->SetBackgroundFitFunction(poly);

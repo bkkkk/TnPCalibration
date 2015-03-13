@@ -2,10 +2,10 @@
 #include "TnPFitter/FitConfig.h"
 
 TEST_F(TestFitConfig, InitializeWithEmptyFunction) {
-  EXPECT_ANY_THROW(new FitConfig ("", 6, false, 2.4f, 4.5f));
-  EXPECT_ANY_THROW(new FitConfig ("some_function", 0, false, 2.4f, 4.5f));
-  EXPECT_ANY_THROW(new FitConfig ("some_function", 6, false, 4.5f, 3.5f));
-  EXPECT_ANY_THROW(new FitConfig ("some_function", 6, false, 4.5f, 4.5f));
+  EXPECT_ANY_THROW(new FitConfig("", 6, 2.4f, 4.5f));
+  EXPECT_ANY_THROW(new FitConfig("some_function", 0, 2.4f, 4.5f));
+  EXPECT_ANY_THROW(new FitConfig("some_function", 6, 4.5f, 3.5f));
+  EXPECT_ANY_THROW(new FitConfig("some_function", 6, 4.5f, 4.5f));
 }
 
 TEST_F(TestFitConfig, GetValidLimits) {

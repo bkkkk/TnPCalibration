@@ -14,7 +14,6 @@ class FitConfig {
  public:
   FitConfig(std::string function,
             unsigned npar,
-            bool isLowBkg,
             double min = 2.62f,
             double max = 3.5f);
 
@@ -36,9 +35,6 @@ class FitConfig {
   void SetFitOptions(const std::string& options);
   std::string GetFitOptions() const;
 
-  bool GetMode() const;
-  inline bool IsLowBackground() const { return (GetMode()); }
-
   const Parameter& ParSettings(std::size_t i) const;
   void SetParamsSettings(const Parameters& pars);
   const Parameters& ParamsSettings() const;
@@ -57,7 +53,6 @@ class FitConfig {
   std::string bkgFunction;
   std::string sigFunction;
   Parameters parameters;
-  bool isLowBackground;
 
 #ifdef __CINT__
   ClassDef(FitConfig, 1)

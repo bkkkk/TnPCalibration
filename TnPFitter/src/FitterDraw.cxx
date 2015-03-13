@@ -106,14 +106,12 @@ void FitterDraw::Draw(const std::string& options) {
   histogram->Draw();
 
   fFitter->GetCompositeFunction()->Draw("SAME");
-  if(!fFitter->GetFitConfig().IsLowBackground()) {
-    fFitter->GetBackgroundFunction()->Draw("SAME");
-    fFitter->GetSignalFunction()->Draw("SAME");
-    fFitter->GetBackgroundDownFunction()->Draw("SAME");
-    fFitter->GetBackgroundUpFunction()->Draw("SAME");
-    fFitter->GetCompositeDownFunction()->Draw("SAME");
-    fFitter->GetCompositeUpFunction()->Draw("SAME");
-  }
+  fFitter->GetBackgroundFunction()->Draw("SAME");
+  fFitter->GetSignalFunction()->Draw("SAME");
+  fFitter->GetBackgroundDownFunction()->Draw("SAME");
+  fFitter->GetBackgroundUpFunction()->Draw("SAME");
+  fFitter->GetCompositeDownFunction()->Draw("SAME");
+  fFitter->GetCompositeUpFunction()->Draw("SAME");
 
   fiveLow->Draw();
   fiveHigh->Draw();
