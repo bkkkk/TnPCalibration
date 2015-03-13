@@ -2,6 +2,30 @@
 #include "TnPFitter/FitterDraw.h"
 
 IFitter::IFitter(std::string name,
+                 std::string functionName,
+                 TH1F* val_histogram,
+                 const FitConfig& val_fitConfig)
+    : name(std::move(name)),
+      fitConfig(val_fitConfig),
+      functionName(std::move(functionName)),
+      histogram(val_histogram),
+      compositeFunction(nullptr),
+      signalFunction(nullptr),
+      backgroundFunction(nullptr),
+      compositeUpFunction(nullptr),
+      compositeDownFunction(nullptr),
+      backgroundUpFunction(nullptr),
+      backgroundDownFunction(nullptr),
+      bottomFitLimit(fitConfig.GetFitMin()),
+      topFitLimit(fitConfig.GetFitMax()) {
+  if (val_histogram == nullptr) {
+    throw(std::runtime_error("Histogram is not setup properly"));
+  }
+
+  histogramName = histogram->GetName();
+}
+
+IFitter::IFitter(std::string name,
                  TH1F* val_histogram,
                  const FitConfig& val_fitConfig)
     : name(std::move(name)),

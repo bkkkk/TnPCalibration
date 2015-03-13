@@ -13,6 +13,10 @@
 class IFitter {
  public:
   IFitter(std::string name,
+          std::string functionName,
+          TH1F* val_histogram,
+          const FitConfig& val_fitConfig);
+  IFitter(std::string name,
           TH1F* val_histogram,
           const FitConfig& val_fitConfig);
 
