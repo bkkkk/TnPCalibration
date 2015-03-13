@@ -42,7 +42,7 @@ TEST_SOURCES = $(wildcard $(TEST_DIR)/*.cxx)
 
 # Output
 OBJECTS = $(SOURCES:$(SOURCE_DIR)/%.cxx=$(OBJECT_DIR)/%.o)
-LIBRARY = $(LIBRARY_DIR)/libTnPSelector.a
+LIBRARY = $(LIBRARY_DIR)/lib$(TARGET).a
 DEP_FILES = $(DEP_DIR)/$(*F)
 TEST_BINS = $(TEST_SOURCES:$(TEST_DIR)/%.cxx=$(TEST_BIN_DIR)/%)
 
