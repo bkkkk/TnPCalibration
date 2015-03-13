@@ -44,7 +44,7 @@ void IFitter::FitCompositeFunction() {
 
   histogram->Fit(compositeFunction, fitConfig.GetFitOptions().c_str());
 
-  writeFitResults(compositeFunction);
+  fitResult.fillFromFunction(compositeFunction);
 }
 
 void IFitter::setupMainCompositeFunction() {
@@ -65,16 +65,6 @@ void IFitter::setupFunctionParameter(TF1* function, std::size_t index) {
     auto min = parameter.LowerLimit();
     auto max = parameter.UpperLimit();
     function->SetParLimits(index, min, max);
-  }
-}
-
-void IFitter::writeFitResults(TF1* function) {
-  for (auto parIdx = 0; parIdx != function->GetNpar(); parIdx++) {
-    auto parName = function->GetParName(parIdx);
-    auto parValue = function->GetParameter(parIdx);
-    auto parError = function->GetParError(parIdx);
-
-    fitResult.AddParameter(parName, parValue, parError);
   }
 }
 
