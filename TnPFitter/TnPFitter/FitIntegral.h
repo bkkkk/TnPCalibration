@@ -9,14 +9,17 @@
 class TH1F;
 
 class FitIntegral {
-public:
-	FitIntegral(IFitter* fitter);
-  FitIntegral(std::string name, TH1F* histogram, double min = 2.63, double max = 3.5);
+ public:
+  FitIntegral(IFitter* fitter);
+  FitIntegral(std::string name,
+              TH1F* histogram,
+              double min = 2.63,
+              double max = 3.5);
 
-public:
-	~FitIntegral();
+ public:
+  ~FitIntegral();
 
-public:
+ public:
   double GetSignalIntegral(int sigma = 3);
   double GetBackgroundIntegral(int sigma = 3);
   double GetCorrectedYield(int sigma = 3);
@@ -27,12 +30,12 @@ public:
   double GetTotalUncertainty(int sigma = 3, int window = 2);
   void Draw(int sigma = 3, int window = 2);
 
-private:
+ private:
   std::string fName;
-	IFitter* fFitter;
+  IFitter* fFitter;
 
 #ifdef __CINT__
-	ClassDef(FitIntegral, 1)
+  ClassDef(FitIntegral, 1)
 #endif
 };
 

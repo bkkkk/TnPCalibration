@@ -4,7 +4,7 @@
 class TH1;
 
 namespace TNPFITTER {
-  bool IsLowBackground(TH1* histogram, double fittingEdge, double threshold);
+bool IsLowBackground(TH1* histogram, double fittingEdge, double threshold);
 }
 
 #endif

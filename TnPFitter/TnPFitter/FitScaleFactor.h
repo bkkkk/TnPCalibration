@@ -1,4 +1,4 @@
-#ifndef TNPFITTER_FITSCALEFACTOR_H_ 
+#ifndef TNPFITTER_FITSCALEFACTOR_H_
 #define TNPFITTER_FITSCALEFACTOR_H_ 1
 
 #include <string>
@@ -7,8 +7,10 @@
 class FitEfficiency;
 
 class FitScaleFactor {
-public:
-  FitScaleFactor(const std::string& name, FitEfficiency* data, FitEfficiency* mc);
+ public:
+  FitScaleFactor(const std::string& name,
+                 FitEfficiency* data,
+                 FitEfficiency* mc);
   ~FitScaleFactor();
 
   double GetRecoScaleFactor();
@@ -16,7 +18,7 @@ public:
   double GetSMTScaleFactor();
   double GetSMTScaleFactorError();
 
-private:
+ private:
   std::string fName;
   FitEfficiency* fData;
   FitEfficiency* fMC;
