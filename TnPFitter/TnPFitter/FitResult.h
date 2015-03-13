@@ -4,6 +4,8 @@
 #include <map>
 #include <string>
 
+class TF1;
+
 class FitResult {
  public:
   using SimpleParameter = std::pair<double, double>;
@@ -13,8 +15,11 @@ class FitResult {
   FitResult() = default;
 
  public:
+  void fillFromFunction(TF1* function);
   void AddParameter(std::string name, double val, double error);
+
   std::size_t GetNPars() const;
+
   const SimpleParameters& GetParameters() const;
   SimpleParameter GetParameter(const std::string& parName) const;
   double GetParValue(const std::string& name) const;

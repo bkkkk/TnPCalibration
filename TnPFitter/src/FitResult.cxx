@@ -1,5 +1,16 @@
 #include "TnPFitter/FitResult.h"
 #include <cassert>
+#include <TF1.h>
+
+void FitResult::fillFromFunction(TF1* function) {
+  for (auto parIdx = 0; parIdx != function->GetNpar(); parIdx++) {
+    auto parName = function->GetParName(parIdx);
+    auto parValue = function->GetParameter(parIdx);
+    auto parError = function->GetParError(parIdx);
+
+    AddParameter(parName, parValue, parError);
+  }
+}
 
 void FitResult::AddParameter(std::string name, double val, double error) {
   parameters[name] = std::make_pair (val, error);
