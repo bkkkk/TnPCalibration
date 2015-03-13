@@ -40,7 +40,22 @@ void IFitter::FitCompositeFunction() {
                               fitConfig.GetFitFunction().c_str(),
                               bottomFitLimit,
                               topFitLimit);
+  setupMainCompositeFunction();
 
+  histogram->Fit(compositeFunction, fitConfig.GetFitOptions().c_str());
+
+  for (auto parIdx = 0; parIdx != compositeFunction->GetNpar(); parIdx++) {
+    auto parName = compositeFunction->GetParName(parIdx);
+    auto parValue = compositeFunction->GetParameter(parIdx);
+    auto parError = compositeFunction->GetParError(parIdx);
+
+    PrintVariable(parName, parValue, parError);
+
+    fitResult.AddParameter(parName, parValue, parError);
+  }
+}
+
+void IFitter::setupMainCompositeFunction() {
   for (auto parIdx = 0; parIdx != compositeFunction->GetNpar(); parIdx++) {
     auto val = fitConfig.ParSettings(parIdx).Value();
     auto min = fitConfig.ParSettings(parIdx).LowerLimit();
@@ -53,18 +68,6 @@ void IFitter::FitCompositeFunction() {
     if (fitConfig.ParSettings(parIdx).HasLowerLimit()) {
       compositeFunction->SetParLimits(parIdx, min, max);
     }
-  }
-
-  histogram->Fit(compositeFunction, fitConfig.GetFitOptions().c_str());
-
-  for (auto parIdx = 0; parIdx != compositeFunction->GetNpar(); parIdx++) {
-    auto parName = compositeFunction->GetParName(parIdx);
-    auto parValue = compositeFunction->GetParameter(parIdx);
-    auto parError = compositeFunction->GetParError(parIdx);
-
-    PrintVariable(parName, parValue, parError);
-
-    fitResult.AddParameter(parName, parValue, parError);
   }
 }
 

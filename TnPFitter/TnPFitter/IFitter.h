@@ -34,6 +34,9 @@ class IFitter {
   virtual void SetCompositeUpFunction() = 0;
   virtual void SetCompositeDownFunction() = 0;
 
+ private:
+  void setupMainCompositeFunction();
+
  public:
   const std::string GetName() const { return name; }
   TH1F* GetHistogram() const { return histogram; }
