@@ -1,52 +1,76 @@
+BUILD ?= debug
+
+TARGET := TnPFitter
+
+RM += -r
+
 MKDIR_P = mkdir -p
 
-CXXFLAGS += -Wall -pedantic-errors -std=c++11
+CXXFLAGS += -Wall -Wextra -Wstring-plus-int -pedantic -Werror -Wunreachable-code -std=c++11
+CXXFLAGS += -MMD -MP
 CXXFLAGS += -I.
 CXXFLAGS += -I../JacobUtils
 CXXFLAGS += -I../D3PDReaderAdapter
 CXXFLAGS += -I/usr/local/Cellar/root6/6.02.05/include/root
 CXXFLAGS += -I/usr/local/gmock/include
+CXXFLAGS += -I/usr/local/gmock/gtest/include
 
 LDFLAGS += -L/usr/local/gmock/build/
 LDFLAGS += -L/usr/local/lib/
 LDFLAGS += -L/usr/local/Cellar/root6/6.02.05/lib/root
 
 LDLIBS += -lc++
-LDLIBS += -lCore -lCint -lRIO -lNet -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lMathCore -lThread -lpthread -lmock
+LDLIBS += -lCore -lRIO -lNet -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lMathCore -lThread -lpthread -lm -ldl
+LDLIBS += -lmock
 
-INCLUDE_DIR := TnPFitter
+# Input directories
+ROOT = $(shell dirname 'pwd')
+SOURCE_DIR := $(ROOT)/src
+INCLUDE_DIR := $(ROOT)/$(TARGET)
+TEST_DIR := $(ROOT)/test
+
+# Output directories
 OBJECT_DIR := obj
-SOURCE_DIR  = Root
 LIBRARY_DIR := lib
+TEST_BIN_DIR := test-bin
+DEP_DIR = .deps
 
-TEST_DIR  = test
-TEST_BIN  = test-bin
+# Input files
+SOURCES = $(wildcard $(SOURCE_DIR)/*.cxx)
+INCLUDES = $(SOURCES:$(SOURCE_DIR)/%.cxx=$(INCLUDE_DIR)/%.hpp)
+TEST_SOURCES = $(wildcard $(TEST_DIR)/*.cxx)
 
-SOURCES := $(wildcard $(SOURCE_DIR)/*.cxx)
-INCLUDES := $(SOURCES:$(SOURCE_DIR)/%.cxx=$(INCLUDE_DIR)/%.hpp)
-TEST_SOURCES := $(wildcard $(TEST_DIR)/*.cxx)
-TEST_BINS := $(TEST_SOURCES:$(TEST_DIR)/%.cxx=$(TEST_BIN)/%)
-OBJECTS := $(SOURCES:$(SOURCE_DIR)/%.cxx=$(OBJECT_DIR)/%.o)
-LIBRARY := $(LIBRARY_DIR)/libTnPFitter.a
+# Output
+OBJECTS = $(SOURCES:$(SOURCE_DIR)/%.cxx=$(OBJECT_DIR)/%.o)
+LIBRARY = $(LIBRARY_DIR)/libTnPSelector.a
+DEP_FILES = $(DEP_DIR)/$(*F)
+TEST_BINS = $(TEST_SOURCES:$(TEST_DIR)/%.cxx=$(TEST_BIN_DIR)/%)
 
 all: directories $(LIBRARY) $(TEST_BINS)
 
 directories:
-	$(MKDIR_P) "obj"
-	$(MKDIR_P) lib
-	$(MKDIR_P) test-bin
+	@$(MKDIR_P) $(OBJECT_DIR)
+	@$(MKDIR_P) $(LIBRARY_DIR)
+	@$(MKDIR_P) $(TEST_BIN_DIR)
+	@$(MKDIR_P) $(DEP_DIR)
 
-$(TEST_BINS): $(TEST_SOURCES) $(OBJECTS)
-	@$(LINK.cc) $@ $^
-	@echo "Linking completed!"
+-include $(TEST_SOURCES:$(TEST_DIR)/%.cxx=$(DEP_DIR)/%.d)
 
-$(OBJECTS): $(SOURCES)
+$(TEST_BIN_DIR)/%: $(TEST_DIR)/%.cxx
+	$(LINK.cc) $(LDLIBS) -L$(LIBRARY_DIR) -l$(TARGET) $< -o $@
+	@mv $(TEST_BIN_DIR)/*.d $(DEP_DIR)/
+
+-include $(SOURCES:$(SOURCE_DIR)/%.cxx=$(DEP_DIR)/%.d)
+
+$(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.cxx
+	@echo "Linking: $@"
 	$(COMPILE.cc) $< -o $@
-	@echo "Compiled "$<" successfully!"
+	@mv $(OBJECT_DIR)/*.d $(DEP_DIR)/
 
 $(LIBRARY): $(OBJECTS)
 	$(AR) $(ARFLAGS) $(LIBRARY) $(OBJECTS)
 
+.PHONY: print-dep
 print-dep:
 	@echo 'Unit tests: '$(TEST_SOURCES)
 	@echo 'Unit tests bins: '$(TEST_BINS)
@@ -54,19 +78,15 @@ print-dep:
 	@echo 'Inlcudes files: '$(INCLUDES)
 	@echo 'Object targets: '$(OBJECTS)
 
-test: test-fitconfig test-singlegaus
+.PHONY: test
+test:
+	sh ./run_tests.sh
 
-test-fitconfig:
-	$(TEST_BIN)/ut_FitConfig
-
-test-singlegaus:
-	$(TEST_BIN)/ut_SingleGausFit
-
-.PHONY: clean distclean test
-
+.PHONY: distclean
 distclean: clean
 
+.PHONY: clean
 clean:
-	$(RM) ./$(OBJECT_DIR)/*.o
-	$(RM) ./$(TEST_BIN)/*
-	$(RM) ./$(LIBRARY_DIR)/*
+	$(RM) ./$(OBJECT_DIR)
+	$(RM) ./$(TEST_BIN_DIR)
+	$(RM) ./$(LIBRARY_DIR)
