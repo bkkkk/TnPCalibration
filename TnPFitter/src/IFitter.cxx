@@ -56,18 +56,23 @@ void IFitter::FitCompositeFunction() {
 }
 
 void IFitter::setupMainCompositeFunction() {
-  for (auto parIdx = 0; parIdx != compositeFunction->GetNpar(); parIdx++) {
-    auto val = fitConfig.ParSettings(parIdx).Value();
-    auto min = fitConfig.ParSettings(parIdx).LowerLimit();
-    auto max = fitConfig.ParSettings(parIdx).UpperLimit();
-    auto namePar = fitConfig.ParSettings(parIdx).Name();
+  for (auto parIndex = 0; parIndex < compositeFunction->GetNpar(); parIndex++) {
+    setupFunctionParameter(compositeFunction, parIndex);
+  }
+}
 
-    compositeFunction->SetParName(parIdx, namePar.c_str());
-    compositeFunction->SetParameter(parIdx, val);
+void IFitter::setupFunctionParameter(TF1* function, std::size_t index) {
+  auto parameter = fitConfig.ParSettings(index);
+  auto name = parameter.Name();
+  auto value = parameter.Value();
 
-    if (fitConfig.ParSettings(parIdx).HasLowerLimit()) {
-      compositeFunction->SetParLimits(parIdx, min, max);
-    }
+  function->SetParName(index, name.c_str());
+  function->SetParameter(index, value);
+
+  if (parameter.HasLowerLimit()) {
+    auto min = parameter.LowerLimit();
+    auto max = parameter.UpperLimit();
+    function->SetParLimits(index, min, max);
   }
 }
 
