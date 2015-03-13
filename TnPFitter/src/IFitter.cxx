@@ -49,8 +49,6 @@ void IFitter::FitCompositeFunction() {
     auto parValue = compositeFunction->GetParameter(parIdx);
     auto parError = compositeFunction->GetParError(parIdx);
 
-    PrintVariable(parName, parValue, parError);
-
     fitResult.AddParameter(parName, parValue, parError);
   }
 }
