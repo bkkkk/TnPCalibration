@@ -8,16 +8,19 @@ TEST_F(TestSingleGausFit, ThrowWhenConstructingConfigWithEmptyHistogram) {
 
 TEST_F(TestSingleGausFit, ThrowWhenConstructingFitterWithEmptyHistogram) {
   auto empty_histogram = new TH1F("test_canvas", "test_canvas", 100, 2.0, 5.0);
-  FitConfig empty_config = TNPFITTER::BuildSingleGausFitConfiguration(empty_histogram);
+  auto empty_config =
+      TNPFITTER::BuildSingleGausFitConfiguration(empty_histogram);
 
   EXPECT_ANY_THROW(new SingleGausFit("", nullptr, empty_config));
 }
 
 TEST_F(TestSingleGausFit, ConstructSuccessfullyWithInitializedParameters) {
   auto empty_histogram = new TH1F("test_canvas", "test_canvas", 100, 2.0, 5.0);
-  FitConfig empty_config = TNPFITTER::BuildSingleGausFitConfiguration(empty_histogram);
+  auto empty_config =
+      TNPFITTER::BuildSingleGausFitConfiguration(empty_histogram);
 
-  EXPECT_NO_THROW(new SingleGausFit("some_name", empty_histogram, empty_config));
+  EXPECT_NO_THROW(
+      new SingleGausFit("some_name", empty_histogram, empty_config));
 }
 
 int main(int argc, char** argv) {
@@ -31,7 +34,8 @@ void SetSignalFunction();
 void SetBackgroundFunction();
 void SetCompositeUpFunction();
 void SetCompositeDownFunction();
-void SetCompositeErrFunction(TF1* function, double poly, double slope, double constant);
+void SetCompositeErrFunction(TF1* function, double poly, double slope, double
+constant);
 std::pair<double, double> GetSigmaAndMu();
 
 TF1* GetSignalFunction();
@@ -47,7 +51,7 @@ const std::string GetName() const { return name; }
 TH1F* GetHistogram() const  { return histogram; }
 const FitConfig GetFitConfig() const { return fitConfig; }
 const std::string& GetFunctionName() const { return functionName; }
-  
+
 virtual double GetSigmaLow (int nSigma = 3);
 virtual double GetSigmaHigh (int nSigma = 3);
 virtual std::pair<double, double> GetSigmaAndMu() = 0;
@@ -57,4 +61,3 @@ void testSignalFunction();
 void testBackgroundFunction();
 void testCompositeFunction();
 */
-
