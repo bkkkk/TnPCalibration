@@ -37,6 +37,7 @@ class IFitter {
  private:
   void setupMainCompositeFunction();
   void setupFunctionParameter(TF1* function, std::size_t index);
+  void writeFitResults(TF1* function);
 
  public:
   const std::string GetName() const { return name; }
