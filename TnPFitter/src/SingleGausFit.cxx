@@ -97,20 +97,20 @@ double SingleGausFit::getParamterDownVariation(const std::string& name) {
 void SingleGausFit::SetCompositeDownFunction() {
   testCompositeFunction();
 
-  auto composite_function_name =
+  auto compositeFunctionName =
       functionName + "_Composite_Down_" + histogramName;
-  auto bkg_function_name = functionName + "_Bkg_Down_" + histogramName;
+  auto bkgFunctionName = functionName + "_Bkg_Down_" + histogramName;
 
-  auto bkg_function = fitConfig.GetBackgroundFitFunction();
-  auto composite_function = fitConfig.GetFitFunction();
+  auto bkgFunction = fitConfig.GetBackgroundFitFunction();
+  auto compositeFunction = fitConfig.GetFitFunction();
 
-  backgroundDownFunction = new TF1(bkg_function_name.c_str(),
-                                   bkg_function.c_str(),
+  backgroundDownFunction = new TF1(bkgFunctionName.c_str(),
+                                   bkgFunction.c_str(),
                                    bottomFitLimit,
                                    topFitLimit);
 
-  compositeDownFunction = new TF1(composite_function_name.c_str(),
-                                  composite_function.c_str(),
+  compositeDownFunction = new TF1(compositeFunctionName.c_str(),
+                                  compositeFunction.c_str(),
                                   bottomFitLimit,
                                   topFitLimit);
 
