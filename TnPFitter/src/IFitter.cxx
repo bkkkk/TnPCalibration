@@ -1,26 +1,27 @@
 #include "TnPFitter/IFitter.h"
 #include "TnPFitter/FitterDraw.h"
 
-IFitter::IFitter(std::string name, TH1F* val_histogram, const FitConfig& val_fitConfig)
-  : name(std::move(name)),
-    fitConfig(val_fitConfig),
-    functionName("NotDefined"),
-    histogram(val_histogram),
-    compositeFunction(nullptr),
-    signalFunction(nullptr),
-    backgroundFunction(nullptr),
-    compositeUpFunction(nullptr),
-    compositeDownFunction(nullptr),
-    backgroundUpFunction(nullptr),
-    backgroundDownFunction(nullptr),
-    bottomFitLimit(fitConfig.GetFitMin()),
-    topFitLimit(fitConfig.GetFitMax()),
-    fitResult{} {
-
-  if(val_histogram == nullptr) {
+IFitter::IFitter(std::string name,
+                 TH1F* val_histogram,
+                 const FitConfig& val_fitConfig)
+    : name(std::move(name)),
+      fitConfig(val_fitConfig),
+      functionName("NotDefined"),
+      histogram(val_histogram),
+      compositeFunction(nullptr),
+      signalFunction(nullptr),
+      backgroundFunction(nullptr),
+      compositeUpFunction(nullptr),
+      compositeDownFunction(nullptr),
+      backgroundUpFunction(nullptr),
+      backgroundDownFunction(nullptr),
+      bottomFitLimit(fitConfig.GetFitMin()),
+      topFitLimit(fitConfig.GetFitMax()),
+      fitResult{} {
+  if (val_histogram == nullptr) {
     throw(std::runtime_error("Histogram is not setup properly"));
   }
-  
+
   histogramName = histogram->GetName();
 }
 
@@ -35,9 +36,12 @@ IFitter::~IFitter() {
 }
 
 void IFitter::FitCompositeFunction() {
-  compositeFunction = new TF1(functionName.c_str(), fitConfig.GetFitFunction().c_str(), bottomFitLimit, topFitLimit);
+  compositeFunction = new TF1(functionName.c_str(),
+                              fitConfig.GetFitFunction().c_str(),
+                              bottomFitLimit,
+                              topFitLimit);
 
-  for(auto parIdx = 0; parIdx != compositeFunction->GetNpar(); parIdx++) {
+  for (auto parIdx = 0; parIdx != compositeFunction->GetNpar(); parIdx++) {
     auto val = fitConfig.ParSettings(parIdx).Value();
     auto min = fitConfig.ParSettings(parIdx).LowerLimit();
     auto max = fitConfig.ParSettings(parIdx).UpperLimit();
@@ -46,14 +50,14 @@ void IFitter::FitCompositeFunction() {
     compositeFunction->SetParName(parIdx, namePar.c_str());
     compositeFunction->SetParameter(parIdx, val);
 
-    if(fitConfig.ParSettings(parIdx).HasLowerLimit()) {
+    if (fitConfig.ParSettings(parIdx).HasLowerLimit()) {
       compositeFunction->SetParLimits(parIdx, min, max);
     }
   }
 
   histogram->Fit(compositeFunction, fitConfig.GetFitOptions().c_str());
 
-  for(auto parIdx = 0; parIdx != compositeFunction->GetNpar(); parIdx++) {
+  for (auto parIdx = 0; parIdx != compositeFunction->GetNpar(); parIdx++) {
     auto parName = compositeFunction->GetParName(parIdx);
     auto parValue = compositeFunction->GetParameter(parIdx);
     auto parError = compositeFunction->GetParError(parIdx);
@@ -66,7 +70,7 @@ void IFitter::FitCompositeFunction() {
 
 TF1* IFitter::GetBackgroundDownFunction() {
   testCompositeFunction();
-  return(backgroundDownFunction);
+  return (backgroundDownFunction);
 }
 
 TF1* IFitter::GetBackgroundUpFunction() {
@@ -105,7 +109,7 @@ double IFitter::GetSigmaLow(int nSigma) {
   auto sigma_mu_pair = GetSigmaAndMu();
   auto lowEdge = sigma_mu_pair.first - nSigma * sigma_mu_pair.second;
 
-  return(lowEdge);
+  return (lowEdge);
 }
 
 double IFitter::GetSigmaHigh(int nSigma) {
@@ -114,7 +118,7 @@ double IFitter::GetSigmaHigh(int nSigma) {
 
   auto highEdge = sigma_mu_pair.first + nSigma * sigma_mu_pair.second;
 
-  return(highEdge);
+  return (highEdge);
 }
 
 void IFitter::SetFitLimits(const double min, const double max) {
@@ -124,31 +128,33 @@ void IFitter::SetFitLimits(const double min, const double max) {
 }
 
 void IFitter::testCompositeFunction() {
-  if(compositeFunction == nullptr) {
+  if (compositeFunction == nullptr) {
     FitCompositeFunction();
   }
 }
 
 void IFitter::testSignalFunction() {
-  if(signalFunction == nullptr) {
+  if (signalFunction == nullptr) {
     SetSignalFunction();
   }
 }
 
 void IFitter::testBackgroundFunction() {
-  if(backgroundFunction == nullptr) {
+  if (backgroundFunction == nullptr) {
     SetBackgroundFunction();
   }
 }
 
-void IFitter::PrintVariable(const std::string& name, double var, double err) const {
-  (void) name;
-  (void) var;
-  (void) err;
+void IFitter::PrintVariable(const std::string& name,
+                            double var,
+                            double err) const {
+  (void)name;
+  (void)var;
+  (void)err;
 }
 
 void TNPFITTER::RunFit(IFitter* fitter) {
-  if(fitter == nullptr) {
+  if (fitter == nullptr) {
     throw(std::runtime_error("Fitter function not setup correctly"));
   }
 

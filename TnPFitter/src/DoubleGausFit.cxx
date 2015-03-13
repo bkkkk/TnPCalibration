@@ -11,12 +11,15 @@
 ClassImp(DoubleGausFit)
 #endif
 
-DoubleGausFit::DoubleGausFit(std::string val_name, TH1F* val_histogram, const FitConfig& val_fitConfig)
-  : IFitter(val_name, val_histogram, val_fitConfig) {
-    functionName = "DGaus";
+    DoubleGausFit::DoubleGausFit(std::string val_name,
+                                 TH1F* val_histogram,
+                                 const FitConfig& val_fitConfig)
+    : IFitter(val_name, val_histogram, val_fitConfig) {
+  functionName = "DGaus";
 }
 
-DoubleGausFit::~DoubleGausFit() { }
+DoubleGausFit::~DoubleGausFit() {
+}
 
 void DoubleGausFit::SetBackgroundFunction() {
   testCompositeFunction();
@@ -25,12 +28,16 @@ void DoubleGausFit::SetBackgroundFunction() {
 
   backgroundFunction = new TF1(funcName.c_str(),
                                fitConfig.GetBackgroundFitFunction().c_str(),
-                               bottomFitLimit, topFitLimit);
+                               bottomFitLimit,
+                               topFitLimit);
 
-  if(!fitConfig.IsLowBackground()) {
-    backgroundFunction->FixParameter(0, compositeFunction->GetParameter("Constant"));
-    backgroundFunction->FixParameter(1, compositeFunction->GetParameter("Slope"));
-    backgroundFunction->FixParameter(2, compositeFunction->GetParameter("Poly"));
+  if (!fitConfig.IsLowBackground()) {
+    backgroundFunction->FixParameter(
+        0, compositeFunction->GetParameter("Constant"));
+    backgroundFunction->FixParameter(1,
+                                     compositeFunction->GetParameter("Slope"));
+    backgroundFunction->FixParameter(2,
+                                     compositeFunction->GetParameter("Poly"));
     backgroundFunction->SetLineColor(6);
     backgroundFunction->SetLineStyle(7);
   }
@@ -43,14 +50,18 @@ void DoubleGausFit::SetSignalFunction() {
 
   signalFunction = new TF1(funcName.c_str(),
                            fitConfig.GetSignalFitFunction().c_str(),
-                           bottomFitLimit, topFitLimit);
+                           bottomFitLimit,
+                           topFitLimit);
 
   signalFunction->FixParameter(0, compositeFunction->GetParameter("Narrow N"));
-  signalFunction->FixParameter(1, compositeFunction->GetParameter("Narrow Mean"));
-  signalFunction->FixParameter(2, compositeFunction->GetParameter("Narrow Sigma"));
+  signalFunction->FixParameter(1,
+                               compositeFunction->GetParameter("Narrow Mean"));
+  signalFunction->FixParameter(2,
+                               compositeFunction->GetParameter("Narrow Sigma"));
   signalFunction->FixParameter(3, compositeFunction->GetParameter("Wide N"));
   signalFunction->FixParameter(4, compositeFunction->GetParameter("Wide Mean"));
-  signalFunction->FixParameter(5, compositeFunction->GetParameter("Wide Sigma"));
+  signalFunction->FixParameter(5,
+                               compositeFunction->GetParameter("Wide Sigma"));
 
   signalFunction->SetLineColor(kRed);
 }
@@ -64,15 +75,19 @@ void DoubleGausFit::SetCompositeUpFunction(void) {
 
   backgroundUpFunction = new TF1(funcNameBkg.c_str(),
                                  fitConfig.GetBackgroundFitFunction().c_str(),
-                                 bottomFitLimit, topFitLimit);
+                                 bottomFitLimit,
+                                 topFitLimit);
 
   compositeUpFunction = new TF1(funcNameComp.c_str(),
                                 fitConfig.GetFitFunction().c_str(),
-                                bottomFitLimit, topFitLimit);
+                                bottomFitLimit,
+                                topFitLimit);
 
-  if(!fitConfig.IsLowBackground()) {
-    auto constant = fitResult.GetParValue("Constant") + fitResult.GetParError("Constant");
-    auto slope = fitResult.GetParValue("Slope") - fitResult.GetParError("Slope");
+  if (!fitConfig.IsLowBackground()) {
+    auto constant =
+        fitResult.GetParValue("Constant") + fitResult.GetParError("Constant");
+    auto slope =
+        fitResult.GetParValue("Slope") - fitResult.GetParError("Slope");
     auto poly = fitResult.GetParValue("Poly") + fitResult.GetParError("Poly");
 
     SetCompositeErrFunction(compositeUpFunction, poly, slope, constant);
@@ -93,24 +108,31 @@ void DoubleGausFit::SetCompositeDownFunction() {
 
   backgroundDownFunction = new TF1(funcNameBkg.c_str(),
                                    fitConfig.GetBackgroundFitFunction().c_str(),
-                                   bottomFitLimit, topFitLimit);
+                                   bottomFitLimit,
+                                   topFitLimit);
 
   compositeDownFunction = new TF1(funcNameComp.c_str(),
                                   fitConfig.GetFitFunction().c_str(),
-                                  bottomFitLimit, topFitLimit );
+                                  bottomFitLimit,
+                                  topFitLimit);
 
-  if(!fitConfig.IsLowBackground()) {
-    auto constant = fitResult.GetParValue("Constant") - fitResult.GetParError("Constant");
-    auto slope = fitResult.GetParValue("Slope") + fitResult.GetParError("Slope");
+  if (!fitConfig.IsLowBackground()) {
+    auto constant =
+        fitResult.GetParValue("Constant") - fitResult.GetParError("Constant");
+    auto slope =
+        fitResult.GetParValue("Slope") + fitResult.GetParError("Slope");
     auto poly = fitResult.GetParValue("Poly") - fitResult.GetParError("Poly");
 
     SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);
 
     histogram->Fit(compositeDownFunction, fitConfig.GetFitOptions().c_str());
 
-    backgroundDownFunction->SetParameter(0, compositeDownFunction->GetParameter(6));
-    backgroundDownFunction->SetParameter(1, compositeDownFunction->GetParameter(7));
-    backgroundDownFunction->SetParameter(2, compositeDownFunction->GetParameter(8));
+    backgroundDownFunction->SetParameter(
+        0, compositeDownFunction->GetParameter(6));
+    backgroundDownFunction->SetParameter(
+        1, compositeDownFunction->GetParameter(7));
+    backgroundDownFunction->SetParameter(
+        2, compositeDownFunction->GetParameter(8));
   }
 }
 
@@ -119,7 +141,7 @@ void DoubleGausFit::SetCompositeErrFunction(TF1* function,
                                             double slope,
                                             double constant) {
   auto first_bkg_parameter = 6;
-  for(auto par_index = 0; par_index < first_bkg_parameter; par_index++) {
+  for (auto par_index = 0; par_index < first_bkg_parameter; par_index++) {
     auto val = fitConfig.ParSettings(par_index).Value();
     auto min = fitConfig.ParSettings(par_index).LowerLimit();
     auto max = fitConfig.ParSettings(par_index).UpperLimit();
@@ -128,7 +150,7 @@ void DoubleGausFit::SetCompositeErrFunction(TF1* function,
     function->SetParName(par_index, namePar.c_str());
     function->SetParameter(par_index, val);
 
-    if(fitConfig.ParSettings(par_index).HasLowerLimit()) {
+    if (fitConfig.ParSettings(par_index).HasLowerLimit()) {
       function->SetParLimits(par_index, min, max);
     }
   }
@@ -148,7 +170,7 @@ std::pair<double, double> DoubleGausFit::GetSigmaAndMu() {
   auto sigma = 0.0;
   auto mu = 0.0;
 
-  if(!fitConfig.IsLowBackground()) {
+  if (!fitConfig.IsLowBackground()) {
     sigma = (sigmaWide + sigmaNarrow) / 2;
   } else {
     sigma = std::min(sigmaNarrow, sigmaWide);
@@ -158,7 +180,7 @@ std::pair<double, double> DoubleGausFit::GetSigmaAndMu() {
   auto diffMuNarrow = fabs(mass - muNarrow);
   auto diffMuWide = fabs(mass - muWide);
 
-  if(diffMuWide < diffMuNarrow) {
+  if (diffMuWide < diffMuNarrow) {
     mu = muWide;
   } else {
     mu = muNarrow;
@@ -166,18 +188,18 @@ std::pair<double, double> DoubleGausFit::GetSigmaAndMu() {
 
   auto pair = std::make_pair(sigma, mu);
 
-  return(pair);
+  return (pair);
 }
 
-FitConfig TNPFITTER::BuildFitConfiguration(TH1* histogram, double min, double max) {
-  Parameters pars = {
-    {"Narrow N", histogram->GetMaximum(), 0, 0.0001, 10000000 },
-    {"Narrow Mean", 3.097, 0, 2.8, 3.3 },
-    {"Narrow Sigma", 0.1, 0, 0.02, 0.2 },
-    {"Wide N", histogram->GetMaximum(), 0, 0.0001, 10000000 },
-    {"Wide Mean", 3.097, 0, 2.7, 3.4},
-    {"Wide Sigma", 0.3, 0, 0.08, 0.7}
-  };
+FitConfig TNPFITTER::BuildFitConfiguration(TH1* histogram,
+                                           double min,
+                                           double max) {
+  Parameters pars = {{"Narrow N", histogram->GetMaximum(), 0, 0.0001, 10000000},
+                     {"Narrow Mean", 3.097, 0, 2.8, 3.3},
+                     {"Narrow Sigma", 0.1, 0, 0.02, 0.2},
+                     {"Wide N", histogram->GetMaximum(), 0, 0.0001, 10000000},
+                     {"Wide Mean", 3.097, 0, 2.7, 3.4},
+                     {"Wide Sigma", 0.3, 0, 0.08, 0.7}};
 
   auto polyPlusDoubleGaus = "gaus(0) + gaus(3) + [6] + [7] * x + [8] * x * x";
   auto doubleGaus = "gaus(0) + gaus(3)";
@@ -186,7 +208,7 @@ FitConfig TNPFITTER::BuildFitConfiguration(TH1* histogram, double min, double ma
   FitConfig* fitConfig;
 
   // Arbitrary number 0.07
-  if(TNPFITTER::IsLowBackground(histogram, min, 0.07)) {
+  if (TNPFITTER::IsLowBackground(histogram, min, 0.07)) {
     fitConfig = new FitConfig(doubleGaus, 6, true, min, max);
   } else {
     fitConfig = new FitConfig(polyPlusDoubleGaus, 9, false, min, max);
@@ -201,5 +223,5 @@ FitConfig TNPFITTER::BuildFitConfiguration(TH1* histogram, double min, double ma
   fitConfig->SetParamsSettings(pars);
   fitConfig->SetFitOptions("MERBQN");
 
-  return(*fitConfig);
+  return (*fitConfig);
 }

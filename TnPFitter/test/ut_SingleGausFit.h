@@ -6,10 +6,10 @@
 class SingleGausFit;
 
 class TestSingleGausFit : public ::testing::Test {
-protected:
-  virtual void SetUp() { }
+ protected:
+  virtual void SetUp() {}
 
-  virtual void TearDown() { }
+  virtual void TearDown() {}
 
   SingleGausFit* fitter;
 };

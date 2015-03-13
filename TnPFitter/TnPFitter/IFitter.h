@@ -11,12 +11,14 @@
 #include "TnPFitter/FitResult.h"
 
 class IFitter {
-public:
-  IFitter(std::string name, TH1F* val_histogram, const FitConfig& val_fitConfig);
-  
+ public:
+  IFitter(std::string name,
+          TH1F* val_histogram,
+          const FitConfig& val_fitConfig);
+
   virtual ~IFitter();
 
-public:
+ public:
   TF1* GetSignalFunction();
   TF1* GetBackgroundFunction();
   TF1* GetCompositeFunction();
@@ -25,28 +27,28 @@ public:
   TF1* GetCompositeUpFunction();
   TF1* GetCompositeDownFunction();
 
-public:  
+ public:
   virtual void FitCompositeFunction();
-  virtual void SetSignalFunction () = 0;
-  virtual void SetBackgroundFunction () = 0;
-  virtual void SetCompositeUpFunction () = 0;
-  virtual void SetCompositeDownFunction () = 0;
+  virtual void SetSignalFunction() = 0;
+  virtual void SetBackgroundFunction() = 0;
+  virtual void SetCompositeUpFunction() = 0;
+  virtual void SetCompositeDownFunction() = 0;
 
-public:
+ public:
   const std::string GetName() const { return name; }
-  TH1F* GetHistogram() const  { return histogram; }
+  TH1F* GetHistogram() const { return histogram; }
   const FitConfig GetFitConfig() const { return fitConfig; }
   const std::string& GetFunctionName() const { return functionName; }
-  
-  virtual double GetSigmaLow (int nSigma = 3);
-  virtual double GetSigmaHigh (int nSigma = 3);
+
+  virtual double GetSigmaLow(int nSigma = 3);
+  virtual double GetSigmaHigh(int nSigma = 3);
   virtual std::pair<double, double> GetSigmaAndMu() = 0;
   void SetFitLimits(const double min, const double max);
 
-protected:
+ protected:
   void PrintVariable(const std::string& name, double var, double err) const;
 
-protected:
+ protected:
   void testSignalFunction();
   void testBackgroundFunction();
   void testCompositeFunction();
@@ -57,11 +59,11 @@ protected:
 
   TH1F* histogram;
   std::string histogramName;
-  
+
   TF1* compositeFunction;
   TF1* signalFunction;
   TF1* backgroundFunction;
-  
+
   TF1* compositeUpFunction;
   TF1* compositeDownFunction;
   TF1* backgroundUpFunction;
@@ -78,7 +80,7 @@ protected:
 };
 
 namespace TNPFITTER {
-  void RunFit(IFitter* fitter);
+void RunFit(IFitter* fitter);
 }
 
 #endif

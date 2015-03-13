@@ -16,8 +16,7 @@ class TPaveText;
 #include <string>
 
 class FitterDraw {
-
-public:
+ public:
   struct LineAttrib {
     std::string name;
     int color;
@@ -26,18 +25,18 @@ public:
     int npx;
   };
 
-public:
+ public:
   FitterDraw(IFitter* fitter = nullptr, int sigma = 3, int window = 2);
   ~FitterDraw(void);
 
-public:
-  void SetupLines(const std::string& options="");
+ public:
+  void SetupLines(const std::string& options = "");
   void SetupLine(TF1* line, LineAttrib* attribute);
   void SetupBox(void);
-  void Draw(const std::string& options="");
+  void Draw(const std::string& options = "");
 
-private:
-  IFitter* fFitter; 
+ private:
+  IFitter* fFitter;
   int fSigma;
   int fWindow;
 
@@ -55,7 +54,7 @@ private:
   TLine* fiveHigh;
   TLine* threeLow;
   TLine* threeHigh;
-  
+
   TPaveText* box;
 
 #ifdef __CINT__

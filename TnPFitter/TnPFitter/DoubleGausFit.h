@@ -14,22 +14,25 @@
 #include <TF1.h>
 
 class DoubleGausFit : public IFitter {
-public:
+ public:
   DoubleGausFit(std::string val_name,
                 TH1F* val_histogram,
                 const FitConfig& val_fitConfig);
 
-public:
+ public:
   ~DoubleGausFit(void);
 
-public:  
+ public:
   void SetSignalFunction();
   void SetBackgroundFunction();
   void SetCompositeUpFunction();
   void SetCompositeDownFunction();
 
-public:
-  void SetCompositeErrFunction(TF1* function, double poly, double slope, double constant);
+ public:
+  void SetCompositeErrFunction(TF1* function,
+                               double poly,
+                               double slope,
+                               double constant);
   std::pair<double, double> GetSigmaAndMu();
 
 #ifdef __CINT__
@@ -38,8 +41,10 @@ public:
 };
 
 namespace TNPFITTER {
-  // Setup a fitconfig object
-  FitConfig BuildFitConfiguration(TH1* histogram, double min = 2.63, double max = 3.5);
+// Setup a fitconfig object
+FitConfig BuildFitConfiguration(TH1* histogram,
+                                double min = 2.63,
+                                double max = 3.5);
 }
 
 #endif

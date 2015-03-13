@@ -5,14 +5,14 @@
 #include <string>
 
 class FitResult {
-public:
+ public:
   using SimpleParameter = std::pair<double, double>;
   using SimpleParameters = std::map<std::string, SimpleParameter>;
 
-public:
+ public:
   FitResult() = default;
 
-public:
+ public:
   void AddParameter(std::string name, double val, double error);
   std::size_t GetNPars() const;
   const SimpleParameters& GetParameters() const;
@@ -20,7 +20,7 @@ public:
   double GetParValue(const std::string& name) const;
   double GetParError(const std::string& name) const;
 
-private:
+ private:
   SimpleParameters parameters;
 };
 

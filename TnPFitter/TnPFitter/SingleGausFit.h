@@ -13,22 +13,27 @@ class TF1;
 class TH1F;
 
 class SingleGausFit : public IFitter {
-public:
+ public:
   SingleGausFit(std::string name, TH1F* histogram, const FitConfig& fitConfig);
   ~SingleGausFit();
 
-public:
+ public:
   void SetSignalFunction();
   void SetBackgroundFunction();
   void SetCompositeUpFunction();
   void SetCompositeDownFunction();
 
-  void SetCompositeErrFunction(TF1* function, double poly, double slope, double constant);
+  void SetCompositeErrFunction(TF1* function,
+                               double poly,
+                               double slope,
+                               double constant);
   std::pair<double, double> GetSigmaAndMu();
 };
 
 namespace TNPFITTER {
-  FitConfig BuildSingleGausFitConfiguration(TH1* histogram, double min = 2.63, double max = 3.5);
+FitConfig BuildSingleGausFitConfiguration(TH1* histogram,
+                                          double min = 2.63,
+                                          double max = 3.5);
 }
 
 #endif

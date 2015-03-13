@@ -5,39 +5,42 @@
 #include "TnPFitter/FitConfigurationHelpers.h"
 #include "JacobUtils/LoggingUtility.h"
 
-FitConfig::FitConfig(std::string function, unsigned npar, bool isLowBkg, double min, double max)
- : fitOptions("MERQB"), 
-   fitMinimum(min),
-   fitMaximum(max),
-   fitFunction(std::move(function)),
-   bkgFunction(""),
-   sigFunction(""),
-   parameters(npar),
-   isLowBackground(false) {
-  (void) isLowBkg;
-  if(npar == 0) {
+FitConfig::FitConfig(std::string function,
+                     unsigned npar,
+                     bool isLowBkg,
+                     double min,
+                     double max)
+    : fitOptions("MERQB"),
+      fitMinimum(min),
+      fitMaximum(max),
+      fitFunction(std::move(function)),
+      bkgFunction(""),
+      sigFunction(""),
+      parameters(npar),
+      isLowBackground(false) {
+  (void)isLowBkg;
+  if (npar == 0) {
     throw(std::runtime_error("Number of parameters is zero"));
   }
 
-  if(fitFunction.empty()) {
+  if (fitFunction.empty()) {
     throw(std::runtime_error("Function is empty"));
   }
 
-  if(min == max) {
+  if (min == max) {
     throw(std::runtime_error("Fitting range is empty"));
   }
-  if(max < min) {
+  if (max < min) {
     throw(std::runtime_error("Fitting range is negative (min > max)"));
   }
 }
 
-
 void FitConfig::SetFitLimits(double min, double max) {
-  if(min == max) {
+  if (min == max) {
     throw(std::runtime_error("Fitting range is empty"));
   }
 
-  if(max < min) {
+  if (max < min) {
     throw(std::runtime_error("Fitting range is negative (min > max)"));
   }
 
@@ -54,7 +57,7 @@ double FitConfig::GetFitMax() const {
 }
 
 void FitConfig::SetFitFunction(const std::string& function) {
-  if(function.empty()) {
+  if (function.empty()) {
     throw(std::runtime_error("Function must not be empty"));
   }
   fitFunction = function;
@@ -65,7 +68,7 @@ std::string FitConfig::GetFitFunction() const {
 }
 
 void FitConfig::SetBackgroundFitFunction(const std::string& function) {
-  if(function.empty()) {
+  if (function.empty()) {
     throw(std::runtime_error("Background fit function is empty"));
   }
   bkgFunction = function;
@@ -76,7 +79,7 @@ std::string FitConfig::GetBackgroundFitFunction() const {
 }
 
 void FitConfig::SetSignalFitFunction(const std::string& function) {
-  if(function.empty()) {
+  if (function.empty()) {
     throw(std::runtime_error("Signal fit function is empty"));
   }
   sigFunction = function;
@@ -117,7 +120,7 @@ void FitConfig::SetFromFitResult(const TFitResultPtr& rhs) {
   auto npar = rhs->NPar();
   auto pars = rhs->GetParams();
 
-  for(auto parIdx = 0ul; parIdx != npar; parIdx++) {
+  for (auto parIdx = 0ul; parIdx != npar; parIdx++) {
     auto name = rhs->GetParameterName(parIdx);
     auto value = pars[parIdx];
     parameters.push_back({name, value});
@@ -125,13 +128,13 @@ void FitConfig::SetFromFitResult(const TFitResultPtr& rhs) {
 }
 
 void FitConfig::Print() {
-  for(const auto& par : parameters) {
+  for (const auto& par : parameters) {
     PrintParameter(par);
   }
 }
 
 void FitConfig::PrintParameter(const Parameter& par) {
-  (void) par;
+  (void)par;
 }
 
 #ifdef __CINT__
