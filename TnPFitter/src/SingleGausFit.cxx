@@ -21,9 +21,6 @@ SingleGausFit::SingleGausFit(std::string name,
   functionName = "SGaus";
 }
 
-SingleGausFit::~SingleGausFit() {
-}
-
 void SingleGausFit::SetBackgroundFunction() {
   testCompositeFunction();
 

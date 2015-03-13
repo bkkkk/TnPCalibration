@@ -11,7 +11,7 @@ class TH1F;
 class SingleGausFit : public IFitter {
  public:
   SingleGausFit(std::string name, TH1F* histogram, const FitConfig& fitConfig);
-  ~SingleGausFit();
+  virtual ~SingleGausFit() = default;
 
  public:
   void SetSignalFunction();
