@@ -33,8 +33,6 @@ void DoubleGausFit::SetBackgroundFunction() {
                                    compositeFunction->GetParameter("Constant"));
   backgroundFunction->FixParameter(1, compositeFunction->GetParameter("Slope"));
   backgroundFunction->FixParameter(2, compositeFunction->GetParameter("Poly"));
-  backgroundFunction->SetLineColor(6);
-  backgroundFunction->SetLineStyle(7);
 }
 
 void DoubleGausFit::SetSignalFunction() {
