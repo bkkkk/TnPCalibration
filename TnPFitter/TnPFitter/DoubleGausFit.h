@@ -34,6 +34,7 @@ class DoubleGausFit : public IFitter {
                                double slope,
                                double constant);
   std::pair<double, double> GetSigmaAndMu();
+  double GetSigma();
   double GetMu();
 
 #ifdef __CINT__

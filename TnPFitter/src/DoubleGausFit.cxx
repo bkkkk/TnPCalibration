@@ -139,18 +139,13 @@ void DoubleGausFit::SetCompositeErrFunction(TF1* function,
 }
 
 std::pair<double, double> DoubleGausFit::GetSigmaAndMu() {
-  auto muNarrow = compositeFunction->GetParameter(1);
+  return (std::make_pair(GetSigma(), GetMu()));
+}
+
+double DoubleGausFit::GetSigma() {
   auto sigmaNarrow = compositeFunction->GetParameter(2);
-
-  auto muWide = compositeFunction->GetParameter(4);
   auto sigmaWide = compositeFunction->GetParameter(5);
-
-  auto sigma = (sigmaWide + sigmaNarrow) / 2;
-  auto mu = GetMu()
-
-  auto pair = std::make_pair(sigma, mu);
-
-  return (pair);
+  return ((sigmaWide + sigmaNarrow) / 2);
 }
 
 double DoubleGausFit::GetMu() {
