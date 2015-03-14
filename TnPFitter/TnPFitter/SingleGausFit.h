@@ -17,8 +17,6 @@ class SingleGausFit : public IFitter {
   void SetSignalFunction();
   void SetBackgroundFunction();
   void SetCompositeUpFunction();
-  double getParameterUpVariation(const std::string& name);
-  double getParamterDownVariation(const std::string& name);
   void SetCompositeDownFunction();
 
   void SetCompositeErrFunction(TF1* function,

@@ -72,9 +72,9 @@ void SingleGausFit::SetCompositeUpFunction(void) {
                                 bottomFitLimit,
                                 topFitLimit);
 
-  auto constant = getParameterUpVariation("Constant");
-  auto slope = getParamterDownVariation("Slope");
-  auto poly = getParameterUpVariation("Poly");
+  auto constant = fitResult.getParameterUpVariation("Constant");
+  auto slope = fitResult.getParameterDownVariation("Slope");
+  auto poly = fitResult.getParameterUpVariation("Poly");
 
   SetCompositeErrFunction(compositeUpFunction, poly, slope, constant);
 
@@ -83,14 +83,6 @@ void SingleGausFit::SetCompositeUpFunction(void) {
   backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(3));
   backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(4));
   backgroundUpFunction->SetParameter(2, compositeUpFunction->GetParameter(5));
-}
-
-double SingleGausFit::getParameterUpVariation(const std::string& name) {
-  return (fitResult.GetParValue(name) + fitResult.GetParError(name));
-}
-
-double SingleGausFit::getParamterDownVariation(const std::string& name) {
-  return (fitResult.GetParValue(name) - fitResult.GetParError(name));
 }
 
 void SingleGausFit::SetCompositeDownFunction() {
@@ -103,23 +95,23 @@ void SingleGausFit::SetCompositeDownFunction() {
   auto bkgFunction = fitConfig.GetBackgroundFitFunction();
   auto compositeFunction = fitConfig.GetFitFunction();
 
-  backgroundDownFunction = new TF1(bkgFunctionName.c_str(),
-                                   bkgFunction.c_str(),
-                                   bottomFitLimit,
-                                   topFitLimit);
-
   compositeDownFunction = new TF1(compositeFunctionName.c_str(),
                                   compositeFunction.c_str(),
                                   bottomFitLimit,
                                   topFitLimit);
 
-  auto constant = getParamterDownVariation("Constant");
-  auto slope = getParameterUpVariation("Slope");
-  auto poly = getParamterDownVariation("Poly");
+  auto constant = fitResult.getParameterDownVariation("Constant");
+  auto slope = fitResult.getParameterUpVariation("Slope");
+  auto poly = fitResult.getParameterDownVariation("Poly");
 
   SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);
 
   histogram->Fit(compositeDownFunction, fitConfig.GetFitOptions().c_str());
+
+  backgroundDownFunction = new TF1(bkgFunctionName.c_str(),
+                                   bkgFunction.c_str(),
+                                   bottomFitLimit,
+                                   topFitLimit);
 
   backgroundDownFunction->SetParameter(0,
                                        compositeDownFunction->GetParameter(3));

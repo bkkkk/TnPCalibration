@@ -12,6 +12,14 @@ void FitResult::fillFromFunction(TF1* function) {
   }
 }
 
+double FitResult::getParameterUpVariation(const std::string& name) {
+  return (GetParValue(name) + GetParError(name));
+}
+
+double FitResult::getParameterDownVariation(const std::string& name) {
+  return (GetParValue(name) - GetParError(name));
+}
+
 void FitResult::AddParameter(std::string name, double val, double error) {
   parameters[name] = std::make_pair (val, error);
   assert(!parameters.empty());

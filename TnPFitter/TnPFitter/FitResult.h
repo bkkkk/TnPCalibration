@@ -16,6 +16,8 @@ class FitResult {
 
  public:
   void fillFromFunction(TF1* function);
+  double getParameterUpVariation(const std::string& name);
+  double getParameterDownVariation(const std::string& name);
   void AddParameter(std::string name, double val, double error);
 
   std::size_t GetNPars() const;
