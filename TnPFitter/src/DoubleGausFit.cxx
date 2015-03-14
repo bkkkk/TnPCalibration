@@ -73,7 +73,10 @@ void DoubleGausFit::SetCompositeUpFunction() {
   SetCompositeErrFunction(compositeUpFunction, poly, slope, constant);
 
   histogram->Fit(compositeUpFunction, fitConfig.GetFitOptions().c_str());
+  SetBackgroundUpFunction();
+}
 
+void DoubleGausFit::SetBackgroundUpFunction() {
   auto funcNameBkg = functionName + "_Bkg_Up_" + histogramName;
   backgroundUpFunction = new TF1(funcNameBkg.c_str(),
                                  fitConfig.GetBackgroundFitFunction().c_str(),
