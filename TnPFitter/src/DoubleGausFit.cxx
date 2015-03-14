@@ -7,14 +7,13 @@
 #include "TLine.h"
 
 #ifdef __CINT__
-ClassImp(DoubleGausFit)
+ClassImp(DoubleGausFit);
 #endif
 
-    DoubleGausFit::DoubleGausFit(std::string val_name,
-                                 TH1F* val_histogram,
-                                 const FitConfig& val_fitConfig)
-    : IFitter(val_name, val_histogram, val_fitConfig) {
-  functionName = "DGaus";
+DoubleGausFit::DoubleGausFit(std::string val_name,
+                             TH1F* val_histogram,
+                             const FitConfig& val_fitConfig)
+    : IFitter(val_name, {"DGaus"}, val_histogram, val_fitConfig) {
 }
 
 DoubleGausFit::~DoubleGausFit() {
