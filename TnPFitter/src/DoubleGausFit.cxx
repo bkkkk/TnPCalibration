@@ -54,22 +54,12 @@ void DoubleGausFit::SetSignalFunction() {
   signalFunction->FixParameter(4, compositeFunction->GetParameter("Wide Mean"));
   signalFunction->FixParameter(5,
                                compositeFunction->GetParameter("Wide Sigma"));
-
-  signalFunction->SetLineColor(kRed);
 }
 
-//______________________________________________________________________________
-void DoubleGausFit::SetCompositeUpFunction(void) {
+void DoubleGausFit::SetCompositeUpFunction() {
   testCompositeFunction();
 
   auto funcNameComp = functionName + "_Composite_Up_" + histogramName;
-  auto funcNameBkg = functionName + "_Bkg_Up_" + histogramName;
-
-  backgroundUpFunction = new TF1(funcNameBkg.c_str(),
-                                 fitConfig.GetBackgroundFitFunction().c_str(),
-                                 bottomFitLimit,
-                                 topFitLimit);
-
   compositeUpFunction = new TF1(funcNameComp.c_str(),
                                 fitConfig.GetFitFunction().c_str(),
                                 bottomFitLimit,
@@ -83,6 +73,12 @@ void DoubleGausFit::SetCompositeUpFunction(void) {
   SetCompositeErrFunction(compositeUpFunction, poly, slope, constant);
 
   histogram->Fit(compositeUpFunction, fitConfig.GetFitOptions().c_str());
+
+  auto funcNameBkg = functionName + "_Bkg_Up_" + histogramName;
+  backgroundUpFunction = new TF1(funcNameBkg.c_str(),
+                                 fitConfig.GetBackgroundFitFunction().c_str(),
+                                 bottomFitLimit,
+                                 topFitLimit);
 
   backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(6));
   backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(7));
