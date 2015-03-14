@@ -7,7 +7,7 @@ TEST_F(TestSingleGausFit, ThrowWhenConstructingConfigWithEmptyHistogram) {
 }
 
 TEST_F(TestSingleGausFit, ThrowWhenConstructingFitterWithEmptyHistogram) {
-  auto empty_histogram = new TH1F("test_canvas", "test_canvas", 100, 2.0, 5.0);
+  auto empty_histogram = new TH1F("test1", "test1", 100, 2.0, 5.0);
   auto empty_config =
       TNPFITTER::BuildSingleGausFitConfiguration(empty_histogram);
 
@@ -15,7 +15,7 @@ TEST_F(TestSingleGausFit, ThrowWhenConstructingFitterWithEmptyHistogram) {
 }
 
 TEST_F(TestSingleGausFit, ConstructSuccessfullyWithInitializedParameters) {
-  auto empty_histogram = new TH1F("test_canvas", "test_canvas", 100, 2.0, 5.0);
+  auto empty_histogram = new TH1F("test2", "test2", 100, 2.0, 5.0);
   auto empty_config =
       TNPFITTER::BuildSingleGausFitConfiguration(empty_histogram);
 
@@ -29,7 +29,6 @@ int main(int argc, char** argv) {
 }
 
 /*
-SingleGausFit(std::string name, TH1F* histogram, const FitConfig& fitConfig);
 void SetSignalFunction();
 void SetBackgroundFunction();
 void SetCompositeUpFunction();
