@@ -163,6 +163,26 @@ std::pair<double, double> DoubleGausFit::GetSigmaAndMu() {
   return (pair);
 }
 
+double DoubleGausFit::GetMu(double narrowMu, double wideMu) {
+  auto mass = fitConfig.ParSettings(1).Value();
+
+  auto muNarrow = compositeFunction->GetParameter(1);
+  auto muWide = compositeFunction->GetParameter(4);
+
+  auto diffMuNarrow = fabs(mass - narrowMu);
+  auto diffMuWide = fabs(mass - wideMu);
+
+  auto mu = 0.0f;
+
+  if (diffMuWide < diffMuNarrow) {
+    mu = muWide;
+  } else {
+    mu = muNarrow;
+  }
+
+  return (mu);
+}
+
 FitConfig TNPFITTER::BuildFitConfiguration(TH1* histogram,
                                            double min,
                                            double max) {
