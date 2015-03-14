@@ -22,11 +22,11 @@ SingleGausFit::SingleGausFit(std::string name,
 void SingleGausFit::SetBackgroundFunction() {
   testCompositeFunction();
 
-  auto funcName = functionName + "_" + histogramName;
-  auto background_function = fitConfig.GetBackgroundFitFunction();
+  auto fullFunctionName = functionName + "_" + histogramName;
+  auto formula = fitConfig.GetBackgroundFitFunction();
 
-  backgroundFunction = new TF1(funcName.c_str(),
-                               background_function.c_str(),
+  backgroundFunction = new TF1(fullFunctionName.c_str(),
+                               formula.c_str(),
                                bottomFitLimit,
                                topFitLimit);
 
@@ -39,12 +39,15 @@ void SingleGausFit::SetBackgroundFunction() {
 void SingleGausFit::SetSignalFunction() {
   testCompositeFunction();
 
-  auto funcName = functionName + "_signal_" + histogramName;
+  auto fullFunctionName = functionName + "_signal_" + histogramName;
+  auto formula = fitConfig.GetSignalFitFunction();
 
-  signalFunction = new TF1(funcName.c_str(),
-                           fitConfig.GetSignalFitFunction().c_str(),
+  signalFunction = new TF1(fullFunctionName.c_str(),
+                           formula.c_str(),
                            bottomFitLimit,
                            topFitLimit);
+
+  signalFunction->SetParNames("Gaus N", "Gaus Mean", "Gaus Sigma");
 
   signalFunction->FixParameter(0, compositeFunction->GetParameter("Gaus N"));
   signalFunction->FixParameter(1, compositeFunction->GetParameter("Gaus Mean"));
@@ -55,20 +58,19 @@ void SingleGausFit::SetSignalFunction() {
 void SingleGausFit::SetCompositeUpFunction(void) {
   testCompositeFunction();
 
-  auto compositeFunctionName =
-      functionName + "_Composite_Up_" + histogramName;
-  auto bkgFunctionName = functionName + "_Bkg_Up_" + histogramName;
+  SetCompositeUpComponent();
 
-  auto bkgFunctionString = fitConfig.GetBackgroundFitFunction();
-  auto functionString = fitConfig.GetFitFunction();
+  histogram->Fit(compositeUpFunction, fitConfig.GetFitOptions().c_str());
 
-  backgroundUpFunction = new TF1(bkgFunctionName.c_str(),
-                                 bkgFunctionString.c_str(),
-                                 bottomFitLimit,
-                                 topFitLimit);
+  SetBackgroundUpFunction();
+}
 
-  compositeUpFunction = new TF1(compositeFunctionName.c_str(),
-                                functionString.c_str(),
+void SingleGausFit::SetCompositeUpComponent() {
+  auto fullFunctionName = functionName + "_Composite_Up_" + histogramName;
+  auto formula = fitConfig.GetFitFunction();
+
+  compositeUpFunction = new TF1(fullFunctionName.c_str(),
+                                formula.c_str(),
                                 bottomFitLimit,
                                 topFitLimit);
 
@@ -77,8 +79,16 @@ void SingleGausFit::SetCompositeUpFunction(void) {
   auto poly = fitResult.getParameterUpVariation("Poly");
 
   SetCompositeErrFunction(compositeUpFunction, poly, slope, constant);
+}
 
-  histogram->Fit(compositeUpFunction, fitConfig.GetFitOptions().c_str());
+void SingleGausFit::SetBackgroundUpFunction() {
+  auto fullFunctionName = functionName + "_Bkg_Up_" + histogramName;
+  auto formula = fitConfig.GetBackgroundFitFunction();
+
+  backgroundUpFunction = new TF1(fullFunctionName.c_str(),
+                                 formula.c_str(),
+                                 bottomFitLimit,
+                                 topFitLimit);
 
   backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(3));
   backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(4));
@@ -88,15 +98,20 @@ void SingleGausFit::SetCompositeUpFunction(void) {
 void SingleGausFit::SetCompositeDownFunction() {
   testCompositeFunction();
 
-  auto compositeFunctionName =
-      functionName + "_Composite_Down_" + histogramName;
-  auto bkgFunctionName = functionName + "_Bkg_Down_" + histogramName;
+  SetCompositeDownComponent();
 
-  auto bkgFunction = fitConfig.GetBackgroundFitFunction();
-  auto compositeFunction = fitConfig.GetFitFunction();
+  histogram->Fit(compositeDownFunction, fitConfig.GetFitOptions().c_str());
 
-  compositeDownFunction = new TF1(compositeFunctionName.c_str(),
-                                  compositeFunction.c_str(),
+  SetBackgroundDownFunction();
+}
+
+void SingleGausFit::SetCompositeDownComponent() {
+  auto fullFunctionName = functionName + "_Composite_Down_" + histogramName;
+
+  auto formula = fitConfig.GetFitFunction();
+
+  compositeDownFunction = new TF1(fullFunctionName.c_str(),
+                                  formula.c_str(),
                                   bottomFitLimit,
                                   topFitLimit);
 
@@ -105,8 +120,11 @@ void SingleGausFit::SetCompositeDownFunction() {
   auto poly = fitResult.getParameterDownVariation("Poly");
 
   SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);
+}
 
-  histogram->Fit(compositeDownFunction, fitConfig.GetFitOptions().c_str());
+void SingleGausFit::SetBackgroundDownFunction() {
+  auto bkgFunctionName = functionName + "_Bkg_Down_" + histogramName;
+  auto bkgFunction = fitConfig.GetBackgroundFitFunction();
 
   backgroundDownFunction = new TF1(bkgFunctionName.c_str(),
                                    bkgFunction.c_str(),

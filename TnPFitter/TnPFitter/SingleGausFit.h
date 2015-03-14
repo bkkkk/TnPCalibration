@@ -17,7 +17,12 @@ class SingleGausFit : public IFitter {
   void SetSignalFunction();
   void SetBackgroundFunction();
   void SetCompositeUpFunction();
+  void SetCompositeUpComponent();
+  void SetBackgroundUpFunction();
+
   void SetCompositeDownFunction();
+  void SetCompositeDownComponent();
+  void SetBackgroundDownFunction();
 
   void SetCompositeErrFunction(TF1* function,
                                double poly,
