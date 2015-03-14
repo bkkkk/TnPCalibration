@@ -146,31 +146,21 @@ std::pair<double, double> DoubleGausFit::GetSigmaAndMu() {
   auto sigmaWide = compositeFunction->GetParameter(5);
 
   auto sigma = (sigmaWide + sigmaNarrow) / 2;
-  auto mu = 0.0;
-
-  auto mass = fitConfig.ParSettings(1).Value();
-  auto diffMuNarrow = fabs(mass - muNarrow);
-  auto diffMuWide = fabs(mass - muWide);
-
-  if (diffMuWide < diffMuNarrow) {
-    mu = muWide;
-  } else {
-    mu = muNarrow;
-  }
+  auto mu = GetMu()
 
   auto pair = std::make_pair(sigma, mu);
 
   return (pair);
 }
 
-double DoubleGausFit::GetMu(double narrowMu, double wideMu) {
+double DoubleGausFit::GetMu() {
   auto mass = fitConfig.ParSettings(1).Value();
 
   auto muNarrow = compositeFunction->GetParameter(1);
   auto muWide = compositeFunction->GetParameter(4);
 
-  auto diffMuNarrow = fabs(mass - narrowMu);
-  auto diffMuWide = fabs(mass - wideMu);
+  auto diffMuNarrow = fabs(mass - muNarrow);
+  auto diffMuWide = fabs(mass - muWide);
 
   auto mu = 0.0f;
 
