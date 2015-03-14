@@ -3,7 +3,6 @@
 
 #include <string>
 
-#include "TnPFitter/DoubleGausFit.h"
 #include "TnPFitter/SingleGausFit.h"
 
 class TH1F;

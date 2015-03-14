@@ -1,5 +1,4 @@
 #include "TnPFitter/FitEfficiency.h"
-#include "TnPFitter/DoubleGausFit.h"
 #include "TnPFitter/FitIntegral.h"
 #include "TH1F.h"
 

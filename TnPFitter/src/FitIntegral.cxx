@@ -1,7 +1,6 @@
 #include <stdexcept>
 
 #include <TnPFitter/FitIntegral.h>
-#include <TnPFitter/DoubleGausFit.h>
 #include <TnPFitter/SingleGausFit.h>
 #include <TH1F.h>
 #include <TF1.h>
