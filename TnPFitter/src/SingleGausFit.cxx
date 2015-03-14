@@ -30,10 +30,17 @@ void SingleGausFit::SetBackgroundFunction() {
                                bottomFitLimit,
                                topFitLimit);
 
-  backgroundFunction->FixParameter(0,
-                                   compositeFunction->GetParameter("Constant"));
-  backgroundFunction->FixParameter(1, compositeFunction->GetParameter("Slope"));
-  backgroundFunction->FixParameter(2, compositeFunction->GetParameter("Poly"));
+  SetBackgroundFunctionParameters();
+}
+
+void SingleGausFit::SetBackgroundFunctionParameters() {
+  std::vector<std::string> parameterNames = { "Constant", "Slope", "Poly" };
+
+  for (auto parIdx = 0ul; parIdx < parameterNames.size(); parIdx++) {
+    auto paramaterName = parameterNames[parIdx].c_str();
+    auto value = compositeFunction->GetParameter(paramaterName);
+    backgroundFunction->FixParameter(parIdx, value);
+  }
 }
 
 void SingleGausFit::SetSignalFunction() {
