@@ -40,6 +40,8 @@ class IFitter {
 
  private:
   void setupMainCompositeFunction();
+
+ protected:
   void setupFunctionParameter(TF1* function, std::size_t index);
 
  public:
