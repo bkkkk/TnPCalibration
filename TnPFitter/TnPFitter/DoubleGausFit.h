@@ -29,6 +29,7 @@ class DoubleGausFit : public IFitter {
   void SetCompositeUpComponent();
   void SetBackgroundUpFunction();
   void SetCompositeDownFunction();
+  void SetCompositeDownComponent();
   void SetBackgroundDownFunction();
 
  public:
