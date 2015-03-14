@@ -92,12 +92,6 @@ void DoubleGausFit::SetCompositeDownFunction() {
   testCompositeFunction();
 
   auto funcNameComp = functionName + "_Composite_Down_" + histogramName;
-  auto funcNameBkg = functionName + "_Bkg_Down_" + histogramName;
-
-  backgroundDownFunction = new TF1(funcNameBkg.c_str(),
-                                   fitConfig.GetBackgroundFitFunction().c_str(),
-                                   bottomFitLimit,
-                                   topFitLimit);
 
   compositeDownFunction = new TF1(funcNameComp.c_str(),
                                   fitConfig.GetFitFunction().c_str(),
@@ -112,13 +106,23 @@ void DoubleGausFit::SetCompositeDownFunction() {
   SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);
 
   histogram->Fit(compositeDownFunction, fitConfig.GetFitOptions().c_str());
+  SetBackgroundDownFunction();
+}
+
+void DoubleGausFit::SetBackgroundDownFunction() {
+  auto funcNameBkg = functionName + "_Bkg_Down_" + histogramName;
+
+  backgroundDownFunction = new TF1(funcNameBkg.c_str(),
+                                   fitConfig.GetBackgroundFitFunction().c_str(),
+                                   bottomFitLimit,
+                                   topFitLimit);
 
   backgroundDownFunction->SetParameter(0,
                                        compositeDownFunction->GetParameter(6));
   backgroundDownFunction->SetParameter(1,
                                        compositeDownFunction->GetParameter(7));
   backgroundDownFunction->SetParameter(2,
-                                       compositeDownFunction->GetParameter(8));
+                                       compositeDownFunction->GetParameter(8));  
 }
 
 void DoubleGausFit::SetCompositeErrFunction(TF1* function,
