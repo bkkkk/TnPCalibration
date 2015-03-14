@@ -55,7 +55,13 @@ void DoubleGausFit::SetSignalFunction() {
 
 void DoubleGausFit::SetCompositeUpFunction() {
   testCompositeFunction();
+  SetCompositeUpComponent();
 
+  histogram->Fit(compositeUpFunction, fitConfig.GetFitOptions().c_str());
+  SetBackgroundUpFunction();
+}
+
+void DoubleGausFit::SetCompositeUpComponent() {
   auto funcNameComp = functionName + "_Composite_Up_" + histogramName;
   compositeUpFunction = new TF1(funcNameComp.c_str(),
                                 fitConfig.GetFitFunction().c_str(),
@@ -67,9 +73,6 @@ void DoubleGausFit::SetCompositeUpFunction() {
   auto poly = fitResult.getParameterUpVariation("Poly");
 
   SetCompositeErrFunction(compositeUpFunction, poly, slope, constant);
-
-  histogram->Fit(compositeUpFunction, fitConfig.GetFitOptions().c_str());
-  SetBackgroundUpFunction();
 }
 
 void DoubleGausFit::SetBackgroundUpFunction() {
