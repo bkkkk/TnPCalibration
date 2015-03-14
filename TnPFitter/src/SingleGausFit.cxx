@@ -16,7 +16,7 @@
 SingleGausFit::SingleGausFit(std::string name,
                              TH1F* histogram,
                              const FitConfig& fitConfig)
-    : IFitter(name, std::string{"SGaus"}, histogram, fitConfig) {
+    : IFitter(name, {"SGaus"}, histogram, fitConfig) {
 }
 
 void SingleGausFit::SetBackgroundFunction() {
