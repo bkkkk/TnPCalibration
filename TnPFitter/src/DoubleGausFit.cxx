@@ -16,9 +16,6 @@ DoubleGausFit::DoubleGausFit(std::string val_name,
     : IFitter(val_name, {"DGaus"}, val_histogram, val_fitConfig) {
 }
 
-DoubleGausFit::~DoubleGausFit() {
-}
-
 void DoubleGausFit::SetBackgroundFunction() {
   testCompositeFunction();
 

@@ -20,7 +20,7 @@ class DoubleGausFit : public IFitter {
                 const FitConfig& val_fitConfig);
 
  public:
-  ~DoubleGausFit(void);
+  ~DoubleGausFit() = default;
 
  public:
   void SetSignalFunction();
