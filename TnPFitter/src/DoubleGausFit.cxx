@@ -65,10 +65,9 @@ void DoubleGausFit::SetCompositeUpFunction() {
                                 bottomFitLimit,
                                 topFitLimit);
 
-  auto constant =
-      fitResult.GetParValue("Constant") + fitResult.GetParError("Constant");
-  auto slope = fitResult.GetParValue("Slope") - fitResult.GetParError("Slope");
-  auto poly = fitResult.GetParValue("Poly") + fitResult.GetParError("Poly");
+  auto constant = fitResult.getParameterUpVariation("Constant");
+  auto slope = fitResult.getParameterDownVariation("Slope");
+  auto poly = fitResult.getParameterUpVariation("Poly");
 
   SetCompositeErrFunction(compositeUpFunction, poly, slope, constant);
 
@@ -98,10 +97,9 @@ void DoubleGausFit::SetCompositeDownFunction() {
                                   bottomFitLimit,
                                   topFitLimit);
 
-  auto constant =
-      fitResult.GetParValue("Constant") - fitResult.GetParError("Constant");
-  auto slope = fitResult.GetParValue("Slope") + fitResult.GetParError("Slope");
-  auto poly = fitResult.GetParValue("Poly") - fitResult.GetParError("Poly");
+  auto constant = fitResult.getParameterDownVariation("Constant");
+  auto slope = fitResult.getParameterUpVariation("Slope");
+  auto poly = fitResult.getParameterDownVariation("Poly");
 
   SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);
 
