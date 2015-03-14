@@ -135,17 +135,7 @@ void SingleGausFit::SetCompositeErrFunction(TF1* function,
                                             double constant) {
   auto nSignalParameters = 3;
   for (auto parIdx = 0; parIdx != nSignalParameters; parIdx++) {
-    auto val = fitConfig.ParSettings(parIdx).Value();
-    auto min = fitConfig.ParSettings(parIdx).LowerLimit();
-    auto max = fitConfig.ParSettings(parIdx).UpperLimit();
-    auto namePar = fitConfig.ParSettings(parIdx).Name();
-
-    function->SetParName(parIdx, namePar.c_str());
-    function->SetParameter(parIdx, val);
-
-    if (fitConfig.ParSettings(parIdx).HasLowerLimit()) {
-      function->SetParLimits(parIdx, min, max);
-    }
+    setupFunctionParameter(function, parIdx);
   }
 
   function->FixParameter(3, constant);
