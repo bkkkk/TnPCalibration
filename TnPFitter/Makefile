@@ -57,18 +57,20 @@ directories:
 -include $(TEST_SOURCES:$(TEST_DIR)/%.cxx=$(DEP_DIR)/%.d)
 
 $(TEST_BIN_DIR)/%: $(TEST_DIR)/%.cxx
-	$(LINK.cc) $(LDLIBS) -L$(LIBRARY_DIR) -l$(TARGET) $< -o $@
+	@echo "Link: $@"
+	@$(LINK.cc) $(LDLIBS) -L$(LIBRARY_DIR) -l$(TARGET) $< -o $@
 	@mv $(TEST_BIN_DIR)/*.d $(DEP_DIR)/
 
 -include $(SOURCES:$(SOURCE_DIR)/%.cxx=$(DEP_DIR)/%.d)
 
 $(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.cxx
-	@echo "Linking: $@"
-	$(COMPILE.cc) $< -o $@
+	@echo "Compile: $@"
+	@$(COMPILE.cc) $< -o $@
 	@mv $(OBJECT_DIR)/*.d $(DEP_DIR)/
 
 $(LIBRARY): $(OBJECTS)
-	$(AR) $(ARFLAGS) $(LIBRARY) $(OBJECTS)
+	@echo "Archiving: $@"
+	@$(AR) $(ARFLAGS) $(LIBRARY) $(OBJECTS)
 
 .PHONY: print-dep
 print-dep:
