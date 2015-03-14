@@ -3,12 +3,12 @@
 
 IFitter::IFitter(std::string name,
                  std::string functionName,
-                 TH1F* val_histogram,
-                 const FitConfig& val_fitConfig)
+                 TH1F* histogram,
+                 const FitConfig& fitConfig)
     : name(std::move(name)),
-      fitConfig(val_fitConfig),
+      fitConfig(fitConfig),
       functionName(std::move(functionName)),
-      histogram(val_histogram),
+      histogram(histogram),
       compositeFunction(nullptr),
       signalFunction(nullptr),
       backgroundFunction(nullptr),
@@ -18,7 +18,7 @@ IFitter::IFitter(std::string name,
       backgroundDownFunction(nullptr),
       bottomFitLimit(fitConfig.GetFitMin()),
       topFitLimit(fitConfig.GetFitMax()) {
-  if (val_histogram == nullptr) {
+  if (histogram == nullptr) {
     throw(std::runtime_error("Histogram is not setup properly"));
   }
 
