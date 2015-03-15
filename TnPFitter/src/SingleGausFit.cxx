@@ -13,6 +13,8 @@
 
 #include "TnPFitter/FitDrawingHelpers.h"
 
+#include "TnPFitter/BackgroundFittedFunction.h"
+
 SingleGausFit::SingleGausFit(std::string name,
                              TH1F* histogram,
                              const FitConfig& fitConfig)
@@ -20,27 +22,9 @@ SingleGausFit::SingleGausFit(std::string name,
 }
 
 void SingleGausFit::SetBackgroundFunction() {
-  testCompositeFunction();
-
-  auto fullFunctionName = functionName + "_" + histogramName;
-  auto formula = fitConfig.GetBackgroundFitFunction();
-
-  backgroundFunction = new TF1(fullFunctionName.c_str(),
-                               formula.c_str(),
-                               bottomFitLimit,
-                               topFitLimit);
-
-  SetBackgroundFunctionParameters();
-}
-
-void SingleGausFit::SetBackgroundFunctionParameters() {
-  std::vector<std::string> parameterNames = { "Constant", "Slope", "Poly" };
-
-  for (auto parIdx = 0ul; parIdx < parameterNames.size(); parIdx++) {
-    auto paramaterName = parameterNames[parIdx].c_str();
-    auto value = compositeFunction->GetParameter(paramaterName);
-    backgroundFunction->FixParameter(parIdx, value);
-  }
+  background =
+      new BackgroundFittedFunction(name, histogramName, fitConfig);
+  background->setParametersFromFunction(compositeFunction);
 }
 
 void SingleGausFit::SetSignalFunction() {

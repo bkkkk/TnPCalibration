@@ -6,6 +6,8 @@
 #include "TCanvas.h"
 #include "TLine.h"
 
+#include "TnPFitter/BackgroundFittedFunction.h"
+
 #ifdef __CINT__
 ClassImp(DoubleGausFit);
 #endif
@@ -17,19 +19,9 @@ DoubleGausFit::DoubleGausFit(std::string val_name,
 }
 
 void DoubleGausFit::SetBackgroundFunction() {
-  testCompositeFunction();
-
-  auto funcName = functionName + "_" + histogramName;
-
-  backgroundFunction = new TF1(funcName.c_str(),
-                               fitConfig.GetBackgroundFitFunction().c_str(),
-                               bottomFitLimit,
-                               topFitLimit);
-
-  backgroundFunction->FixParameter(0,
-                                   compositeFunction->GetParameter("Constant"));
-  backgroundFunction->FixParameter(1, compositeFunction->GetParameter("Slope"));
-  backgroundFunction->FixParameter(2, compositeFunction->GetParameter("Poly"));
+  background =
+      new BackgroundFittedFunction(name, histogramName, fitConfig);
+  background->setParametersFromFunction(compositeFunction);
 }
 
 void DoubleGausFit::SetSignalFunction() {

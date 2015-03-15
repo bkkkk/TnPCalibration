@@ -10,6 +10,8 @@
 #include "TnPFitter/FitConfig.h"
 #include "TnPFitter/FitResult.h"
 
+class BackgroundFittedFunction;
+
 class IFitter {
  public:
   IFitter(std::string name,
@@ -60,7 +62,6 @@ class IFitter {
 
  protected:
   void testSignalFunction();
-  void testBackgroundFunction();
   void testCompositeFunction();
 
   std::string name;
@@ -72,7 +73,7 @@ class IFitter {
 
   TF1* compositeFunction;
   TF1* signalFunction;
-  TF1* backgroundFunction;
+  BackgroundFittedFunction* background;
 
   TF1* compositeUpFunction;
   TF1* compositeDownFunction;

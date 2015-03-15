@@ -1,6 +1,8 @@
 #include "TnPFitter/IFitter.h"
 #include "TnPFitter/FitterDraw.h"
 
+#include "TnPFitter/BackgroundFittedFunction.h"
+
 IFitter::IFitter(std::string name,
                  std::string functionName,
                  TH1F* histogram,
@@ -11,7 +13,6 @@ IFitter::IFitter(std::string name,
       histogram(histogram),
       compositeFunction(nullptr),
       signalFunction(nullptr),
-      backgroundFunction(nullptr),
       compositeUpFunction(nullptr),
       compositeDownFunction(nullptr),
       backgroundUpFunction(nullptr),
@@ -27,7 +28,6 @@ IFitter::IFitter(std::string name,
 
 IFitter::~IFitter() {
   delete compositeFunction;
-  delete backgroundFunction;
   delete signalFunction;
   delete backgroundUpFunction;
   delete backgroundDownFunction;
@@ -99,8 +99,7 @@ TF1* IFitter::GetSignalFunction() {
 }
 
 TF1* IFitter::GetBackgroundFunction() {
-  testBackgroundFunction();
-  return (backgroundFunction);
+  return (background->getFunction());
 }
 
 double IFitter::GetSigmaLow(int nSigma) {
@@ -136,12 +135,6 @@ void IFitter::testCompositeFunction() {
 void IFitter::testSignalFunction() {
   if (signalFunction == nullptr) {
     SetSignalFunction();
-  }
-}
-
-void IFitter::testBackgroundFunction() {
-  if (backgroundFunction == nullptr) {
-    SetBackgroundFunction();
   }
 }
 
