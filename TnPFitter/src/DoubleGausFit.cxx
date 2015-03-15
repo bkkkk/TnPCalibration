@@ -159,27 +159,25 @@ double DoubleGausFit::GetMu() {
 FitConfig TNPFITTER::BuildFitConfiguration(TH1* histogram,
                                            double min,
                                            double max) {
-  Parameters pars = {{"Narrow N", histogram->GetMaximum(), 0, 0.0001, 10000000},
-                     {"Narrow Mean", 3.097, 0, 2.8, 3.3},
-                     {"Narrow Sigma", 0.1, 0, 0.02, 0.2},
-                     {"Wide N", histogram->GetMaximum(), 0, 0.0001, 10000000},
-                     {"Wide Mean", 3.097, 0, 2.7, 3.4},
-                     {"Wide Sigma", 0.3, 0, 0.08, 0.7}};
-
   auto polyPlusDoubleGaus = "gaus(0) + gaus(3) + [6] + [7] * x + [8] * x * x";
   auto doubleGaus = "gaus(0) + gaus(3)";
   auto poly = "[0] + [1] * x + [2] * x * x";
 
-  FitConfig* fitConfig = new FitConfig(polyPlusDoubleGaus, 9, min, max);
+  auto config = FitConfig{polyPlusDoubleGaus, 9, min, max};
+  config.SetFitOptions("MERBQN");
+  config.SetSignalFitFunction(doubleGaus);
+  config.AddParameter(
+      {"Narrow N", histogram->GetMaximum(), 0, 0.0001, 1000000});
+  config.AddParameter({"Narrow Mean", 3.097, 0, 2.8, 3.3});
+  config.AddParameter({"Narrow Sigma", 0.1, 0, 0.02, 0.2});
+  config.AddParameter(
+      {"Wide N", histogram->GetMaximum(), 0, 0.0001, 10000000});
+  config.AddParameter({"Wide Mean", 3.097, 0, 2.7, 3.4});
+  config.AddParameter({"Wide Sigma", 0.3, 0, 0.08, 0.7});
+  config.SetBackgroundFitFunction(poly);
+  config.AddParameter({"Constant", 0});
+  config.AddParameter({"Slope", 0});
+  config.AddParameter({"Poly", 0});
 
-  pars.push_back({"Constant", 0});
-  pars.push_back({"Slope", 0});
-  pars.push_back({"Poly", 0});
-
-  fitConfig->SetSignalFitFunction(doubleGaus);
-  fitConfig->SetBackgroundFitFunction(poly);
-  fitConfig->SetParamsSettings(pars);
-  fitConfig->SetFitOptions("MERBQN");
-
-  return (*fitConfig);
+  return (config);
 }

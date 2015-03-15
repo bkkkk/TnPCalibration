@@ -140,26 +140,20 @@ FitConfig TNPFITTER::BuildSingleGausFitConfiguration(TH1* histogram,
     throw(std::runtime_error("Histogram is not setup properly"));
   }
 
-  Parameters pars = {
-      {"Gaus N", histogram->GetMaximum(), 0, 0.0001, 10000000},
-      {"Gaus Mean", 3.097, 0, 2.8, 3.3},
-      {"Gaus Sigma", 0.1, 0, 0.02, 0.2},
-  };
-
   auto polyPlusSingleGaus = "gaus(0) + [3] + [4] * x + [5] * x * x";
   auto singleGaus = "gaus(0)";
   auto poly = "[0] + [1] * x + [2] * x * x";
 
-  FitConfig* fitConfig = new FitConfig(polyPlusSingleGaus, 6, min, max);
+  auto config = FitConfig{polyPlusSingleGaus, 6, min, max};
+  config.SetFitOptions("MERBQN");
+  config.SetSignalFitFunction(singleGaus);
+  config.AddParameter({"Gaus N", histogram->GetMaximum(), 0, 0.0001, 1000000});
+  config.AddParameter({"Gaus Mean", 3.097, 0, 2.8, 3.3});
+  config.AddParameter({"Gaus Sigma", 0.1, 0, 0.02, 0.2});
+  config.SetBackgroundFitFunction(poly);
+  config.AddParameter({"Constant", 0});
+  config.AddParameter({"Slope", 0});
+  config.AddParameter({"Poly", 0});
 
-  pars.push_back({"Constant", 0});
-  pars.push_back({"Slope", 0});
-  pars.push_back({"Poly", 0});
-
-  fitConfig->SetSignalFitFunction(singleGaus);
-  fitConfig->SetBackgroundFitFunction(poly);
-  fitConfig->SetParamsSettings(pars);
-  fitConfig->SetFitOptions("MERBQN");
-
-  return (*fitConfig);
+  return (config);
 }
