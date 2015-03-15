@@ -49,10 +49,8 @@ void SingleGausFit::SetSignalFunction() {
   auto fullFunctionName = functionName + "_signal_" + histogramName;
   auto formula = fitConfig.GetSignalFitFunction();
 
-  signalFunction = new TF1(fullFunctionName.c_str(),
-                           formula.c_str(),
-                           bottomFitLimit,
-                           topFitLimit);
+  signalFunction = new TF1(
+      fullFunctionName.c_str(), formula.c_str(), bottomFitLimit, topFitLimit);
 
   signalFunction->SetParNames("Gaus N", "Gaus Mean", "Gaus Sigma");
 
@@ -76,10 +74,8 @@ void SingleGausFit::SetCompositeUpComponent() {
   auto fullFunctionName = functionName + "_Composite_Up_" + histogramName;
   auto formula = fitConfig.GetFitFunction();
 
-  compositeUpFunction = new TF1(fullFunctionName.c_str(),
-                                formula.c_str(),
-                                bottomFitLimit,
-                                topFitLimit);
+  compositeUpFunction = new TF1(
+      fullFunctionName.c_str(), formula.c_str(), bottomFitLimit, topFitLimit);
 
   auto constant = fitResult.getParameterUpVariation("Constant");
   auto slope = fitResult.getParameterDownVariation("Slope");
@@ -92,10 +88,8 @@ void SingleGausFit::SetBackgroundUpFunction() {
   auto fullFunctionName = functionName + "_Bkg_Up_" + histogramName;
   auto formula = fitConfig.GetBackgroundFitFunction();
 
-  backgroundUpFunction = new TF1(fullFunctionName.c_str(),
-                                 formula.c_str(),
-                                 bottomFitLimit,
-                                 topFitLimit);
+  backgroundUpFunction = new TF1(
+      fullFunctionName.c_str(), formula.c_str(), bottomFitLimit, topFitLimit);
 
   backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(3));
   backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(4));
@@ -117,10 +111,8 @@ void SingleGausFit::SetCompositeDownComponent() {
 
   auto formula = fitConfig.GetFitFunction();
 
-  compositeDownFunction = new TF1(fullFunctionName.c_str(),
-                                  formula.c_str(),
-                                  bottomFitLimit,
-                                  topFitLimit);
+  compositeDownFunction = new TF1(
+      fullFunctionName.c_str(), formula.c_str(), bottomFitLimit, topFitLimit);
 
   auto constant = fitResult.getParameterDownVariation("Constant");
   auto slope = fitResult.getParameterUpVariation("Slope");
