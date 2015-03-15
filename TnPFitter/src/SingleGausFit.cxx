@@ -28,20 +28,9 @@ void SingleGausFit::SetBackgroundFunction() {
 }
 
 void SingleGausFit::SetSignalFunction() {
-  testCompositeFunction();
-
-  auto fullFunctionName = functionName + "_signal_" + histogramName;
-  auto formula = fitConfig.GetSignalFitFunction();
-
-  signalFunction = new TF1(
-      fullFunctionName.c_str(), formula.c_str(), bottomFitLimit, topFitLimit);
-
-  signalFunction->SetParNames("Gaus N", "Gaus Mean", "Gaus Sigma");
-
-  signalFunction->FixParameter(0, compositeFunction->GetParameter("Gaus N"));
-  signalFunction->FixParameter(1, compositeFunction->GetParameter("Gaus Mean"));
-  signalFunction->FixParameter(2,
-                               compositeFunction->GetParameter("Gaus Sigma"));
+  signal = new SignalFittedFunction(name, histogramName, fitConfig);
+  signal->setParameterNames({"Gaus N", "Gaus Mean", "Gaus Sigma"});
+  signal->setParametersFromFunction(compositeFunction);
 }
 
 void SingleGausFit::SetCompositeUpFunction(void) {

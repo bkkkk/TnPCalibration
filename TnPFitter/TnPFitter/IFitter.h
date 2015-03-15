@@ -11,6 +11,7 @@
 #include "TnPFitter/FitResult.h"
 
 class BackgroundFittedFunction;
+class SignalFittedFunction;
 
 class IFitter {
  public:
@@ -73,6 +74,7 @@ class IFitter {
 
   TF1* compositeFunction;
   TF1* signalFunction;
+  SignalFittedFunction* signal;
   BackgroundFittedFunction* background;
 
   TF1* compositeUpFunction;

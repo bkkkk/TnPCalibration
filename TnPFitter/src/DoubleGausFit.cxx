@@ -7,6 +7,7 @@
 #include "TLine.h"
 
 #include "TnPFitter/BackgroundFittedFunction.h"
+#include "TnPFitter/SignalFittedFunction.h"
 
 #ifdef __CINT__
 ClassImp(DoubleGausFit);
@@ -27,22 +28,14 @@ void DoubleGausFit::SetBackgroundFunction() {
 void DoubleGausFit::SetSignalFunction() {
   testCompositeFunction();
 
-  auto funcName = functionName + "_signal_" + histogramName;
-
-  signalFunction = new TF1(funcName.c_str(),
-                           fitConfig.GetSignalFitFunction().c_str(),
-                           bottomFitLimit,
-                           topFitLimit);
-
-  signalFunction->FixParameter(0, compositeFunction->GetParameter("Narrow N"));
-  signalFunction->FixParameter(1,
-                               compositeFunction->GetParameter("Narrow Mean"));
-  signalFunction->FixParameter(2,
-                               compositeFunction->GetParameter("Narrow Sigma"));
-  signalFunction->FixParameter(3, compositeFunction->GetParameter("Wide N"));
-  signalFunction->FixParameter(4, compositeFunction->GetParameter("Wide Mean"));
-  signalFunction->FixParameter(5,
-                               compositeFunction->GetParameter("Wide Sigma"));
+  signal = new SignalFittedFunction(functionName, histogramName, fitConfig);
+  signal->setParameterNames({"Narrow N",
+                             "Narrow Mean",
+                             "Narrow Sigma",
+                             "Wide N",
+                             "Wide Mean",
+                             "Wide Sigma"});
+  signal->setParametersFromFunction(compositeFunction);
 }
 
 void DoubleGausFit::SetCompositeUpFunction() {

@@ -2,6 +2,7 @@
 #include "TnPFitter/FitterDraw.h"
 
 #include "TnPFitter/BackgroundFittedFunction.h"
+#include "TnPFitter/SignalFittedFunction.h"
 
 IFitter::IFitter(std::string name,
                  std::string functionName,
@@ -94,8 +95,7 @@ TF1* IFitter::GetCompositeFunction() {
 }
 
 TF1* IFitter::GetSignalFunction() {
-  testSignalFunction();
-  return (signalFunction);
+  return (signal->getFunction());
 }
 
 TF1* IFitter::GetBackgroundFunction() {
