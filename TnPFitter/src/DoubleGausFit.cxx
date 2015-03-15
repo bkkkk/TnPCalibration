@@ -19,8 +19,7 @@ DoubleGausFit::DoubleGausFit(std::string val_name,
 }
 
 void DoubleGausFit::SetBackgroundFunction() {
-  background =
-      new BackgroundFittedFunction(name, histogramName, fitConfig);
+  background = new BackgroundFittedFunction(name, histogramName, fitConfig);
   background->setParameterNames({"Constant", "Slope", "Poly"});
   background->setParametersFromFunction(compositeFunction);
 }
