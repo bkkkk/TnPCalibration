@@ -1,3 +1,6 @@
+#ifndef TNPFITTER_BACKGROUNDFITTEDFUNCTION_H_
+#define TNPFITTER_BACKGROUNDFITTEDFUNCTION_H_ 1
+
 #include <vector>
 #include <string>
 #include <cassert>
@@ -20,3 +23,5 @@ class BackgroundFittedFunction {
   TF1* backgroundFunction;
   std::vector<std::string> parameterNames;
 };
+
+#endif
