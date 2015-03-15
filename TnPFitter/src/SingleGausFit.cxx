@@ -22,8 +22,8 @@ SingleGausFit::SingleGausFit(std::string name,
 }
 
 void SingleGausFit::SetBackgroundFunction() {
-  background =
-      new BackgroundFittedFunction(name, histogramName, fitConfig);
+  background = new BackgroundFittedFunction(name, histogramName, fitConfig);
+  background->setParameterNames({"Constant", "Slope", "Poly"});
   background->setParametersFromFunction(compositeFunction);
 }
 
