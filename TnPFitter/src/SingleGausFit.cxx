@@ -14,6 +14,7 @@
 #include "TnPFitter/FitDrawingHelpers.h"
 
 #include "TnPFitter/BackgroundFittedFunction.h"
+#include "TnPFitter/SignalFittedFunction.h"
 
 SingleGausFit::SingleGausFit(std::string name,
                              TH1F* histogram,
