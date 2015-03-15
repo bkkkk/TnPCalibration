@@ -1,5 +1,6 @@
 #include "TnPFitter/FitConfig.h"
 
+#include "TFitResultPtr.h"
 #include "TFitResult.h"
 
 #include "JacobUtils/LoggingUtility.h"

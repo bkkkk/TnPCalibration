@@ -2,10 +2,11 @@
 #define TNPFIT_FITCONFIG_H_ 1
 
 #include "Fit/ParameterSettings.h"
-#include "TFitResultPtr.h"
 
 #include <vector>
 #include <string>
+
+class TFitResultPtr;
 
 using Parameter = ROOT::Fit::ParameterSettings;
 using Parameters = std::vector<Parameter>;
