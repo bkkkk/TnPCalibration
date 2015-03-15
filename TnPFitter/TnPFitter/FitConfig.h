@@ -17,7 +17,7 @@ class FitConfig {
             double min = 2.62f,
             double max = 3.5f);
 
-  ~FitConfig() {}
+  ~FitConfig() = default;
 
   void SetFitLimits(double min, double max);
   double GetFitMin() const;
