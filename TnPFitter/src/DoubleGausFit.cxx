@@ -108,7 +108,7 @@ void DoubleGausFit::SetCompositeDownComponent() {
   auto slope = fitResult.getParameterUpVariation("Slope");
   auto poly = fitResult.getParameterDownVariation("Poly");
 
-  SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);  
+  SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);
 }
 
 void DoubleGausFit::SetBackgroundDownFunction() {
@@ -124,7 +124,7 @@ void DoubleGausFit::SetBackgroundDownFunction() {
   backgroundDownFunction->SetParameter(1,
                                        compositeDownFunction->GetParameter(7));
   backgroundDownFunction->SetParameter(2,
-                                       compositeDownFunction->GetParameter(8));  
+                                       compositeDownFunction->GetParameter(8));
 }
 
 void DoubleGausFit::SetCompositeErrFunction(TF1* function,
