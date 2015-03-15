@@ -101,6 +101,10 @@ void FitConfig::SetParamsSettings(const Parameters& pars) {
   parameters = pars;
 }
 
+void FitConfig::AddParameter(const Parameter& parameter) {
+  parameters.push_back(parameter);
+}
+
 const Parameters& FitConfig::ParamsSettings() const {
   return (parameters);
 }

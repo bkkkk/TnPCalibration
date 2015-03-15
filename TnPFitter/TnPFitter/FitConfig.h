@@ -38,6 +38,7 @@ class FitConfig {
 
   const Parameter& ParSettings(std::size_t i) const;
   void SetParamsSettings(const Parameters& pars);
+  void AddParameter(const Parameter& parameter);
   const Parameters& ParamsSettings() const;
   std::size_t NPar() const;
 
