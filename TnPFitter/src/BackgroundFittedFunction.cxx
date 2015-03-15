@@ -1,6 +1,7 @@
 #include "TnPFitter/BackgroundFittedFunction.h"
 
 #include <vector>
+#include <cassert>
 
 #include "TF1.h"
 
@@ -27,10 +28,11 @@ void BackgroundFittedFunction::setParametersFromFunction(TF1* const another) {
   }
 }
 
-void BackgroundFittedFunction::setParameterNames(std::vector<std::string> names) {
-  assert(names.size() == (std::size_t) backgroundFunction->GetNpar());
+void BackgroundFittedFunction::setParameterNames(
+    std::vector<std::string> names) {
+  assert(names.size() == (std::size_t)backgroundFunction->GetNpar());
 
-  for(auto index = 0ul; index < names.size(); index++) {
+  for (auto index = 0ul; index < names.size(); index++) {
     backgroundFunction->SetParName(index, names[index].c_str());
   }
 }
