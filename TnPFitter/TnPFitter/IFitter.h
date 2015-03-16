@@ -73,7 +73,6 @@ class IFitter {
   std::string histogramName;
 
   TF1* compositeFunction;
-  TF1* signalFunction;
   SignalFittedFunction* signal;
   BackgroundFittedFunction* background;
 

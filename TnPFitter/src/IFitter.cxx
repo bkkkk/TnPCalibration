@@ -13,7 +13,6 @@ IFitter::IFitter(std::string name,
       functionName(std::move(functionName)),
       histogram(histogram),
       compositeFunction(nullptr),
-      signalFunction(nullptr),
       compositeUpFunction(nullptr),
       compositeDownFunction(nullptr),
       backgroundUpFunction(nullptr),
@@ -29,7 +28,6 @@ IFitter::IFitter(std::string name,
 
 IFitter::~IFitter() {
   delete compositeFunction;
-  delete signalFunction;
   delete backgroundUpFunction;
   delete backgroundDownFunction;
   delete compositeDownFunction;
@@ -133,9 +131,6 @@ void IFitter::testCompositeFunction() {
 }
 
 void IFitter::testSignalFunction() {
-  if (signalFunction == nullptr) {
-    SetSignalFunction();
-  }
 }
 
 void IFitter::PrintVariable(const std::string& name,
