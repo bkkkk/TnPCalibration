@@ -11,6 +11,7 @@ CXXFLAGS += -MMD -MP
 CXXFLAGS += -I.
 CXXFLAGS += -I../JacobUtils
 CXXFLAGS += -I../D3PDReaderAdapter
+CXXFLAGS += -I../RootAdapters
 CXXFLAGS += -I/usr/local/Cellar/root6/6.02.05/include/root
 CXXFLAGS += -I/usr/local/gmock/include
 CXXFLAGS += -I/usr/local/gmock/gtest/include

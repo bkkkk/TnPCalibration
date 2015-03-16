@@ -17,15 +17,6 @@ DoubleGausFit::DoubleGausFit(std::string val_name,
 }
 
 void DoubleGausFit::SetBackgroundFunction() {
-  testCompositeFunction();
-
-  auto funcName = functionName + "_" + histogramName;
-
-  backgroundFunction = new TF1(funcName.c_str(),
-                               fitConfig.GetBackgroundFitFunction().c_str(),
-                               bottomFitLimit,
-                               topFitLimit);
-
   backgroundFunction->FixParameter(0,
                                    compositeFunction->GetParameter("Constant"));
   backgroundFunction->FixParameter(1, compositeFunction->GetParameter("Slope"));
@@ -33,15 +24,6 @@ void DoubleGausFit::SetBackgroundFunction() {
 }
 
 void DoubleGausFit::SetSignalFunction() {
-  testCompositeFunction();
-
-  auto funcName = functionName + "_signal_" + histogramName;
-
-  signalFunction = new TF1(funcName.c_str(),
-                           fitConfig.GetSignalFitFunction().c_str(),
-                           bottomFitLimit,
-                           topFitLimit);
-
   signalFunction->FixParameter(0, compositeFunction->GetParameter("Narrow N"));
   signalFunction->FixParameter(1,
                                compositeFunction->GetParameter("Narrow Mean"));
@@ -62,12 +44,6 @@ void DoubleGausFit::SetCompositeUpFunction() {
 }
 
 void DoubleGausFit::SetCompositeUpComponent() {
-  auto funcNameComp = functionName + "_Composite_Up_" + histogramName;
-  compositeUpFunction = new TF1(funcNameComp.c_str(),
-                                fitConfig.GetFitFunction().c_str(),
-                                bottomFitLimit,
-                                topFitLimit);
-
   auto constant = fitResult.getParameterUpVariation("Constant");
   auto slope = fitResult.getParameterDownVariation("Slope");
   auto poly = fitResult.getParameterUpVariation("Poly");
@@ -76,12 +52,6 @@ void DoubleGausFit::SetCompositeUpComponent() {
 }
 
 void DoubleGausFit::SetBackgroundUpFunction() {
-  auto funcNameBkg = functionName + "_Bkg_Up_" + histogramName;
-  backgroundUpFunction = new TF1(funcNameBkg.c_str(),
-                                 fitConfig.GetBackgroundFitFunction().c_str(),
-                                 bottomFitLimit,
-                                 topFitLimit);
-
   backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(6));
   backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(7));
   backgroundUpFunction->SetParameter(2, compositeUpFunction->GetParameter(8));
@@ -97,34 +67,20 @@ void DoubleGausFit::SetCompositeDownFunction() {
 }
 
 void DoubleGausFit::SetCompositeDownComponent() {
-  auto funcNameComp = functionName + "_Composite_Down_" + histogramName;
-
-  compositeDownFunction = new TF1(funcNameComp.c_str(),
-                                  fitConfig.GetFitFunction().c_str(),
-                                  bottomFitLimit,
-                                  topFitLimit);
-
   auto constant = fitResult.getParameterDownVariation("Constant");
   auto slope = fitResult.getParameterUpVariation("Slope");
   auto poly = fitResult.getParameterDownVariation("Poly");
 
-  SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);  
+  SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);
 }
 
 void DoubleGausFit::SetBackgroundDownFunction() {
-  auto funcNameBkg = functionName + "_Bkg_Down_" + histogramName;
-
-  backgroundDownFunction = new TF1(funcNameBkg.c_str(),
-                                   fitConfig.GetBackgroundFitFunction().c_str(),
-                                   bottomFitLimit,
-                                   topFitLimit);
-
   backgroundDownFunction->SetParameter(0,
                                        compositeDownFunction->GetParameter(6));
   backgroundDownFunction->SetParameter(1,
                                        compositeDownFunction->GetParameter(7));
   backgroundDownFunction->SetParameter(2,
-                                       compositeDownFunction->GetParameter(8));  
+                                       compositeDownFunction->GetParameter(8));
 }
 
 void DoubleGausFit::SetCompositeErrFunction(TF1* function,

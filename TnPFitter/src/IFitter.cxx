@@ -9,15 +9,40 @@ IFitter::IFitter(std::string name,
       fitConfig(fitConfig),
       functionName(std::move(functionName)),
       histogram(histogram),
-      compositeFunction(nullptr),
-      signalFunction(nullptr),
-      backgroundFunction(nullptr),
-      compositeUpFunction(nullptr),
-      compositeDownFunction(nullptr),
-      backgroundUpFunction(nullptr),
-      backgroundDownFunction(nullptr),
       bottomFitLimit(fitConfig.GetFitMin()),
-      topFitLimit(fitConfig.GetFitMax()) {
+      topFitLimit(fitConfig.GetFitMax()),
+      compositeFunction(Smart::Formula(functionName,
+                                       fitConfig.GetFitFunction(),
+                                       bottomFitLimit,
+                                       topFitLimit)),
+      signalFunction(Smart::Formula(functionName + "_signal_" + histogramName,
+                                    fitConfig.GetSignalFitFunction(),
+                                    bottomFitLimit,
+                                    topFitLimit)),
+      backgroundFunction(Smart::Formula(functionName + "_" + histogramName,
+                                        fitConfig.GetBackgroundFitFunction(),
+                                        bottomFitLimit,
+                                        topFitLimit)),
+      compositeUpFunction(
+          Smart::Formula(functionName + "_Composite_Up_" + histogramName,
+                         fitConfig.GetFitFunction(),
+                         bottomFitLimit,
+                         topFitLimit)),
+      compositeDownFunction(
+          Smart::Formula(functionName + "_Composite_Down_" + histogramName,
+                          fitConfig.GetFitFunction(),
+                          bottomFitLimit,
+                          topFitLimit)),
+      backgroundUpFunction(
+          Smart::Formula(functionName + "_Bkg_Up_" + histogramName,
+                         fitConfig.GetBackgroundFitFunction(),
+                         bottomFitLimit,
+                         topFitLimit)),
+      backgroundDownFunction(
+          Smart::Formula(functionName + "_Bkg_Down_" + histogramName,
+                         fitConfig.GetBackgroundFitFunction(),
+                         bottomFitLimit,
+                         topFitLimit)) {
   if (histogram == nullptr) {
     throw(std::runtime_error("Histogram is not setup properly"));
   }
@@ -36,10 +61,6 @@ IFitter::~IFitter() {
 }
 
 void IFitter::FitCompositeFunction() {
-  compositeFunction = new TF1(functionName.c_str(),
-                              fitConfig.GetFitFunction().c_str(),
-                              bottomFitLimit,
-                              topFitLimit);
   setupMainCompositeFunction();
 
   histogram->Fit(compositeFunction, fitConfig.GetFitOptions().c_str());

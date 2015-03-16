@@ -5,6 +5,7 @@
 #include <stdexcept>
 
 #include <TF1.h>
+#include "RootAdapters/SmartFunction.h"
 #include <TH1F.h>
 
 #include "TnPFitter/FitConfig.h"
@@ -70,7 +71,12 @@ class IFitter {
   TH1F* histogram;
   std::string histogramName;
 
+  double bottomFitLimit;
+  double topFitLimit;
+
   TF1* compositeFunction;
+  FitResult fitResult;
+
   TF1* signalFunction;
   TF1* backgroundFunction;
 
@@ -78,11 +84,6 @@ class IFitter {
   TF1* compositeDownFunction;
   TF1* backgroundUpFunction;
   TF1* backgroundDownFunction;
-
-  double bottomFitLimit;
-  double topFitLimit;
-
-  FitResult fitResult;
 
 #ifdef __CINT__
   ClassDef(IFitter, 1)
