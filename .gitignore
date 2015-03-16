@@ -62,3 +62,5 @@ gangalog
 TnPSelector/.tags
 TnPSelector/.tags_sorted_by_file
 TnPSelector/tags
+.tags
+.tags_sorted_by_file
