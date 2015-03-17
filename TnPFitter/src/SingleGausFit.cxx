@@ -48,14 +48,6 @@ void SingleGausFit::SetCompositeUpComponent() {
 }
 
 void SingleGausFit::SetBackgroundUpFunction() {
-  auto fullFunctionName = functionName + "_Bkg_Up_" + histogramName;
-  auto formula = fitConfig.GetBackgroundFitFunction();
-
-  backgroundUpFunction = new TF1(fullFunctionName.c_str(),
-                                 formula.c_str(),
-                                 bottomFitLimit,
-                                 topFitLimit);
-
   backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(3));
   backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(4));
   backgroundUpFunction->SetParameter(2, compositeUpFunction->GetParameter(5));
