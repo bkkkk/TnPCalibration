@@ -1,17 +1,9 @@
 #include "TnPFitter/SingleGausFit.h"
 
-#include <TCanvas.h>
-#include <TLine.h>
-#include <TF1.h>
-#include <TH1F.h>
-#include <Fit/ParameterSettings.h>
-
 #include "JacobUtils/LoggingUtility.h"
 
-#include "TnPFitter/FitConfig.h"
-#include "TnPFitter/FitResult.h"
-
-#include "TnPFitter/FitDrawingHelpers.h"
+#include <TF1.h>
+#include <TH1F.h>
 
 SingleGausFit::SingleGausFit(std::string name,
                              TH1F* histogram,

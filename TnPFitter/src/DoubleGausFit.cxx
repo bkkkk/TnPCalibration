@@ -1,14 +1,9 @@
 #include "TnPFitter/DoubleGausFit.h"
-#include "TnPFitter/FitDrawingHelpers.h"
 
 #include "JacobUtils/LoggingUtility.h"
 
-#include "TCanvas.h"
-#include "TLine.h"
-
-#ifdef __CINT__
-ClassImp(DoubleGausFit);
-#endif
+#include <TF1.h>
+#include <TH1F.h>
 
 DoubleGausFit::DoubleGausFit(std::string val_name,
                              TH1F* val_histogram,
@@ -154,3 +149,7 @@ FitConfig TNPFITTER::BuildFitConfiguration(TH1* histogram,
 
   return (*fitConfig);
 }
+
+#ifdef __CINT__
+ClassImp(DoubleGausFit);
+#endif
