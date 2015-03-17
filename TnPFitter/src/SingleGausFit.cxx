@@ -64,15 +64,6 @@ void SingleGausFit::SetCompositeDownFunction() {
 }
 
 void SingleGausFit::SetCompositeDownComponent() {
-  auto fullFunctionName = functionName + "_Composite_Down_" + histogramName;
-
-  auto formula = fitConfig.GetFitFunction();
-
-  compositeDownFunction = new TF1(fullFunctionName.c_str(),
-                                  formula.c_str(),
-                                  bottomFitLimit,
-                                  topFitLimit);
-
   auto constant = fitResult.getParameterDownVariation("Constant");
   auto slope = fitResult.getParameterUpVariation("Slope");
   auto poly = fitResult.getParameterDownVariation("Poly");
