@@ -1,6 +1,8 @@
 #ifndef ROOTADAPTERS_SMARTFUNCTION_H_
 #define ROOTADAPTERS_SMARTFUNCTION_H_ 1
 
+#include <string>
+
 class TF1;
 
 namespace Smart {

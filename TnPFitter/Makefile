@@ -19,10 +19,12 @@ CXXFLAGS += -I/usr/local/gmock/gtest/include
 LDFLAGS += -L/usr/local/gmock/build/
 LDFLAGS += -L/usr/local/lib/
 LDFLAGS += -L/usr/local/Cellar/root6/6.02.05/lib/root
+LDFLAGS += -L../RootAdapters/lib
 
 LDLIBS += -lc++
 LDLIBS += -lCore -lRIO -lNet -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lMathCore -lThread -lpthread -lm -ldl
 LDLIBS += -lmock
+LDLIBS += -lRootAdapters
 
 # Input directories
 ROOT = $(shell dirname 'pwd')
