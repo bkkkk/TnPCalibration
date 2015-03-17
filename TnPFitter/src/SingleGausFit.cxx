@@ -29,16 +29,6 @@ void SingleGausFit::SetSignalFunction() {
       2, GetCompositeFunction()->GetParameter("Gaus Sigma"));
 }
 
-void SingleGausFit::SetCompositeUpFunction(void) {
-  testCompositeFunction();
-
-  SetCompositeUpComponent();
-
-  histogram->Fit(compositeUpFunction, fitConfig.GetFitOptions().c_str());
-
-  SetBackgroundUpFunction();
-}
-
 void SingleGausFit::SetCompositeUpComponent() {
   auto constant = fitResult.getParameterUpVariation("Constant");
   auto slope = fitResult.getParameterDownVariation("Slope");
@@ -51,16 +41,6 @@ void SingleGausFit::SetBackgroundUpFunction() {
   backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(3));
   backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(4));
   backgroundUpFunction->SetParameter(2, compositeUpFunction->GetParameter(5));
-}
-
-void SingleGausFit::SetCompositeDownFunction() {
-  testCompositeFunction();
-
-  SetCompositeDownComponent();
-
-  histogram->Fit(compositeDownFunction, fitConfig.GetFitOptions().c_str());
-
-  SetBackgroundDownFunction();
 }
 
 void SingleGausFit::SetCompositeDownComponent() {

@@ -31,10 +31,17 @@ class IFitter {
 
  public:
   virtual void FitCompositeFunction();
+  virtual void SetCompositeUpFunction();
+  virtual void SetCompositeDownFunction();
+
   virtual void SetSignalFunction() = 0;
   virtual void SetBackgroundFunction() = 0;
-  virtual void SetCompositeUpFunction() = 0;
-  virtual void SetCompositeDownFunction() = 0;
+
+  virtual void SetCompositeUpComponent() = 0;
+  virtual void SetBackgroundUpFunction() = 0;
+
+  virtual void SetCompositeDownComponent() = 0;
+  virtual void SetBackgroundDownFunction() = 0;
 
  private:
   void setupMainCompositeFunction();

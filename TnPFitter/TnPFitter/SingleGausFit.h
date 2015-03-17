@@ -16,11 +16,8 @@ class SingleGausFit : public IFitter {
  public:
   void SetSignalFunction();
   void SetBackgroundFunction();
-  void SetCompositeUpFunction();
   void SetCompositeUpComponent();
   void SetBackgroundUpFunction();
-
-  void SetCompositeDownFunction();
   void SetCompositeDownComponent();
   void SetBackgroundDownFunction();
 

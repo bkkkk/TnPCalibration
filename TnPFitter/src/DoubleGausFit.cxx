@@ -30,14 +30,6 @@ void DoubleGausFit::SetSignalFunction() {
                                compositeFunction->GetParameter("Wide Sigma"));
 }
 
-void DoubleGausFit::SetCompositeUpFunction() {
-  testCompositeFunction();
-  SetCompositeUpComponent();
-
-  histogram->Fit(compositeUpFunction, fitConfig.GetFitOptions().c_str());
-  SetBackgroundUpFunction();
-}
-
 void DoubleGausFit::SetCompositeUpComponent() {
   auto constant = fitResult.getParameterUpVariation("Constant");
   auto slope = fitResult.getParameterDownVariation("Slope");
@@ -50,15 +42,6 @@ void DoubleGausFit::SetBackgroundUpFunction() {
   backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(6));
   backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(7));
   backgroundUpFunction->SetParameter(2, compositeUpFunction->GetParameter(8));
-}
-
-void DoubleGausFit::SetCompositeDownFunction() {
-  testCompositeFunction();
-
-  SetCompositeDownComponent();
-
-  histogram->Fit(compositeDownFunction, fitConfig.GetFitOptions().c_str());
-  SetBackgroundDownFunction();
 }
 
 void DoubleGausFit::SetCompositeDownComponent() {

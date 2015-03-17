@@ -68,6 +68,22 @@ void IFitter::FitCompositeFunction() {
   fitResult.fillFromFunction(compositeFunction);
 }
 
+void IFitter::SetCompositeUpFunction() {
+  SetCompositeUpComponent();
+
+  histogram->Fit(compositeUpFunction, fitConfig.GetFitOptions().c_str());
+
+  SetBackgroundUpFunction();
+}
+
+void IFitter::SetCompositeDownFunction() {
+  SetCompositeDownComponent();
+
+  histogram->Fit(compositeDownFunction, fitConfig.GetFitOptions().c_str());
+
+  SetBackgroundDownFunction();
+}
+
 void IFitter::setupMainCompositeFunction() {
   for (auto parIndex = 0; parIndex < compositeFunction->GetNpar(); parIndex++) {
     setupFunctionParameter(compositeFunction, parIndex);
