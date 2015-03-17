@@ -30,9 +30,9 @@ IFitter::IFitter(std::string name,
                          topFitLimit)),
       compositeDownFunction(
           Smart::Formula(functionName + "_Composite_Down_" + histogramName,
-                          fitConfig.GetFitFunction(),
-                          bottomFitLimit,
-                          topFitLimit)),
+                         fitConfig.GetFitFunction(),
+                         bottomFitLimit,
+                         topFitLimit)),
       backgroundUpFunction(
           Smart::Formula(functionName + "_Bkg_Up_" + histogramName,
                          fitConfig.GetBackgroundFitFunction(),
