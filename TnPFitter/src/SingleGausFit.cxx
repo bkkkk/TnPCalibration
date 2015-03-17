@@ -40,14 +40,6 @@ void SingleGausFit::SetCompositeUpFunction(void) {
 }
 
 void SingleGausFit::SetCompositeUpComponent() {
-  auto fullFunctionName = functionName + "_Composite_Up_" + histogramName;
-  auto formula = fitConfig.GetFitFunction();
-
-  compositeUpFunction = new TF1(fullFunctionName.c_str(),
-                                formula.c_str(),
-                                bottomFitLimit,
-                                topFitLimit);
-
   auto constant = fitResult.getParameterUpVariation("Constant");
   auto slope = fitResult.getParameterDownVariation("Slope");
   auto poly = fitResult.getParameterUpVariation("Poly");
