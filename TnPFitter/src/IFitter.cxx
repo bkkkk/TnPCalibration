@@ -106,43 +106,34 @@ void IFitter::setupFunctionParameter(TF1* function, std::size_t index) {
 }
 
 TF1* IFitter::GetBackgroundDownFunction() {
-  testCompositeFunction();
   return (backgroundDownFunction);
 }
 
 TF1* IFitter::GetBackgroundUpFunction() {
-  testCompositeFunction();
   return (backgroundUpFunction);
 }
 
 TF1* IFitter::GetCompositeDownFunction() {
-  testCompositeFunction();
   return (compositeDownFunction);
 }
 
 TF1* IFitter::GetCompositeUpFunction() {
-  testCompositeFunction();
   return (compositeUpFunction);
 }
 
 TF1* IFitter::GetCompositeFunction() {
-  testCompositeFunction();
   return (compositeFunction);
 }
 
 TF1* IFitter::GetSignalFunction() {
-  testSignalFunction();
   return (signalFunction);
 }
 
 TF1* IFitter::GetBackgroundFunction() {
-  testBackgroundFunction();
   return (backgroundFunction);
 }
 
 double IFitter::GetSigmaLow(int nSigma) {
-  testCompositeFunction();
-
   auto sigma_mu_pair = GetSigmaAndMu();
   auto lowEdge = sigma_mu_pair.first - nSigma * sigma_mu_pair.second;
 
@@ -150,7 +141,6 @@ double IFitter::GetSigmaLow(int nSigma) {
 }
 
 double IFitter::GetSigmaHigh(int nSigma) {
-  testCompositeFunction();
   auto sigma_mu_pair = GetSigmaAndMu();
 
   auto highEdge = sigma_mu_pair.first + nSigma * sigma_mu_pair.second;
@@ -162,32 +152,6 @@ void IFitter::SetFitLimits(const double min, const double max) {
   bottomFitLimit = min;
   topFitLimit = max;
   return;
-}
-
-void IFitter::testCompositeFunction() {
-  if (compositeFunction == nullptr) {
-    FitCompositeFunction();
-  }
-}
-
-void IFitter::testSignalFunction() {
-  if (signalFunction == nullptr) {
-    SetSignalFunction();
-  }
-}
-
-void IFitter::testBackgroundFunction() {
-  if (backgroundFunction == nullptr) {
-    SetBackgroundFunction();
-  }
-}
-
-void IFitter::PrintVariable(const std::string& name,
-                            double var,
-                            double err) const {
-  (void)name;
-  (void)var;
-  (void)err;
 }
 
 void TNPFITTER::RunFit(IFitter* fitter) {

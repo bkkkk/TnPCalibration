@@ -60,14 +60,7 @@ class IFitter {
   virtual std::pair<double, double> GetSigmaAndMu() = 0;
   void SetFitLimits(const double min, const double max);
 
- protected:
-  void PrintVariable(const std::string& name, double var, double err) const;
-
- protected:
-  void testSignalFunction();
-  void testBackgroundFunction();
-  void testCompositeFunction();
-
+protected:
   std::string name;
   FitConfig fitConfig;
   std::string functionName;
