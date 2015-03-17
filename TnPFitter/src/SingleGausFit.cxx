@@ -12,20 +12,12 @@ SingleGausFit::SingleGausFit(std::string name,
 }
 
 void SingleGausFit::SetBackgroundFunction() {
-  testCompositeFunction();
-
-  auto fullFunctionName = functionName + "_" + histogramName;
-  auto formula = fitConfig.GetBackgroundFitFunction();
-
-  backgroundFunction = new TF1(fullFunctionName.c_str(),
-                               formula.c_str(),
-                               bottomFitLimit,
-                               topFitLimit);
-
-  backgroundFunction->FixParameter(0,
-                                   compositeFunction->GetParameter("Constant"));
-  backgroundFunction->FixParameter(1, compositeFunction->GetParameter("Slope"));
-  backgroundFunction->FixParameter(2, compositeFunction->GetParameter("Poly"));
+  GetBackgroundFunction()->FixParameter(
+      0, GetCompositeFunction()->GetParameter("Constant"));
+  GetBackgroundFunction()->FixParameter(
+      1, GetCompositeFunction()->GetParameter("Slope"));
+  GetBackgroundFunction()->FixParameter(
+      2, GetCompositeFunction()->GetParameter("Poly"));
 }
 
 void SingleGausFit::SetSignalFunction() {
