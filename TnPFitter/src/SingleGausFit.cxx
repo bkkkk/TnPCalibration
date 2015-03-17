@@ -72,14 +72,6 @@ void SingleGausFit::SetCompositeDownComponent() {
 }
 
 void SingleGausFit::SetBackgroundDownFunction() {
-  auto bkgFunctionName = functionName + "_Bkg_Down_" + histogramName;
-  auto bkgFunction = fitConfig.GetBackgroundFitFunction();
-
-  backgroundDownFunction = new TF1(bkgFunctionName.c_str(),
-                                   bkgFunction.c_str(),
-                                   bottomFitLimit,
-                                   topFitLimit);
-
   backgroundDownFunction->SetParameter(0,
                                        compositeDownFunction->GetParameter(3));
   backgroundDownFunction->SetParameter(1,
