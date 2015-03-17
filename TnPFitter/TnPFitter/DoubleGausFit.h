@@ -5,13 +5,8 @@
 
 #include <TnPFitter/IFitter.h>
 
-#include <TnPFitter/FitConfig.h>
-#include <TnPFitter/FitResult.h>
-
-#include <Fit/ParameterSettings.h>
-
-#include <TH1F.h>
-#include <TF1.h>
+class TF1;
+class TH1F;
 
 class DoubleGausFit : public IFitter {
  public:
@@ -47,7 +42,6 @@ class DoubleGausFit : public IFitter {
 };
 
 namespace TNPFITTER {
-// Setup a fitconfig object
 FitConfig BuildFitConfiguration(TH1* histogram,
                                 double min = 2.63,
                                 double max = 3.5);

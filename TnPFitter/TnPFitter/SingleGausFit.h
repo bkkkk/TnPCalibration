@@ -1,9 +1,9 @@
 #ifndef SINGLEGAUSFIT_H_
 #define SINGLEGAUSFIT_H_ 1
 
-#include <TnPFitter/IFitter.h>
-
 #include <string>
+
+#include <TnPFitter/IFitter.h>
 
 class TF1;
 class TH1F;
