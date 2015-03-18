@@ -31,11 +31,14 @@ void DoubleGausFit::SetSignalFunction() {
 }
 
 void DoubleGausFit::SetCompositeUpComponent() {
+  setCompositeSignalComponent(GetCompositeUpFunction());
+
   auto constant = fitResult.getParameterUpVariation("Constant");
   auto slope = fitResult.getParameterDownVariation("Slope");
   auto poly = fitResult.getParameterUpVariation("Poly");
 
-  SetCompositeErrFunction(compositeUpFunction, poly, slope, constant);
+  setCompositeBackgroundComponent(
+      GetCompositeUpFunction(), poly, slope, constant);
 }
 
 void DoubleGausFit::SetBackgroundUpFunction() {
@@ -45,11 +48,14 @@ void DoubleGausFit::SetBackgroundUpFunction() {
 }
 
 void DoubleGausFit::SetCompositeDownComponent() {
+  setCompositeSignalComponent(GetCompositeDownFunction());
+
   auto constant = fitResult.getParameterDownVariation("Constant");
   auto slope = fitResult.getParameterUpVariation("Slope");
   auto poly = fitResult.getParameterDownVariation("Poly");
 
-  SetCompositeErrFunction(compositeDownFunction, poly, slope, constant);
+  setCompositeBackgroundComponent(
+      GetCompositeDownFunction(), poly, slope, constant);
 }
 
 void DoubleGausFit::SetBackgroundDownFunction() {
@@ -61,15 +67,16 @@ void DoubleGausFit::SetBackgroundDownFunction() {
                                        compositeDownFunction->GetParameter(8));
 }
 
-void DoubleGausFit::SetCompositeErrFunction(TF1* function,
-                                            double poly,
-                                            double slope,
-                                            double constant) {
+void DoubleGausFit::setCompositeSignalComponent(TF1* function) {
   auto nSignalParameters = 6;
   for (auto parIndex = 0; parIndex < nSignalParameters; parIndex++) {
     setupFunctionParameter(function, parIndex);
   }
 
+void DoubleGausFit::setCompositeBackgroundComponent(TF1* function,
+                                                    double poly,
+                                                    double slope,
+                                                    double constant) {
   function->FixParameter(6, constant);
   function->FixParameter(7, slope);
   function->FixParameter(8, poly);

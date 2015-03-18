@@ -21,10 +21,11 @@ class SingleGausFit : public IFitter {
   void SetCompositeDownComponent();
   void SetBackgroundDownFunction();
 
-  void SetCompositeErrFunction(TF1* function,
-                               double poly,
-                               double slope,
-                               double constant);
+  void setCompositeSignalComponent(TF1* function);
+  void setCompositeBackgroundComponent(TF1* function,
+                                       double poly,
+                                       double slope,
+                                       double constant);
   std::pair<double, double> GetSigmaAndMu();
 };
 

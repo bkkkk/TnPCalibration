@@ -26,10 +26,12 @@ class DoubleGausFit : public IFitter {
   void SetBackgroundDownFunction();
 
  public:
-  void SetCompositeErrFunction(TF1* function,
-                               double poly,
-                               double slope,
-                               double constant);
+  void setCompositeBackgroundComponent(TF1* function,
+                                       double poly,
+                                       double slope,
+                                       double constant);
+  void setCompositeSignalComponent(TF1* function);
+
   std::pair<double, double> GetSigmaAndMu();
   double GetSigma();
   double GetMu();
