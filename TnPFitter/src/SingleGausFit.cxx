@@ -21,11 +21,11 @@ void SingleGausFit::SetBackgroundFunction() {
 }
 
 void SingleGausFit::SetSignalFunction() {
-  signalFunction->FixParameter(0,
-                               GetCompositeFunction()->GetParameter("Gaus N"));
-  signalFunction->FixParameter(
+  GetSignalFunction()->FixParameter(
+      0, GetCompositeFunction()->GetParameter("Gaus N"));
+  GetSignalFunction()->FixParameter(
       1, GetCompositeFunction()->GetParameter("Gaus Mean"));
-  signalFunction->FixParameter(
+  GetSignalFunction()->FixParameter(
       2, GetCompositeFunction()->GetParameter("Gaus Sigma"));
 }
 
@@ -41,9 +41,12 @@ void SingleGausFit::SetCompositeUpComponent() {
 }
 
 void SingleGausFit::SetBackgroundUpFunction() {
-  backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(3));
-  backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(4));
-  backgroundUpFunction->SetParameter(2, compositeUpFunction->GetParameter(5));
+  GetBackgroundUpFunction()->SetParameter(
+      0, GetCompositeUpFunction()->GetParameter(3));
+  GetBackgroundUpFunction()->SetParameter(
+      1, GetCompositeUpFunction()->GetParameter(4));
+  GetBackgroundUpFunction()->SetParameter(
+      2, GetCompositeUpFunction()->GetParameter(5));
 }
 
 void SingleGausFit::SetCompositeDownComponent() {
@@ -58,18 +61,18 @@ void SingleGausFit::SetCompositeDownComponent() {
 }
 
 void SingleGausFit::SetBackgroundDownFunction() {
-  backgroundDownFunction->SetParameter(0,
-                                       compositeDownFunction->GetParameter(3));
-  backgroundDownFunction->SetParameter(1,
-                                       compositeDownFunction->GetParameter(4));
-  backgroundDownFunction->SetParameter(2,
-                                       compositeDownFunction->GetParameter(5));
+  GetBackgroundDownFunction()->SetParameter(
+      0, GetCompositeDownFunction()->GetParameter(3));
+  GetBackgroundDownFunction()->SetParameter(
+      1, GetCompositeDownFunction()->GetParameter(4));
+  GetBackgroundDownFunction()->SetParameter(
+      2, GetCompositeDownFunction()->GetParameter(5));
 }
 
 void SingleGausFit::setCompositeSignalComponent(TF1* function) {
   auto nSignalParameters = 3;
   for (auto parIdx = 0; parIdx != nSignalParameters; parIdx++) {
-    setupFunctionParameter(function, parIdx);
+    setParameterFromConfig(function, parIdx);
   }
 }
 
@@ -83,8 +86,8 @@ void SingleGausFit::setCompositeBackgroundComponent(TF1* function,
 }
 
 std::pair<double, double> SingleGausFit::GetSigmaAndMu() {
-  auto mu = compositeFunction->GetParameter(1);
-  auto sigma = compositeFunction->GetParameter(2);
+  auto mu = GetCompositeFunction()->GetParameter(1);
+  auto sigma = GetCompositeFunction()->GetParameter(2);
 
   return (std::make_pair(sigma, mu));
 }

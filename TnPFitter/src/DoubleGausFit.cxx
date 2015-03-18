@@ -12,22 +12,27 @@ DoubleGausFit::DoubleGausFit(std::string name,
 }
 
 void DoubleGausFit::SetBackgroundFunction() {
-  backgroundFunction->FixParameter(0,
-                                   compositeFunction->GetParameter("Constant"));
-  backgroundFunction->FixParameter(1, compositeFunction->GetParameter("Slope"));
-  backgroundFunction->FixParameter(2, compositeFunction->GetParameter("Poly"));
+  GetBackgroundFunction()->FixParameter(
+      0, GetCompositeFunction()->GetParameter("Constant"));
+  GetBackgroundFunction()->FixParameter(
+      1, GetCompositeFunction()->GetParameter("Slope"));
+  GetBackgroundFunction()->FixParameter(
+      2, GetCompositeFunction()->GetParameter("Poly"));
 }
 
 void DoubleGausFit::SetSignalFunction() {
-  signalFunction->FixParameter(0, compositeFunction->GetParameter("Narrow N"));
-  signalFunction->FixParameter(1,
-                               compositeFunction->GetParameter("Narrow Mean"));
-  signalFunction->FixParameter(2,
-                               compositeFunction->GetParameter("Narrow Sigma"));
-  signalFunction->FixParameter(3, compositeFunction->GetParameter("Wide N"));
-  signalFunction->FixParameter(4, compositeFunction->GetParameter("Wide Mean"));
-  signalFunction->FixParameter(5,
-                               compositeFunction->GetParameter("Wide Sigma"));
+  GetSignalFunction()->FixParameter(
+      0, GetCompositeFunction()->GetParameter("Narrow N"));
+  GetSignalFunction()->FixParameter(
+      1, GetCompositeFunction()->GetParameter("Narrow Mean"));
+  GetSignalFunction()->FixParameter(
+      2, GetCompositeFunction()->GetParameter("Narrow Sigma"));
+  GetSignalFunction()->FixParameter(
+      3, GetCompositeFunction()->GetParameter("Wide N"));
+  GetSignalFunction()->FixParameter(
+      4, GetCompositeFunction()->GetParameter("Wide Mean"));
+  GetSignalFunction()->FixParameter(
+      5, GetCompositeFunction()->GetParameter("Wide Sigma"));
 }
 
 void DoubleGausFit::SetCompositeUpComponent() {
@@ -42,9 +47,12 @@ void DoubleGausFit::SetCompositeUpComponent() {
 }
 
 void DoubleGausFit::SetBackgroundUpFunction() {
-  backgroundUpFunction->SetParameter(0, compositeUpFunction->GetParameter(6));
-  backgroundUpFunction->SetParameter(1, compositeUpFunction->GetParameter(7));
-  backgroundUpFunction->SetParameter(2, compositeUpFunction->GetParameter(8));
+  GetBackgroundUpFunction()->SetParameter(
+      0, GetCompositeUpFunction()->GetParameter(6));
+  GetBackgroundUpFunction()->SetParameter(
+      1, GetCompositeUpFunction()->GetParameter(7));
+  GetBackgroundUpFunction()->SetParameter(
+      2, GetCompositeUpFunction()->GetParameter(8));
 }
 
 void DoubleGausFit::SetCompositeDownComponent() {
@@ -59,19 +67,20 @@ void DoubleGausFit::SetCompositeDownComponent() {
 }
 
 void DoubleGausFit::SetBackgroundDownFunction() {
-  backgroundDownFunction->SetParameter(0,
-                                       compositeDownFunction->GetParameter(6));
-  backgroundDownFunction->SetParameter(1,
-                                       compositeDownFunction->GetParameter(7));
-  backgroundDownFunction->SetParameter(2,
-                                       compositeDownFunction->GetParameter(8));
+  GetBackgroundDownFunction()->SetParameter(
+      0, GetCompositeDownFunction()->GetParameter(6));
+  GetBackgroundDownFunction()->SetParameter(
+      1, GetCompositeDownFunction()->GetParameter(7));
+  GetBackgroundDownFunction()->SetParameter(
+      2, GetCompositeDownFunction()->GetParameter(8));
 }
 
 void DoubleGausFit::setCompositeSignalComponent(TF1* function) {
   auto nSignalParameters = 6;
   for (auto parIndex = 0; parIndex < nSignalParameters; parIndex++) {
-    setupFunctionParameter(function, parIndex);
+    setParameterFromConfig(function, parIndex);
   }
+}
 
 void DoubleGausFit::setCompositeBackgroundComponent(TF1* function,
                                                     double poly,
@@ -87,16 +96,16 @@ std::pair<double, double> DoubleGausFit::GetSigmaAndMu() {
 }
 
 double DoubleGausFit::GetSigma() {
-  auto sigmaNarrow = compositeFunction->GetParameter(2);
-  auto sigmaWide = compositeFunction->GetParameter(5);
+  auto sigmaNarrow = GetCompositeFunction()->GetParameter(2);
+  auto sigmaWide = GetCompositeFunction()->GetParameter(5);
   return ((sigmaWide + sigmaNarrow) / 2);
 }
 
 double DoubleGausFit::GetMu() {
   auto mass = fitConfig.ParSettings(1).Value();
 
-  auto muNarrow = compositeFunction->GetParameter(1);
-  auto muWide = compositeFunction->GetParameter(4);
+  auto muNarrow = GetCompositeFunction()->GetParameter(1);
+  auto muWide = GetCompositeFunction()->GetParameter(4);
 
   auto diffMuNarrow = fabs(mass - muNarrow);
   auto diffMuWide = fabs(mass - muWide);

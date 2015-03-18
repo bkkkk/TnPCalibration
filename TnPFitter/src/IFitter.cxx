@@ -47,6 +47,8 @@ IFitter::IFitter(std::string name,
     throw(std::runtime_error("Histogram is not setup properly"));
   }
 
+  setupMainCompositeFunction();
+
   histogramName = histogram->GetName();
 }
 
@@ -60,18 +62,23 @@ IFitter::~IFitter() {
   delete compositeUpFunction;
 }
 
+void IFitter::setupMainCompositeFunction() {
+  for (auto parIndex = 0; parIndex < GetCompositeFunction()->GetNpar();
+       parIndex++) {
+    setParameterFromConfig(GetCompositeFunction(), parIndex);
+  }
+}
+
 void IFitter::FitCompositeFunction() {
-  setupMainCompositeFunction();
+  histogram->Fit(GetCompositeFunction(), fitConfig.GetFitOptions().c_str());
 
-  histogram->Fit(compositeFunction, fitConfig.GetFitOptions().c_str());
-
-  fitResult.fillFromFunction(compositeFunction);
+  fitResult.fillFromFunction(GetCompositeFunction());
 }
 
 void IFitter::SetCompositeUpFunction() {
   SetCompositeUpComponent();
 
-  histogram->Fit(compositeUpFunction, fitConfig.GetFitOptions().c_str());
+  histogram->Fit(GetCompositeUpFunction(), fitConfig.GetFitOptions().c_str());
 
   SetBackgroundUpFunction();
 }
@@ -79,18 +86,12 @@ void IFitter::SetCompositeUpFunction() {
 void IFitter::SetCompositeDownFunction() {
   SetCompositeDownComponent();
 
-  histogram->Fit(compositeDownFunction, fitConfig.GetFitOptions().c_str());
+  histogram->Fit(GetCompositeDownFunction(), fitConfig.GetFitOptions().c_str());
 
   SetBackgroundDownFunction();
 }
 
-void IFitter::setupMainCompositeFunction() {
-  for (auto parIndex = 0; parIndex < compositeFunction->GetNpar(); parIndex++) {
-    setupFunctionParameter(compositeFunction, parIndex);
-  }
-}
-
-void IFitter::setupFunctionParameter(TF1* function, std::size_t index) {
+void IFitter::setParameterFromConfig(TF1* function, std::size_t index) {
   auto parameter = fitConfig.ParSettings(index);
   auto name = parameter.Name();
   auto value = parameter.Value();

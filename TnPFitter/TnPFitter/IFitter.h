@@ -47,7 +47,7 @@ class IFitter {
   void setupMainCompositeFunction();
 
  protected:
-  void setupFunctionParameter(TF1* function, std::size_t index);
+  void setParameterFromConfig(TF1* function, std::size_t index);
 
  public:
   const std::string GetName() const { return name; }
