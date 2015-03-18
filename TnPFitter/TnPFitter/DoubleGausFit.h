@@ -10,9 +10,9 @@ class TH1F;
 
 class DoubleGausFit : public IFitter {
  public:
-  DoubleGausFit(std::string val_name,
-                TH1F* val_histogram,
-                const FitConfig& val_fitConfig);
+  DoubleGausFit(std::string name,
+                TH1F* histogram,
+                const FitConfig& configuration);
 
  public:
   ~DoubleGausFit() = default;

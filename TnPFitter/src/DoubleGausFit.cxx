@@ -5,10 +5,10 @@
 #include <TF1.h>
 #include <TH1F.h>
 
-DoubleGausFit::DoubleGausFit(std::string val_name,
-                             TH1F* val_histogram,
-                             const FitConfig& val_fitConfig)
-    : IFitter(val_name, {"DGaus"}, val_histogram, val_fitConfig) {
+DoubleGausFit::DoubleGausFit(std::string name,
+                             TH1F* histogram,
+                             const FitConfig& configuration)
+    : IFitter(name, {"DGaus"}, histogram, configuration) {
 }
 
 void DoubleGausFit::SetBackgroundFunction() {
