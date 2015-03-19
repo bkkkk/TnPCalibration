@@ -31,7 +31,6 @@ Parameters SingleGausFit::getVariationDown() {
   return (parameters);
 }
 
-
 std::pair<double, double> SingleGausFit::GetSigmaAndMu() {
   auto mu = GetCompositeFunction()->GetParameter(1);
   auto sigma = GetCompositeFunction()->GetParameter(2);

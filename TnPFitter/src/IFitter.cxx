@@ -1,5 +1,6 @@
 #include "TnPFitter/IFitter.h"
 #include "TnPFitter/FitterDraw.h"
+#include "RootAdapters/SmartFunction.h"
 
 IFitter::IFitter(std::string name,
                  std::string functionName,
@@ -11,18 +12,18 @@ IFitter::IFitter(std::string name,
       histogram(histogram),
       bottomFitLimit(fitConfig.GetFitMin()),
       topFitLimit(fitConfig.GetFitMax()),
-      compositeFunction(Smart::Formula(functionName,
-                                       fitConfig.GetFitFunction(),
-                                       bottomFitLimit,
-                                       topFitLimit)),
-      signalFunction(Smart::Formula(functionName + "_signal_" + histogramName,
-                                    fitConfig.GetSignalFitFunction(),
-                                    bottomFitLimit,
-                                    topFitLimit)),
-      backgroundFunction(Smart::Formula(functionName + "_" + histogramName,
-                                        fitConfig.GetBackgroundFitFunction(),
-                                        bottomFitLimit,
-                                        topFitLimit)),
+      composite{functionName,
+                fitConfig.GetFitFunction(),
+                bottomFitLimit,
+                topFitLimit},
+      signal{functionName + "_signal_" + histogramName,
+             fitConfig.GetSignalFitFunction(),
+             bottomFitLimit,
+             topFitLimit},
+      background{functionName + "_" + histogramName,
+                 fitConfig.GetBackgroundFitFunction(),
+                 bottomFitLimit,
+                 topFitLimit},
       compositeUpFunction(
           Smart::Formula(functionName + "_Composite_Up_" + histogramName,
                          fitConfig.GetFitFunction(),
@@ -47,15 +48,13 @@ IFitter::IFitter(std::string name,
     throw(std::runtime_error("Histogram is not setup properly"));
   }
 
-  setupMainCompositeFunction();
+  composite.setupParametersFromConfig(fitConfig.ParamsSettings());
 
   histogramName = histogram->GetName();
 }
 
 IFitter::~IFitter() {
-  delete compositeFunction;
   delete backgroundFunction;
-  delete signalFunction;
   delete backgroundUpFunction;
   delete backgroundDownFunction;
   delete compositeDownFunction;
@@ -68,13 +67,6 @@ void IFitter::setCompositeSignalComponent(TF1* function) {
   }
 }
 
-void IFitter::setupMainCompositeFunction() {
-  for (auto parIndex = 0; parIndex < GetCompositeFunction()->GetNpar();
-       parIndex++) {
-    setParameterFromConfig(GetCompositeFunction(), parIndex);
-  }
-}
-
 void IFitter::FitCompositeFunction() {
   histogram->Fit(GetCompositeFunction(), fitConfig.GetFitOptions().c_str());
 
@@ -82,19 +74,37 @@ void IFitter::FitCompositeFunction() {
 }
 
 void IFitter::SetSignalFunction() {
+  Parameters pars = getSignalParametersFromFunction(GetCompositeFunction());
+  signal.fixParametersFromConfig(pars);
+}
+
+Parameters IFitter::getSignalParametersFromFunction(TF1* function) {
+  Parameters result;
   for (auto index = 0u; index < nSignalParameters; index++) {
-    auto value = GetCompositeFunction()->GetParameter(index);
-    GetSignalFunction()->FixParameter(index, value);
+    auto name = function->GetParName(index);
+    auto value = function->GetParameter(index);
+    result.push_back({name, value});
   }
+  return (result);
 }
 
 void IFitter::SetBackgroundFunction() {
+  Parameters pars = getBackgroundParametersFromFunction(GetCompositeFunction());
+  
+  background.fixParametersFromConfig(pars);  
+}
+
+Parameters IFitter::getBackgroundParametersFromFunction(TF1* function) {
+  Parameters result;
+
   for (auto index = 0u; index < nBackgroundParameters; index++) {
     auto inCompositeIndex = index + nSignalParameters;
-    auto value = GetCompositeFunction()->GetParameter(inCompositeIndex);
-
-    GetBackgroundFunction()->FixParameter(index, value);
+    auto value = function->GetParameter(inCompositeIndex);
+    auto name = function->GetParName(inCompositeIndex);
+    result.push_back({name, value});
   }
+
+  return (result);
 }
 
 void IFitter::SetCompositeUpFunction() {
@@ -168,6 +178,18 @@ void IFitter::setCompositeBackgroundComponent(TF1* function, Parameters pars) {
   }
 }
 
+TF1* IFitter::GetCompositeFunction() {
+  return (composite.getFunction());
+}
+
+TF1* IFitter::GetSignalFunction() {
+  return (signal.getFunction());
+}
+
+TF1* IFitter::GetBackgroundFunction() {
+  return (background.getFunction());
+}
+
 TF1* IFitter::GetBackgroundDownFunction() {
   return (backgroundDownFunction);
 }
@@ -182,18 +204,6 @@ TF1* IFitter::GetCompositeDownFunction() {
 
 TF1* IFitter::GetCompositeUpFunction() {
   return (compositeUpFunction);
-}
-
-TF1* IFitter::GetCompositeFunction() {
-  return (compositeFunction);
-}
-
-TF1* IFitter::GetSignalFunction() {
-  return (signalFunction);
-}
-
-TF1* IFitter::GetBackgroundFunction() {
-  return (backgroundFunction);
 }
 
 double IFitter::GetSigmaLow(int nSigma) {

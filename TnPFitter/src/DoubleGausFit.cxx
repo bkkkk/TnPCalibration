@@ -5,6 +5,8 @@
 #include <TF1.h>
 #include <TH1F.h>
 
+#include "TnPFitter/FittableFunction.h"
+
 DoubleGausFit::DoubleGausFit(std::string name,
                              TH1F* histogram,
                              const FitConfig& configuration)

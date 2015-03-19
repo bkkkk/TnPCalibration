@@ -5,11 +5,12 @@
 #include <stdexcept>
 
 #include <TF1.h>
-#include "RootAdapters/SmartFunction.h"
 #include <TH1F.h>
 
 #include "TnPFitter/FitConfig.h"
 #include "TnPFitter/FitResult.h"
+
+#include "TnPFitter/FittableFunction.h"
 
 class IFitter {
  public:
@@ -35,7 +36,9 @@ class IFitter {
   virtual void SetCompositeDownFunction();
 
   virtual void SetSignalFunction();
+  Parameters getSignalParametersFromFunction(TF1* function);
   virtual void SetBackgroundFunction();
+  Parameters getBackgroundParametersFromFunction(TF1* function);
 
   virtual void SetCompositeUpComponent();
   virtual void SetBackgroundUpFunction();
@@ -44,7 +47,6 @@ class IFitter {
   virtual void SetBackgroundDownFunction();
 
  private:
-  void setupMainCompositeFunction();
   void setCompositeBackgroundComponent(TF1* function, Parameters pars);
 
  protected:
@@ -80,10 +82,11 @@ class IFitter {
   std::size_t nSignalParameters;
   std::size_t nBackgroundParameters;
 
-  TF1* compositeFunction;
+  FittableFunction composite;
   FitResult fitResult;
 
-  TF1* signalFunction;
+  FittableFunction signal;
+  FittableFunction background;
   TF1* backgroundFunction;
 
   TF1* compositeUpFunction;
