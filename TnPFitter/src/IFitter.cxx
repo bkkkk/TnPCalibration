@@ -54,7 +54,6 @@ IFitter::IFitter(std::string name,
 }
 
 IFitter::~IFitter() {
-  delete backgroundFunction;
   delete backgroundUpFunction;
   delete backgroundDownFunction;
   delete compositeDownFunction;

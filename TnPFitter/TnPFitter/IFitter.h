@@ -87,7 +87,6 @@ class IFitter {
 
   FittableFunction signal;
   FittableFunction background;
-  TF1* backgroundFunction;
 
   TF1* compositeUpFunction;
   TF1* compositeDownFunction;
