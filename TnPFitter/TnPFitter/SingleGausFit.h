@@ -10,22 +10,12 @@ class TH1F;
 
 class SingleGausFit : public IFitter {
  public:
-  SingleGausFit(std::string name, TH1F* histogram, const FitConfig& fitConfig);
-  virtual ~SingleGausFit() = default;
+  SingleGausFit(std::string name, TH1F* histogram, const FitConfig& config);
+  ~SingleGausFit() = default;
 
- public:
-  void SetSignalFunction();
-  void SetBackgroundFunction();
-  void SetCompositeUpComponent();
-  void SetBackgroundUpFunction();
-  void SetCompositeDownComponent();
-  void SetBackgroundDownFunction();
+  Parameters getVariationDown();
+  Parameters getVariationUp();
 
-  void setCompositeSignalComponent(TF1* function);
-  void setCompositeBackgroundComponent(TF1* function,
-                                       double poly,
-                                       double slope,
-                                       double constant);
   std::pair<double, double> GetSigmaAndMu();
 };
 

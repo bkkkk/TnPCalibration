@@ -34,20 +34,26 @@ class IFitter {
   virtual void SetCompositeUpFunction();
   virtual void SetCompositeDownFunction();
 
-  virtual void SetSignalFunction() = 0;
-  virtual void SetBackgroundFunction() = 0;
+  virtual void SetSignalFunction();
+  virtual void SetBackgroundFunction();
 
-  virtual void SetCompositeUpComponent() = 0;
-  virtual void SetBackgroundUpFunction() = 0;
+  virtual void SetCompositeUpComponent();
+  virtual void SetBackgroundUpFunction();
 
-  virtual void SetCompositeDownComponent() = 0;
-  virtual void SetBackgroundDownFunction() = 0;
+  virtual void SetCompositeDownComponent();
+  virtual void SetBackgroundDownFunction();
 
  private:
   void setupMainCompositeFunction();
+  void setCompositeBackgroundComponent(TF1* function, Parameters pars);
+
+ protected:
+  virtual Parameters getVariationDown() = 0;
+  virtual Parameters getVariationUp() = 0;
 
  protected:
   void setParameterFromConfig(TF1* function, std::size_t index);
+  void setCompositeSignalComponent(TF1* function);
 
  public:
   const std::string GetName() const { return name; }
@@ -60,7 +66,7 @@ class IFitter {
   virtual std::pair<double, double> GetSigmaAndMu() = 0;
   void SetFitLimits(const double min, const double max);
 
-protected:
+ protected:
   std::string name;
   FitConfig fitConfig;
   std::string functionName;
@@ -70,6 +76,9 @@ protected:
 
   double bottomFitLimit;
   double topFitLimit;
+
+  std::size_t nSignalParameters;
+  std::size_t nBackgroundParameters;
 
   TF1* compositeFunction;
   FitResult fitResult;

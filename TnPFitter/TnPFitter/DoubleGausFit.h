@@ -10,35 +10,16 @@ class TH1F;
 
 class DoubleGausFit : public IFitter {
  public:
-  DoubleGausFit(std::string name,
-                TH1F* histogram,
-                const FitConfig& configuration);
-
- public:
+  DoubleGausFit(std::string name, TH1F* histogram, const FitConfig& config);
   ~DoubleGausFit() = default;
 
  public:
-  void SetSignalFunction();
-  void SetBackgroundFunction();
-  void SetCompositeUpComponent();
-  void SetBackgroundUpFunction();
-  void SetCompositeDownComponent();
-  void SetBackgroundDownFunction();
-
- public:
-  void setCompositeBackgroundComponent(TF1* function,
-                                       double poly,
-                                       double slope,
-                                       double constant);
-  void setCompositeSignalComponent(TF1* function);
+  Parameters getVariationDown();
+  Parameters getVariationUp();
 
   std::pair<double, double> GetSigmaAndMu();
   double GetSigma();
   double GetMu();
-
-#ifdef __CINT__
-  ClassDef(DoubleGausFit, 1)
-#endif
 };
 
 namespace TNPFITTER {

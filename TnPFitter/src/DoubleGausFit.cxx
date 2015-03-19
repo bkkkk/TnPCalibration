@@ -9,86 +9,26 @@ DoubleGausFit::DoubleGausFit(std::string name,
                              TH1F* histogram,
                              const FitConfig& configuration)
     : IFitter(name, {"DGaus"}, histogram, configuration) {
+  nSignalParameters = 6;
+  nBackgroundParameters = 3;
 }
 
-void DoubleGausFit::SetBackgroundFunction() {
-  GetBackgroundFunction()->FixParameter(
-      0, GetCompositeFunction()->GetParameter("Constant"));
-  GetBackgroundFunction()->FixParameter(
-      1, GetCompositeFunction()->GetParameter("Slope"));
-  GetBackgroundFunction()->FixParameter(
-      2, GetCompositeFunction()->GetParameter("Poly"));
+Parameters DoubleGausFit::getVariationUp() {
+  Parameters parameters = {
+      {"Constant", fitResult.getParameterUpVariation("Constant")},
+      {"Slope", fitResult.getParameterDownVariation("Slope")},
+      {"Poly", fitResult.getParameterUpVariation("Poly")}};
+
+  return (parameters);
 }
 
-void DoubleGausFit::SetSignalFunction() {
-  GetSignalFunction()->FixParameter(
-      0, GetCompositeFunction()->GetParameter("Narrow N"));
-  GetSignalFunction()->FixParameter(
-      1, GetCompositeFunction()->GetParameter("Narrow Mean"));
-  GetSignalFunction()->FixParameter(
-      2, GetCompositeFunction()->GetParameter("Narrow Sigma"));
-  GetSignalFunction()->FixParameter(
-      3, GetCompositeFunction()->GetParameter("Wide N"));
-  GetSignalFunction()->FixParameter(
-      4, GetCompositeFunction()->GetParameter("Wide Mean"));
-  GetSignalFunction()->FixParameter(
-      5, GetCompositeFunction()->GetParameter("Wide Sigma"));
-}
+Parameters DoubleGausFit::getVariationDown() {
+  Parameters parameters = {
+      {"Constant", fitResult.getParameterDownVariation("Constant")},
+      {"Slope", fitResult.getParameterUpVariation("Slope")},
+      {"Poly", fitResult.getParameterDownVariation("Poly")}};
 
-void DoubleGausFit::SetCompositeUpComponent() {
-  setCompositeSignalComponent(GetCompositeUpFunction());
-
-  auto constant = fitResult.getParameterUpVariation("Constant");
-  auto slope = fitResult.getParameterDownVariation("Slope");
-  auto poly = fitResult.getParameterUpVariation("Poly");
-
-  setCompositeBackgroundComponent(
-      GetCompositeUpFunction(), poly, slope, constant);
-}
-
-void DoubleGausFit::SetBackgroundUpFunction() {
-  GetBackgroundUpFunction()->SetParameter(
-      0, GetCompositeUpFunction()->GetParameter(6));
-  GetBackgroundUpFunction()->SetParameter(
-      1, GetCompositeUpFunction()->GetParameter(7));
-  GetBackgroundUpFunction()->SetParameter(
-      2, GetCompositeUpFunction()->GetParameter(8));
-}
-
-void DoubleGausFit::SetCompositeDownComponent() {
-  setCompositeSignalComponent(GetCompositeDownFunction());
-
-  auto constant = fitResult.getParameterDownVariation("Constant");
-  auto slope = fitResult.getParameterUpVariation("Slope");
-  auto poly = fitResult.getParameterDownVariation("Poly");
-
-  setCompositeBackgroundComponent(
-      GetCompositeDownFunction(), poly, slope, constant);
-}
-
-void DoubleGausFit::SetBackgroundDownFunction() {
-  GetBackgroundDownFunction()->SetParameter(
-      0, GetCompositeDownFunction()->GetParameter(6));
-  GetBackgroundDownFunction()->SetParameter(
-      1, GetCompositeDownFunction()->GetParameter(7));
-  GetBackgroundDownFunction()->SetParameter(
-      2, GetCompositeDownFunction()->GetParameter(8));
-}
-
-void DoubleGausFit::setCompositeSignalComponent(TF1* function) {
-  auto nSignalParameters = 6;
-  for (auto parIndex = 0; parIndex < nSignalParameters; parIndex++) {
-    setParameterFromConfig(function, parIndex);
-  }
-}
-
-void DoubleGausFit::setCompositeBackgroundComponent(TF1* function,
-                                                    double poly,
-                                                    double slope,
-                                                    double constant) {
-  function->FixParameter(6, constant);
-  function->FixParameter(7, slope);
-  function->FixParameter(8, poly);
+  return (parameters);
 }
 
 std::pair<double, double> DoubleGausFit::GetSigmaAndMu() {
