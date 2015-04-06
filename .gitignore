@@ -20,7 +20,10 @@ TODO
 *.la
 *.a
 
-# RootCore specific
+# Build items
+cmake/
+build/
+.idea/
 obj/
 test-bin/
 bin/

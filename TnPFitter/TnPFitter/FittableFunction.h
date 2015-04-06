@@ -18,6 +18,8 @@ class FittableFunction {
   void fixParametersFromConfig(const Parameters& pars);
   void fixParameterFromConfig(std::size_t index, const Parameter& parameter);
 
+  Parameters getParameters() const;
+
  private:
   TF1* function;
 };

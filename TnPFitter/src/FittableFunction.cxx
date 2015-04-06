@@ -21,6 +21,16 @@ void FittableFunction::setFunction(TF1* func) {
   function = func;
 }
 
+Parameters FittableFunction::getParameters() const {
+  Parameters result;
+  for (auto index = 0; index < function->GetNpar(); index++) {
+    auto name = function->GetParName(index);
+    auto value = function->GetParameter(index);
+    result.push_back({name, value});
+  }
+  return (result);
+}
+
 void FittableFunction::setupParametersFromConfig(const Parameters& pars) {
   for (auto index = 0ul; index < pars.size(); index++) {
     setParameterFromConfig(index, pars[index]);
