@@ -4,23 +4,33 @@
 
 #include "JacobUtils/LoggingUtility.h"
 
-FitConfig::FitConfig(std::string function,
-                     unsigned npar,
+FitConfig::FitConfig(std::string sigFormula,
+                     std::string bkgFormula,
+                     unsigned signalPars,
+                     unsigned bkgPars,
                      double min,
                      double max)
     : fitOptions("MERQB"),
       fitMinimum(min),
       fitMaximum(max),
-      fitFunction(std::move(function)),
-      bkgFunction(""),
-      sigFunction(""),
-      parameters(npar) {
-  if (npar == 0) {
-    throw(std::runtime_error("Number of parameters is zero"));
+      sigFunction{std::move(sigFormula)},
+      bkgFunction{std::move(bkgFormula)},
+      signalParameters(signalPars),
+      bkgParameters(bkgPars) {
+  if (signalPars == 0) {
+    throw(std::runtime_error("Number of signal parameters is zero"));
   }
 
-  if (fitFunction.empty()) {
-    throw(std::runtime_error("Function is empty"));
+  if (bkgPars == 0) {
+    throw(std::runtime_error("Number of background parameters is zero"));
+  }
+
+  if (sigFunction.empty()) {
+    throw(std::runtime_error("Signal function is empty"));
+  }
+
+  if (bkgFunction.empty()) {
+    throw(std::runtime_error("Background function is empty"));
   }
 
   if (min == max) {
@@ -52,17 +62,6 @@ double FitConfig::GetFitMax() const {
   return (fitMaximum);
 }
 
-void FitConfig::SetFitFunction(const std::string& function) {
-  if (function.empty()) {
-    throw(std::runtime_error("Function must not be empty"));
-  }
-  fitFunction = function;
-}
-
-std::string FitConfig::GetFitFunction() const {
-  return (fitFunction);
-}
-
 void FitConfig::SetBackgroundFitFunction(const std::string& function) {
   if (function.empty()) {
     throw(std::runtime_error("Background fit function is empty"));
@@ -92,35 +91,61 @@ std::string FitConfig::GetFitOptions() const {
   return (fitOptions);
 }
 
-const Parameter& FitConfig::ParSettings(std::size_t i) const {
-  return (parameters.at(i));
+Parameters FitConfig::getSignalParameters() const {
+  return (signalParameters);
 }
 
-void FitConfig::SetParamsSettings(const Parameters& pars) {
-  parameters = pars;
+void FitConfig::setSignalParameters(const Parameters& parameters) {
+  signalParameters = parameters;
 }
 
-const Parameters& FitConfig::ParamsSettings() const {
-  return (parameters);
+Parameter FitConfig::getSignalParameter(std::size_t index) const {
+  return (signalParameters[index]);
 }
 
-std::size_t FitConfig::NPar() const {
-  return (parameters.size());
+std::size_t FitConfig::getNumberOfSignalParameters() {
+  return (signalParameters.size());
+}
+
+Parameters FitConfig::getBkgParameters() const {
+  return (bkgParameters);
+}
+
+void FitConfig::setBkgParameters(const Parameters& parameters) {
+  bkgParameters = parameters;
+}
+
+Parameter FitConfig::getBkgParameter(std::size_t index) const {
+  return (bkgParameters[index]);
+}
+
+std::size_t FitConfig::getNumberOfBkgParameters() {
+  return (bkgParameters.size());
 }
 
 void FitConfig::SetFromFitResult(const TFitResultPtr& rhs) {
-  auto npar = rhs->NPar();
   auto pars = rhs->GetParams();
 
-  for (auto parIdx = 0ul; parIdx != npar; parIdx++) {
-    auto name = rhs->GetParameterName(parIdx);
-    auto value = pars[parIdx];
-    parameters.push_back({name, value});
+  for (auto index = 0ul; index < signalParameters.size(); index++) {
+    auto name = rhs->GetParameterName(index);
+    auto value = pars[index];
+    signalParameters.push_back({name, value});
+  }
+
+  for (auto index = 0ul; index < bkgParameters.size(); index++) {
+    auto indexInComposite = index + signalParameters.size();
+    auto name = rhs->GetParameterName(indexInComposite);
+    auto value = pars[indexInComposite];
+    bkgParameters.push_back({name, value});
   }
 }
 
 void FitConfig::Print() {
-  for (const auto& par : parameters) {
+  for (const auto& par : signalParameters) {
+    PrintParameter(par);
+  }
+
+  for (const auto& par : bkgParameters) {
     PrintParameter(par);
   }
 }

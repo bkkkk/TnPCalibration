@@ -12,19 +12,18 @@ using Parameters = std::vector<Parameter>;
 
 class FitConfig {
  public:
-  FitConfig(std::string function,
-            unsigned npar,
+  FitConfig(std::string sigFormula,
+            std::string bkgFormula,
+            unsigned signalPars,
+            unsigned bkgPars,
             double min = 2.62f,
             double max = 3.5f);
 
-  ~FitConfig() {}
+  ~FitConfig() = default;
 
   void SetFitLimits(double min, double max);
   double GetFitMin() const;
   double GetFitMax() const;
-
-  void SetFitFunction(const std::string& fitFunction);
-  std::string GetFitFunction() const;
 
   void SetBackgroundFitFunction(const std::string& function);
   std::string GetBackgroundFitFunction() const;
@@ -35,10 +34,15 @@ class FitConfig {
   void SetFitOptions(const std::string& options);
   std::string GetFitOptions() const;
 
-  const Parameter& ParSettings(std::size_t i) const;
-  void SetParamsSettings(const Parameters& pars);
-  const Parameters& ParamsSettings() const;
-  std::size_t NPar() const;
+  Parameters getSignalParameters() const;
+  void setSignalParameters(const Parameters& parameters);
+  Parameter getSignalParameter(std::size_t index) const;
+  std::size_t getNumberOfSignalParameters();
+
+  Parameters getBkgParameters() const;
+  void setBkgParameters(const Parameters& parameters);
+  Parameter getBkgParameter(std::size_t index) const;
+  std::size_t getNumberOfBkgParameters();
 
  public:
   void SetFromFitResult(const TFitResultPtr& rhs);
@@ -49,10 +53,10 @@ class FitConfig {
   std::string fitOptions;
   double fitMinimum;
   double fitMaximum;
-  std::string fitFunction;
-  std::string bkgFunction;
   std::string sigFunction;
-  Parameters parameters;
+  std::string bkgFunction;
+  Parameters signalParameters;
+  Parameters bkgParameters;
 
 #ifdef __CINT__
   ClassDef(FitConfig, 1)

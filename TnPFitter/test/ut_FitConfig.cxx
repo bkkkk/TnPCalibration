@@ -2,10 +2,12 @@
 #include "TnPFitter/FitConfig.h"
 
 TEST_F(TestFitConfig, InitializeWithEmptyFunction) {
-  EXPECT_ANY_THROW(new FitConfig("", 6, 2.4f, 4.5f));
-  EXPECT_ANY_THROW(new FitConfig("some_function", 0, 2.4f, 4.5f));
-  EXPECT_ANY_THROW(new FitConfig("some_function", 6, 4.5f, 3.5f));
-  EXPECT_ANY_THROW(new FitConfig("some_function", 6, 4.5f, 4.5f));
+  EXPECT_ANY_THROW(new FitConfig("sig_func", "", 3, 3, 2.4f, 4.5f));
+  EXPECT_ANY_THROW(new FitConfig("", "bkg_func", 3, 3, 2.4f, 4.5f));
+  EXPECT_ANY_THROW(new FitConfig("sig_func", "bkg_func", 0, 3, 2.4f, 4.5f));
+  EXPECT_ANY_THROW(new FitConfig("sig_func", "bkg_func", 3, 0, 2.4f, 4.5f));
+  EXPECT_ANY_THROW(new FitConfig("sig_func", "bkg_func", 3, 3, 4.5f, 3.5f));
+  EXPECT_ANY_THROW(new FitConfig("sig_func", "bkg_func", 3, 3, 4.5f, 4.5f));
 }
 
 TEST_F(TestFitConfig, GetValidLimits) {
@@ -27,26 +29,12 @@ TEST_F(TestFitConfig, SetValidFitLimits) {
   EXPECT_EQ(max, fit->GetFitMax());
 }
 
-TEST_F(TestFitConfig, SetInvalidFunction) {
-  EXPECT_ANY_THROW(fit->SetFitFunction(""));
-}
-
-TEST_F(TestFitConfig, GetValidFunction) {
-  EXPECT_STREQ("test_function", fit->GetFitFunction().c_str());
-}
-
-TEST_F(TestFitConfig, SetValidFunction) {
-  auto newFunction = "a_new_function";
-  EXPECT_NO_THROW(fit->SetFitFunction(newFunction));
-  EXPECT_STREQ(newFunction, fit->GetFitFunction().c_str());
-}
-
 TEST_F(TestFitConfig, SetInvalidBkgFunction) {
   EXPECT_ANY_THROW(fit->SetBackgroundFitFunction(""));
 }
 
 TEST_F(TestFitConfig, GetValidBkgFunction) {
-  EXPECT_EQ("", fit->GetBackgroundFitFunction());
+  EXPECT_EQ("test_function", fit->GetBackgroundFitFunction());
 }
 
 TEST_F(TestFitConfig, SetValidBkgFunction) {
@@ -60,7 +48,7 @@ TEST_F(TestFitConfig, SetInvalidSigFunction) {
 }
 
 TEST_F(TestFitConfig, GetValidSigFunction) {
-  EXPECT_EQ("", fit->GetSignalFitFunction());
+  EXPECT_EQ("test_function", fit->GetSignalFitFunction());
 }
 
 TEST_F(TestFitConfig, SetValidSigFunction) {

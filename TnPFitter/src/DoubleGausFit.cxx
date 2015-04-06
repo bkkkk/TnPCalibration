@@ -6,6 +6,8 @@
 #include <TH1F.h>
 
 #include "TnPFitter/FittableFunction.h"
+#include "TnPFitter/CompositeFunction.h"
+#include "TnPFitter/FittableGroup.h"
 
 DoubleGausFit::DoubleGausFit(std::string name,
                              TH1F* histogram,
@@ -44,13 +46,13 @@ double DoubleGausFit::GetSigma() {
 }
 
 double DoubleGausFit::GetMu() {
-  auto mass = fitConfig.ParSettings(1).Value();
+  const auto Mass = fitConfig.getSignalParameter(1).Value();
 
   auto muNarrow = GetCompositeFunction()->GetParameter(1);
   auto muWide = GetCompositeFunction()->GetParameter(4);
 
-  auto diffMuNarrow = fabs(mass - muNarrow);
-  auto diffMuWide = fabs(mass - muWide);
+  auto diffMuNarrow = fabs(Mass - muNarrow);
+  auto diffMuWide = fabs(Mass - muWide);
 
   auto mu = 0.0f;
 
@@ -66,26 +68,21 @@ double DoubleGausFit::GetMu() {
 FitConfig TNPFITTER::BuildFitConfiguration(TH1* histogram,
                                            double min,
                                            double max) {
-  Parameters pars = {{"Narrow N", histogram->GetMaximum(), 0, 0.0001, 10000000},
-                     {"Narrow Mean", 3.097, 0, 2.8, 3.3},
-                     {"Narrow Sigma", 0.1, 0, 0.02, 0.2},
-                     {"Wide N", histogram->GetMaximum(), 0, 0.0001, 10000000},
-                     {"Wide Mean", 3.097, 0, 2.7, 3.4},
-                     {"Wide Sigma", 0.3, 0, 0.08, 0.7}};
-
-  auto polyPlusDoubleGaus = "gaus(0) + gaus(3) + [6] + [7] * x + [8] * x * x";
   auto doubleGaus = "gaus(0) + gaus(3)";
   auto poly = "[0] + [1] * x + [2] * x * x";
 
-  FitConfig* fitConfig = new FitConfig(polyPlusDoubleGaus, 9, min, max);
+  FitConfig* fitConfig = new FitConfig(doubleGaus, poly, 6, 3, min, max);
+  Parameters signalParameters = {
+      {"Narrow N", histogram->GetMaximum(), 0, 0.0001, 10000000},
+      {"Narrow Mean", 3.097, 0, 2.8, 3.3},
+      {"Narrow Sigma", 0.1, 0, 0.02, 0.2},
+      {"Wide N", histogram->GetMaximum(), 0, 0.0001, 10000000},
+      {"Wide Mean", 3.097, 0, 2.7, 3.4},
+      {"Wide Sigma", 0.3, 0, 0.08, 0.7}};
+  fitConfig->setSignalParameters(signalParameters);
 
-  pars.push_back({"Constant", 0});
-  pars.push_back({"Slope", 0});
-  pars.push_back({"Poly", 0});
-
-  fitConfig->SetSignalFitFunction(doubleGaus);
-  fitConfig->SetBackgroundFitFunction(poly);
-  fitConfig->SetParamsSettings(pars);
+  Parameters bkgParameters = {{"Constant", 0}, {"Slope", 0}, {"Poly", 0}};
+  fitConfig->setBkgParameters(bkgParameters);
   fitConfig->SetFitOptions("MERBQN");
 
   return (*fitConfig);

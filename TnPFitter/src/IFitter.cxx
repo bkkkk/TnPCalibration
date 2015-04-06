@@ -12,58 +12,37 @@ IFitter::IFitter(std::string name,
       histogram(histogram),
       bottomFitLimit(fitConfig.GetFitMin()),
       topFitLimit(fitConfig.GetFitMax()),
-      composite{functionName,
-                fitConfig.GetFitFunction(),
-                bottomFitLimit,
-                topFitLimit},
-      signal{functionName + "_signal_" + histogramName,
-             fitConfig.GetSignalFitFunction(),
-             bottomFitLimit,
-             topFitLimit},
-      background{functionName + "_" + histogramName,
+      histogramName{},
+      fittingGroup{functionName, histogramName, fitConfig},
+      background{functionName + "_Bkg_" + histogramName,
                  fitConfig.GetBackgroundFitFunction(),
                  bottomFitLimit,
                  topFitLimit},
-      compositeUpFunction(
-          Smart::Formula(functionName + "_Composite_Up_" + histogramName,
-                         fitConfig.GetFitFunction(),
-                         bottomFitLimit,
-                         topFitLimit)),
-      compositeDownFunction(
-          Smart::Formula(functionName + "_Composite_Down_" + histogramName,
-                         fitConfig.GetFitFunction(),
-                         bottomFitLimit,
-                         topFitLimit)),
-      backgroundUpFunction(
-          Smart::Formula(functionName + "_Bkg_Up_" + histogramName,
-                         fitConfig.GetBackgroundFitFunction(),
-                         bottomFitLimit,
-                         topFitLimit)),
-      backgroundDownFunction(
-          Smart::Formula(functionName + "_Bkg_Down_" + histogramName,
-                         fitConfig.GetBackgroundFitFunction(),
-                         bottomFitLimit,
-                         topFitLimit)) {
+      signal{functionName + "_Sig_" + histogramName,
+             fitConfig.GetSignalFitFunction(),
+             bottomFitLimit,
+             topFitLimit},
+      composite{functionName, signal, background},
+      compositeUp{functionName + "_Composite_Up_" + histogramName,
+                  signal,
+                  background},
+      backgroundUp{functionName + "_Bkg_Up_" + histogramName,
+                   fitConfig.GetBackgroundFitFunction(),
+                   bottomFitLimit,
+                   topFitLimit},
+      compositeDown{functionName + "_Composite_Down_" + histogramName,
+                    signal,
+                    background},
+      backgroundDown{functionName + "_Bkg_Down_" + histogramName,
+                     fitConfig.GetBackgroundFitFunction(),
+                     bottomFitLimit,
+                     topFitLimit} {
   if (histogram == nullptr) {
     throw(std::runtime_error("Histogram is not setup properly"));
   }
-
-  composite.setupParametersFromConfig(fitConfig.ParamsSettings());
-
   histogramName = histogram->GetName();
-}
-
-IFitter::~IFitter() {
-  delete backgroundUpFunction;
-  delete backgroundDownFunction;
-  delete compositeDownFunction;
-  delete compositeUpFunction;
-}
-
-void IFitter::setCompositeSignalComponent(TF1* function) {
-  for (auto index = 0ul; index < nSignalParameters; index++) {
-    setParameterFromConfig(function, index);
-  }
+  composite.setSignalParameters(fitConfig.getSignalParameters());
+  composite.setBackgroundParameters(fitConfig.getBkgParameters());
 }
 
 void IFitter::FitCompositeFunction() {
@@ -73,37 +52,11 @@ void IFitter::FitCompositeFunction() {
 }
 
 void IFitter::SetSignalFunction() {
-  Parameters pars = getSignalParametersFromFunction(GetCompositeFunction());
-  signal.fixParametersFromConfig(pars);
-}
-
-Parameters IFitter::getSignalParametersFromFunction(TF1* function) {
-  Parameters result;
-  for (auto index = 0u; index < nSignalParameters; index++) {
-    auto name = function->GetParName(index);
-    auto value = function->GetParameter(index);
-    result.push_back({name, value});
-  }
-  return (result);
+  fittingGroup.fillSignalFunction(composite);
 }
 
 void IFitter::SetBackgroundFunction() {
-  Parameters pars = getBackgroundParametersFromFunction(GetCompositeFunction());
-  
-  background.fixParametersFromConfig(pars);  
-}
-
-Parameters IFitter::getBackgroundParametersFromFunction(TF1* function) {
-  Parameters result;
-
-  for (auto index = 0u; index < nBackgroundParameters; index++) {
-    auto inCompositeIndex = index + nSignalParameters;
-    auto value = function->GetParameter(inCompositeIndex);
-    auto name = function->GetParName(inCompositeIndex);
-    result.push_back({name, value});
-  }
-
-  return (result);
+  background.fixParametersFromConfig(composite.getBackgroundParameters());
 }
 
 void IFitter::SetCompositeUpFunction() {
@@ -115,11 +68,7 @@ void IFitter::SetCompositeUpFunction() {
 }
 
 void IFitter::SetBackgroundUpFunction() {
-  for (auto index = 0ul; index < nBackgroundParameters; index++) {
-    auto inCompositeIndex = index + nSignalParameters;
-    auto value = GetCompositeUpFunction()->GetParameter(inCompositeIndex);
-    GetBackgroundUpFunction()->SetParameter(index, value);
-  }
+  backgroundUp.setupParametersFromConfig(compositeUp.getBackgroundParameters());
 }
 
 void IFitter::SetCompositeDownFunction() {
@@ -131,50 +80,17 @@ void IFitter::SetCompositeDownFunction() {
 }
 
 void IFitter::SetBackgroundDownFunction() {
-  for (auto index = 0ul; index < nBackgroundParameters; index++) {
-    auto inCompositeIndex = index + nSignalParameters;
-    auto value = GetCompositeDownFunction()->GetParameter(inCompositeIndex);
-    GetBackgroundDownFunction()->SetParameter(index, value);
-  }
-}
-
-void IFitter::setParameterFromConfig(TF1* function, std::size_t index) {
-  auto parameter = fitConfig.ParSettings(index);
-  auto name = parameter.Name();
-  auto value = parameter.Value();
-
-  function->SetParName(index, name.c_str());
-  function->SetParameter(index, value);
-
-  if (parameter.HasLowerLimit()) {
-    auto min = parameter.LowerLimit();
-    auto max = parameter.UpperLimit();
-    function->SetParLimits(index, min, max);
-  }
+  backgroundDown.setupParametersFromConfig(compositeDown.getBackgroundParameters());
 }
 
 void IFitter::SetCompositeUpComponent() {
-  setCompositeSignalComponent(GetCompositeUpFunction());
-
-  Parameters parameters = getVariationUp();
-
-  setCompositeBackgroundComponent(GetCompositeUpFunction(), parameters);
+  compositeUp.setSignalParameters(fitConfig.getSignalParameters());
+  compositeUp.setBackgroundParameters(getVariationUp());
 }
 
 void IFitter::SetCompositeDownComponent() {
-  setCompositeSignalComponent(GetCompositeDownFunction());
-
-  Parameters parameters = getVariationDown();
-
-  setCompositeBackgroundComponent(GetCompositeDownFunction(), parameters);
-}
-
-void IFitter::setCompositeBackgroundComponent(TF1* function, Parameters pars) {
-  for (auto index = 0ul; index < nBackgroundParameters; index++) {
-    auto value = pars[index].Value();
-    auto indexInComposite = nSignalParameters + index;
-    function->FixParameter(indexInComposite, value);
-  }
+  compositeDown.setSignalParameters(fitConfig.getSignalParameters());
+  compositeDown.setBackgroundParameters(getVariationDown());
 }
 
 TF1* IFitter::GetCompositeFunction() {
@@ -182,27 +98,27 @@ TF1* IFitter::GetCompositeFunction() {
 }
 
 TF1* IFitter::GetSignalFunction() {
-  return (signal.getFunction());
+  return (fittingGroup.getSignal().getFunction());
 }
 
 TF1* IFitter::GetBackgroundFunction() {
-  return (background.getFunction());
+  return (fittingGroup.getBackground().getFunction());
 }
 
 TF1* IFitter::GetBackgroundDownFunction() {
-  return (backgroundDownFunction);
+  return (backgroundDown.getFunction());
 }
 
 TF1* IFitter::GetBackgroundUpFunction() {
-  return (backgroundUpFunction);
+  return (backgroundUp.getFunction());
 }
 
 TF1* IFitter::GetCompositeDownFunction() {
-  return (compositeDownFunction);
+  return (compositeDown.getFunction());
 }
 
 TF1* IFitter::GetCompositeUpFunction() {
-  return (compositeUpFunction);
+  return (compositeUp.getFunction());
 }
 
 double IFitter::GetSigmaLow(int nSigma) {

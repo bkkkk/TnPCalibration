@@ -11,6 +11,8 @@
 #include "TnPFitter/FitResult.h"
 
 #include "TnPFitter/FittableFunction.h"
+#include "TnPFitter/CompositeFunction.h"
+#include "TnPFitter/FittableGroup.h"
 
 class IFitter {
  public:
@@ -19,7 +21,7 @@ class IFitter {
           TH1F* val_histogram,
           const FitConfig& val_fitConfig);
 
-  virtual ~IFitter();
+  virtual ~IFitter() { }
 
  public:
   TF1* GetSignalFunction();
@@ -36,9 +38,7 @@ class IFitter {
   virtual void SetCompositeDownFunction();
 
   virtual void SetSignalFunction();
-  Parameters getSignalParametersFromFunction(TF1* function);
   virtual void SetBackgroundFunction();
-  Parameters getBackgroundParametersFromFunction(TF1* function);
 
   virtual void SetCompositeUpComponent();
   virtual void SetBackgroundUpFunction();
@@ -46,16 +46,9 @@ class IFitter {
   virtual void SetCompositeDownComponent();
   virtual void SetBackgroundDownFunction();
 
- private:
-  void setCompositeBackgroundComponent(TF1* function, Parameters pars);
-
  protected:
   virtual Parameters getVariationDown() = 0;
   virtual Parameters getVariationUp() = 0;
-
- protected:
-  void setParameterFromConfig(TF1* function, std::size_t index);
-  void setCompositeSignalComponent(TF1* function);
 
  public:
   const std::string GetName() const { return name; }
@@ -82,16 +75,18 @@ class IFitter {
   std::size_t nSignalParameters;
   std::size_t nBackgroundParameters;
 
-  FittableFunction composite;
-  FitResult fitResult;
+  FittableGroup fittingGroup;
 
   FittableFunction signal;
   FittableFunction background;
 
-  TF1* compositeUpFunction;
-  TF1* compositeDownFunction;
-  TF1* backgroundUpFunction;
-  TF1* backgroundDownFunction;
+  CompositeFunction composite;
+  FitResult fitResult;
+
+  CompositeFunction compositeUp;
+  FittableFunction backgroundUp;
+  CompositeFunction compositeDown;
+  FittableFunction backgroundDown;
 
 #ifdef __CINT__
   ClassDef(IFitter, 1)
