@@ -30,8 +30,7 @@ public:
   virtual const ITruth& operator[](std::size_t idx) const = 0;
   virtual ITruth& operator[](std::size_t idx) = 0;
 
-  virtual const std::size_t n() const = 0;
-  virtual std::size_t n() = 0;
+  virtual std::size_t n() const = 0;
 };
 
 #endif

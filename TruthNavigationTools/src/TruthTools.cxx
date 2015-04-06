@@ -86,7 +86,7 @@ void PrintParticleSiblings(const siblingType type, const std::vector<int>& sibli
   for(size_t sibling = 0; sibling != siblings.size(); sibling++) {
     ss << siblings[sibling] << ", ";
   }
-
+  (void) type;
   // LOG_INFO() << GetNameOfSibling(type) << ": " << ss.str();
 }
 

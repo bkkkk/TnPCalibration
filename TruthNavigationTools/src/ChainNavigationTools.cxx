@@ -38,7 +38,7 @@ void TT::ChainNavigationTools::PrintSiblingChain(const size_t index, const sibli
 }
 
 void TT::ChainNavigationTools::PrintAllOfType(const int pdgId) {
-  for(int mcIdx = 0; mcIdx != truthRecords.n(); mcIdx++) {
+  for(auto mcIdx = 0ul; mcIdx != truthRecords.n(); mcIdx++) {
     if(IsParticleOfType(truthRecords[mcIdx], pdgId)) {
       TT::PrintParticleInformation(truthRecords[mcIdx]);
     }
@@ -46,14 +46,14 @@ void TT::ChainNavigationTools::PrintAllOfType(const int pdgId) {
 }
 
 bool TT::ChainNavigationTools::IsParticleOfType(const ITruth& particle, const int pdgid) {
-  int id  = particle.pdgId();
+  auto id  = particle.pdgId();
   return (id == pdgid || id == -pdgid);
 }
 
 std::vector<int> TT::ChainNavigationTools::FindAllOfType(const int pdgId) {
   std::vector<int> found;
 
-  for(int mcIdx = 0; mcIdx != truthRecords.n(); mcIdx++) {
+  for(auto mcIdx = 0ul; mcIdx != truthRecords.n(); mcIdx++) {
     if(truthRecords[mcIdx].pdgId() == pdgId || truthRecords[mcIdx].pdgId() == -pdgId ) {
       found.push_back(mcIdx);
     }
@@ -63,7 +63,7 @@ std::vector<int> TT::ChainNavigationTools::FindAllOfType(const int pdgId) {
 }
 
 void TT::ChainNavigationTools::PrintAll() {
-  for(int mcIdx = 0; mcIdx!=truthRecords.n(); mcIdx++) {
+  for(auto mcIdx = 0ul; mcIdx!=truthRecords.n(); mcIdx++) {
     TT::PrintParticleInformation(truthRecords[mcIdx]);
   }
 }

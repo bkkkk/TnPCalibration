@@ -1,0 +1,17 @@
+set(LIBRARY_NAME TruthNavigationTools)
+
+set(SOURCE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test)
+
+file(GLOB PROJECT1_SRCS ${SOURCE_DIRS}/*.cxx)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${PROJECT_SOURCE_DIR}/D3PDReaderAdapter/)
+include_directories(${PROJECT_SOURCE_DIR}/JacobUtils/)
+include_directories(${PROJECT_SOURCE_DIR}/TnPSelector/)
+
+add_library(${LIBRARY_NAME} SHARED ${PROJECT1_SRCS})
+target_link_libraries(${LIBRARY_NAME} ${ROOT_LIBRARIES})
+target_link_libraries(${LIBRARY_NAME} TnPSelector)
+
+add_gtest_test(${LIBRARY_NAME} TestTruthTools ${TEST_DIR}/ut_TruthTools.cxx)

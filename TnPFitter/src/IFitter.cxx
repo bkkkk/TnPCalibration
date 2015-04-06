@@ -10,18 +10,18 @@ IFitter::IFitter(std::string name,
       fitConfig(fitConfig),
       functionName(std::move(functionName)),
       histogram(histogram),
+      histogramName{},
       bottomFitLimit(fitConfig.GetFitMin()),
       topFitLimit(fitConfig.GetFitMax()),
-      histogramName{},
       fittingGroup{functionName, histogramName, fitConfig},
-      background{functionName + "_Bkg_" + histogramName,
-                 fitConfig.GetBackgroundFitFunction(),
-                 bottomFitLimit,
-                 topFitLimit},
       signal{functionName + "_Sig_" + histogramName,
              fitConfig.GetSignalFitFunction(),
              bottomFitLimit,
              topFitLimit},
+      background{functionName + "_Bkg_" + histogramName,
+                 fitConfig.GetBackgroundFitFunction(),
+                 bottomFitLimit,
+                 topFitLimit},
       composite{functionName, signal, background},
       compositeUp{functionName + "_Composite_Up_" + histogramName,
                   signal,
@@ -80,7 +80,8 @@ void IFitter::SetCompositeDownFunction() {
 }
 
 void IFitter::SetBackgroundDownFunction() {
-  backgroundDown.setupParametersFromConfig(compositeDown.getBackgroundParameters());
+  backgroundDown.setupParametersFromConfig(
+      compositeDown.getBackgroundParameters());
 }
 
 void IFitter::SetCompositeUpComponent() {
