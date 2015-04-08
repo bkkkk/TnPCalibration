@@ -13,7 +13,7 @@ FittableGroup::FittableGroup(std::string functionName,
              fitConfig.GetSignalFitFunction(),
              fitConfig.GetFitMin(),
              fitConfig.GetFitMax()},
-      background{functionName + "_" + histogramName,
+      background{functionName + "_bkg_" + histogramName,
                  fitConfig.GetBackgroundFitFunction(),
                  fitConfig.GetFitMin(),
                  fitConfig.GetFitMax()} {

@@ -71,9 +71,9 @@ namespace TNPFITTER {
   double GetTotalUncertainty(FitIntegral* top, FitIntegral* bottom, int nSigma, int windowSize) {
     auto topUncertainty = top->GetTotalUncertainty(nSigma, windowSize);
     auto bottomUncertainty =  bottom->GetTotalUncertainty(nSigma, windowSize);
-    auto totalUncerainty = GetTotalUncertainty(topUncertainty, bottomUncertainty);
+    auto totalUncertainty = GetTotalUncertainty(topUncertainty, bottomUncertainty);
 
-    return(totalUncerainty);
+    return(totalUncertainty);
   }
 }
 
