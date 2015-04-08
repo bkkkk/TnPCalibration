@@ -1,5 +1,11 @@
-set(ROOTADAPTERS_INCLUDES "RootAdapters")
+set(LIBRARY_NAME RootAdapters)
+
+set(LIBRARY_HEADER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${LIBRARY_NAME})
+set(LIBRARY_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-set(ROOTADAPTERS_SRCS "src/SmartFunction.cxx")
-add_library(RootAdapters STATIC ${ROOTADAPTERS_SRCS})
+set(SOURCES ${LIBRARY_SOURCE_DIR}/SmartFunction.cxx
+            ${LIBRARY_HEADER_DIR}/SmartFunction.h)
+
+add_library(${LIBRARY_NAME} STATIC ${SOURCES})
