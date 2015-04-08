@@ -3,7 +3,6 @@
 
 #include <map>
 #include <string>
-#include "TH1F.h"
 
 class IEvent;
 class Weighting;
