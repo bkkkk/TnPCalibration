@@ -7,49 +7,33 @@
 
 class TFile;
 
-namespace ST
-{
-  class SampleList
-  {
-  public:
-    // Create a new interface object to XML file
-    // @par path Path to XML file repo
-    SampleList(const std::string& path);
+namespace ST {
+class SampleList {
+ public:
+  SampleList(const std::string& path);
+  SampleList(TFile* path);
 
-    // Create a new interface object to XML file
-    SampleList(TFile* path);
-  
-    // Returns the path of sample name
-    std::string GetPath(const std::string& name);
+  std::string GetPath(const std::string& name);
 
-    // Add sample with path
-    void AddSample(const std::string& sample, const std::string& path);
-    
-    // Remove Sample from list
-    void RemoveSample(const std::string& sample);
-    
-    void Write(void);
+  void AddSample(const std::string& sample, const std::string& path);
+  void RemoveSample(const std::string& sample);
+  void Write(void);
+  void Print(void);
+  ~SampleList();
 
-    // Prints all the samples in the repo
-    //
-    void Print(void);
+ private:
+  bool IsPresent(const std::string& name) {
+    return ((*sampleMap).find(name) == (*sampleMap).end());
+  }
 
-    // Delete stuff
-    ~SampleList();
-
-  private:
-    bool IsPresent(const std::string& name)
-    {
-      return ((*sampleMap).find(name) == (*sampleMap).end());
-    }
-
-  private:
-    TFile* dataset;
-    typedef std::map<std::string, std::string> SampleMap;
-    SampleMap* sampleMap;
-
-    ClassDef(ST::SampleList, 1)
-  };
+ private:
+  TFile* dataset;
+  typedef std::map<std::string, std::string> SampleMap;
+  SampleMap* sampleMap;
+#ifdef __CINT__
+  ClassDef(ST::SampleList, 1)
+#endif
+};
 }
 
 #endif
