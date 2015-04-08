@@ -1,78 +1,49 @@
 #ifndef GRAPHER_TOOLS_SCALE_FACTOR_H_
 #define GRAPHER_TOOLS_SCALE_FACTOR_H_ 1
 
+#include "GrapherTools/ScaleFactorComponent.h"
+#include "GrapherTools/ScaleFactorAttributes.h"
+
+#include <string>
+
 #include "TCanvas.h"
-#include "TH1F.h"
 #include "THStack.h"
+#include "TH1F.h"
 #include "TLegend.h"
-#include "TPad.h"
 
-namespace GT
-{
+namespace GT {
 
-struct SFAttributes {
-  SFAttributes() {
-  }
+class ScaleFactor {
+ public:
+  ScaleFactor(SFAttributes attributes,
+              SFComponent numerator,
+              SFComponent denominator);
+  ~ScaleFactor() = default;
 
-  std::string Title;
-  std::string xAxisTitle;
-  std::string yAxisTitle;
-  const float titleSize;
-  const float titleOffset;
-  const int markerStyle;
-  const int markerColor;
-  float minimum;
-  float maximum;
-};
+ public:
+  void Draw(void);
+  void SaveAs(std::string path, std::string format);
 
-struct SFComponent {
-  SFComponent(std::unique_ptr<TH1> histogram, const std::string& title, Style_t markerStyle, Color_t color) : histogram(std::move(histogram)), title(title), markerStyle(markerStyle), color(color) {}
+ private:
+  void addComponentToStack(SFComponent component);
+  void enableMiddleTicks(TCanvas& canvas);
+  void drawStack();
+  void setupScaleFactorHistogram();
 
-  std::unique_ptr<TH1> histogram;
-  std::string title;
-  Style_t markerStyle;
-  Color_t color;
-};
-
-class ScaleFactor {  
-
-ClassDef(ScaleFactor, 1);
-
-private:
-  TCanvas canvas;
-  TPad padTopLeft;
-  TPad padBottomRight;
-  THStack stack;
-  TH1* SF;
-
-public:
+ public:
+  SFAttributes attributes;
   SFComponent numerator;
   SFComponent denominator;
-  SFAttributes attributes;
 
-public:
-  ScaleFactor(const std::string& name, const SFComponent& numerator, const SFComponent& denominator);
+ private:
+  TCanvas canvas;
+  THStack stack;
+  TLegend leg;
+  TH1F SF;
 
-public:
-  void SetXaxisTitle(const std::string& title);
-  void SetYaxisTitle(const std::string& title);
-  void SetSFaxisTitle(const std::string& title);
-
-public:
-  // Sets the range for the scale factor plot
-  void SetSFRange(const float min, const float max);
-
-public:
-  void Draw(void);
-
-  void SaveAs(const std::string& path, const std::string& format);
-
-public:
-  // Ctor
-  ~ScaleFactor();
-};
-
-} // End Namespace GT
-
+#ifdef __CINT__
+  ClassDef(ScaleFactor, 1);
 #endif
-// END GRAPHER_TOOLS_SCALE_FACTOR_H_
+};
+}
+#endif
