@@ -2,36 +2,26 @@
 #define WEIGHTING_H_ 1
 
 #include <string>
-#include "D3PDReader/Event.h"
+#include "D3PDReaderAdapter/IEvent.h"
 
-class Weighting
-{
-protected:
-	Weighting(const std::string& name, const std::string& title)
-	 : m_name(name), 
-	   m_title(title)
-	{
+class Weighting {
+ protected:
+  Weighting(std::string name, std::string title)
+      : m_name{std::move(name)}, m_title{std::move(title)} {}
+  virtual ~Weighting() = default;
 
-	}
+ public:
+  inline std::string GetName() { return m_name; }
+  inline std::string GetTitle() { return m_title; }
+  virtual double GetWeight(IEvent* event) = 0;
 
-protected:
-	virtual ~Weighting() { m_name = ""; m_name = ""; }
+ protected:
+  std::string m_name;
+  std::string m_title;
 
-public:
-	virtual double GetWeight(const D3PDReader::Event* event) = 0;
-
-public:
-	inline std::string GetName(void) { return m_name; }
-
-public:
-	inline std::string GetTitle(void) { return m_title; }
-
-protected:
-	// Name and title
-	std::string m_name;
-	std::string m_title;
-
-	ClassDef(Weighting, 1);
+#ifdef __CINT__
+  ClassDef(Weighting, 1);
+#endif
 };
 
 #endif

@@ -5,33 +5,29 @@
 #include <string>
 #include "TH1F.h"
 
-namespace D3PDReader {
-	class Event;
-}
-
+class IEvent;
 class Weighting;
 
-class EventWeighting
-{
-public:
-	EventWeighting(const std::string& name="");
+class EventWeighting {
+ public:
+  EventWeighting() = default;
+  ~EventWeighting() = default;
 
-public:
- 	~EventWeighting();
+ public:
+  int AddWeighting(Weighting* weighting);
 
-public:
-	int AddWeighting(Weighting* weighting);
+ public:
+  double GetTotalWeighting(IEvent* event);
 
-public:
-	double GetTotalWeighting(const D3PDReader::Event* event);
+ public:
+  Weighting* GetWeighting(const std::string& name);
 
-public:
-	Weighting* GetWeighting(const std::string& name);
+ private:
+  std::map<std::string, Weighting*> m_weightings;
 
-private:
-	std::map<std::string, Weighting*> m_weightings;
-
-	ClassDef(EventWeighting, 1)
+#ifdef __CINT__
+  ClassDef(EventWeighting, 1)
+#endif
 };
 
 #endif

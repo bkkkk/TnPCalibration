@@ -3,149 +3,128 @@
 
 #include <map>
 #include <vector>
-#include "TH1F.h"
-#include "TH2F.h"
-#include "TH3F.h"
-#include <EventLoop/Worker.h>
+#include <string>
 
-namespace Root{
-  class TAccept;
-}
+class IWorker;
+class TH1F;
+class TH2F;
+class TH3F;
+class CutflowCollector;
 
-namespace HC
-{
+namespace HC {
 
-  class HistogramCollector
-  {
-  public:
-    HistogramCollector( const std::string& val_name, EL::Worker* worker );
-  
-  public:
-    ~HistogramCollector();
+class HistogramCollector {
+ public:
+  HistogramCollector(const std::string& name, IWorker* worker);
+  ~HistogramCollector();
 
-  public:
-    std::string name;
+  int CreateHistogramGroup(const std::string& baseName,
+                           const std::vector<std::string>& nameSuffixes,
+                           const std::string& baseTitle,
+                           const std::vector<std::string>& titleSuffixes,
+                           const unsigned int nbins,
+                           const float min,
+                           const float max);
 
-  private:
-    EL::Worker* wk;  
+  int CreateHistogramGroup(const std::string& baseName,
+                           const std::vector<std::string>& nameSuffixes,
+                           const std::string& baseTitle,
+                           const std::vector<std::string>& titleSuffixes,
+                           const unsigned int nbinsx,
+                           const float minx,
+                           const float maxx,
+                           const unsigned int nbinsy,
+                           const float miny,
+                           const float maxy);
 
+  int CreateHistogramGroup(const std::string& baseName,
+                           const std::vector<std::string>& nameSuffixes,
+                           const std::string& baseTitle,
+                           const std::vector<std::string>& titleSuffixes,
+                           const unsigned int nbinsx,
+                           const float minx,
+                           const float maxx,
+                           const unsigned int nbinsy,
+                           const float miny,
+                           const float maxy,
+                           const unsigned int nbinsz,
+                           const float minz,
+                           const float maxz);
 
-  public:
-    std::vector<std::string> histoNames;
-    std::vector<std::string> histoNames2D;
-    std::vector<std::string> histoNames3D;
+  int CreateHistogram(const std::string& name,
+                      const std::string& title,
+                      CutflowCollector* acceptObject);
 
-  public:
-    int CreateHistogramGroup( const std::string& baseName,
-                              const std::vector<std::string>& nameSuffixes,
-                              const std::string& baseTitle,
-                              const std::vector<std::string>& titleSuffixes,
-                              const unsigned int nbins,
-                              const float min,
-                              const float max );
+  int CreateHistogram(const std::string& name,
+                      const std::string& title,
+                      const unsigned int nbins,
+                      const float min,
+                      const float max);
 
-  public:
-    // 2D creator
-    int CreateHistogramGroup( const std::string& baseName,
-                              const std::vector<std::string>& nameSuffixes,
-                              const std::string& baseTitle,
-                              const std::vector<std::string>& titleSuffixes,
-                              const unsigned int nbinsx,
-                              const float minx,
-                              const float maxx,
-                              const unsigned int nbinsy,
-                              const float miny,
-                              const float maxy );
+  int CreateHistogram(const std::string& name,
+                      const std::string& title,
+                      const unsigned int nbinsx,
+                      const float minx,
+                      const float maxx,
+                      const unsigned int nbinsy,
+                      const float miny,
+                      const float maxy);
 
-  public:
-    // 3D creator
-    int CreateHistogramGroup( const std::string& baseName,
-                              const std::vector<std::string>& nameSuffixes,
-                              const std::string& baseTitle,
-                              const std::vector<std::string>& titleSuffixes,
-                              const unsigned int nbinsx,
-                              const float minx,
-                              const float maxx,
-                              const unsigned int nbinsy,
-                              const float miny,
-                              const float maxy,
-                              const unsigned int nbinsz,
-                              const float minz,
-                              const float maxz );
+  int CreateHistogram(const std::string& name,
+                      const std::string& title,
+                      const unsigned int nbinsx,
+                      const float minx,
+                      const float maxx,
+                      const unsigned int nbinsy,
+                      const float miny,
+                      const float maxy,
+                      const unsigned int nbinsz,
+                      const float minz,
+                      const float maxz);
 
-  public:
-    // 1D Cutflow Histogram
-    int CreateHistogram( const std::string& name,
-                         const std::string& title,
-                         const Root::TAccept* acceptObject );
+  int FillHistogram(const std::string& name,
+                    const float& value,
+                    const float& weight);
 
-  public:
-    // 1D creator
-    int CreateHistogram( const std::string& name,
-                         const std::string& title,
-                         const unsigned int nbins,
-                         const float min,
-                         const float max );
+  int FillHistogram(const std::string& name,
+                    const float& valueX,
+                    const float& valueY,
+                    const float& weight);
 
-  public:
-    // 2D creator
-    int CreateHistogram( const std::string& name,
-                         const std::string& title,
-                         const unsigned int nbinsx,
-                         const float minx,
-                         const float maxx,
-                         const unsigned int nbinsy,
-                         const float miny,
-                         const float maxy );
+  int FillHistogram(const std::string& name,
+                    const float& valueX,
+                    const float& valueY,
+                    const float& valueZ,
+                    const float& weight);
 
-  public:
-    // 3D creator
-    int CreateHistogram( const std::string& name,
-                         const std::string& title,
-                         const unsigned int nbinsx,
-                         const float minx,
-                         const float maxx,
-                         const unsigned int nbinsy,
-                         const float miny,
-                         const float maxy,
-                         const unsigned int nbinsz,
-                         const float minz,
-                         const float maxz );
+  int FillHistogram(const std::string& name,
+                    CutflowCollector* accept,
+                    const float weight);
 
-  public:
-    /// 1D Fillers
-    int FillHistogram ( const std::string& name, const float& value,
-                        const float& weight );
+ public:
+  TH1F* GetHistogram1D(const std::string& name);
+  TH2F* GetHistogram2D(const std::string& name);
+  TH3F* GetHistogram3D(const std::string& name);
 
-    /// 2D Filler
-    int FillHistogram ( const std::string& name, const float& valueX,
-                        const float& valueY, const float& weight);
+ private:
+  inline void WarningNotFound(const std::string& name);
 
-    /// 3D Filler
-    int FillHistogram ( const std::string& name, const float& valueX,
-                        const float& valueY, const float& valueZ,
-                        const float& weight);
+ public:
+  std::string name;
 
-    /// Fill Cutflow
-    int FillHistogram( const std::string& name,
-                       const Root::TAccept* accept,
-                       const float weight );
+ private:
+  IWorker* wk;
 
-  public:
-    // 1D Getter
-    TH1F* GetHistogram1D( const std::string& name );
-    TH2F* GetHistogram2D( const std::string& name );
-    TH3F* GetHistogram3D( const std::string& name );
+ public:
+  std::vector<std::string> histoNames;
+  std::vector<std::string> histoNames2D;
+  std::vector<std::string> histoNames3D;
 
-  private:
-    const inline void WarningNotFound( const std::string& name );
-
-  private:
-    std::map<std::string, TH1F*> mapHistos;
-    std::map<std::string, TH2F*> mapHistos2D;
-    std::map<std::string, TH3F*> mapHistos3D;
-  };
-
+ private:
+  std::map<std::string, TH1F*> mapHistos;
+  std::map<std::string, TH2F*> mapHistos2D;
+  std::map<std::string, TH3F*> mapHistos3D;
+};
 }
 
 #endif
