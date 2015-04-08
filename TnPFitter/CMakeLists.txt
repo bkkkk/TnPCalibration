@@ -6,6 +6,7 @@ set(TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test)
 file(GLOB PROJECT1_SRCS ${SOURCE_DIRS}/*.cxx)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/TnPFitter/)
 include_directories(${PROJECT_SOURCE_DIR}/RootAdapters/)
 include_directories(${PROJECT_SOURCE_DIR}/JacobUtils/)
 
