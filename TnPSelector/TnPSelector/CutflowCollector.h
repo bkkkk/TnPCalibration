@@ -8,6 +8,7 @@ class CutflowCollector {
 public:
   virtual std::size_t getNCuts() const = 0;
   virtual const char* getCutName(unsigned index) const = 0;
+  virtual bool getCutResult(unsigned index) const = 0;
 };
 
 #endif
