@@ -11,9 +11,9 @@
 
 FitterDraw::FitterDraw(IFitter* fitter, int sigma, int window)
   : fFitter(fitter),
-    fSigma(sigma),
-    fWindow(window) {
-  configFile = new TFile("$ROOTCOREDIR/data/TnPFitter/TnPFitter-FittingConfig.xml", "OPEN");
+    fSigma{sigma},
+    fWindow{window} {
+  configFile = new TFile{"$ROOTCOREDIR/data/TnPFitter/TnPFitter-FittingConfig.xml", "OPEN"};
 
   if(configFile->IsZombie()) {
     throw(std::runtime_error("Failed to load configuration XML file"));
@@ -64,10 +64,10 @@ void FitterDraw::SetupLines(const std::string& options) {
   auto wideSigmaLow = fFitter->GetSigmaLow(fSigma + fWindow);
   auto wideSigmaHigh = fFitter->GetSigmaHigh(fSigma + fWindow);
 
-  fiveLow = new TLine( wideSigmaLow, histMin, wideSigmaLow, histMax );
-  fiveHigh = new TLine( wideSigmaHigh, histMin, wideSigmaHigh, histMax );
-  threeLow = new TLine( narrowSigmaLow, histMin, narrowSigmaLow, histMax );
-  threeHigh = new TLine( narrowSigmaHigh, histMin, narrowSigmaHigh, histMax );
+  fiveLow = new TLine{wideSigmaLow, histMin, wideSigmaLow, histMax};
+  fiveHigh = new TLine{wideSigmaHigh, histMin, wideSigmaHigh, histMax};
+  threeLow = new TLine{narrowSigmaLow, histMin, narrowSigmaLow, histMax};
+  threeHigh = new TLine{narrowSigmaHigh, histMin, narrowSigmaHigh, histMax};
 
   fiveLow->SetLineColor(3);
   fiveLow->SetLineWidth(2);
@@ -81,7 +81,7 @@ void FitterDraw::SetupLines(const std::string& options) {
 }
 
 void FitterDraw::SetupBox() {
-  box = new TPaveText(0.2, 0.48, 0.45, 0.9, "NDC");
+  box = new TPaveText{0.2, 0.48, 0.45, 0.9, "NDC"};
   for(auto parIdx = 0; parIdx != fFitter->GetCompositeFunction()->GetNpar(); parIdx++) {
     auto name = fFitter->GetCompositeFunction()->GetParName(parIdx);
     auto val = fFitter->GetCompositeFunction()->GetParameter(parIdx);

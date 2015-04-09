@@ -22,7 +22,7 @@ void FittableFunction::setFunction(TF1* func) {
 }
 
 Parameters FittableFunction::getParameters() const {
-  Parameters result;
+  auto result = Parameters{};
   for (auto index = 0; index < function->GetNpar(); index++) {
     auto name = function->GetParName(index);
     auto value = function->GetParameter(index);
