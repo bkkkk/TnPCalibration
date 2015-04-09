@@ -1,17 +1,29 @@
 set(LIBRARY_NAME TnPSelector)
-set(LIBRARY_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(HEADER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${LIBRARY_NAME})
 set(TEST_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test)
 
-set(LIBRARY_SOURCES ${LIBRARY_SOURCE_DIR}/KinematicUtils.cxx
-    ${LIBRARY_SOURCE_DIR}/PrintUtils.cxx
-    ${LIBRARY_SOURCE_DIR}/TJPsiClassifier.cxx
-    ${LIBRARY_SOURCE_DIR}/TJPsiMCPSelector.cxx
-    ${LIBRARY_SOURCE_DIR}/TJPsiMuonProbeSelector.cxx
-    ${LIBRARY_SOURCE_DIR}/TJPsiPairSelector.cxx
-    ${LIBRARY_SOURCE_DIR}/TJPsiProbeSelector.cxx
-    ${LIBRARY_SOURCE_DIR}/TJPsiSMTSelector.cxx
-    ${LIBRARY_SOURCE_DIR}/TJPsiTagSelector.cxx
-    ${LIBRARY_SOURCE_DIR}/TTriggerMatching.cxx)
+set(LIBRARY_SOURCES ${SOURCE_DIR}/KinematicUtils.cxx
+    ${SOURCE_DIR}/PrintUtils.cxx
+    ${SOURCE_DIR}/TJPsiClassifier.cxx
+    ${SOURCE_DIR}/TJPsiMCPSelector.cxx
+    ${SOURCE_DIR}/TJPsiMuonProbeSelector.cxx
+    ${SOURCE_DIR}/TJPsiPairSelector.cxx
+    ${SOURCE_DIR}/TJPsiProbeSelector.cxx
+    ${SOURCE_DIR}/TJPsiSMTSelector.cxx
+    ${SOURCE_DIR}/TJPsiTagSelector.cxx
+    ${SOURCE_DIR}/TTriggerMatching.cxx
+    ${HEADER_DIR}/CutflowCollector.h
+    ${HEADER_DIR}/KinematicUtils.h
+    ${HEADER_DIR}/PrintUtils.h
+    ${HEADER_DIR}/TJPsiClassifier.h
+    ${HEADER_DIR}/TJPsiMuonProbeSelector.h
+    ${HEADER_DIR}/TJPsiPairSelector.h
+    ${HEADER_DIR}/TJPsiProbeSelector.h
+    ${HEADER_DIR}/TJPsiSMTSelector.h
+    ${HEADER_DIR}/TJPsiTagSelector.h
+    ${HEADER_DIR}/TMCPSelector.h
+    ${HEADER_DIR}/TTriggerMatching.h)
 
 include_directories("./")
 include_directories(${PROJECT_SOURCE_DIR}/D3PDReaderAdapter/)
