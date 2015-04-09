@@ -86,8 +86,8 @@ void FitterDraw::SetupBox() {
     auto name = fFitter->GetCompositeFunction()->GetParName(parIdx);
     auto val = fFitter->GetCompositeFunction()->GetParameter(parIdx);
     auto err = fFitter->GetCompositeFunction()->GetParError(parIdx);
-    std::stringstream str;
-    str << name << " : " << val << "+-" << err;
+    std::stringstream str(name);
+    str << " : " << val << "+-" << err;
 
     box->AddText(str.str().c_str());
   }
