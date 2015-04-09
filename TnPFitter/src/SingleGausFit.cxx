@@ -2,9 +2,6 @@
 
 #include "JacobUtils/LoggingUtility.h"
 
-#include <TF1.h>
-#include <TH1F.h>
-
 SingleGausFit::SingleGausFit(std::string name,
                              TH1F* histogram,
                              const FitConfig& fitConfig)
