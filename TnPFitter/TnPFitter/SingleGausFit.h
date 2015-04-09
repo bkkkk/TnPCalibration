@@ -5,9 +5,6 @@
 
 #include <TnPFitter/IFitter.h>
 
-class TF1;
-class TH1F;
-
 class SingleGausFit : public IFitter {
  public:
   SingleGausFit(std::string name, TH1F* histogram, const FitConfig& config);
