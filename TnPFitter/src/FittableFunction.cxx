@@ -8,6 +8,9 @@ FittableFunction::FittableFunction(std::string name,
                                    double min,
                                    double max)
     : function(Smart::Formula(name, formula, min, max)) {
+  if(min > max) {
+    throw(std::runtime_error("Fitting range is invalid"));
+  }
 }
 
 FittableFunction::FittableFunction(TF1* function) : function(function) {
@@ -32,6 +35,10 @@ Parameters FittableFunction::getParameters() const {
 }
 
 void FittableFunction::setupParametersFromConfig(const Parameters& pars) {
+  if(pars.size() != (unsigned long)function->GetNpar()) {
+    throw(std::runtime_error("Parameters list contains too few or too many parameters"));
+  }
+
   for (auto index = 0ul; index < pars.size(); index++) {
     setParameterFromConfig(index, pars[index]);
   }

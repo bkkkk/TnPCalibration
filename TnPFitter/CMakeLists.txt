@@ -39,5 +39,6 @@ add_library(${LIBRARY_NAME} SHARED ${LIBRARY_SOURCES})
 target_link_libraries(${LIBRARY_NAME} ${ROOT_LIBRARIES})
 target_link_libraries(${LIBRARY_NAME} RootAdapters)
 
+add_gtest_test(${LIBRARY_NAME} TestFittableFunction ${TEST_DIR}/ut_FittableFunction.cpp)
 add_gtest_test(${LIBRARY_NAME} TestFitConfig ${TEST_DIR}/ut_FitConfig.cxx)
 add_gtest_test(${LIBRARY_NAME} TestSingleGaus ${TEST_DIR}/ut_SingleGausFit.cxx)
