@@ -1,7 +1,7 @@
 #include "GrapherTools/ScaleFactorAttributes.h"
 
-SFAttributes::SFAttributes(std::string title)
-    : title{std::move(title)},
+SFAttributes::SFAttributes(std::string sfTitle)
+    : title{std::move(sfTitle)},
       xAxisTitle{"x-axis"},
       yAxisTitle{"y-axis"},
       minimum{0},
@@ -32,8 +32,8 @@ float SFAttributes::getMaximum() {
   return (maximum);
 }
 
-SFAttributes SFAttributes::constructScaleFactorWithTitle(std::string title) {
-  return (SFAttributes(title));
+SFAttributes SFAttributes::constructScaleFactorWithTitle(std::string sfTitle) {
+  return (SFAttributes(sfTitle));
 }
 
 SFAttributes& SFAttributes::withRange(float min, float max) {
@@ -62,12 +62,12 @@ SFAttributes& SFAttributes::withMarkerColor(unsigned color) {
   return (*this);
 }
 
-SFAttributes& SFAttributes::withXAxisTitle(std::string title) {
-  xAxisTitle = title;
+SFAttributes& SFAttributes::withXAxisTitle(std::string axisTitle) {
+  xAxisTitle = std::move(axisTitle);
   return (*this);
 }
 
-SFAttributes& SFAttributes::withYAxisTitle(std::string title) {
-  yAxisTitle = title;
+SFAttributes& SFAttributes::withYAxisTitle(std::string axisTitle) {
+  yAxisTitle = std::move(axisTitle);
   return (*this);
 }
