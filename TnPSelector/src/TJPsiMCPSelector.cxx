@@ -2,14 +2,14 @@
 #include <math.h>
 
 
-TMCPSelector::TMCPSelector(const std::string& selectorName)
- : name(selectorName),
-   expectBLayerHitCut(1),
-   nBLHitCut(0),
-   sumPixCut(0),
-   sumSctCut(4),
-   sumHolesCut(3),
-   sumTrtCut(5) {
+TMCPSelector::TMCPSelector(std::string selectorName)
+ : name{std::move(selectorName)},
+   expectBLayerHitCut{1},
+   nBLHitCut{0},
+   sumPixCut{0},
+   sumSctCut{4},
+   sumHolesCut{3},
+   sumTrtCut{5} {
 }
 
 
