@@ -18,12 +18,12 @@
 
 #include <iostream>
 
-GT::ScaleFactor::ScaleFactor(SFAttributes attributes,
-                             SFComponent numerator,
-                             SFComponent denominator)
-    : attributes{attributes},
-      numerator{numerator},
-      denominator{denominator},
+GT::ScaleFactor::ScaleFactor(SFAttributes sfAttributes,
+                             SFComponent sfNumerator,
+                             SFComponent sfDenominator)
+    : attributes{sfAttributes},
+      numerator{sfNumerator},
+      denominator{sfDenominator},
       canvas{attributes.getTitle().c_str(),
              attributes.getTitle().c_str(),
              900,
@@ -86,9 +86,9 @@ void GT::ScaleFactor::setupScaleFactorHistogram() {
   SF.GetYaxis()->SetTitleOffset(0.7);
 }
 
-void GT::ScaleFactor::enableMiddleTicks(TCanvas& canvas) {
-  canvas.SetTickx(1);
-  canvas.SetTicky(1);
+void GT::ScaleFactor::enableMiddleTicks(TCanvas& inCanvas) {
+  inCanvas.SetTickx(1);
+  inCanvas.SetTicky(1);
 }
 
 void GT::ScaleFactor::addComponentToStack(SFComponent component) {

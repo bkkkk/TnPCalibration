@@ -26,7 +26,7 @@ class ScaleFactor {
 
  private:
   void addComponentToStack(SFComponent component);
-  void enableMiddleTicks(TCanvas& canvas);
+  void enableMiddleTicks(TCanvas& inCanvas);
   void drawStack();
   void setupScaleFactorHistogram();
 
