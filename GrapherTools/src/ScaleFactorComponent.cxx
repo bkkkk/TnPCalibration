@@ -1,14 +1,14 @@
 #include "GrapherTools/ScaleFactorComponent.h"
 #include "TH1.h"
 
-SFComponent::SFComponent(std::unique_ptr<TH1> histogram,
-                         std::string title,
-                         unsigned markerStyle,
-                         unsigned markerColor)
-    : histogram{std::move(histogram)},
-      title{title},
-      markerStyle{markerStyle},
-      markerColor{markerColor} {
+SFComponent::SFComponent(std::unique_ptr<TH1> sfHistogram,
+                         std::string sfTitle,
+                         unsigned sfMarkerStyle,
+                         unsigned sfMarkerColor)
+    : histogram{std::move(sfHistogram)},
+      title{sfTitle},
+      markerStyle{sfMarkerStyle},
+      markerColor{sfMarkerColor} {
 }
 
 SFComponent::SFComponent(SFComponent& rhs)

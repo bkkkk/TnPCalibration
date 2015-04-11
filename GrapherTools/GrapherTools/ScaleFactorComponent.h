@@ -8,10 +8,10 @@ class TH1;
 
 class SFComponent {
 public:
-  SFComponent(std::unique_ptr<TH1> histogram,
-              std::string title,
-              unsigned markerStyle,
-              unsigned markerColor);
+  SFComponent(std::unique_ptr<TH1> sfHistogram,
+              std::string sfTitle,
+              unsigned sfMarkerStyle,
+              unsigned sfMarkerColor);
   SFComponent(SFComponent& rhs);
 
 public:
