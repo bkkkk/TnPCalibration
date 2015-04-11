@@ -27,6 +27,10 @@ FitConfig::FitConfig(std::string compositeFormula,
     throw(std::runtime_error("Number of background parameters is zero"));
   }
 
+  if (compositeFunction.empty()) {
+    throw(std::runtime_error("Composite function is empty"));
+  }
+
   if (sigFunction.empty()) {
     throw(std::runtime_error("Signal function is empty"));
   }

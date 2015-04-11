@@ -7,12 +7,11 @@
 class TestFitConfig : public ::testing::Test {
  protected:
   virtual void SetUp() {
-    fit = new FitConfig("test_function", "test_function", 3, 3, 1.2f, 3.4f);
   }
 
   virtual void TearDown() { delete fit; }
 
-  FitConfig* fit;
+  FitConfig* fit = new FitConfig{"test_composite", "test_function", "test_function", 3, 3, 1.2f, 3.4f};
 };
 
 #endif

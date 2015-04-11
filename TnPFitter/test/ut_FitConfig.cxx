@@ -2,12 +2,14 @@
 #include "TnPFitter/FitConfig.h"
 
 TEST_F(TestFitConfig, InitializeWithEmptyFunction) {
-  EXPECT_ANY_THROW(new FitConfig("sig_func", "", 3, 3, 2.4f, 4.5f));
-  EXPECT_ANY_THROW(new FitConfig("", "bkg_func", 3, 3, 2.4f, 4.5f));
-  EXPECT_ANY_THROW(new FitConfig("sig_func", "bkg_func", 0, 3, 2.4f, 4.5f));
-  EXPECT_ANY_THROW(new FitConfig("sig_func", "bkg_func", 3, 0, 2.4f, 4.5f));
-  EXPECT_ANY_THROW(new FitConfig("sig_func", "bkg_func", 3, 3, 4.5f, 3.5f));
-  EXPECT_ANY_THROW(new FitConfig("sig_func", "bkg_func", 3, 3, 4.5f, 4.5f));
+  EXPECT_ANY_THROW(FitConfig("", "sig_func", "bkg_func", 3, 3, 2.4f, 4.5f));
+  EXPECT_ANY_THROW(FitConfig("func", "", "bkg_func", 3, 3, 2.4f, 4.5f));
+  EXPECT_ANY_THROW(FitConfig("func", "sig_func", "", 3, 3, 2.4f, 4.5f));
+  EXPECT_ANY_THROW(FitConfig("", "sig_func", "bkg_func", 3, 3, 2.4f, 4.5f));
+  EXPECT_ANY_THROW(FitConfig("func", "sig_func", "bkg_func", 0, 3, 2.4f, 4.5f));
+  EXPECT_ANY_THROW(FitConfig("func", "sig_func", "bkg_func", 3, 0, 2.4f, 4.5f));
+  EXPECT_ANY_THROW(FitConfig("func", "sig_func", "bkg_func", 3, 3, 4.5f, 3.5f));
+  EXPECT_ANY_THROW(FitConfig("func", "sig_func", "bkg_func", 3, 3, 4.5f, 4.5f));
 }
 
 TEST_F(TestFitConfig, GetValidLimits) {
