@@ -13,7 +13,7 @@ FittableFunction::FittableFunction(std::string name,
   }
 }
 
-FittableFunction::FittableFunction(TF1* function) : function(function) {
+FittableFunction::FittableFunction(TF1* fittingFunction) : function(fittingFunction) {
 }
 
 TF1* FittableFunction::getFunction() const {

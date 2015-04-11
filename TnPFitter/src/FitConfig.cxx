@@ -4,7 +4,8 @@
 
 #include "JacobUtils/LoggingUtility.h"
 
-FitConfig::FitConfig(std::string sigFormula,
+FitConfig::FitConfig(std::string compositeFormula,
+                     std::string sigFormula,
                      std::string bkgFormula,
                      unsigned signalPars,
                      unsigned bkgPars,
@@ -13,6 +14,7 @@ FitConfig::FitConfig(std::string sigFormula,
     : fitOptions("MERQB"),
       fitMinimum(min),
       fitMaximum(max),
+      compositeFunction{std::move(compositeFormula)},
       sigFunction{std::move(sigFormula)},
       bkgFunction{std::move(bkgFormula)},
       signalParameters(signalPars),
@@ -62,7 +64,15 @@ double FitConfig::GetFitMax() const {
   return (fitMaximum);
 }
 
-void FitConfig::SetBackgroundFitFunction(const std::string& function) {
+void FitConfig::SetCompositeFitFunction(const std::string &function) {
+  compositeFunction = function;
+}
+
+std::string FitConfig::GetCompositeFunction() {
+  return (compositeFunction);
+}
+
+void FitConfig::SetBackgroundFitFunction(const std::string &function) {
   if (function.empty()) {
     throw(std::runtime_error("Background fit function is empty"));
   }
@@ -73,7 +83,7 @@ std::string FitConfig::GetBackgroundFitFunction() const {
   return (bkgFunction);
 }
 
-void FitConfig::SetSignalFitFunction(const std::string& function) {
+void FitConfig::SetSignalFitFunction(const std::string &function) {
   if (function.empty()) {
     throw(std::runtime_error("Signal fit function is empty"));
   }
@@ -84,9 +94,10 @@ std::string FitConfig::GetSignalFitFunction() const {
   return (sigFunction);
 }
 
-void FitConfig::SetFitOptions(const std::string& options) {
+void FitConfig::SetFitOptions(const std::string &options) {
   fitOptions = options;
 }
+
 std::string FitConfig::GetFitOptions() const {
   return (fitOptions);
 }
@@ -95,7 +106,7 @@ Parameters FitConfig::getSignalParameters() const {
   return (signalParameters);
 }
 
-void FitConfig::setSignalParameters(const Parameters& parameters) {
+void FitConfig::setSignalParameters(const Parameters &parameters) {
   signalParameters = parameters;
 }
 
@@ -111,7 +122,7 @@ Parameters FitConfig::getBkgParameters() const {
   return (bkgParameters);
 }
 
-void FitConfig::setBkgParameters(const Parameters& parameters) {
+void FitConfig::setBkgParameters(const Parameters &parameters) {
   bkgParameters = parameters;
 }
 
@@ -123,7 +134,7 @@ std::size_t FitConfig::getNumberOfBkgParameters() {
   return (bkgParameters.size());
 }
 
-void FitConfig::SetFromFitResult(const TFitResultPtr& rhs) {
+void FitConfig::SetFromFitResult(const TFitResultPtr &rhs) {
   auto pars = rhs->GetParams();
 
   for (auto index = 0ul; index < signalParameters.size(); index++) {
@@ -141,18 +152,19 @@ void FitConfig::SetFromFitResult(const TFitResultPtr& rhs) {
 }
 
 void FitConfig::Print() {
-  for (const auto& par : signalParameters) {
+  for (const auto &par : signalParameters) {
     PrintParameter(par);
   }
 
-  for (const auto& par : bkgParameters) {
+  for (const auto &par : bkgParameters) {
     PrintParameter(par);
   }
 }
 
-void FitConfig::PrintParameter(const Parameter& par) {
-  (void)par;
+void FitConfig::PrintParameter(const Parameter &par) {
+  (void) par;
 }
+
 
 #ifdef __CINT__
 ClassImp(FitConfig)
