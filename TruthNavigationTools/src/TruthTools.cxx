@@ -31,7 +31,7 @@ std::string GetParticleName(const int& pdgid) {
   particleName[ZBOSON] = "Z";
   particleName[WPLUSBOSON] = "W";
 
-  int absPdgId = fabs(pdgid);
+  int absPdgId = std::abs(pdgid);
 
   if (particleName.find(absPdgId) == particleName.end()) {
     return (IntToString(absPdgId));
