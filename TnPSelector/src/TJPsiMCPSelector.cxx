@@ -2,8 +2,8 @@
 #include <math.h>
 
 
-TMCPSelector::TMCPSelector(const std::string& name)
- : name(name),
+TMCPSelector::TMCPSelector(const std::string& selectorName)
+ : name(selectorName),
    expectBLayerHitCut(1),
    nBLHitCut(0),
    sumPixCut(0),
