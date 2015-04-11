@@ -24,12 +24,6 @@ function(add_gtest_test library_under_test target)
   target_link_libraries(${target} ${library_under_test})
 
   add_test(${target} ${target})
-
-  add_custom_command(TARGET ${target}
-                     POST_BUILD
-                     COMMAND ${target}
-                     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-                     COMMENT "Running ${target}" VERBATIM)
 endfunction()
 
 add_subdirectory(RootAdapters)
