@@ -3,8 +3,8 @@
 
 class CutflowCollector {
  public:
-  CutflowCollector();
-  virtual ~CutflowCollector();
+  CutflowCollector() = default;
+  virtual ~CutflowCollector() = default;
 public:
   virtual std::size_t getNCuts() const = 0;
   virtual const char* getCutName(unsigned index) const = 0;
