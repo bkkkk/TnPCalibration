@@ -7,10 +7,10 @@
 
 #include <vector>
 
-class ChainNavigationTools;
 
 namespace TT {
 
+class ChainNavigationTools;
 class TruthMuonMatching {
 
 private:
