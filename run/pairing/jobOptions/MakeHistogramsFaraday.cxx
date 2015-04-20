@@ -30,12 +30,9 @@
   EventWeighting* eventWgt = new EventWeighting("NOMINAL");
 
   // Testing PRW disabled for now
-  bool doPRW = true;
-  if(doPRW == false)
-  {
-    std::cout << "!!!!! WARNING !!!!! RUNNING WITH PRW DISABLED !!!!!! WARNING !!!!!!!" << std::endl;
-  }
-
+#ifdef DOPRW
+  std::cout << "!!!!! WARNING !!!!! RUNNING WITH PRW DISABLED !!!!!! WARNING !!!!!!!" << std::endl;
+#endif
   // Do PRW for MC only
   bool isMC = false;
   if(TString(inputSample).Contains("JPsi") && TString(periodForPrw).Contains("None") != true)
@@ -60,29 +57,22 @@
     pileupTool->AddConfigFile(prwFullPath.c_str());
   
     // used to fix expected Nvtx discrepancy between MC and data due to z beam spot size
-    bool runKFactorCorrection = false;
-    if(runKFactorCorrection != false) 
-    {
-      std::cout << "Running with scale factor Nvtx correction" << std::endl;
-      pileupTool->SetDataScaleFactors(1./1.11);
-    }
+#ifdef DO_NVTX_FIX
+    std::cout << "Running with scale factor Nvtx correction" << std::endl;
+    pileupTool->SetDataScaleFactors(1./1.11);
+#endif
 
     pileupTool->AddLumiCalcFile(ilumiCalcFile.c_str());
     pileupTool->SetUnrepresentedDataAction(2);
     pileupTool->Initialize();
 
     double override = 0;
-    bool doOverride = true;
-    if(doOverride == true)
-    {
-      std::cout << "!!! Running in Channel override mode !!!" << std::endl;
-      if(TString(inputSample).Contains("NonPromptJPsi"))
-      {
-        override = 208202;
-      } else
-      {
-        override = 208002;
-      }
+
+    std::cout << "!!! Running in Channel override mode !!!" << std::endl;
+    if(TString(inputSample).Contains("NonPromptJPsi")) {
+      override = 208202;
+    } else {
+      override = 208002;
     }
 
     eventWgt->AddWeighting(new PileupReWeighting("PRW", "Pileup Reweighting Tool", pileupTool, override)); // PRW tool
