@@ -9,9 +9,14 @@ TT::TruthMuonMatching::TruthMuonMatching(const ITruths& mc)
  , deltaRCut(std::numeric_limits<float>::max()) {
 }
 
-TT::TruthMuonMatching::~TruthMuonMatching() {
+TT::TruthMuonMatching::TruthMuonMatching(const ITruths& mc,
+                                         const ChainNavigationTools& navTools) : mcRecords{mc} {
+  (void) navTools;
 }
 
+
+TT::TruthMuonMatching::~TruthMuonMatching() {
+}
 void TT::TruthMuonMatching::SetAllTruthMuons() {
   TT::ChainNavigationTools navTools(mcRecords);
   truthMuons = navTools.FindAllOfType(TT::MUON);
