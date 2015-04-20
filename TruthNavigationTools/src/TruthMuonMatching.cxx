@@ -23,10 +23,13 @@ void TT::TruthMuonMatching::SetAllTruthMuons() {
 }
 
 int TT::TruthMuonMatching::MatchMuonPair(const IMuon& tag, const IMuon& probe) {
-  int truthTagIndex = 0;
-  int truthProbeIndex = 0;
+  auto truthTagIndex = 0;
+  auto truthProbeIndex = 0;
 
-  if(!MatchMuon(probe, truthProbeIndex) || !MatchMuon(tag, truthTagIndex))  {
+  auto matchedProbe = MatchMuon(probe, truthProbeIndex);
+  auto matchedTag = MatchMuon(tag, truthTagIndex);
+
+  if(!matchedProbe || !matchedTag)  {
     return (0);
   }
 
