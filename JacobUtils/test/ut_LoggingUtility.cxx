@@ -12,4 +12,6 @@ int main() {
   LOG_DEBUG4() << "This is a debug4 message";
   SET_LOG_LEVEL(kINFO);
   LOG_DEBUG() << "If this is showing, something is wrong";
+
+  return (0);
 }

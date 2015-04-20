@@ -7,4 +7,6 @@ int main() {
   list->Write();
   list->Print();
   list->GetPath("PeriodA");
+
+  return (0);
 }
