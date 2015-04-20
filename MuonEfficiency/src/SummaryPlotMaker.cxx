@@ -128,14 +128,9 @@ SaveScaleFactorHistograms ( const std::string& varName,
     smtSF->Write();
   }; 
   return (StatusCode);
-};
+}
 
-// =============================================================================
-
-
-int SummaryPlotMaker ::
-SaveScaleFactorHistograms( const std::string& varName )
-{
+int SummaryPlotMaker::SaveScaleFactorHistograms(const std::string& varName) {
   int status = 1;
 
   std::vector< std::pair<float, float> > slices = tnpSlices->varMap[varName];
@@ -185,10 +180,8 @@ SaveScaleFactorHistograms( const std::string& varName )
 
   outputFile->cd();
 
-  if(outputFile==NULL)
-  {
-    LOG_ERROR() << "File got deleted somewhere";
-    throw;
+  if(!outputFile) {
+    throw(std::runtime_error::("File got deleted somewhere"));
   }
   
   recoSFStack->Add(recoEffData);
@@ -213,42 +206,33 @@ SaveScaleFactorHistograms( const std::string& varName )
   status = smtSF->Write();
 
   return (status);
-};
+}
 
-// =============================================================================
-
-int SummaryPlotMaker ::
-FillEfficiencyHistograms(const SampleType type,
+int SummaryPlotMaker::FillEfficiencyHistograms(const SampleType type,
                          const std::string& varName,
                          const std::vector<std::pair<float, float> >& slices,
                          TH1F& recoHisto,
                          TH1F& smtHisto,
-                         const std::string& prefix)
-{
-  switch(type)
-  {
+                         const std::string& prefix)  {
+  switch(type) {
     case kMC:
-      return(FillEfficiencyHistograms(mcFile, "MC", varName, slices, recoHisto, smtHisto, prefix));
+      return FillEfficiencyHistograms(mcFile, "MC", varName, slices, recoHisto,
+                                      smtHisto, prefix);
     case kDATA:
       return(FillEfficiencyHistograms(dataFile, "Data", varName, slices, recoHisto, smtHisto, prefix));
     default:
       LOG_ERROR() << "Mode not correct";
       return (0);
-  };
-  return(0);
-};
+  }
+}
 
-// =============================================================================
-
-int SummaryPlotMaker ::
-FillEfficiencyHistograms(TFile* file,
+int SummaryPlotMaker::FillEfficiencyHistograms(TFile* file,
                          const std::string& typeName,
                          const std::string& varName,
                          const std::vector<std::pair<float, float> >& slices,
                          TH1F& recoHisto,
                          TH1F& smtHisto,
-                         const std::string& prefix)
-{
+                         const std::string& prefix) {
   LOG_INFO() << "Looping over slices in " << varName << " and " << prefix;
 
   for (size_t idx = 0; idx != slices.size(); idx++)
@@ -369,20 +353,13 @@ int SummaryPlotMaker::AddSample(const SampleType mode,
   return( AddSample ( mode, new TFile( filePath.c_str() ) ) );
 };
 
-// =============================================================================
-
-
-int SummaryPlotMaker::AddSample(const SampleType mode, TFile* file)
-{
-    // Check if file is opened properly
-  if(file == NULL || file->IsZombie() == 1)
-  {
-    LOG_ERROR() << "Failed to open file: " << file->GetName();
+int SummaryPlotMaker::AddSample(const SampleType mode, TFile* file)  {
+  if(file || file->IsZombie()) {
+    LOG_ERROR() << "Failed to open file";
     return (0);
-  };
+  }
 
-  switch(mode)
-  {
+  switch(mode) {
     case kMC:
       mcFile = file;
       break;
@@ -393,17 +370,13 @@ int SummaryPlotMaker::AddSample(const SampleType mode, TFile* file)
       LOG_ERROR() << "Mode not correct";
       return (0);
       break;
-  };
+  }
 
   LOG_INFO() << "Sample loaded successfully";
   return (1);
-};
+}
 
-// =============================================================================
-
-float SummaryPlotMaker ::
-GetTotalError(const float eff, const float statErr, const float systErr) 
-{
+float SummaryPlotMaker::GetTotalError(const float eff, const float statErr, const float systErr) {
     float statRel = statErr / eff;
     float systRel = systErr / eff;
 
