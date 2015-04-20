@@ -26,5 +26,3 @@ class FitScaleFactor {
   ClassDef(FitScaleFactor, 1)
 #endif
 };
-
-#endif
