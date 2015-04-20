@@ -67,3 +67,10 @@ void TT::ChainNavigationTools::PrintAll() {
     TT::PrintParticleInformation(truthRecords[mcIdx]);
   }
 }
+
+bool TT::ChainNavigationTools::IsParticleOfType(const int index,
+                                                const int pdgid) {
+  (void) index;
+  (void) pdgid;
+  return false;
+}
