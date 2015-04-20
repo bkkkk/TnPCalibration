@@ -1,5 +1,4 @@
-#ifndef TNPFITTER_FITSCALEFACTOR_H_
-#define TNPFITTER_FITSCALEFACTOR_H_ 1
+#pragma once
 
 #include <string>
 #include "TObject.h"
