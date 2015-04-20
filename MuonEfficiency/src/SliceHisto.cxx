@@ -80,24 +80,21 @@ int SliceHisto::MakeName()
   return (1);
 };
 
-// =============================================================================
+std::string SliceHisto::LevelName() {
+  auto levelName {"Invalid"};
+  switch (histType) {
+    case PROBE:
+      levelName = "Probe";
+      break;
+    case MUONPROBE:
+      levelName = "MuonProbe";
+      break;
+    case SMT:
+      levelName = "SMT";
+      break;
+    default:
+      throw(std::runtime_error("The histogram type is incorrectly set"));
+  }
 
-std::string SliceHisto::LevelName()
-{
-    if(histType == PROBE)
-    {
-      return("Probe");
-    } else if(histType == MUONPROBE)
-    {
-      return("MuonProbe");
-    } else if(histType == SMT)
-    {
-      return("SMT");
-    } else
-    {
-      std::cout << "WTF are you doing?!" << std::endl;
-      return("");
-    }
-
-    return ("");
+  return (levelName);
 }
