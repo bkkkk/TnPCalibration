@@ -2,22 +2,27 @@
 #include "physicstools/MatchResult.h"
 
 TEST_F(TestMatchResult, NumberConstructorShouldNotThrow) {
-  EXPECT_NO_THROW(MatchResult(true, 1.2));
+  EXPECT_NO_THROW(MatchResult<int>(true, 1.2, 1));
 }
 
 TEST_F(TestMatchResult, BoolOperatorReturnsCorrectValue) {
-  MatchResult matchResult = MatchResult{true, 1.2};
+  auto matchResult = MatchResult<int>{true, 1.2, 1};
   EXPECT_TRUE(matchResult());
 }
 
 TEST_F(TestMatchResult, GetDistanceThrowsIfMatchFailed) {
-  auto badResult = MatchResult{false, 0.0};
+  auto badResult = MatchResult<int>{false, 0.0, 0};
   EXPECT_ANY_THROW(badResult.getDistance());
 }
 
 TEST_F(TestMatchResult, GetDistanceReturnsMatchDistance) {
-  auto matchResult = MatchResult{true, 1.2};
+  auto matchResult = MatchResult<int>{true, 1.2, 0};
   EXPECT_EQ(1.2, matchResult.getDistance());
+}
+
+TEST_F(TestMatchResult, GetMatchedToReturnsMatchedIndex) {
+  auto matchResult = MatchResult<int>{true, 1.2, 4};
+  EXPECT_EQ(4, matchResult.getMatched());
 }
 
 int main(int argc, char** argv) {

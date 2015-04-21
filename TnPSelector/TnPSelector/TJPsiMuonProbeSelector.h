@@ -3,6 +3,7 @@
 
 #include <D3PDReaderAdapter/IMuons.h>
 #include <D3PDReaderAdapter/ITracks.h>
+#include "PhysicsTools/MatchResult.h"
 
 class TJPsiMuonProbeSelector {
 public:
@@ -12,15 +13,14 @@ public:
 
   int initialize();
 
-  int accept(const ITrack& probe, const IMuons& muons,
-             std::size_t& muonProbeIdx);
-
-  int accept(float deltaR);
+  MatchResult<std::size_t> accept(const ITrack& probe, const IMuons& muons);
 
   int finalize();
 
 private:
   unsigned findNearestMuonToProbe(const ITrack& probe, const IMuons& muons);
+  bool muonInRange(std::size_t index, std::size_t numberOfMuons);
+  bool passesDeltaRCut(double deltaR);
 
 public:
   float deltaRCut;

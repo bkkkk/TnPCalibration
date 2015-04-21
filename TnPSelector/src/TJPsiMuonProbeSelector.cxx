@@ -5,6 +5,7 @@
 #include <string>
 
 #include <TnPSelector/KinematicUtils.h>
+#include "PhysicsTools/MatchResult.h"
 
 TJPsiMuonProbeSelector::TJPsiMuonProbeSelector()
     : deltaRCut{std::numeric_limits<float>::max()} {}
@@ -16,16 +17,22 @@ int TJPsiMuonProbeSelector::initialize() {
   return (1);
 }
 
-int TJPsiMuonProbeSelector::accept(const ITrack& probe, const IMuons& muons,
-                                   std::size_t& muonProbeIdx) {
-  muonProbeIdx = findNearestMuonToProbe(probe, muons);
-  if (muonProbeIdx == muons.n() + 1) {
-    return (0);
+MatchResult<std::size_t> TJPsiMuonProbeSelector::accept(const ITrack& probe,
+                                                        const IMuons& muons) {
+  auto muonProbeIndex = findNearestMuonToProbe(probe, muons);
+
+  auto result = MatchResult<std::size_t>{};
+  if (!muonInRange(muonProbeIndex, muons.n())) {
+    return (result);
   }
 
-  auto deltaR = TNP::GetDeltaR(muons[muonProbeIdx], probe);
+  auto deltaR = TNP::GetDeltaR(muons[muonProbeIndex], probe);
+  if(!passesDeltaRCut(deltaR)) {
+    return (result);
+  }
 
-  return (accept(deltaR));
+  result.setFound(deltaR, muonProbeIndex);
+  return (result);
 }
 
 unsigned TJPsiMuonProbeSelector::findNearestMuonToProbe(const ITrack& probe,
@@ -48,10 +55,13 @@ unsigned TJPsiMuonProbeSelector::findNearestMuonToProbe(const ITrack& probe,
   return (muonProbeIdx);
 }
 
-int TJPsiMuonProbeSelector::accept(float deltaR) {
-  if (deltaR > deltaRCut)
-    return (0);
-  return (1);
+bool TJPsiMuonProbeSelector::muonInRange(std::size_t index,
+                                         std::size_t numberOfMuons) {
+  return (index == numberOfMuons + 1);
+}
+
+bool TJPsiMuonProbeSelector::passesDeltaRCut(double deltaR) {
+  return (deltaR < deltaRCut);
 }
 
 int TJPsiMuonProbeSelector::finalize() { return (1); }

@@ -28,6 +28,7 @@ set(LIBRARY_SOURCES ${SOURCE_DIR}/KinematicUtils.cxx
 include_directories("./")
 include_directories(${PROJECT_SOURCE_DIR}/D3PDReaderAdapter/)
 include_directories(${PROJECT_SOURCE_DIR}/JacobUtils/)
+include_directories(${PROJECT_SOURCE_DIR}/PhysicsTools/)
 include_directories(${GTest_INCLUDE_DIR})
 
 # Compile library file

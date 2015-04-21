@@ -59,14 +59,14 @@ int TJPsiClassifier::classify(const IMuons &muons, const ITracks &tracks) {
     return 0;
   }
 
-  isMuonProbe =
-      muonProbeSelector->accept(tracks[pair.second], muons, muonProbeIdx);
+  auto matchResult = muonProbeSelector->accept(tracks[pair.second], muons);
+  isMuonProbe = matchResult();
 
-  if (isMuonProbe != 1) {
+  if (isMuonProbe) {
     return (1);
   }
 
-  isSMT = smtSelector->accept(muons[muonProbeIdx]);
+  isSMT = smtSelector->accept(muons[matchResult.getMatched()]);
 
   return (1);
 }
