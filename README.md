@@ -24,7 +24,7 @@ Tag Selection:
 
 Probe Selection:
  * pT > 4 GeV
- * ![](http://www.sciweavers.org/tex2img.php?eq=%7C%5Ceta%7C%3C2.5&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+ * ![]("http://bit.ly/28ZAKp1")
 
 Pairing Selection:
  * Tag charge is opposite of the Probe charge
